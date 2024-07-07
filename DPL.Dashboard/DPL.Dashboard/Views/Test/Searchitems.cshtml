@@ -1,0 +1,389 @@
+﻿
+@{
+    ViewBag.Title = "Searchitems";
+}
+
+
+@RenderPage("~/Views/Shared/Sidebar.cshtml")
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Search with Select2</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet">
+    <script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+
+
+
+
+
+    <style>
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.428571429;
+            color: #333;
+            background-color: #C2E3F6;
+        }
+
+        .table-responsive {
+            margin: 10px 0;
+        }
+
+
+        .table-wrapper {
+            min-width: 1400px;
+            padding: 50px;
+            border-radius: 3px;
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        }
+
+
+       
+
+        .select2-results__option table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .select2-results__option table, .select2-results__option th, .select2-results__option td {
+            /*border: 1px solid #ddd;*/
+        }
+
+        .select2-results__option th, .select2-results__option td {
+            padding: 8px;
+            text-align: center;
+            width: 209px;
+        }
+
+        .select2-results__option th {
+            background-color: #f2f2f2;
+        }
+
+
+        .select2-container--default .select2-results > .select2-results__options {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+
+
+        th {
+            text-align: center;
+            border: 1px solid #ddd;
+            width: 210px;
+            background-color: #f2f2f2;
+            height:40px;
+        }
+
+
+    </style>
+
+
+</head>
+
+
+
+
+<body>
+
+    <div class="container">
+        <div class="table-responsive">
+            <div class="table-wrapper">
+                <select class="form-control" id="mySelect2" multiple style="width: 300px;"></select>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script>
+        //$(document).ready(function () {
+        //    $('#mySelect2').select2({
+        //        width: '100%',
+        //        ajax: {
+        //            url: '/ProductName/mGetProductNameList',
+        //            dataType: 'json',
+        //            processResults: function (data, params) {
+        //                var query = params.term.toLowerCase();
+        //                var filteredData = $.grep(data, function (item) {
+        //                    return (
+        //                        item.strSTOCKITEM_ALIAS.toLowerCase().includes(query) ||
+        //                        item.strSTOCKITEM_NAME.toLowerCase().includes(query) ||
+        //                        item.strSTOCKITEM_PRIMARY_GROUP.toLowerCase().includes(query) ||
+        //                        item.strSTOCKGROUP_NAME.toLowerCase().includes(query) ||
+        //                        item.strSTOCKCATEGORY_NAME.toLowerCase().includes(query) ||
+        //                        item.strSALES_PRICE_AMOUNT.toLowerCase().includes(query)
+        //                    );
+        //                });
+
+        //                return {
+        //                    results: $.map(filteredData, function (item) {
+        //                        return {
+        //                            id: item.strSTOCKITEM_ALIAS,
+        //                            text: '<tr>''<td>' + item.strSTOCKITEM_ALIAS.toLowerCase() + '</td>'' - ''<td>' + item.strSTOCKITEM_NAME.toLowerCase() + '</td>'' - ' '<td>'+ item.strSTOCKITEM_PRIMARY_GROUP.toLowerCase() + '</td>'' - ' '<td>'+ item.strSTOCKGROUP_NAME.toLowerCase() + '</td>'' - ' '<td>'+ item.strSTOCKCATEGORY_NAME.toLowerCase() +'</td>' ' - ' '<td>'+ item.strSALES_PRICE_AMOUNT.toLowerCase() + '</td>''<?tr>'
+        //                        };
+        //                    })
+        //                };
+        //            }
+        //        },
+        //        placeholder: 'Search...',
+        //        allowClear: true,
+        //        language: {
+        //            noResults: function () {
+        //                return 'No matches found';
+        //            }
+        //        },
+        //        matcher: matchStart
+        //    });
+
+        //    $('#mySelect2').on('select2:open', function () {
+        //        var $searchField = $('.select2-search__field');
+        //        $searchField.attr('placeholder', 'Search...');
+        //    });
+
+
+        //    function matchStart(params, data) {
+               
+        //        if ($.trim(params.term) === '') {
+        //            return data;
+        //        }
+
+               
+        //        if (typeof data.text === 'undefined') {
+        //            return null;
+        //        }
+
+              
+        //        if (data.text.toLowerCase().indexOf(params.term.toLowerCase()) === 0) {
+        //            return data;
+        //        }
+
+               
+        //        return null;
+        //    }
+
+
+        //});
+
+
+        //$(document).ready(function () {
+        //    function formatItem(item) {
+        //        if (!item.id) {
+        //            return item.text;
+        //        }
+        //        var row = $('<tr>');
+        //        row.append($('<td>').text(item.strSTOCKITEM_ALIAS.toLowerCase()));
+        //        row.append($('<td>').text(item.strSTOCKITEM_NAME.toLowerCase()));
+        //        row.append($('<td>').text(item.strSTOCKITEM_PRIMARY_GROUP.toLowerCase()));
+        //        row.append($('<td>').text(item.strSTOCKGROUP_NAME.toLowerCase()));
+        //        row.append($('<td>').text(item.strSTOCKCATEGORY_NAME.toLowerCase()));
+        //        row.append($('<td>').text(item.strSALES_PRICE_AMOUNT.toLowerCase()));
+        //        return row;
+        //    }
+
+        //    function formatHeader() {
+        //        var header = $('<tr>');
+        //        header.append($('<th>').text('Alias'));
+        //        header.append($('<th>').text('Name'));
+        //        header.append($('<th>').text('Primary Group'));
+        //        header.append($('<th>').text('Group Name'));
+        //        header.append($('<th>').text('Category Name'));
+        //        header.append($('<th>').text('Sales Price'));
+        //        return $('<table>').append(header);
+        //    }
+
+        //    $('#mySelect2').select2({
+        //        width: '100%',
+        //        ajax: {
+        //            url: '/ProductName/mGetProductNameList',
+        //            dataType: 'json',
+        //            processResults: function (data, params) {
+        //                var query = params.term ? params.term.toLowerCase() : '';
+        //                var filteredData = $.grep(data, function (item) {
+        //                    return (
+        //                        item.strSTOCKITEM_ALIAS.toLowerCase().includes(query) ||
+        //                        item.strSTOCKITEM_NAME.toLowerCase().includes(query) ||
+        //                        item.strSTOCKITEM_PRIMARY_GROUP.toLowerCase().includes(query) ||
+        //                        item.strSTOCKGROUP_NAME.toLowerCase().includes(query) ||
+        //                        item.strSTOCKCATEGORY_NAME.toLowerCase().includes(query) ||
+        //                        item.strSALES_PRICE_AMOUNT.toLowerCase().includes(query)
+        //                    );
+        //                });
+
+        //                var results = $.map(filteredData, function (item) {
+        //                    return {
+        //                        id: item.strSTOCKITEM_ALIAS,
+        //                        strSTOCKITEM_ALIAS: item.strSTOCKITEM_ALIAS,
+        //                        strSTOCKITEM_NAME: item.strSTOCKITEM_NAME,
+        //                        strSTOCKITEM_PRIMARY_GROUP: item.strSTOCKITEM_PRIMARY_GROUP,
+        //                        strSTOCKGROUP_NAME: item.strSTOCKGROUP_NAME,
+        //                        strSTOCKCATEGORY_NAME: item.strSTOCKCATEGORY_NAME,
+        //                        strSALES_PRICE_AMOUNT: item.strSALES_PRICE_AMOUNT
+        //                    };
+        //                });
+
+        //                results.unshift({
+        //                    id: '',
+        //                    text: formatHeader().prop('outerHTML')
+        //                });
+
+        //                return {
+        //                    results: results
+        //                };
+        //            }
+        //        },
+        //        placeholder: 'Search...',
+        //        allowClear: true,
+        //        language: {
+        //            noResults: function () {
+        //                return 'No matches found';
+        //            }
+        //        },
+        //        escapeMarkup: function (markup) {
+        //            return markup;
+        //        },
+        //        templateResult: function (data) {
+        //            if (!data.id) {
+        //                return $(data.text);
+        //            }
+        //            return formatItem(data);
+        //        },
+        //        templateSelection: function (item) {
+        //            return item.strSTOCKITEM_NAME || item.text;
+        //        }
+        //    });
+
+        //    $('#mySelect2').on('select2:open', function () {
+        //        var $searchField = $('.select2-search__field');
+        //        $searchField.attr('placeholder', 'Search...');
+        //        var $resultsContainer = $('.select2-dropdown').find('.select2-results');
+        //        $resultsContainer.prepend(formatHeader());
+        //    });
+        //});
+
+
+
+
+        $(document).ready(function () {
+            var headerAppended = false;
+
+            function formatItem(item) {
+                if (!item.id) {
+                    return item.text;
+                }
+                var row = $('<tr>');
+                row.append($('<td>').text(item.strSTOCKITEM_ALIAS.toLowerCase()));
+                row.append($('<td>').text(item.strSTOCKITEM_NAME.toLowerCase()));
+                row.append($('<td>').text(item.strSTOCKITEM_PRIMARY_GROUP.toLowerCase()));
+                row.append($('<td>').text(item.strSTOCKGROUP_NAME.toLowerCase()));
+                row.append($('<td>').text(item.strSTOCKCATEGORY_NAME.toLowerCase()));
+                row.append($('<td>').text(item.strSALES_PRICE_AMOUNT.toLowerCase()));
+                return row;
+            }
+
+            function formatHeader() {
+                var header = $('<tr>');
+                header.append($('<th>').text('Alias'));
+                header.append($('<th>').text('Name'));
+                header.append($('<th>').text('Primary Group'));
+                header.append($('<th>').text('Group Name'));
+                header.append($('<th>').text('Category Name'));
+                header.append($('<th>').text('Sales Price'));
+                return $('<table>').append(header);
+            }
+
+            $('#mySelect2').select2({
+                width: '100%',
+                ajax: {
+                    url: '/ProductName/mGetProductNameList',
+                    dataType: 'json',
+                    processResults: function (data, params) {
+                        var query = params.term ? params.term.toLowerCase() : '';
+                        var filteredData = $.grep(data, function (item) {
+                            return (
+                                item.strSTOCKITEM_ALIAS.toLowerCase().includes(query) ||
+                                item.strSTOCKITEM_NAME.toLowerCase().includes(query) ||
+                                item.strSTOCKITEM_PRIMARY_GROUP.toLowerCase().includes(query) ||
+                                item.strSTOCKGROUP_NAME.toLowerCase().includes(query) ||
+                                item.strSTOCKCATEGORY_NAME.toLowerCase().includes(query) ||
+                                item.strSALES_PRICE_AMOUNT.toLowerCase().includes(query)
+                            );
+                        });
+
+                        var results = $.map(filteredData, function (item) {
+                            return {
+                                id: item.strSTOCKITEM_ALIAS,
+                                strSTOCKITEM_ALIAS: item.strSTOCKITEM_ALIAS,
+                                strSTOCKITEM_NAME: item.strSTOCKITEM_NAME,
+                                strSTOCKITEM_PRIMARY_GROUP: item.strSTOCKITEM_PRIMARY_GROUP,
+                                strSTOCKGROUP_NAME: item.strSTOCKGROUP_NAME,
+                                strSTOCKCATEGORY_NAME: item.strSTOCKCATEGORY_NAME,
+                                strSALES_PRICE_AMOUNT: item.strSALES_PRICE_AMOUNT
+                            };
+                        });
+
+                        if (!headerAppended) {
+                            results.unshift({
+                                id: '',
+                                text: formatHeader().prop('outerHTML')
+                            });
+                            headerAppended = true;
+                        }
+
+                        return {
+                            results: results
+                        };
+                    }
+                },
+                placeholder: 'Search...',
+                allowClear: true,
+                language: {
+                    noResults: function () {
+                        return 'No matches found';
+                    }
+                },
+                escapeMarkup: function (markup) {
+                    return markup;
+                },
+                templateResult: function (data) {
+                    if (!data.id) {
+                        return $(data.text);
+                    }
+                    return formatItem(data);
+                },
+                templateSelection: function (item) {
+                    return item.strSTOCKITEM_NAME || item.text;
+                }
+            });
+
+            $('#mySelect2').on('select2:open', function () {
+                if (!headerAppended) {
+                    var $searchField = $('.select2-search__field');
+                    $searchField.attr('placeholder', 'Search...');
+                    var $resultsContainer = $('.select2-dropdown').find('.select2-results');
+                    $resultsContainer.prepend(formatHeader());
+                    headerAppended = true;
+                }
+            });
+        });
+
+
+    </script>
+
+
+
+
+
+
+
+
+</body>
+</html>
+

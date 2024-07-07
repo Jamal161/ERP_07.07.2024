@@ -1,0 +1,916 @@
+﻿
+@{
+    ViewBag.Title = "Divisionsalescollectionachievement";
+}
+
+
+@RenderPage("~/Views/Shared/Sidebar.cshtml")
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        button {
+            background: cornflowerblue;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-family: 'Lato';
+            margin: 5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            outline: none;
+        }
+
+            button:hover {
+                background: orange;
+            }
+
+        .bordercolor {
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+
+        .centerContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item {
+            width: 50em;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            margin: auto;
+            text-align: center;
+            font-family: arial;
+        }
+
+
+        .centerContain {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .border {
+            border: 1px solid #dee2e6 !important;
+        }
+
+        .p-2 {
+            padding: 0.5rem !important;
+        }
+
+        legend {
+            display: block;
+            width: auto;
+            margin-bottom: 2px;
+            padding-left: 2px;
+            padding-right: 2px;
+            border: none;
+        }
+
+        button:hover {
+            background: orange;
+        }
+
+        .bordercolor {
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+
+        .centerContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item {
+            width: 60em;
+        }
+
+
+        /**auther: aktarul
+              only for button css.
+            **/
+        .linkbutton:hover {
+            background: #2b8eed;
+            color: white;
+        }
+
+        .pcenter {
+            margin: auto;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+        }
+
+        .linkbutton {
+            border: 1px solid black;
+            height: 35px;
+            border-radius: 5px;
+            text-align: center;
+            background-color: #a8a7b9;
+            color: white;
+            padding-left: 5px;
+            padding-right: 5px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            justify-content: center;
+        }
+
+        /*.fa-file-invoice-dollar {
+            color: blue;
+        }*/
+
+        .il {
+            color: #dcf588;
+        }
+
+        .ilF {
+            color: #ffffff;
+        }
+
+        .ilF1 {
+            color: #00ff90;
+        }
+
+        .imagecenter {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 25%;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="centerContainer ">
+        <div class="item bordercolor" style="padding: 20px; margin:100px; background-color:azure">
+            <h4> Division Sales Collection Achievement</h4><br />
+
+            <div id="dividBranchSCA" class="row" style="display:none;">
+                <label class="control-label"> Branch Name:</label>
+                <select id="idBranchNameSCA" class="form-control" onchange="getcheckData()">
+                    <option value="">--Select One--</option>
+                    <option value="All">All</option>
+                    <option value="0001">Deeplaid Laboratories Ltd.-2024</option>
+                    <option value="0002">Sale Center. Dhaka</option>
+                    <option value="0003">Herbal</option>
+                </select>
+            </div>
+
+            <br />
+            <div id="dividLedgerGroup" class="col-md-12">
+                <fieldset class="border p-2">
+                    <legend class="w-auto">Option</legend>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label style="font-size: 15px;"><input type="radio" id="idGroupwise" name="nameGroupMPOwise" value="3" style="height: 12px; width: 25px; margin-top: 5px" onchange="getcheckData()" checked="">Group Wise</label>
+                        </div>
+                        <div class="col-md-6">
+                            <label style="font-size: 15px;"><input type="radio" id="idLedgerwise" name="nameGroupMPOwise" value="4" style="height: 12px; width: 25px; margin-top: 5px" onchange="getcheckData()">MPO Wise</label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <br />
+            <div class="col-md-12">
+                <fieldset class="border p-2">
+                    <legend class="w-auto">Selection</legend>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label style="font-size: 15px;"><input type="radio" id="idAll" name="optionAllIndividual" value="0" style="height: 12px; width: 25px; margin-top: 5px" checked="" onchange="getcheckData()">All</label>
+                        </div>
+                        <div class="col-md-6">
+                            <label style="font-size: 15px;"><input type="radio" id="idIndividual" name="optionAllIndividual" value="1" style="height: 12px; width: 25px; margin-top: 5px" onchange="getcheckData()">Individual</label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <br />
+            <div id="DivMPO_GROUPText" class="col-md-12" style="display: none;">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label">Ledger Name: </label>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <select id="cboParticulars" class="form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true"><option value="Select">Select</option><option value="AH-1X-MPO-Homoeo">AH-1X-MPO-Homoeo</option><option value="AH-2X-MPO-Unani">AH-2X-MPO-Unani</option><option value="AH-3X-Bad Debtors-Homoeo">AH-3X-Bad Debtors-Homoeo</option><option value="AH-4X-Bad Debtors-Old">AH-4X-Bad Debtors-Old</option><option value="AH-5X-Others-Debtors">AH-5X-Others-Debtors</option><option value="AH-6X-Closed-MPO">AH-6X-Closed-MPO</option><option value="AH-AM-Abdul Kader-Rangpur B">AH-AM-Abdul Kader-Rangpur B</option><option value="AH-AM-Abdul Wahab Shourov-Pabna Sadar">AH-AM-Abdul Wahab Shourov-Pabna Sadar</option><option value="AH-AM-Abdus Sabur Hossain-Rajshahi Sadar">AH-AM-Abdus Sabur Hossain-Rajshahi Sadar</option><option value="AH-AM-Abu Hanif Jomadder-Patuakhali">AH-AM-Abu Hanif Jomadder-Patuakhali</option><option value="AH-AM-Ahosan Kabir Chowdhury-Tangail">AH-AM-Ahosan Kabir Chowdhury-Tangail</option><option value="AH-AM-Anisur Rahman-Satkhira">AH-AM-Anisur Rahman-Satkhira</option><option value="AH-AM-Asadur Rahman-Bagerhat Sadar">AH-AM-Asadur Rahman-Bagerhat Sadar</option><option value="AH-AM-Imran Hossain-Mirpur">AH-AM-Imran Hossain-Mirpur</option><option value="AH-AM-Kamal Uddin Sarkar-Nilphamari">AH-AM-Kamal Uddin Sarkar-Nilphamari</option><option value="AH-AM-Kawsar Ahmed-Jamalpur">AH-AM-Kawsar Ahmed-Jamalpur</option><option value="AH-AM-Md. Abdur Rouf-Savar">AH-AM-Md. Abdur Rouf-Savar</option><option value="AH-AM-Md. Al Amin-Madaripur Sadar">AH-AM-Md. Al Amin-Madaripur Sadar</option><option value="AH-AM-Md. Anwarul Islam-Pirgacha">AH-AM-Md. Anwarul Islam-Pirgacha</option><option value="AH-AM-Md. Ariful-Dinajpur">AH-AM-Md. Ariful-Dinajpur</option><option value="AH-AM-Md. Asadusjaman-Manikganj">AH-AM-Md. Asadusjaman-Manikganj</option><option value="AH-AM-Md. Belal Hosen-Jashore">AH-AM-Md. Belal Hosen-Jashore</option><option value="AH-AM-Md. Bodiuzzaman-Chapainawabganj">AH-AM-Md. Bodiuzzaman-Chapainawabganj</option><option value="AH-AM-Md. Jalal Uddin-Sunamganj">AH-AM-Md. Jalal Uddin-Sunamganj</option><option value="AH-AM-Md. Maidul Islam-Mohakhali">AH-AM-Md. Maidul Islam-Mohakhali</option><option value="AH-AM-Md. Moshiur Rahman-Jhalokathi/Barishal">AH-AM-Md. Moshiur Rahman-Jhalokathi/Barishal</option><option value="AH-AM-Md. Nazmul Huda-Uttara">AH-AM-Md. Nazmul Huda-Uttara</option><option value="AH-AM-Md. Rabiul Awal-Cumilla North">AH-AM-Md. Rabiul Awal-Cumilla North</option><option value="AH-AM-Md. Saidul Islam-Tongi">AH-AM-Md. Saidul Islam-Tongi</option><option value="AH-AM-Md. Yousuf Ali-Jessore Sadar">AH-AM-Md. Yousuf Ali-Jessore Sadar</option><option value="AH-AM-Mohammad Abbas Ali-Thakurgaon">AH-AM-Mohammad Abbas Ali-Thakurgaon</option><option value="AH-AM-Mohammed Abdus Sabur-Chakaria">AH-AM-Mohammed Abdus Sabur-Chakaria</option><option value="AH-AM-Mominul Islam-B.Baria Sadar">AH-AM-Mominul Islam-B.Baria Sadar</option><option value="AH-AM-Mostafizur Rahman-Barishal Sadar">AH-AM-Mostafizur Rahman-Barishal Sadar</option><option value="AH-AM-Motiur Rahman-Gazipur">AH-AM-Motiur Rahman-Gazipur</option><option value="AH-AM-Shahed Ahmed-Sylhet Sadar">AH-AM-Shahed Ahmed-Sylhet Sadar</option><option value="AH-AM-Sonjoy Karmaker-Barishal">AH-AM-Sonjoy Karmaker-Barishal</option><option value="AH-Corporate-Sales-Herbal">AH-Corporate-Sales-Herbal</option><option value="AH-Corporate-Sales-Homoeo">AH-Corporate-Sales-Homoeo</option><option value="AH-DSM-Md. Tarajul Islam-Mymensingh">AH-DSM-Md. Tarajul Islam-Mymensingh</option><option value="AH-DSM-Muhammad Shafiqul Islam-Madhupur">AH-DSM-Muhammad Shafiqul Islam-Madhupur</option><option value="AH-FM-Abu Sayed-Jhenaidah">AH-FM-Abu Sayed-Jhenaidah</option><option value="AH-FM-Al Amin-Cumilla South">AH-FM-Al Amin-Cumilla South</option><option value="AH-FM-Ashraful Haque Suhak-Habiganj">AH-FM-Ashraful Haque Suhak-Habiganj</option><option value="AH-FM-Bellal Hossain-Faridpur Sadar">AH-FM-Bellal Hossain-Faridpur Sadar</option><option value="AH-FM-Bellal Hossen-Ctg. Sadar">AH-FM-Bellal Hossen-Ctg. Sadar</option><option value="AH-FM-Debashis Swar-Ullapara">AH-FM-Debashis Swar-Ullapara</option><option value="AH-FM-Jalal Uddin-Natore">AH-FM-Jalal Uddin-Natore</option><option value="AH-FM-Md. Abu Lais-Moulvibazar">AH-FM-Md. Abu Lais-Moulvibazar</option><option value="AH-FM-Md. Al-Amin Hossain-Narayanganj">AH-FM-Md. Al-Amin Hossain-Narayanganj</option><option value="AH-FM-Md. Almahmud-Bogura">AH-FM-Md. Almahmud-Bogura</option><option value="AH-FM-Md. Ashraful Islam-Chapainawabganj">AH-FM-Md. Ashraful Islam-Chapainawabganj</option><option value="AH-FM-Md. Asraful Alam-Gaibandha">AH-FM-Md. Asraful Alam-Gaibandha</option><option value="AH-FM-Md. Ebrahim Khan-Khulna 2">AH-FM-Md. Ebrahim Khan-Khulna 2</option><option value="AH-FM-Md. Ferdaus-Patiya">AH-FM-Md. Ferdaus-Patiya</option><option value="AH-FM-Md. Hasan-Munshiganj">AH-FM-Md. Hasan-Munshiganj</option><option value="AH-FM-MD. Joynal Abedin-Netrokona">AH-FM-MD. Joynal Abedin-Netrokona</option><option value="AH-FM-Md. Mahfuz Alam-Chandpur">AH-FM-Md. Mahfuz Alam-Chandpur</option><option value="AH-FM-Md. Mehedi Hasan-Thakurgaon">AH-FM-Md. Mehedi Hasan-Thakurgaon</option><option value="AH-FM-Md. Mizanur Rahman-Dinajpur">AH-FM-Md. Mizanur Rahman-Dinajpur</option><option value="AH-FM-Md. Saiful Islam-Naogaon">AH-FM-Md. Saiful Islam-Naogaon</option><option value="AH-FM-Md. Sumon-Bhola Sadar">AH-FM-Md. Sumon-Bhola Sadar</option><option value="AH-FM-Md. Umor Faruk-Kurigram">AH-FM-Md. Umor Faruk-Kurigram</option><option value="AH-FM-Md.Sohag Alom-Keraniganj">AH-FM-Md.Sohag Alom-Keraniganj</option><option value="AH-FM-Mir Mohammad Musa-Khulna 1">AH-FM-Mir Mohammad Musa-Khulna 1</option><option value="AH-FM-Nasir Bin Nazrul-Narsingdi">AH-FM-Nasir Bin Nazrul-Narsingdi</option><option value="AH-FM-Nazmul Hossen-Feni">AH-FM-Nazmul Hossen-Feni</option><option value="AH-FM-Nur Islam-Hathazari">AH-FM-Nur Islam-Hathazari</option><option value="AH-FM-S.A.M Masud Ahmed-Kishoreganj">AH-FM-S.A.M Masud Ahmed-Kishoreganj</option><option value="AH-FM-Shahidullah-Trishal">AH-FM-Shahidullah-Trishal</option><option value="AH-FM-Sobuj Molla-Gopalganj">AH-FM-Sobuj Molla-Gopalganj</option><option value="AH-FM-Tazuddin Sharif-Ishwarganj">AH-FM-Tazuddin Sharif-Ishwarganj</option><option value="AH-FM-Toslim Uddin-Sirajganj">AH-FM-Toslim Uddin-Sirajganj</option><option value="AH-FM-Waliur Rahman Gazi-Bhandaria">AH-FM-Waliur Rahman Gazi-Bhandaria</option><option value="AH-HERBAL-DIVISION-OLD">AH-HERBAL-DIVISION-OLD</option><option value="AH-RSM-Md. Abu Baker Siddik-Rangpur A">AH-RSM-Md. Abu Baker Siddik-Rangpur A</option><option value="AH-RSM-Md. Ohiduzzaman Prodhan-Rangpur">AH-RSM-Md. Ohiduzzaman Prodhan-Rangpur</option><option value="AH-RSM-Md. Saeid Atikullah-Dhaka">AH-RSM-Md. Saeid Atikullah-Dhaka</option><option value="AH-Sr. AM-Goutum Kumar Roy-Chuadanga">AH-Sr. AM-Goutum Kumar Roy-Chuadanga</option><option value="AH-Sr. AM-Jewel Rana-Kushtia Sadar">AH-Sr. AM-Jewel Rana-Kushtia Sadar</option><option value="AH-Sr. AM-K.M Nurul Amin-Mohammadpur">AH-Sr. AM-K.M Nurul Amin-Mohammadpur</option><option value="AH-Sr. AM-Md. Johirul Islam-Bhola">AH-Sr. AM-Md. Johirul Islam-Bhola</option><option value="AH-Sr. AM-Md. Manirul Islam-Rajshahi">AH-Sr. AM-Md. Manirul Islam-Rajshahi</option><option value="AH-Sr. AM-Md. Rohis Uddin-Natore">AH-Sr. AM-Md. Rohis Uddin-Natore</option><option value="AH-Sr. AM-Md. Solaiman-Gazipur">AH-Sr. AM-Md. Solaiman-Gazipur</option><option value="AH-Sr. AM-Subir Das-Noakhali">AH-Sr. AM-Subir Das-Noakhali</option><option value="AH-Sr. DSM-Mostakim Billah-Bhairab">AH-Sr. DSM-Mostakim Billah-Bhairab</option><option value="AH-X AM-Md. Ashraful Islam-Panchagarh">AH-X AM-Md. Ashraful Islam-Panchagarh</option><option value="AH-X AM-Md. Hasan Habibi-Mohonganj">AH-X AM-Md. Hasan Habibi-Mohonganj</option><option value="AH-X AM-Md. Humayun Kabir-Bogura">AH-X AM-Md. Humayun Kabir-Bogura</option><option value="AH-X FM-Md. Asrafur Rahman Sumon-Khulna">AH-X FM-Md. Asrafur Rahman Sumon-Khulna</option><option value="AH-X RSM-Jahid Hossain-Chakaria">AH-X RSM-Jahid Hossain-Chakaria</option><option value="AH-X SM-G.M Mazharul Islam-Cumilla">AH-X SM-G.M Mazharul Islam-Cumilla</option><option value="AH-X Sr. AM-Mohammad Shahjahan Kabir-Dhanmondi">AH-X Sr. AM-Mohammad Shahjahan Kabir-Dhanmondi</option><option value="DH-AMM-Md. Faiz Ullah-Noakhali">DH-AMM-Md. Faiz Ullah-Noakhali</option><option value="DH-Corporate Sales-Herbal">DH-Corporate Sales-Herbal</option><option value="DH-Corporate Sales-Homoeo">DH-Corporate Sales-Homoeo</option><option value="DH-DAM-Humayun Kabir-Gazipur">DH-DAM-Humayun Kabir-Gazipur</option><option value="DH-DSM-Md. Tarajul Islam-Mymensingh">DH-DSM-Md. Tarajul Islam-Mymensingh</option><option value="DH-DSM-Muhammad Shafiqul Islam-Tangail">DH-DSM-Muhammad Shafiqul Islam-Tangail</option><option value="DH-DSM-Rezaul Karim-Bogura">DH-DSM-Rezaul Karim-Bogura</option><option value="DH-DSM-Syed Nazrul Islam-Jessore">DH-DSM-Syed Nazrul Islam-Jessore</option><option value="DH-HERBAL DIVISION-OLD">DH-HERBAL DIVISION-OLD</option><option value="DH-RSM-Mahi Uddin Ahmed-Sylhet">DH-RSM-Mahi Uddin Ahmed-Sylhet</option><option value="DH-RSM-Md. Abdur Rahim-Narsingdi">DH-RSM-Md. Abdur Rahim-Narsingdi</option><option value="DH-RSM-Md. Abu Baker Siddik-Rangpur">DH-RSM-Md. Abu Baker Siddik-Rangpur</option><option value="DH-RSM-Md. Ashraful Islam-Rajshahi">DH-RSM-Md. Ashraful Islam-Rajshahi</option><option value="DH-RSM-Md. Humayun Kabir-Barisal">DH-RSM-Md. Humayun Kabir-Barisal</option><option value="DH-RSM-Md. Jahangeer Alam Badsha-Dinajpur">DH-RSM-Md. Jahangeer Alam Badsha-Dinajpur</option><option value="DH-RSM-Md. Monjurul Islam-Ctg. Division">DH-RSM-Md. Monjurul Islam-Ctg. Division</option><option value="DH-RSM-Md. Ohiduzzaman Prodhan-Rangpur">DH-RSM-Md. Ohiduzzaman Prodhan-Rangpur</option><option value="DH-RSM-Md. Rakibul Hasan Sunny-Dhaka">DH-RSM-Md. Rakibul Hasan Sunny-Dhaka</option><option value="DH-RSM-Md. Rokonuzzaman-Dinajpur">DH-RSM-Md. Rokonuzzaman-Dinajpur</option><option value="DH-RSM-Md. Saeid Atikullah-Dhaka">DH-RSM-Md. Saeid Atikullah-Dhaka</option><option value="DH-RSM-Mizanur Rahman-Faridpur">DH-RSM-Mizanur Rahman-Faridpur</option><option value="DH-RSM-Pulak Kanti Boral-Khulna">DH-RSM-Pulak Kanti Boral-Khulna</option><option value="DH-RSM-S.M. Mominul Haque-Rajshahi Sadar">DH-RSM-S.M. Mominul Haque-Rajshahi Sadar</option><option value="DH-SM-Md. Mashiur Rahman-Herbal Division">DH-SM-Md. Mashiur Rahman-Herbal Division</option><option value="DH-Sr. DSM-Gillur Rahman-Cumilla">DH-Sr. DSM-Gillur Rahman-Cumilla</option><option value="DH-X DAM-Shekh Md. Sagar-Narsingdi">DH-X DAM-Shekh Md. Sagar-Narsingdi</option><option value="DH-X Sr. AM-Mahi Uddin Ahmed-Habiganj">DH-X Sr. AM-Mahi Uddin Ahmed-Habiganj</option><option value="DH-X ZH-Md. Humayun Kabir-Noakhali">DH-X ZH-Md. Humayun Kabir-Noakhali</option><option value="DH-X-MPO Accounts">DH-X-MPO Accounts</option><option value="EAST ZONE">EAST ZONE</option><option value="HERBAL DIVISION-OLD">HERBAL DIVISION-OLD</option><option value="HERBAL ZONE">HERBAL ZONE</option><option value="NOASHAL ZONE">NOASHAL ZONE</option><option value="NORTH ZONE">NORTH ZONE</option><option value="Sales Center-1">Sales Center-1</option><option value="Sales Center-2">Sales Center-2</option><option value="Sales Center-3">Sales Center-3</option><option value="SOUTH ZONE">SOUTH ZONE</option><option value="Trade And Other Receivables">Trade And Other Receivables</option><option value="WEST ZONE">WEST ZONE</option><option value="X-MPO Accounts-Zone">X-MPO Accounts-Zone</option><option value="ZH-Corporate Sales">ZH-Corporate Sales</option></select><span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-cboParticulars-container"><span class="select2-selection__rendered" id="select2-cboParticulars-container" title="Select"></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div id="DivGorupWiseSummary" class="col-md-12">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <label class="control-label ">Gorupwise Summary: </label>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="input-group">
+                                    <select id="cboPrimary" class="form-control">
+                                        <option value="0">---Select---</option>
+                                        <option value="0">ALL ZONE</option>
+                                        <option value="1">ZONE</option>
+                                        <option value="2">DIVISION</option>
+                                        <option value="3">AREA</option>
+                                        <option value="4">MPO</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="checkbox"><input type="checkbox" id="idhondaLoan" class="checkboxTypeGiftSearch" value="1"> Honda Loan</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <label class="checkbox"><input type="checkbox" id="chkSalesCollection" class="checkboxTypeGiftSearch" value="1">Monthly Summary</label>
+                        </div>
+                        <div class="row">
+                            <label class="checkbox"><input type="checkbox" id="chkTargetSuppress" class="checkboxTypeGiftSearch" value="1">Target Suppress</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+            <div id="dividLedgerStatusD" class="row bordercolor col-md-12 p-2" style=" margin: 10px;">
+                <div class="col-md-4">
+                    <div class="row">
+                        <label style="font-size: 15px;"><input type="radio" id="rbtnAll" name="allActiveInactivestatus" value="2" style="height: 12px; width: 25px; margin-top: 5px" onchange="getcheckData()">All</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <label style="font-size: 15px;"><input type="radio" id="rbtnActive" name="allActiveInactivestatus" value="0" style="height: 12px; width: 25px; margin-top: 5px" checked="" onchange="getcheckData()">Active</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <label style="font-size: 15px;"><input type="radio" id="rbtnInActive" name="allActiveInactivestatus" value="3" style="height: 12px; width: 25px; margin-top: 5px" onchange="getcheckData()">InActive</label>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-2">
+
+                        <label class="checkbox"><input type="checkbox" id="idDualDate" onclick="dualdate()" class="checkboxTypeGiftSearch" value="1">Dual Date</label>
+                    </div>
+                    <div id="divSaleDate" class="col-md-5" style="display: none;">
+                        <fieldset class="border p-2">
+                            <legend class="w-auto">Sales Period</legend>
+                            <div class="row" style="margin-left:4px">
+                                <label class="control-label col-md-3">From: </label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        <input type="date" id="FDateSCASale">
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row" style="margin-left:4px">
+                                <label class="control-label col-md-3">To: </label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        <input type="date" id="TDateSCASale" name="toDate">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div id="divCollDate" class="col-md-5">
+                        <fieldset class="border p-2">
+                            <legend class="w-auto">Collection Period</legend>
+                            <div class="row" style="margin-left:4px">
+                                <label class="control-label col-md-3">From: </label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        <input type="date" id="FDateSCACollection">
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row" style="margin-left:4px">
+                                <label class="control-label col-md-3">To: </label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        <input type="date" id="TDateSCACollection" name="toDate">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row" style=" float:right; ">
+                <div>
+                    <button title="Commission Cal." style="margin: 2px; text-transform: capitalize;" class="btn btn-success" onclick="Print();">
+                        <i class="fa fa-floppy-o"></i> Preview
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+
+        var branchName = "";
+        var strName = "";
+        var strMonthID = "";
+        var intSelection = 1;
+        var intActive = 0;
+        var intSuppress = 0;
+        var radioGroupWiseMpoWiseStatus = 0;
+        var intSalesColl = 0;
+        var intTargetSupp = 0;
+        var intBaseTarget = 0;
+        var intHodaloan = 0;
+        var radioAllIndividual = 0;
+        var radioAllActiveInActive = 0;
+        var selectBranch = "";
+        var fdate;
+        var today;
+        var intDetailsSummary = 0;
+
+        $(document).ready(function () {
+
+
+            BranchNamechangeFunc();
+            divMPO_GROUPShow();
+            diveHideShow();
+            var idddbranchName = $("#idBranchName");
+            $("#cboParticulars").select2({ "width": '100%' });
+            var date = new Date();
+
+            var day = date.getDate();
+
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+
+            if (month < 10) month = "0" + month;
+            if (day < 10) day = "0" + day;
+            fdate = year + "-" + month + "-" + "01";
+            today = year + "-" + month + "-" + day;
+            console.log('kib', day)
+
+            //getcheckData();
+            document.getElementById('FDateSCASale').value = fdate;
+            document.getElementById('TDateSCASale').value = today;
+
+            document.getElementById('FDateSCACollection').value = fdate;
+            document.getElementById('TDateSCACollection').value = today;
+
+            var dividMPO_GROUPT = document.getElementById("DivMPO_GROUPText");
+            dividMPO_GROUPT.style.display = "none";
+            var dividMPO_GROUPT = document.getElementById("divSaleDate");
+            dividMPO_GROUPT.style.display = "none";
+
+
+            if ("MPO" == "Admin") {
+
+                var dividBranch = document.getElementById("dividBranchSCA");
+                dividBranch.style.display = "none";
+
+                var dividBranch = document.getElementById("dividBranch");
+                dividBranch.style.display = "none";
+                //var DivMPO_GROUP = document.getElementById("DivMPO_GROUP");
+                //DivMPO_GROUP.style.display = "none";
+                //var dividLedgerStatusD = document.getElementById("dividLedgerStatusD");
+                //dividLedgerStatusD.style.display = "none";
+                //var dividAM = document.getElementById("dividAMSS");
+                //dividAM.style.display = "none";
+                //var dividDSM = document.getElementById("dividDSMSS");
+                //dividDSM.style.display = "none";
+                //var dividZONE = document.getElementById("dividZONESS");
+                //dividZONE.style.display = "none";
+                //var dividTeam = document.getElementById("dividTeamSS");
+                //dividTeam.style.display = "none";
+            }
+
+            if ("Area" == "Admin") {
+
+                var dividBranchd = document.getElementById("dividBranchSCA");
+                dividBranchd.style.display = "none";
+                //var idLedgerGroup = document.getElementById("dividLedgerGroup");
+                //idLedgerGroup.style.display = "none";
+                //var dividAM = document.getElementById("dividAMSS");
+                //dividAM.style.display = "none";
+                //var dividDSM = document.getElementById("dividDSMSS");
+                //dividDSM.style.display = "none";
+                //var dividZONE = document.getElementById("dividZONESS");
+                //dividZONE.style.display = "none";
+                //var dividTeam = document.getElementById("dividTeamSS");
+                //dividTeam.style.display = "none";
+            }
+            if ("Division" == "Admin") {
+
+                var dividBranch = document.getElementById("dividBranchSCA");
+                dividBranch.style.display = "none";
+
+            }
+
+        });
+        function dualdate() {
+            var dualdatestatus = document.getElementById("idDualDate").checked;
+            if (dualdatestatus == true) {
+
+                var dividMPO_GROUPT = document.getElementById("divSaleDate");
+                dividMPO_GROUPT.style.display = "block";
+            }
+            else {
+                var dividMPO_GROUPT = document.getElementById("divSaleDate");
+                dividMPO_GROUPT.style.display = "none";
+            }
+
+        }
+
+
+
+        function getcheckData() {
+
+            selectBranch = $("#idBranchNameSCA").val();
+            radioGroupWiseMpoWiseStatus = $("input[name='nameGroupMPOwise']:checked").val();
+            optionAllIndividual = $("input[name='optionAllIndividual']:checked").val();
+            if (optionAllIndividual == 1) {
+                var dividMPO_GROUPT = document.getElementById("DivMPO_GROUPText");
+                dividMPO_GROUPT.style.display = "block";
+            }
+            else {
+                var dividMPO_GROUPT = document.getElementById("DivMPO_GROUPText");
+                dividMPO_GROUPT.style.display = "none";
+            }
+
+            selectBranch = $("#idBranchNameSCA").val();
+
+            radioStatus = $("input[name='allActiveInactivestatus']:checked").val();
+
+            radioUser = $("input[name='userType']:checked").val();
+
+            var ListBox = document.getElementById('<%= lstRightM.ClientID %>');
+
+            console.log('Kib', radioStatus + radioUser);
+
+            var ddllstLeft = $("#lstLeftsv");
+            var ddllstRight = $("#lstRightsv");
+            ddllstLeft.html('');
+            ddllstRight.html('');
+
+
+            var ddlUnder = $("#cboParticulars");
+            debugger
+            if (radioGroupWiseMpoWiseStatus == 3) {
+                $.ajax({
+                    url: '/SalesReport/GetGroupList',
+                    datatype: "json",
+                    data: {
+                        selectBranchID: selectBranch,
+                        radioStatus: radioStatus,
+                        radioUser: radioGroupWiseMpoWiseStatus
+                    },
+                    success: function (data) {
+                        ddlUnder.html('');
+                        ddlUnder.append($('<option value=Select>Select</option>'));
+                        $.each(data, function (id, option) {
+                            ddlUnder.append($('<option value="' + option.GroupName + '">' + option.GroupName + '</option>'));
+                        });
+                    }
+                })
+            }
+            else {
+                $.ajax({
+                    url: '/SalesReport/mGetMPOLedger',
+                    datatype: "json",
+                    data: {
+                        selectBranchID: selectBranch,
+                        radioStatus: radioStatus,
+                        radioUser: radioGroupWiseMpoWiseStatus
+                    },
+                    success: function (data) {
+                        ddlUnder.html('');
+                        ddlUnder.append($('<option value=Select>Select</option>'));
+                        $.each(data, function (id, option) {
+                            ddlUnder.append($('<option value="' + option.strGRName + '">' + option.strGRName + '</option>'));
+                        });
+                    }
+                })
+            }
+
+
+        };
+        function divMPO_GROUPShow() {
+
+            //ddllstRight.html('');
+            radioStatus = 2;
+            radioStatus = $("input[name='status']:checked").val();
+
+            if (radioStatus == 2) {
+                $("#DivMPO_GROUP").hide();
+                $("#DivMPO_GROUPText").hide();
+            }
+            else {
+                $("#DivMPO_GROUP").show();
+                $("#DivMPO_GROUPText").show();
+            }
+        }
+        function diveHideShow() {
+            //ddllstLeft.html('');
+            //ddllstRight.html('');
+            radioStatus = 2;
+            radioStatus = $("input[name='status']:checked").val();
+
+            if (radioStatus == 2) {
+                $("#idSearch").hide();
+            }
+            else {
+                $("#idSearch").show();
+            }
+        }
+
+        function documentFunc() {
+
+
+        }
+
+
+        function BranchNamechangeFunc() {
+            var idddbranchName = $("#idBranchNameSCA");
+            $.ajax({
+                url: '/SalesReport/mGetBranchName',
+                datatype: "json",
+                success: function (data) {
+                    $.each(data, function (id, option) {
+                        //console.log(option.strBranch)
+                        idddbranchName.append($('<option value="' + option.Key + '">' + option.Value + '</option>'));
+                    });
+                }
+            })
+        }
+
+
+
+
+
+        function mloadParticulars(drcr) {
+
+
+            var ddlUnder = $("#cboParticulars");
+            $.ajax({
+                url: "/AccVoucher/mFillLedgerPV?vstrPrefix=" + drcr,
+                datatype: "json",
+                data: {},
+                success: function (data) {
+                    ddlUnder.html('');
+                    ddlUnder.append($('<option value=Select>Select</option>'));
+                    $.each(data, function (id, option) {
+                        ddlUnder.append($('<option value="' + option.strLedgerName + '">' + option.strLedgerName + '</option>'));
+                    });
+                    $('#ddlUnder').val(selectdata.strLedgerName);
+
+                }
+            })
+        }
+
+        function mloadBranch() {
+            var ddlidBranchlist = $("#bName");
+            $.ajax({
+                url: '/SalesReport/mGetBranch',
+                datatype: "json",
+
+                success: function (data) {
+                    //console.log(data);
+                    ddlidBranchlist.html('');
+                    $.each(data, function (id, option) {
+                        console.log(option.Value);
+                        ddlidBranchlist.append($('<option value="' + option.Key + '">' + option.Value + '</option>'));
+                    });
+                    //$('#ddlidBranchlist').val(selectdata.Value);
+                    //$('#ddlidBranchlist').trigger('change');
+                }
+            })
+
+        };
+        $(function () {
+            $("#ShiftRight,#ShiftLeft").click(function (event) {
+                var ID = $(event.target).attr("ID");
+                var ChooseFrom = ID == "ShiftRight" ? "#ChooseLeft" : "#ChooseRight";
+                var moveTo = ID == "ShiftRight" ? "#ChooseRight" : "#ChooseLeft";
+                var SelectData = $(ChooseFrom + " :selected").toArray();
+                $(moveTo).append(SelectData);
+                SelectData.remove;
+            });
+        });
+
+
+
+
+        //-----------------------------Filter starts
+        //declare
+        var keys = [];
+        var values = [];
+
+        var options = $('#ChooseLeft option');
+        //load all list key and value
+        $.each(options, function (index, item) {
+            keys.push(item.value);
+            values.push(item.innerHTML);
+        });
+
+        //event on key up
+        $('#txtSearchBy').keyup(function () {
+            var filter = $(this).val();
+            doListBoxFilter('#ChooseLeft', filter, keys, values);
+        });
+
+        //private helper method to search
+        function doListBoxFilter(listBoxSelector, filter, keys, values) {
+            var list = $(listBoxSelector);
+            var selectBase = '<option value="{0}">{1}</option>';
+
+
+            list.empty();
+            for (i = 0; i < values.length; ++i) {
+
+
+                var value = values[i];
+
+
+                if (value == "" || value.toLowerCase().indexOf(filter.toLowerCase()) >= 0) {
+                    var temp = '<option value="' + keys[i] + '">' + value + '</option>';
+                    list.append(temp);
+                }
+            }
+        }
+        $(function () {
+            $("#leftsv").bind("click", function () {
+
+                //alert("SSS");
+
+                var options = $("[id*=lstLeftsv] option:selected");
+                console.log(options.length);
+                var lstRightMt = $("#lstRightsv");
+                for (var i = 0; i < options.length; i++) {
+                    var opt = $(options[i]).clone();
+                    console.log(opt);
+                    $(options[i]).remove();
+                    $("[id*=lstRightsv]").append(opt);
+                }
+            });
+
+            $("#rightsv").bind("click", function () {
+
+
+
+                var options = $("[id*=lstRightsv] option:selected");
+                console.log(options.length);
+                var lstLeftsv = $("#lstLeftsv");
+                for (var i = 0; i < options.length; i++) {
+                    var opt = $(options[i]).clone();
+                    console.log(opt);
+                    $(options[i]).remove();
+                    $("[id*=lstLeftsv]").append(opt);
+                }
+            });
+
+
+
+            $("#allleftsv").bind("click", function () {
+                var options = $("[id*=lstRightsv] option");
+
+                for (var i = 0; i < options.length; i++) {
+                    var opt = $(options[i]).clone();
+                    console.log(opt);
+                    $(options[i]).remove();
+                    $("[id*=lstLeftsv]").append(opt);
+                }
+            });
+            $("#allRightsv").bind("click", function () {
+                var options = $("[id*=lstLeftsv] option");
+
+                for (var i = 0; i < options.length; i++) {
+                    var opt = $(options[i]).clone();
+                    console.log(opt);
+                    $(options[i]).remove();
+                    $("[id*=lstRightsv]").append(opt);
+                }
+            });
+
+        });
+
+        function Print() {
+
+            branchName = document.getElementById("idBranchNameSCA").value;//branchId
+
+            var t = document.getElementById("idBranchNameSCA");
+            selectBranch = t.options[t.selectedIndex].text;//branch Name
+
+            radioStatus = $("input[name='status']:checked").val();
+
+            var statusSalesCollAch = 0;
+
+            var chkboxSpecilaMonitort = 0;
+            var chkboxDetails = 0;
+
+            if (document.getElementById("idcheckboxDetails").checked == true) {
+                chkboxDetails = 1;
+            }
+            var ListBox = document.getElementById("lstRightSS");
+            var rList = [];
+            var rListstrring = "";
+
+            fdate = document.getElementById('FDateSCASale').value;
+            today = document.getElementById('TDateSCASale').value;
+
+            console.log('Fdate', fdate);
+            console.log('Tdate', today);
+
+
+
+
+            //
+            //    if (($('#idBranchNameSCA').val() == "---Select---") || ($('#idBranchNameSCA').val() == "")) {
+            //        swal('Required!!!', 'Please Select Branch', 'warning')
+            //        return;
+            //    }
+
+
+            debugger
+
+
+            if (document.getElementById("chkSalesCollection").checked == true) {
+                intSalesColl = 1;
+            }
+
+            if (document.getElementById("idLedgerwise").checked == true) {
+                intSuppress = 1;
+            }
+            else {
+                intSuppress = 0;
+            }
+
+            if (document.getElementById("idIndividual").checked == true) {
+                if (($('#cboParticulars').val() == "---Select---") || ($('#cboParticulars').val() == "")) {
+                    swal('Required!!!', 'Please Select Leger Group.', 'warning')
+                    return;
+                }
+                if (document.getElementById("idLedgerwise").checked == true) {
+                    intSelection = 2;
+
+                }
+                else {
+                    intSelection = 1;
+                }
+
+                strName = $('#cboParticulars').val();
+
+            }
+            else {
+                strName = "";
+            }
+
+            if (document.getElementById("idhondaLoan").checked == true) {
+                intHodaloan = 1;
+            }
+
+            else {
+                intHodaloan = 0;
+            }
+
+            if (document.getElementById("rbtnAll").checked == true) {
+                intActive = 2;
+            }
+            else if (document.getElementById("rbtnActive").checked == true) {
+                intActive = 0;
+            }
+            else {
+                intActive = 3;
+            }
+            debugger
+            var intGroupSelection = 0;
+            var tdd = document.getElementById("cboPrimary");
+            var strPrimary = tdd.options[tdd.selectedIndex].text;
+
+            if (strPrimary != "---Select---") {
+                intSelection = 0;
+
+
+
+                if ($('#cboPrimary').val() == "MPO") {
+                    intGroupSelection = 1;
+                    intSuppress = 1;
+                    intSelection = 1;
+                }
+                if (strPrimary == "ZONE") {
+                    intGroupSelection = 2;
+                }
+                if (strPrimary == "DIVISION") {
+                    intGroupSelection = 3;
+                }
+                if (strPrimary == "AREA") {
+                    intGroupSelection = 4;
+                }
+                if (strPrimary == "ALL ZONE") {
+                    intGroupSelection = 5;
+                }
+            }
+
+            if (document.getElementById("chkSalesCollection").checked == true) {
+                intSalesColl = 1;
+
+            }
+            if (document.getElementById("chkTargetSuppress").checked == true) {
+                intTargetSupp = 1;
+            }
+
+            optionAllIndividual = $("input[name='optionAllIndividual']:checked").val();
+
+            fdatesales = document.getElementById('FDateSCASale').value;
+            tdatesales = document.getElementById('TDateSCASale').value;
+            fdatecoll = document.getElementById('FDateSCACollection').value;
+            tdatecoll = document.getElementById('TDateSCACollection').value;
+            var dualdatestatusche = false;
+            dualdatestatusche = document.getElementById("idDualDate").checked;
+
+
+            $.ajax({
+
+                url: '/SalesReport/mgetServerDate',
+                type: "POST",
+                datatype: "json",
+                data: {
+                    strDate1: tdatesales,
+                    strDate2: tdatecoll,
+                },
+                success: function (data) {
+                    strBoole = data;
+                    console.log(1, strBoole);
+
+
+
+                    if (strBoole == 'false') {
+                        swal("Failed!", "You have No Permission to Show Advance Date", "warning");
+                        return;
+                    }
+                    else {
+                        $.ajax({
+
+                            url: '/SalesReport/ReportSalesCollectionAchievement',
+                            type: "POST",
+                            datatype: "json",
+                            data: {
+                                strFdateSales: fdatesales,
+                                strTdateSales: tdatesales,
+                                strFdateColl: fdatecoll,
+                                strTdateColl: tdatecoll,
+                                strBranchName: selectBranch,
+                                strName: strName,
+                                intSelection: intSelection,
+                                intActive: intActive,
+                                intSuppress: intSuppress,
+                                intGroupSelection: intGroupSelection,
+                                intSalesColl: intSalesColl,
+                                intTargetSupp: intTargetSupp,
+                                intBaseTarget: 0,
+                                intHodaloan: intHodaloan,
+                                booldualdatestatus: dualdatestatusche,
+                                intAllIndividual: optionAllIndividual
+                            },
+                            success: function (data) {
+                                console.log('Path', data)
+                                window.open(data);
+                            }
+                        });
+                    }
+
+                }
+            });
+
+
+
+        };
+
+
+
+    </script>
+
+</body>
+
+
+</html>

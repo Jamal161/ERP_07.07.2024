@@ -1,0 +1,297 @@
+﻿
+@{
+    ViewBag.Title = "Admindailymonitoringsheet";
+}
+
+@RenderPage("~/Views/Shared/Sidebar.cshtml")
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <style>
+        button {
+            background: cornflowerblue;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-family: 'Lato';
+            margin: 5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            outline: none;
+        }
+
+            button:hover {
+                background: orange;
+            }
+
+        .bordercolor {
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+
+        .centerContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item {
+            width: 50em;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            margin: auto;
+            text-align: center;
+            font-family: arial;
+        }
+
+
+        .centerContain {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .border {
+            border: 1px solid #dee2e6 !important;
+        }
+
+        .p-2 {
+            padding: 0.5rem !important;
+        }
+
+        legend {
+            display: block;
+            width: auto;
+            margin-bottom: 2px;
+            padding-left: 2px;
+            padding-right: 2px;
+            border: none;
+        }
+
+        button:hover {
+            background: orange;
+        }
+
+        .bordercolor {
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+
+        .centerContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item {
+            width: 60em;
+        }
+
+
+        /**auther: aktarul
+              only for button css.
+            **/
+        .linkbutton:hover {
+            background: #2b8eed;
+            color: white;
+        }
+
+        .pcenter {
+            margin: auto;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+        }
+
+        .linkbutton {
+            border: 1px solid black;
+            height: 35px;
+            border-radius: 5px;
+            text-align: center;
+            background-color: #a8a7b9;
+            color: white;
+            padding-left: 5px;
+            padding-right: 5px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            justify-content: center;
+        }
+
+        /*.fa-file-invoice-dollar {
+            color: blue;
+        }*/
+
+        .il {
+            color: #dcf588;
+        }
+
+        .ilF {
+            color: #ffffff;
+        }
+
+        .ilF1 {
+            color: #00ff90;
+        }
+
+        .imagecenter {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 25%;
+        }
+    </style>
+
+</head>
+<body>
+
+    
+    <div class="centerContainer ">
+        <div class="item bordercolor" style="padding: 20px; margin: 100px; background-color:azure">
+
+            <h4> Admin Daily Monitoring Sheet </h4>
+            <br />
+
+            <div id="dividBranchD" class="row">
+                <label class="control-label"> Branch Name</label>
+                <select id="idBranchNameDaily" class="form-control">
+                    <option value="">--Select One--</option>
+                    <option value="All">All</option>
+                    <option value="0001">Deeplaid Laboratories Ltd.-2024</option>
+                    <option value="0002">Sale Center. Dhaka</option>
+                    <option value="0003">Herbal</option>
+                </select>
+            </div>
+         
+             <br />
+            <div id="dividLedgerStatusD" class="row bordercolor">
+                <div class="col-lg-2">
+                    <div class="row">
+
+                        <label style="font-size: 15px;"><input type="radio" name="status" value="3" style="height: 12px; width: 25px; margin-top: 5px" checked="" onchange="getcheckData()">All</label>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="row">
+
+                        <label style="font-size: 15px;"><input type="radio" name="status" value="0" style="height: 12px; width: 25px; margin-top: 5px" onchange="getcheckData()">Active</label>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="row">
+
+                        <label style="font-size: 15px;"><input type="radio" name="status" value="1" style="height: 12px; width: 25px; margin-top: 5px" onchange="getcheckData()">InActive</label>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row bordercolor">
+                <div id="dividallD" class="col-lg-2">
+                    <div class="row">
+                        <label style="font-size: 15px;"><input type="radio" name="userType" value="5" style="height: 12px; width: 25px; margin-top: 5px" checked="" onchange="getcheckData()">All</label>
+                    </div>
+                </div>
+                <div id="dividMpoD" class="col-lg-2">
+                    <div class="row toggle-vis">
+                        <label style="font-size: 15px;"><input type="radio" name="userType" style="height: 12px; width: 25px; margin-top: 5px" value="4" onchange="getcheckData()">Mpo</label>
+                    </div>
+                </div>
+                <div id="dividAMD" class="col-lg-2">
+                    <div class="row">
+                        <label style="font-size: 15px;"><input type="radio" name="userType" value="3" style="height: 12px; width: 25px; margin-top: 5px" onchange="getcheckData()">AM/FM</label>
+                    </div>
+                </div>
+                <div id="dividDSMD" class="col-lg-2">
+                    <div class="row">
+
+                        <label style="font-size: 15px;"><input type="radio" name="userType" value="2" style="height: 12px; width: 25px; margin-top: 5px" onchange="getcheckData()">DSM/RSM</label>
+                    </div>
+                </div>
+                <div id="dividZONED" class="col-lg-2">
+                    <div class="row">
+
+                        <label style="font-size: 15px;"><input type="radio" name="userType" value="1" style="height: 12px; width: 25px; margin-top: 5px" onchange="getcheckData()">ZONE</label>
+                    </div>
+                </div>
+                <div id="dividTeamD" class="col-lg-2">
+                    <div class="row">
+
+                        <label style="font-size: 15px;"><input type="radio" name="userType" value="6" style="height: 12px; width: 25px; margin-top: 5px" onchange="getcheckData()">Team</label>
+                    </div>
+                </div>
+            </div>
+         <br />
+            <div class="row bordercolor" style="padding-top: 5px; padding-bottom: 5px">
+                <div class="col-md-5">
+                    <div class="input-group">
+
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                    </div>
+                    <select id="lstLeftM" class="form-control" multiple="multiple" style="height:220px;"></select>
+                </div>
+                <div class="col-md-1" style="padding-top: 110px">
+                    <input type="button" style="width:40px" id="leftD" value=" > ">
+                    <br>
+                    <input type="button" id="allRightD" style="width:40px" value=">>">
+                    <br>
+                    <input type="button" id="rightD" style="width:40px" value=" < ">
+                    <br>
+                    <input type="button" id="allleftD" style="width:40px" value="<<">
+                </div>
+                <div class="col-md-5" style="margin-top: 38px">
+                    <select id="lstRightM" class="form-control" multiple="multiple" style="height:220px;"></select>
+                </div>
+            </div>
+
+            <br />
+            <div class="row" style="margin-bottom:10px">
+
+                <div class="col-md-6">
+                    <fieldset class="border p-2">
+                        <legend class="w-auto">Period Selection</legend>
+                        <div class="row" style="margin-left:4px">
+                            <label class="control-label col-md-3">From: </label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+
+                                    <input type="date" id="fromDateMD">
+                                </div>
+                            </div>
+                        </div>
+                         <br />
+                        <div class="row" style="margin-left:4px">
+                            <label class="control-label col-md-3">To: </label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <input type="date" id="toDateMD" name="toDate">
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="row" style="   float: right; ">
+                <div>
+                    <button title="Commission Cal." style="margin: 2px; text-transform: capitalize;" class="btn btn-success" onclick="Print();">
+                        <i class="fa fa-floppy-o"></i> Preview
+                    </button>
+                </div>
+                <div hidden="">
+                    <button title="Commission Cal." style="margin: 2px; text-transform: capitalize;" class="btn btn-danger" onclick="App();">
+                        <i class="fa fa-times"></i>cancel
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    
+
+</body>
+
+
+</html>

@@ -1,0 +1,1809 @@
+
+ //public List<DoctorVisit> mGetDoctorVisit(DoctorVisit obj)
+        //{
+        //    string strSQL = null;
+        //    string connectionString = Utility.SQLConnstringComSwitch("0001");
+        //    List<DoctorVisit> DoctorVisitList = new List<DoctorVisit>();
+
+        //    using (SqlConnection gcnMain = new SqlConnection(connectionString))
+        //    {
+        //        gcnMain.Open();
+
+        //        strSQL = "select * from HRS_DOCTOR_VISIT_NEW ";
+
+        //        using (SqlCommand cmd = new SqlCommand(strSQL, gcnMain))
+        //        {
+        //            using (SqlDataReader dr = cmd.ExecuteReader())
+        //            {
+        //                while (dr.Read())
+        //                {
+        //                    DoctorVisit Doctor = new DoctorVisit();
+        //                    Doctor.strVistID = dr["VistID"].ToString();
+        //                    Doctor.strUser_Name = dr["User_Name"].ToString();
+        //                    Doctor.strCardNO = dr["CardNO"].ToString();
+        //                    Doctor.strVisited_With = dr["Visited_With"].ToString();
+        //                    Doctor.strDoctor = dr["Doctor"].ToString();
+        //                    Doctor.strInstitute = dr["Institute"].ToString();
+        //                    Doctor.strChamber = dr["Chamber"].ToString();
+        //                    Doctor.strMarket = dr["Market"].ToString();
+        //                    Doctor.strVisited_At = dr["Visited_At"].ToString();
+        //                    Doctor.strShift = dr["Shift"].ToString();
+        //                    Doctor.strLocation = dr["Location"].ToString();
+        //                    Doctor.strDistance = dr["Distance"].ToString();
+        //                    Doctor.strActions = dr["Actions"].ToString();
+        //                    Doctor.strNOTE = dr["NOTE"].ToString();
+
+        //                    DoctorVisitList.Add(Doctor);
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    if (DoctorVisitList.Count == 0)
+        //    {
+
+        //        DoctorVisitList.Add(new DoctorVisit());
+        //    }
+
+        //    return DoctorVisitList;
+        //}
+
+
+
+
+
+
+
+
+
+
+                //$(document).ready(function () {
+                //    loadData();
+                //});
+
+                //function loadData() {
+                //    var request1 = $.ajax({
+                //        url: "/Attendence/mGetPercent",
+                //        type: "GET",
+                //        contentType: 'application/json;charset=utf-8',
+                //        dataType: "json"
+                //    });
+
+                //    var request2 = $.ajax({
+                //        url: "/Attendence/mGetTeamList",
+                //        type: "GET",
+                //        contentType: 'application/json;charset=utf-8',
+                //        dataType: "json"
+                //    });
+
+                //    var request3 = $.ajax({
+                //        url: "/Attendence/mGetZoneList",
+                //        type: "GET",
+                //        contentType: 'application/json;charset=utf-8',
+                //        dataType: "json"
+                //    });
+
+                //    $.when(request1, request2, request3).done(function (response1, response2, response3) {
+                //        var percentData = response1[0];
+                //        var teamListData = response2[0];
+                //        var zoneListData = response3[0];
+
+                //        displayData(percentData, teamListData, zoneListData);
+
+                //        $('.tbody').on('click', 'td.team-name', function () {
+                //            var teamName = $(this).text();
+                //            var allRows = $('.tbody tr');
+                //            allRows.hide(); 
+                //            var zoneDataHtml = generateZoneDataHtml(percentData, zoneListData, teamName);
+                //            $('.tbody').html(zoneDataHtml); 
+                //            $('.tbody').append('<tr><td colspan="6"><button class="previousButton">Previous</button></td></tr>');
+
+                //            $('.previousButton').on('click', function () {
+                //                loadData(); 
+                //            });
+                //        });
+                //    }).fail(function (xhr, status, error) {
+                //        console.error("AJAX Error:", error);
+                //        $('.tbody').html('<tr><td colspan="6">Error loading data. Please try again later.</td></tr>');
+                //    });
+                //}
+
+                //function displayData(percentData, teamListData, zoneListData) {
+                //    var html = '';
+
+                //    $.each(teamListData, function (key, team) {
+                //        html += '<tr>';
+                //        html += '<td class="team-name">' + team.strTEAM_NAME + '</td>';
+                //        html += '<td>' + team.strTOTALMPO + '</td>';
+                //        var percentItem = percentData[key];
+                //        if (percentItem) {
+                //            html += '<td>' + percentItem.intPresent + '</td>';
+                //            html += '<td>' + percentItem.intLeave + '</td>';
+                //            html += '<td>' + percentItem.intAbsent + '</td>';
+                //            html += '<td>' + percentItem.dblPercentage + '%</td>';
+                //        } else {
+                //            html += '<td colspan="4"></td>';
+                //        }
+                //        html += '</tr>';
+                //    });
+
+                //    $('.tbody').html(html);
+                //}
+
+                //function generateZoneDataHtml(percentData, zoneListData, teamName) {
+                //    var html = '';
+
+                //    $.each(zoneListData, function (key, zone) {
+                //        if (zone.strTEAM_NAME === teamName) {
+                //            html += '<tr>';
+                //            html += '<td>' + zone.strZONE + '</td>';
+                //            html += '<td>' + zone.strTOTAL_MPO.trim() + '</td>';
+                //            var percentItem = percentData[key];
+                //            if (percentItem) {
+                //                html += '<td>' + percentItem.intPresent + '</td>';
+                //                html += '<td>' + percentItem.intLeave + '</td>';
+                //                html += '<td>' + percentItem.intAbsent + '</td>';
+                //                html += '<td>' + percentItem.dblPercentage + '%</td>';
+                //            } else {
+                //                html += '<td colspan="4"></td>';
+                //            }
+                //            html += '</tr>';
+                //        }
+                //    });
+
+                //    return html;
+                //}
+
+
+
+
+
+                //$(document).ready(function () {
+                //    loadData();
+                //});
+
+                //function loadData() {
+                //    var request1 = $.ajax({
+                //        url: "/Attendence/mGetPercent",
+                //        type: "GET",
+                //        contentType: 'application/json;charset=utf-8',
+                //        dataType: "json"
+                //    });
+
+                //    var request2 = $.ajax({
+                //        url: "/Attendence/mGetTeamList",
+                //        type: "GET",
+                //        contentType: 'application/json;charset=utf-8',
+                //        dataType: "json"
+                //    });
+
+                //    var request3 = $.ajax({
+                //        url: "/Attendence/mGetZoneList",
+                //        type: "GET",
+                //        contentType: 'application/json;charset=utf-8',
+                //        dataType: "json"
+                //    });
+
+                //    $.when(request1, request2, request3).done(function (response1, response2, response3) {
+                //        var percentData = response1[0];
+                //        var teamListData = response2[0];
+                //        var zoneListData = response3[0];
+
+                //        displayData(percentData, teamListData, zoneListData);
+
+                //        $('.tbody').on('click', 'td.team-name', function () {
+                //            var teamName = $(this).text();
+                //            var allRows = $('.tbody tr');
+                //            allRows.hide();
+                //            var zoneDataHtml = generateZoneDataHtml(percentData, zoneListData, teamName);
+                //            $('.tbody').html(zoneDataHtml);
+                //            $('.tbody').append('<tr><td colspan="6"><button class="previousButton">Previous</button></td></tr>');
+
+                //            $('.previousButton').on('click', function () {
+                //                loadData();
+                //            });
+
+                //            drawAttendanceChart(teamName, percentData, zoneListData);
+                //        });
+                //    }).fail(function (xhr, status, error) {
+                //        console.error("AJAX Error:", error);
+                //        $('.tbody').html('<tr><td colspan="6">Error loading data. Please try again later.</td></tr>');
+                //    });
+                //}
+
+                //function displayData(percentData, teamListData, zoneListData) {
+                //    var html = '';
+
+                //    $.each(teamListData, function (key, team) {
+                //        html += '<tr>';
+                //        html += '<td class="team-name">' + team.strTEAM_NAME + '</td>';
+                //        html += '<td>' + team.strTOTALMPO + '</td>';
+                //        var percentItem = percentData[key];
+                //        if (percentItem) {
+                //            html += '<td>' + percentItem.intPresent + '</td>';
+                //            html += '<td>' + percentItem.intLeave + '</td>';
+                //            html += '<td>' + percentItem.intAbsent + '</td>';
+                //            html += '<td>' + percentItem.dblPercentage + '%</td>';
+                //        } else {
+                //            html += '<td colspan="4"></td>';
+                //        }
+                //        html += '</tr>';
+                //    });
+
+                //    $('.tbody').html(html);
+                //}
+
+                //function generateZoneDataHtml(percentData, zoneListData, teamName) {
+                //    var html = '';
+
+                //    $.each(zoneListData, function (key, zone) {
+                //        if (zone.strTEAM_NAME === teamName) {
+                //            html += '<tr>';
+                //            html += '<td>' + zone.strZONE + '</td>';
+                //            html += '<td>' + zone.strTOTAL_MPO.trim() + '</td>';
+                //            var percentItem = percentData[key];
+                //            if (percentItem) {
+                //                html += '<td>' + percentItem.intPresent + '</td>';
+                //                html += '<td>' + percentItem.intLeave + '</td>';
+                //                html += '<td>' + percentItem.intAbsent + '</td>';
+                //                html += '<td>' + percentItem.dblPercentage + '%</td>';
+                //            } else {
+                //                html += '<td colspan="4"></td>';
+                //            }
+                //            html += '</tr>';
+                //        }
+                //    });
+
+                //    return html;
+                //}
+
+                //google.load("visualization", "44", { packages: ["corechart"] });
+
+                //function drawAttendanceChart(teamName, percentData, zoneListData) {
+                //    var options = {
+                //        pieHole: 0.8,
+                //        pieSliceTextStyle: {
+                //            color: 'transparent',
+                //        },
+                //        legend: 'none',
+                //        title: '',
+                //        colors: ['#58F3D1', '#FF8E8E', '#383838']
+                //    };
+
+                //    var arrValues = [['Status', 'Count']];
+                //    var totalValue = 0;
+                //    var presentValue = 0;
+                //    var absentValue = 0;
+                //    var leaveValue = 0;
+
+                //    $.each(zoneListData, function (index, zone) {
+                //        if (zone.strTEAM_NAME === teamName) {
+                //            var zonePercentData = percentData[index];
+                //            if (zonePercentData) {
+                //                var present = zonePercentData.intPresent;
+                //                var absent = zonePercentData.intAbsent;
+                //                var leave = zonePercentData.intLeave;
+                //                arrValues.push(['Present', present]);
+                //                arrValues.push(['Absent', absent]);
+                //                arrValues.push(['Leave', leave]);
+
+                //                totalValue += present + absent + leave;
+                //                presentValue += present;
+                //                absentValue += absent;
+                //                leaveValue += leave;
+                //            }
+                //        }
+                //    });
+
+                //    var dataTable = google.visualization.arrayToDataTable(arrValues);
+                //    var chart = new google.visualization.PieChart(document.getElementById('b_sale'));
+                //    chart.draw(dataTable, options);
+
+                //    drawTitleAndTotal(chart, teamName, totalValue, presentValue, absentValue, leaveValue);
+                //}
+
+                //function drawTitleAndTotal(chart, title, totalValue, presentValue, absentValue, leaveValue) {
+                //    var chartContainer = chart.getContainer();
+                //    var svg = chartContainer.getElementsByTagName('svg')[0];
+
+                //    var existingIcons = svg.querySelectorAll('.icon');
+                //    existingIcons.forEach(function (icon) {
+                //        svg.removeChild(icon);
+                //    });
+
+                //    var centerX = chartContainer.clientWidth / 2;
+                //    var centerY = chartContainer.clientHeight / 2;
+
+                //    var titleText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                //    titleText.setAttribute('x', centerX);
+                //    titleText.setAttribute('y', centerY - 40);
+                //    titleText.setAttribute('text-anchor', 'middle');
+                //    titleText.setAttribute('dominant-baseline', 'middle');
+                //    titleText.setAttribute('font-size', '18');
+                //    titleText.setAttribute('font-weight', 'bold');
+                //    titleText.textContent = title;
+
+                //    createAndAppendTextElement(svg, 'Present: ', centerX, centerY + 120, '#58F3D1', presentValue);
+                //    createAndAppendTextElement(svg, 'Absent: ', centerX, centerY + 140, '#FF8E8E', absentValue);
+                //    createAndAppendTextElement(svg, 'Leave: ', centerX, centerY + 160, '#383838', leaveValue);
+                //    createAndAppendTextElement(svg, 'Total: ' + totalValue, centerX, centerY, '#FFFFFF');
+
+                //    svg.appendChild(titleText);
+                //}
+
+                //function createAndAppendTextElement(svg, label, x, y, color, value) {
+                //    var textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                //    textElement.setAttribute('x', x);
+                //    textElement.setAttribute('y', y);
+                //    textElement.setAttribute('text-anchor', 'middle');
+                //    textElement.setAttribute('dominant-baseline', 'middle');
+                //    textElement.setAttribute('font-size', '12');
+                //    textElement.setAttribute('font-weight', 'bold');
+                //    textElement.textContent = label;
+
+                //    var icon = createIcon(color, x - 45, y - 5);
+                //    svg.appendChild(icon);
+                //    svg.appendChild(textElement);
+
+                //    var valueText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                //    valueText.setAttribute('x', x + 30);
+                //    valueText.setAttribute('y', y);
+                //    valueText.setAttribute('text-anchor', 'start');
+                //    valueText.setAttribute('dominant-baseline', 'start');
+                //    valueText.setAttribute('font-size', '12');
+                //    valueText.textContent = value;
+                //    svg.appendChild(valueText);
+                //}
+
+                //function createIcon(color, x, y) {
+                //    var icon = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+                //    icon.setAttribute('class', 'icon');
+                //    icon.setAttribute('width', '10');
+                //    icon.setAttribute('height', '10');
+                //    icon.setAttribute('x', x);
+                //    icon.setAttribute('y', y);
+                //    icon.setAttribute('fill', color);
+                //    return icon;
+                //}
+
+
+
+
+    @*<button id="firstButton">First Button</button>
+    <button id="relatedButton1" class="hidden">Related Button 1</button>
+    <button id="relatedButton2" class="hidden">Related Button 2</button>
+    <button id="previousButton" class="hidden">Previous Button</button>
+<style>
+    .hidden {
+        display: none;
+    }
+
+</style>
+    <script>
+        document.getElementById('firstButton').addEventListener('click', function () {
+            document.getElementById('relatedButton1').classList.remove('hidden');
+            document.getElementById('relatedButton2').classList.remove('hidden');
+            document.getElementById('previousButton').classList.remove('hidden');
+            document.getElementById('firstButton').classList.add('hidden');
+        });
+
+        document.getElementById('previousButton').addEventListener('click', function () {
+            document.getElementById('relatedButton1').classList.add('hidden');
+            document.getElementById('relatedButton2').classList.add('hidden');
+            document.getElementById('previousButton').classList.add('hidden');
+            document.getElementById('firstButton').classList.remove('hidden');
+        });
+
+    </script>*@
+
+
+
+
+
+<script>
+
+
+
+
+        //google.load("visualization", "44", { packages: ["corechart"] });
+
+        //google.setOnLoadCallback(drawAttendanceChart);
+
+        //function drawAttendanceChart() {
+        //    var options = {
+        //        pieHole: 0.800,
+        //        pieSliceTextStyle: {
+        //            color: '',
+        //            display: 'none',
+        //        },
+        //        legend: 'none',
+        //        title: '',
+        //        colors: ['#58F3D1', '#FF8E8E', '#383838']
+        //    };
+
+        //    $.ajax({
+        //        url: '/Attendence/mGetPercent',
+        //        dataType: "json",
+        //        type: "GET",
+        //        success: function (data) {
+
+
+        //            var arrValues = [['', 'Count']];
+        //            var totalValue = 0;
+        //            var presentId = 0;
+        //            var absentValue = 0;
+        //            var leaveValue = 0;
+
+        //            $.each(data, function (index, item) {
+        //                var presentValue = item.intTotal - item.intAbsent - item.intLeave;
+        //                arrValues.push(['Present', presentValue]);
+        //                arrValues.push(['Absent', item.intAbsent]);
+        //                arrValues.push(['Leave', item.intLeave]);
+
+        //                totalValue += presentValue + item.intAbsent + item.intLeave;
+        //                presentId += item.intTotal - item.intAbsent - item.intLeave;
+        //                absentValue += item.intAbsent;
+        //                leaveValue += item.intLeave;
+        //            });
+
+        //            var dataTable = google.visualization.arrayToDataTable(arrValues);
+        //            var chart = new google.visualization.PieChart(document.getElementById('b_sale'));
+        //            chart.draw(dataTable, options);
+
+        //            drawTitleAndTotal(chart, options.title, totalValue, presentId, absentValue, leaveValue);
+        //        },
+        //        error: function (XMLHttpRequest, textStatus, errorThrown) {
+        //            alert('There was an Error');
+        //        }
+        //    });
+        //}
+
+        //function drawTitleAndTotal(chart, title, totalValue, presentId, absentValue, leaveValue) {
+        //    var chartContainer = chart.getContainer();
+        //    var svg = chartContainer.getElementsByTagName('svg')[0];
+
+        //    var existingIcons = svg.querySelectorAll('.icon');
+        //    existingIcons.forEach(function (icon) {
+        //        svg.removeChild(icon);
+        //    });
+
+        //    var centerX = chartContainer.clientWidth / 2.5;
+        //    var centerY = chartContainer.clientHeight / 2;
+
+        //    var titleText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        //    titleText.setAttribute('id', 'titleText');
+        //    titleText.setAttribute('x', centerX);
+        //    titleText.setAttribute('y', centerY - 40);
+        //    titleText.setAttribute('text-anchor', 'middle');
+        //    titleText.setAttribute('dominant-baseline', 'middle');
+        //    titleText.setAttribute('font-size', '18');
+        //    titleText.setAttribute('font-weight', 'bold');
+        //    titleText.setAttribute('fill', 'transparent');
+        //    titleText.textContent = title;
+
+        //    createAndAppendTextElement(svg, 'Present: ', centerX - 0, centerY + 120, '#58F3D1', presentId);
+        //    createAndAppendTextElement(svg, 'Absent: ', centerX - 0, centerY + 140, '#FF8E8E', absentValue);
+        //    createAndAppendTextElement(svg, 'Leave: ', centerX + 0, centerY + 160, '#383838', leaveValue);
+        //    createAndAppendTextElement(svg, 'Total: ' + totalValue, centerX + 20, centerY + 0, '#FFFFFF');
+
+        //    svg.appendChild(titleText);
+        //}
+
+        //function createAndAppendTextElement(svg, label, x, y, color, value) {
+        //    var textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        //    textElement.setAttribute('x', x);
+        //    textElement.setAttribute('y', y);
+        //    textElement.setAttribute('text-anchor', 'middle');
+        //    textElement.setAttribute('dominant-baseline', 'middle');
+        //    textElement.setAttribute('font-size', '12');
+        //    textElement.setAttribute('font-weight', 'bold');
+        //    textElement.textContent = label;
+
+        //    var icon = createIcon(color, x - 45, y - 5);
+        //    svg.appendChild(icon);
+        //    svg.appendChild(textElement);
+
+        //    var valueText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        //    valueText.setAttribute('x', x + 30);
+        //    valueText.setAttribute('y', y);
+        //    valueText.setAttribute('text-anchor', 'start');
+        //    valueText.setAttribute('dominant-baseline', 'start');
+        //    valueText.setAttribute('font-size', '12');
+        //    valueText.textContent = value;
+        //    svg.appendChild(valueText);
+        //}
+
+        //function createIcon(color, x, y) {
+        //    var icon = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        //    icon.setAttribute('class', 'icon');
+        //    icon.setAttribute('width', '10');
+        //    icon.setAttribute('height', '10');
+        //    icon.setAttribute('x', x);
+        //    icon.setAttribute('y', y);
+        //    icon.setAttribute('fill', color);
+        //    return icon;
+        //}
+
+
+
+
+
+
+    </script>
+
+
+
+
+
+        /*.card {
+
+
+                padding: 10px;
+                margin-bottom: 20px;
+
+            }
+
+            .card-title {
+                font-size: 20px;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+
+            .card-content {
+                padding: 10px 0;
+            }
+
+            .card-section {
+                margin-bottom: 10px;
+            }
+
+                .card-section div {
+                    margin-bottom: 5px;
+                }*/
+
+        /*.card-container {
+                display: flex;
+                justify-content: center;
+                /*margin-left: 500px;*/
+        /*}*/
+
+        /*.product-card {
+                width: 200px;
+                height: 300px;
+                color: red;
+                border-radius: 5px;
+                padding: 20px;
+                margin: 0 25px;
+            }*/
+
+        /*.gap {
+                width: 500px;
+                flex-shrink: 0;
+            }*/
+
+
+
+
+        /*.card-container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                gap: 50px;
+            }
+
+
+            .card-product {
+                width: calc(100% - 25px);
+                margin-bottom: 50px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+
+            .card-header {
+                background-color: #fff;
+                padding: 15px;
+                font-size: 20px;
+                font-weight: bold;
+                border-bottom: 1px solid #ddd;
+            }
+
+
+            .card-body {
+                padding: 20px;
+                background: #ffF;
+            }
+
+
+            .card-section {
+                margin-bottom: 15px;
+            }
+
+
+                .card-section p {
+                    margin: 0;
+                }
+
+
+                    .card-section p strong {
+                        font-weight: bold;
+                        margin-right: 5px;
+                    }*/
+
+
+ /*.table {
+                border-collapse: collapse;
+                width: 400px;
+                height: 200px;
+                overflow: auto;
+            }
+
+                .table td, .table th {
+                    border: 1px solid #dddddd;
+                    text-align: left;
+                    padding: 8px;
+                }
+
+                .table th {
+                    background-color: #f2f2f2;
+                }
+
+
+            #idshifttable {
+                border-collapse: collapse;
+                width: 400px;
+                height: 200px;
+                overflow: auto;
+            }
+
+                #idshifttable td, #idshifttable th {
+                    border: 1px solid #dddddd;
+                    text-align: left;
+                    padding: 8px;
+                }
+
+                #idshifttable th {
+                    background-color: #f2f2f2;
+                }*/
+
+
+
+
+
+//$(document).ready(function () {
+                //    loadData2();
+                //});
+
+                //function loadData2() {
+                //    $.ajax({
+                //        url: "/Attendence/mGetTotal",
+                //        type: "GET",
+                //        contentType: 'application/json;charset=utf-8',
+                //        dataType: "json",
+                //        success: function (result) {
+                //            console.log("Result from server:", result);
+
+                //            let html = '';
+                //            const groupedData = groupBy(result, 'TYPE');
+
+                //            for (const [type, items] of Object.entries(groupedData)) {
+                //                if (Array.isArray(items) && type && type.trim() !== '' && items.length > 0) {
+                //                const totalMPOCounts = countTotalMPO(items);
+
+
+                             
+
+                //                const totalMPOS = items.reduce((acc, obj) => acc + parseInt(obj.TOTALMPO.trim()), 0);
+
+                //                const totalAH = items.reduce((acc, obj) => acc + parseInt(obj.TOTALAREA.trim()), 0);
+
+                //                const totalDH = items.reduce((acc, obj) => acc + parseInt(obj.TOTALDIV.trim()), 0);
+
+                //                const totalZH = items.reduce((acc, obj) => acc + parseInt(obj.TOTALZH.trim()), 0);
+
+
+
+
+
+                //                const presentCount = items.reduce((acc, obj) => acc + (obj.PRESENT || 0), 0);
+                //                const absentCount = items.reduce((acc, obj) => acc + (obj.ABSENT || 0), 0);
+                //                const leaveCount = items.reduce((acc, obj) => acc + (obj.LEAVE || 0), 0);
+                //                const presentPercentage = (totalMPOCounts.total > 0) ? (presentCount / totalMPOCounts.total) * 100 : 0;
+
+                //                html += `<tr>`;
+                //                html += `<td>${type}</td>`;
+                //                html += `<td>${totalMPOS.toLocaleString().trim()} ${totalAH.toLocaleString().trim()} ${totalDH.toLocaleString().trim()} ${totalZH.toLocaleString().trim()}</td>`;
+                //                //html += `<td>${totalMPOS}</td>`;
+                //                html += `<td>${presentCount}</td>`;
+                //                html += `<td>${leaveCount}</td>`;
+                //                html += `<td>${absentCount}</td>`;
+                //                html += `<td>${presentPercentage.toFixed(2)}%</td>`;
+                //                html += `</tr>`;
+                //            } else {
+                //                    console.log("Invalid items for type:", type, items);
+                //        }
+                //    }
+                //            $('.tbody-role').append(html);
+                //},
+                //error: function (errormessage) {
+                //    console.error("Error fetching data:", errormessage);
+                //    alert(errormessage.responseText);
+                //}
+                //});
+                //}
+
+                //function groupBy(array, key) {
+                //    if (!Array.isArray(array)) {
+                //        console.error("Expected array but got:", array);
+                //        return {};
+                //    }
+                //    return array.reduce((acc, obj) => {
+                //        const property = obj[key];
+                //    if (property) {
+                //        acc[property] = acc[property] || [];
+                //        acc[property].push(obj);
+                //    }
+                //    return acc;
+                //}, {});
+                //}
+
+                //function countTotalMPO(items) {
+                //    const counts = {};
+                //    let total = 0;
+
+                //    items.forEach(item => {
+                //        const totalMPO = item.TOTALMPO.trim(); 
+                //    counts[totalMPO] = (counts[totalMPO] || 0) + 1;
+                //    total++;
+                //});
+
+                //return { counts, total };
+                //}
+
+
+
+
+
+
+
+
+
+$(document).ready(function () {
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(loadData);
+});
+
+function loadData() {
+    $.when(
+        $.ajax({
+            url: '/Attendence/mGetTotal',
+            type: 'GET',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json'
+        }),
+        $.ajax({
+            url: '/Attendence/mGetTeamList',
+            type: 'GET',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json'
+        }),
+        $.ajax({
+            url: '/Attendence/mGetZoneList',
+            type: 'GET',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json'
+        })
+    ).done(function (percentData, teamListData, zoneListData) {
+        percentData = percentData[0];
+        teamListData = teamListData[0];
+        zoneListData = zoneListData[0];
+
+        displayData(percentData, teamListData);
+        drawAttendanceChart(percentData);
+
+        $('.tbody').on('click', 'td.team-name', function () {
+            var teamName = $(this).text();
+            var zoneDataHtml = generateZoneDataHtml(percentData, zoneListData, teamName);
+            $('.tbody').html(zoneDataHtml);
+            $('.tbody').append('<tr><td colspan="6"><button class="previousButton">Previous</button></td></tr>');
+
+            $('.previousButton').on('click', function () {
+                displayData(percentData, teamListData);
+                drawAttendanceChart(percentData);
+            });
+
+            drawAttendanceChartForTeam(teamName, percentData, zoneListData);
+        });
+    }).fail(function (xhr, status, error) {
+        console.error("AJAX Error:", error);
+        $('.tbody').html('<tr><td colspan="6">Error loading data. Please try again later.</td></tr>');
+    });
+}
+
+function displayData(percentData, teamListData) {
+    var html = '';
+    $.each(teamListData, function (key, team) {
+        html += '<tr>';
+        html += '<td class="team-name">' + team.strTEAM_NAME + '</td>';
+        html += '<td>' + team.strTOTALMPO + '</td>';
+
+        var presentCount = team.intPresent;
+        var absentCount = team.intAbsent;
+        var totalMPOCounts = { total: parseInt(team.strTOTALMPO) };
+        var leaveCount = totalMPOCounts.total - presentCount - absentCount;
+        var presentPercentage = (totalMPOCounts.total > 0) ? (presentCount / totalMPOCounts.total) * 100 : 0;
+
+        var percentItem = percentData[key];
+        if (percentItem) {
+            html += '<td>' + percentItem.PRESENT + '</td>';
+            html += '<td>' + percentItem.ABSENT + '</td>';
+            html += '<td>' + leaveCount + '</td>';
+            html += '<td>' + presentPercentage.toFixed(2) + '%</td>';
+        } else {
+            html += '<td colspan="4"></td>';
+        }
+        html += '</tr>';
+    });
+    $('.tbody').html(html);
+}
+
+function generateZoneDataHtml(percentData, zoneListData, teamName) {
+    var html = '';
+    $.each(zoneListData, function (key, zone) {
+        if (zone.strTEAM_NAME === teamName) {
+            html += '<tr>';
+            html += '<td>' + zone.strZONE + '</td>';
+            html += '<td>' + zone.TOTALMPO.trim() + '</td>';
+
+            var presentCount = zone.intPresent;
+            var absentCount = zone.intAbsent;
+            var totalMPOCounts = { total: parseInt(zone.TOTALMPO) };
+            var leaveCount = totalMPOCounts.total - presentCount - absentCount;
+            var presentPercentage = (totalMPOCounts.total > 0) ? (presentCount / totalMPOCounts.total) * 100 : 0;
+
+            var percentItem = percentData[key];
+            if (percentItem) {
+                html += '<td>' + percentItem.PRESENT + '</td>';
+                html += '<td>' + percentItem.ABSENT + '</td>';
+                html += '<td>' + leaveCount + '</td>';
+                html += '<td>' + presentPercentage.toFixed(2) + '%</td>';
+            } else {
+                html += '<td colspan="4"></td>';
+            }
+            html += '</tr>';
+        }
+    });
+    return html;
+}
+
+function drawAttendanceChart(data) {
+    var options = {
+        pieHole: 0.8,
+        pieSliceTextStyle: { color: 'transparent' },
+        legend: 'none',
+        title: '',
+        colors: ['#58F3D1', '#FF8E8E', '#383838']
+    };
+
+    var arrValues = [['Status', 'Count']];
+    var totalValue = 0;
+    var presentValue = 0;
+    var absentValue = 0;
+    var leaveValue = 0;
+
+    $.each(data, function (index, item) {
+        var present = item.PRESENT;
+        var absent = item.ABSENT;
+        var totalMPOCounts = { total: item.TOTALMPO };
+        var leave = totalMPOCounts.total - present - absent;
+        totalValue += present + absent + leave;
+        presentValue += present;
+        absentValue += absent;
+        leaveValue += leave;
+    });
+
+    arrValues.push(['Present', presentValue]);
+    arrValues.push(['Absent', absentValue]);
+    arrValues.push(['Leave', leaveValue]);
+
+    var dataTable = google.visualization.arrayToDataTable(arrValues);
+    var chart = new google.visualization.PieChart(document.getElementById('b_sale'));
+    chart.draw(dataTable, options);
+
+    drawTitleAndTotal(chart, '', totalValue, presentValue, absentValue, leaveValue);
+}
+
+function drawAttendanceChartForTeam(teamName, percentData, zoneListData) {
+    var options = {
+        pieHole: 0.8,
+        pieSliceTextStyle: { color: 'transparent' },
+        legend: 'none',
+        title: '',
+        colors: ['#58F3D1', '#FF8E8E', '#383838']
+    };
+
+    var arrValues = [['Status', 'Count']];
+    var totalValue = 0;
+    var presentValue = 0;
+    var absentValue = 0;
+    var leaveValue = 0;
+
+    $.each(zoneListData, function (index, zone) {
+        if (zone.strTEAM_NAME === teamName) {
+            var zonePercentData = percentData[index];
+            if (zonePercentData) {
+                var present = zonePercentData.PRESENT;
+                var absent = zonePercentData.ABSENT;
+                var totalMPOCounts = { total: zone.TOTALMPO };
+                var leave = totalMPOCounts.total - present - absent;
+                totalValue += present + absent + leave;
+                presentValue += present;
+                absentValue += absent;
+                leaveValue += leave;
+            }
+        }
+    });
+
+    arrValues.push(['Present', presentValue]);
+    arrValues.push(['Absent', absentValue]);
+    arrValues.push(['Leave', leaveValue]);
+
+    var dataTable = google.visualization.arrayToDataTable(arrValues);
+    var chart = new google.visualization.PieChart(document.getElementById('b_sale'));
+    chart.draw(dataTable, options);
+
+    drawTitleAndTotal(chart, teamName + ' ', totalValue, presentValue, absentValue, leaveValue);
+}
+
+function drawTitleAndTotal(chart, title, totalValue, presentValue, absentValue, leaveValue) {
+    var chartContainer = chart.getContainer();
+    var svg = chartContainer.getElementsByTagName('svg')[0];
+
+    var existingIcons = svg.querySelectorAll('.icon');
+    existingIcons.forEach(function (icon) {
+        svg.removeChild(icon);
+    });
+
+    var centerX = chartContainer.clientWidth / 2;
+    var centerY = chartContainer.clientHeight / 2;
+
+    var titleText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    titleText.setAttribute('x', centerX);
+    titleText.setAttribute('y', centerY - 40);
+    titleText.setAttribute('text-anchor', 'middle');
+    titleText.setAttribute('dominant-baseline', 'middle');
+    titleText.setAttribute('font-size', '12');
+    titleText.setAttribute('font-weight', 'bold');
+    titleText.textContent = title;
+
+    createAndAppendTextElement(svg, 'Present: ', centerX, centerY + 120, '#58F3D1', presentValue);
+    createAndAppendTextElement(svg, 'Absent: ', centerX, centerY + 140, '#FF8E8E', absentValue);
+    createAndAppendTextElement(svg, 'Leave: ', centerX, centerY + 160, '#383838', leaveValue);
+    createAndAppendTextElement(svg, 'Total: ' + totalValue, centerX, centerY, '#FFFFFF');
+
+    svg.appendChild(titleText);
+}
+
+function createAndAppendTextElement(svg, label, x, y, color, value) {
+    var textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    textElement.setAttribute('x', x);
+    textElement.setAttribute('y', y);
+    textElement.setAttribute('text-anchor',
+
+
+
+
+                    //var html = '';
+                    //$.each(teamListData, function (key, team) {
+
+
+                      
+                        //html += '<tr>';
+                        //html += '<td class="team-name">' + team.TEAM_NAME + '</td>';
+                        //html += '<td>' + team.TOTALMPO + '</td>';
+                        //var percentItem = percentData[key];
+                        //if (percentItem) {
+                        //    html += '<td>' + percentItem.intPresent + '</td>';
+                        //    html += '<td>' + percentItem.intLeave + '</td>';
+                        //    html += '<td>' + percentItem.intAbsent + '</td>';
+                        //    html += '<td>' + percentItem.dblPercentage + '%</td>';
+                        //} else {
+                        //    html += '<td colspan="4"></td>';
+                        //}
+                        //html += '</tr>';
+                    //});
+
+
+
+
+
+ //$(document).ready(function () {
+                //    loadData2();
+                //});
+
+                //function loadData2() {
+                //    $.ajax({
+                //        url: "/Attendence/mGetTotal",
+                //        type: "GET",
+                //        contentType: 'application/json;charset=utf-8',
+                //        dataType: "json",
+                //        success: function (result) {
+                //            console.log("Result from server:", result);
+
+                //            let html = '';
+                //            const groupedData = groupBy(result, 'TYPE');
+
+                //            for (const [type, items] of Object.entries(groupedData)) {
+                //                if (Array.isArray(items) && type && type.trim() !== '' && items.length > 0) {
+                //                const totalMPOCounts = countTotalMPO(items);
+
+
+                             
+
+                //                const totalMPOS = items.reduce((acc, obj) => acc + parseInt(obj.TOTALMPO.trim()), 0);
+
+                //                const totalAH = items.reduce((acc, obj) => acc + parseInt(obj.TOTALAREA.trim()), 0);
+
+                //                const totalDH = items.reduce((acc, obj) => acc + parseInt(obj.TOTALDIV.trim()), 0);
+
+                //                const totalZH = items.reduce((acc, obj) => acc + parseInt(obj.TOTALZH.trim()), 0);
+
+
+
+
+
+                //                const presentCount = items.reduce((acc, obj) => acc + (obj.PRESENT || 0), 0);
+                //                const absentCount = items.reduce((acc, obj) => acc + (obj.ABSENT || 0), 0);
+                //                const leaveCount = items.reduce((acc, obj) => acc + (obj.LEAVE || 0), 0);
+                //                const presentPercentage = (totalMPOCounts.total > 0) ? (presentCount / totalMPOCounts.total) * 100 : 0;
+
+                //                html += `<tr>`;
+                //                html += `<td>${type}</td>`;
+                //                html += `<td>${totalMPOS.toLocaleString().trim()} ${totalAH.toLocaleString().trim()} ${totalDH.toLocaleString().trim()} ${totalZH.toLocaleString().trim()}</td>`;
+                //                //html += `<td>${totalMPOS}</td>`;
+                //                html += `<td>${presentCount}</td>`;
+                //                html += `<td>${leaveCount}</td>`;
+                //                html += `<td>${absentCount}</td>`;
+                //                html += `<td>${presentPercentage.toFixed(2)}%</td>`;
+                //                html += `</tr>`;
+                //            } else {
+                //                    console.log("Invalid items for type:", type, items);
+                //        }
+                //    }
+                //            $('.tbody-role').append(html);
+                //},
+                //error: function (errormessage) {
+                //    console.error("Error fetching data:", errormessage);
+                //    alert(errormessage.responseText);
+                //}
+                //});
+                //}
+
+                //function groupBy(array, key) {
+                //    if (!Array.isArray(array)) {
+                //        console.error("Expected array but got:", array);
+                //        return {};
+                //    }
+                //    return array.reduce((acc, obj) => {
+                //        const property = obj[key];
+                //    if (property) {
+                //        acc[property] = acc[property] || [];
+                //        acc[property].push(obj);
+                //    }
+                //    return acc;
+                //}, {});
+                //}
+
+                //function countTotalMPO(items) {
+                //    const counts = {};
+                //    let total = 0;
+
+                //    items.forEach(item => {
+                //        const totalMPO = item.TOTALMPO.trim(); 
+                //    counts[totalMPO] = (counts[totalMPO] || 0) + 1;
+                //    total++;
+                //});
+
+                //return { counts, total };
+                //}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                $(document).ready(function () {
+                    google.charts.load('current', { 'packages': ['corechart'] });
+                    google.charts.setOnLoadCallback(loadData);
+                });
+
+                function loadData() {
+                    $.when(
+                        $.ajax({
+                            url: '/Attendence/mGetPercent',
+                            type: 'GET',
+                            contentType: 'application/json;charset=utf-8',
+                            dataType: 'json'
+                        }),
+                        $.ajax({
+                            url: '/Attendence/mGetTeamList',
+                            type: 'GET',
+                            contentType: 'application/json;charset=utf-8',
+                            dataType: 'json'
+                        }),
+                        $.ajax({
+                            url: '/Attendence/mGetZoneList',
+                            type: 'GET',
+                            contentType: 'application/json;charset=utf-8',
+                            dataType: 'json'
+                        })
+                    ).done(function (percentData, teamListData, zoneListData) {
+                        percentData = percentData[0];
+                        teamListData = teamListData[0];
+                        zoneListData = zoneListData[0];
+
+                        displayData(percentData, teamListData);
+                        drawAttendanceChart(percentData);
+
+                        $('.tbody').on('click', 'td.team-name', function () {
+                            var teamName = $(this).text();
+                            var zoneDataHtml = generateZoneDataHtml(percentData, zoneListData, teamName);
+                            $('.tbody').html(zoneDataHtml);
+                            $('.tbody').append('<tr><td colspan="6"><button class="previousButton">Previous</button></td></tr>');
+
+                            $('.previousButton').on('click', function () {
+                                displayData(percentData, teamListData);
+                                drawAttendanceChart(percentData);
+                            });
+
+                            drawAttendanceChartForTeam(teamName, percentData, zoneListData);
+                        });
+                    }).fail(function (xhr, status, error) {
+                        console.error("AJAX Error:", error);
+                        $('.tbody').html('<tr><td colspan="6">Error loading data. Please try again later.</td></tr>');
+                    });
+                }
+
+                function displayData(percentData, teamListData) {
+                    var html = '';
+                    $.each(teamListData, function (key, team) {
+                        html += '<tr>';
+                        html += '<td class="team-name">' + team.strTEAM_NAME + '</td>';
+                        html += '<td>' + team.strTOTALMPO + '</td>';
+                        var percentItem = percentData[key];
+                        if (percentItem) {
+                            html += '<td>' + percentItem.intPresent + '</td>';
+                            html += '<td>' + percentItem.intLeave + '</td>';
+                            html += '<td>' + percentItem.intAbsent + '</td>';
+                            html += '<td>' + percentItem.dblPercentage + '%</td>';
+                        } else {
+                            html += '<td colspan="4"></td>';
+                        }
+                        html += '</tr>';
+                    });
+                    $('.tbody').html(html);
+                }
+
+                function generateZoneDataHtml(percentData, zoneListData, teamName) {
+                    var html = '';
+                    $.each(zoneListData, function (key, zone) {
+                        if (zone.strTEAM_NAME === teamName) {
+                            html += '<tr>';
+                            html += '<td>' + zone.strZONE + '</td>';
+                            html += '<td>' + zone.strTOTAL_MPO.trim() + '</td>';
+                            var percentItem = percentData[key];
+                            if (percentItem) {
+                                html += '<td>' + percentItem.intPresent + '</td>';
+                                html += '<td>' + percentItem.intLeave + '</td>';
+                                html += '<td>' + percentItem.intAbsent + '</td>';
+                                html += '<td>' + percentItem.dblPercentage + '%</td>';
+                            } else {
+                                html += '<td colspan="4"></td>';
+                            }
+                            html += '</tr>';
+                        }
+                    });
+                    return html;
+                }
+
+                function drawAttendanceChart(data) {
+                    var options = {
+                        pieHole: 0.8,
+                        pieSliceTextStyle: { color: 'transparent' },
+                        legend: 'none',
+                        title: '',
+                        colors: ['#58F3D1', '#FF8E8E', '#383838']
+                    };
+
+                    var arrValues = [['Status', 'Count']];
+                    var totalValue = 0;
+                    var presentValue = 0;
+                    var absentValue = 0;
+                    var leaveValue = 0;
+
+                    $.each(data, function (index, item) {
+                        var present = item.intPresent;
+                        var absent = item.intAbsent;
+                        var leave = item.intLeave;
+                        totalValue += present + absent + leave;
+                        presentValue += present;
+                        absentValue += absent;
+                        leaveValue += leave;
+                    });
+
+                    arrValues.push(['Present', presentValue]);
+                    arrValues.push(['Absent', absentValue]);
+                    arrValues.push(['Leave', leaveValue]);
+
+                    var dataTable = google.visualization.arrayToDataTable(arrValues);
+                    var chart = new google.visualization.PieChart(document.getElementById('b_sale'));
+                    chart.draw(dataTable, options);
+
+                    drawTitleAndTotal(chart, '', totalValue, presentValue, absentValue, leaveValue);
+                }
+
+                function drawAttendanceChartForTeam(teamName, percentData, zoneListData) {
+                    var options = {
+                        pieHole: 0.8,
+                        pieSliceTextStyle: { color: 'transparent' },
+                        legend: 'none',
+                        title: '',
+                        colors: ['#58F3D1', '#FF8E8E', '#383838']
+                    };
+
+                    var arrValues = [['Status', 'Count']];
+                    var totalValue = 0;
+                    var presentValue = 0;
+                    var absentValue = 0;
+                    var leaveValue = 0;
+
+                    $.each(zoneListData, function (index, zone) {
+                        if (zone.strTEAM_NAME === teamName) {
+                            var zonePercentData = percentData[index];
+                            if (zonePercentData) {
+                                var present = zonePercentData.intPresent;
+                                var absent = zonePercentData.intAbsent;
+                                var leave = zonePercentData.intLeave;
+                                totalValue += present + absent + leave;
+                                presentValue += present;
+                                absentValue += absent;
+                                leaveValue += leave;
+                            }
+                        }
+                    });
+
+                    arrValues.push(['Present', presentValue]);
+                    arrValues.push(['Absent', absentValue]);
+                    arrValues.push(['Leave', leaveValue]);
+
+                    var dataTable = google.visualization.arrayToDataTable(arrValues);
+                    var chart = new google.visualization.PieChart(document.getElementById('b_sale'));
+                    chart.draw(dataTable, options);
+
+                    drawTitleAndTotal(chart, teamName + ' ', totalValue, presentValue, absentValue, leaveValue);
+                }
+
+                function drawTitleAndTotal(chart, title, totalValue, presentValue, absentValue, leaveValue) {
+                    var chartContainer = chart.getContainer();
+                    var svg = chartContainer.getElementsByTagName('svg')[0];
+
+                    var existingIcons = svg.querySelectorAll('.icon');
+                    existingIcons.forEach(function (icon) {
+                        svg.removeChild(icon);
+                    });
+
+                    var centerX = chartContainer.clientWidth / 2;
+                    var centerY = chartContainer.clientHeight / 2;
+
+                    var titleText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                    titleText.setAttribute('x', centerX);
+                    titleText.setAttribute('y', centerY - 40);
+                    titleText.setAttribute('text-anchor', 'middle');
+                    titleText.setAttribute('dominant-baseline', 'middle');
+                    titleText.setAttribute('font-size', '12');
+                    titleText.setAttribute('font-weight', 'bold');
+                    titleText.textContent = title;
+
+                    createAndAppendTextElement(svg, 'Present: ', centerX, centerY + 120, '#58F3D1', presentValue);
+                    createAndAppendTextElement(svg, 'Absent: ', centerX, centerY + 140, '#FF8E8E', absentValue);
+                    createAndAppendTextElement(svg, 'Leave: ', centerX, centerY + 160, '#383838', leaveValue);
+                    createAndAppendTextElement(svg, 'Total: ' + totalValue, centerX, centerY, '#FFFFFF');
+
+                    svg.appendChild(titleText);
+                }
+
+                function createAndAppendTextElement(svg, label, x, y, color, value) {
+                    var textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                    textElement.setAttribute('x', x);
+                    textElement.setAttribute('y', y);
+                    textElement.setAttribute('text-anchor', 'middle');
+                    textElement.setAttribute('dominant-baseline', 'middle');
+                    textElement.setAttribute('font-size', '12');
+                    textElement.setAttribute('font-weight', 'bold');
+                    textElement.textContent = label;
+
+                    var icon = createIcon(color, x - 45, y - 5);
+                    svg.appendChild(icon);
+                    svg.appendChild(textElement);
+
+                    var valueText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                    valueText.setAttribute('x', x + 30);
+                    valueText.setAttribute('y', y);
+                    valueText.setAttribute('text-anchor', 'start');
+                    valueText.setAttribute('dominant-baseline', 'start');
+                    valueText.setAttribute('font-size', '12');
+                    valueText.textContent = value;
+                    svg.appendChild(valueText);
+                }
+
+                function createIcon(color, x, y) {
+                    var icon = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+                    icon.setAttribute('class', 'icon');
+                    icon.setAttribute('width', '10');
+                    icon.setAttribute('height', '10');
+                    icon.setAttribute('x', x);
+                    icon.setAttribute('y', y);
+                    icon.setAttribute('fill', color);
+                    return icon;
+                }
+
+
+
+
+
+
+
+
+                //$(document).ready(function () {
+                //    google.charts.load('current', { 'packages': ['corechart'] });
+                //    google.charts.setOnLoadCallback(loadData);
+                //});
+
+                //function loadData() {
+                //    $.when(
+                //        $.ajax({
+                //            url: '/Attendence/mGetPercent',
+                //            type: 'GET',
+                //            contentType: 'application/json;charset=utf-8',
+                //            dataType: 'json'
+                //        }),
+                //        $.ajax({
+                //            url: '/Attendence/mGetTeamList',
+                //            type: 'GET',
+                //            contentType: 'application/json;charset=utf-8',
+                //            dataType: 'json'
+                //        }),
+                //        $.ajax({
+                //            url: '/Attendence/mGetZoneList',
+                //            type: 'GET',
+                //            contentType: 'application/json;charset=utf-8',
+                //            dataType: 'json'
+                //        })
+                //    ).done(function (percentData, teamListData, zoneListData) {
+                //        percentData = percentData[0];
+                //        teamListData = teamListData[0];
+                //        zoneListData = zoneListData[0];
+
+                //        displayData(percentData, teamListData);
+                //        drawAttendanceChart(percentData);
+
+                //        $('.tbody').on('click', 'td.team-name', function () {
+                //            var teamName = $(this).text();
+                //            var zoneDataHtml = generateZoneDataHtml(percentData, zoneListData, teamName);
+                //            $('.tbody').html(zoneDataHtml);
+                //            $('.tbody').append('<tr><td colspan="6"><button class="previousButton">Previous</button></td></tr>');
+
+                //            $('.previousButton').on('click', function () {
+                //                displayData(percentData, teamListData);
+                //                drawAttendanceChart(percentData);
+                //            });
+
+                //            drawAttendanceChartForTeam(teamName, percentData, zoneListData);
+                //        });
+                //    }).fail(function (xhr, status, error) {
+                //        console.error("AJAX Error:", error);
+                //        $('.tbody').html('<tr><td colspan="6">Error loading data. Please try again later.</td></tr>');
+                //    });
+                //}
+
+                //function displayData(percentData, teamListData) {
+                //    var html = '';
+                //    $.each(teamListData, function (key, team) {
+                //        html += '<tr>';
+                //        html += '<td class="team-name">' + team.strTEAM_NAME + '</td>';
+                //        html += '<td>' + team.strTOTALMPO + '</td>';
+                //        var percentItem = percentData[key];
+                //        if (percentItem) {
+                //            html += '<td>' + percentItem.intPresent + '</td>';
+                //            html += '<td>' + percentItem.intLeave + '</td>';
+                //            html += '<td>' + percentItem.intAbsent + '</td>';
+                //            html += '<td>' + percentItem.dblPercentage + '%</td>';
+                //        } else {
+                //            html += '<td colspan="4"></td>';
+                //        }
+                //        html += '</tr>';
+                //    });
+                //    $('.tbody').html(html);
+                //}
+
+                //function generateZoneDataHtml(percentData, zoneListData, teamName) {
+                //    var html = '';
+                //    $.each(zoneListData, function (key, zone) {
+                //        if (zone.strTEAM_NAME === teamName) {
+                //            html += '<tr>';
+                //            html += '<td>' + zone.strZONE + '</td>';
+                //            html += '<td>' + zone.strTOTAL_MPO.trim() + '</td>';
+                //            var percentItem = percentData[key];
+                //            if (percentItem) {
+                //                html += '<td>' + percentItem.intPresent + '</td>';
+                //                html += '<td>' + percentItem.intLeave + '</td>';
+                //                html += '<td>' + percentItem.intAbsent + '</td>';
+                //                html += '<td>' + percentItem.dblPercentage + '%</td>';
+                //            } else {
+                //                html += '<td colspan="4"></td>';
+                //            }
+                //            html += '</tr>';
+                //        }
+                //    });
+                //    return html;
+                //}
+
+                //function drawAttendanceChart(data) {
+                //    var options = {
+                //        pieHole: 0.8,
+                //        pieSliceTextStyle: { color: 'transparent' },
+                //        legend: 'none',
+                //        title: '',
+                //        colors: ['#58F3D1', '#FF8E8E', '#383838']
+                //    };
+
+                //    var arrValues = [['Status', 'Count']];
+                //    var totalValue = 0;
+                //    var presentValue = 0;
+                //    var absentValue = 0;
+                //    var leaveValue = 0;
+
+                //    $.each(data, function (index, item) {
+                //        var present = item.intPresent;
+                //        var absent = item.intAbsent;
+                //        var leave = item.intLeave;
+                //        totalValue += present + absent + leave;
+                //        presentValue += present;
+                //        absentValue += absent;
+                //        leaveValue += leave;
+                //    });
+
+                //    arrValues.push(['Present', presentValue]);
+                //    arrValues.push(['Absent', absentValue]);
+                //    arrValues.push(['Leave', leaveValue]);
+
+                //    var dataTable = google.visualization.arrayToDataTable(arrValues);
+                //    var chart = new google.visualization.PieChart(document.getElementById('b_sale'));
+                //    chart.draw(dataTable, options);
+
+                //    drawTitleAndTotal(chart, '', totalValue, presentValue, absentValue, leaveValue);
+                //}
+
+                //function drawAttendanceChartForTeam(teamName, percentData, zoneListData) {
+                //    var options = {
+                //        pieHole: 0.8,
+                //        pieSliceTextStyle: { color: 'transparent' },
+                //        legend: 'none',
+                //        title: '',
+                //        colors: ['#58F3D1', '#FF8E8E', '#383838']
+                //    };
+
+                //    var arrValues = [['Status', 'Count']];
+                //    var totalValue = 0;
+                //    var presentValue = 0;
+                //    var absentValue = 0;
+                //    var leaveValue = 0;
+
+                //    $.each(zoneListData, function (index, zone) {
+                //        if (zone.strTEAM_NAME === teamName) {
+                //            var zonePercentData = percentData[index];
+                //            if (zonePercentData) {
+                //                var present = zonePercentData.intPresent;
+                //                var absent = zonePercentData.intAbsent;
+                //                var leave = zonePercentData.intLeave;
+                //                totalValue += present + absent + leave;
+                //                presentValue += present;
+                //                absentValue += absent;
+                //                leaveValue += leave;
+                //            }
+                //        }
+                //    });
+
+                //    arrValues.push(['Present', presentValue]);
+                //    arrValues.push(['Absent', absentValue]);
+                //    arrValues.push(['Leave', leaveValue]);
+
+                //    var dataTable = google.visualization.arrayToDataTable(arrValues);
+                //    var chart = new google.visualization.PieChart(document.getElementById('b_sale'));
+                //    chart.draw(dataTable, options);
+
+                //    drawTitleAndTotal(chart, teamName + ' ', totalValue, presentValue, absentValue, leaveValue);
+                //}
+
+                //function drawTitleAndTotal(chart, title, totalValue, presentValue, absentValue, leaveValue) {
+                //    var chartContainer = chart.getContainer();
+                //    var svg = chartContainer.getElementsByTagName('svg')[0];
+
+                //    var existingIcons = svg.querySelectorAll('.icon');
+                //    existingIcons.forEach(function (icon) {
+                //        svg.removeChild(icon);
+                //    });
+
+                //    var centerX = chartContainer.clientWidth / 2;
+                //    var centerY = chartContainer.clientHeight / 2;
+
+                //    var titleText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                //    titleText.setAttribute('x', centerX);
+                //    titleText.setAttribute('y', centerY - 40);
+                //    titleText.setAttribute('text-anchor', 'middle');
+                //    titleText.setAttribute('dominant-baseline', 'middle');
+                //    titleText.setAttribute('font-size', '12');
+                //    titleText.setAttribute('font-weight', 'bold');
+                //    titleText.textContent = title;
+
+                //    createAndAppendTextElement(svg, 'Present: ', centerX, centerY + 120, '#58F3D1', presentValue);
+                //    createAndAppendTextElement(svg, 'Absent: ', centerX, centerY + 140, '#FF8E8E', absentValue);
+                //    createAndAppendTextElement(svg, 'Leave: ', centerX, centerY + 160, '#383838', leaveValue);
+                //    createAndAppendTextElement(svg, 'Total: ' + totalValue, centerX, centerY, '#FFFFFF');
+
+                //    svg.appendChild(titleText);
+                //}
+
+                //function createAndAppendTextElement(svg, label, x, y, color, value) {
+                //    var textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                //    textElement.setAttribute('x', x);
+                //    textElement.setAttribute('y', y);
+                //    textElement.setAttribute('text-anchor', 'middle');
+                //    textElement.setAttribute('dominant-baseline', 'middle');
+                //    textElement.setAttribute('font-size', '12');
+                //    textElement.setAttribute('font-weight', 'bold');
+                //    textElement.textContent = label;
+
+                //    var icon = createIcon(color, x - 45, y - 5);
+                //    svg.appendChild(icon);
+                //    svg.appendChild(textElement);
+
+                //    var valueText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                //    valueText.setAttribute('x', x + 30);
+                //    valueText.setAttribute('y', y);
+                //    valueText.setAttribute('text-anchor', 'start');
+                //    valueText.setAttribute('dominant-baseline', 'start');
+                //    valueText.setAttribute('font-size', '12');
+                //    valueText.textContent = value;
+                //    svg.appendChild(valueText);
+                //}
+
+                //function createIcon(color, x, y) {
+                //    var icon = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+                //    icon.setAttribute('class', 'icon');
+                //    icon.setAttribute('width', '10');
+                //    icon.setAttribute('height', '10');
+                //    icon.setAttribute('x', x);
+                //    icon.setAttribute('y', y);
+                //    icon.setAttribute('fill', color);
+                //    return icon;
+                //}
+
+
+
+
+
+
+                //$(document).ready(function () {
+                //    google.charts.load('current', { 'packages': ['corechart'] });
+                //    google.charts.setOnLoadCallback(loadData);
+                //});
+
+                //function loadData() {
+                //    $.ajax({
+                //        url: '/Attendence/mGetTotal',
+                //        type: 'GET',
+                //        contentType: 'application/json;charset=utf-8',
+                //        dataType: 'json',
+                //        success: function (data) {
+                //            displayData(data);
+                //            $('.tbody').on('click', 'td.team-name', function () {
+                //                var teamName = $(this).text();
+                //                var zoneListData = data.filter(zone => zone.TEAM_NAME === teamName);
+                //                displayZoneData(zoneListData);
+                //                $('.tbody').append('<tr><td colspan="6"><button class="previousButton">Previous</button></td></tr>');
+
+                //                $('.previousButton').on('click', function () {
+                //                    displayData(data);
+                //                    drawAttendanceChart(data);
+                //                });
+                //                drawAttendanceChart(zoneListData); // Update the chart for the selected team
+                //            });
+                //        },
+                //        error: function (xhr, status, error) {
+                //            console.error("AJAX Error:", error);
+                //            $('.tbody').html('<tr><td colspan="6">Error loading data. Please try again later.</td></tr>');
+                //        }
+                //    });
+                //}
+
+                //function displayData(data) {
+                //    var html = '';
+                //    var teamList = [];
+                //    var teamData = {};
+
+                //    data.forEach(function (item) {
+                //        if (!teamList.includes(item.TEAM_NAME)) {
+                //            teamList.push(item.TEAM_NAME);
+                //            teamData[item.TEAM_NAME] = {
+                //                TOTALMPO: parseInt(item.TOTALMPO),
+                //                PRESENT: parseInt(item.PRESENT),
+                //                ABSENT: parseInt(item.ABSENT)
+                //            };
+                //        } else {
+                //            teamData[item.TEAM_NAME].TOTALMPO += parseInt(item.TOTALMPO);
+                //            teamData[item.TEAM_NAME].PRESENT += parseInt(item.PRESENT);
+                //            teamData[item.TEAM_NAME].ABSENT += parseInt(item.ABSENT);
+                //        }
+                //    });
+
+                //    for (const [teamName, teamStats] of Object.entries(teamData)) {
+                //        html += '<tr>';
+                //        html += '<td class="team-name">' + teamName + '</td>';
+                //        html += '<td>' + teamStats.TOTALMPO + '</td>';
+                //        html += '<td>' + teamStats.PRESENT + '</td>';
+                //        html += '<td>' + (teamStats.TOTALMPO - teamStats.PRESENT - teamStats.ABSENT) + '</td>';
+                //        html += '<td>' + teamStats.ABSENT + '</td>';
+                //        html += '<td>' + ((teamStats.TOTALMPO > 0) ? ((teamStats.PRESENT / teamStats.TOTALMPO) * 100).toFixed(2) : 0) + '%</td>';
+                //        html += '</tr>';
+                //    }
+
+                //$('.tbody').html(html);
+                //drawAttendanceChart(data);
+                //}
+
+                //function displayZoneData(zoneListData) {
+                //    var html = '';
+                //    var zonList = [];
+                //    var totalMPO = 0;
+
+                //    zoneListData.forEach(function (zone) {
+                //        totalMPO += parseInt(zone.TOTALMPO);
+                //        if (!zonList.includes(zone.ZONE)) {
+                //            zonList.push(zone.ZONE);
+                //            html += '<tr>';
+                //            html += '<td>' + zone.ZONE + '</td>';
+                //            html += '<td>' + zone.TOTALMPO + '</td>';
+                //            html += '<td>' + zone.PRESENT + '</td>';
+                //            html += '<td>' + (zone.TOTALMPO - zone.PRESENT - zone.ABSENT) + '</td>';
+                //            html += '<td>' + zone.ABSENT + '</td>';
+                //            html += '<td>' + ((zone.TOTALMPO > 0) ? ((zone.PRESENT / zone.TOTALMPO) * 100).toFixed(2) : 0) + '%</td>';
+                //            html += '</tr>';
+                //        }
+                //    });
+
+                //    $('.tbody').html(html);
+                //}
+
+                //function drawAttendanceChart(data) {
+                //    var options = {
+                //        pieHole: 0.8,
+                //        pieSliceTextStyle: { color: 'transparent' },
+                //        legend: 'none',
+                //        title: '',
+                //        colors: ['#58F3D1', '#FF8E8E', '#383838']
+                //    };
+
+                //    var presentValue = 0;
+                //    var absentValue = 0;
+                //    var leaveValue = 0;
+
+                //    data.forEach(function (item) {
+                //        presentValue += parseInt(item.PRESENT);
+                //        absentValue += parseInt(item.ABSENT);
+                //        leaveValue += parseInt(item.TOTALMPO) - parseInt(item.PRESENT) - parseInt(item.ABSENT);
+                //    });
+
+                //    var totalValue = presentValue + absentValue + leaveValue;
+                //    var arrValues = [['Status', 'Count'], ['Present', presentValue], ['Absent', absentValue], ['Leave', leaveValue]];
+
+                //    var dataTable = google.visualization.arrayToDataTable(arrValues);
+                //    var chart = new google.visualization.PieChart(document.getElementById('b_sale'));
+                //    chart.draw(dataTable, options);
+
+                   
+
+                //    drawTitleAndTotal(chart, '', totalValue, presentValue, absentValue, leaveValue);
+                //}
+
+                //function drawTitleAndTotal(chart, title, totalValue, presentValue, absentValue, leaveValue) {
+                //    var chartContainer = chart.getContainer();
+                //    var svg = chartContainer.getElementsByTagName('svg')[0];
+
+                //    var existingIcons = svg.querySelectorAll('.icon');
+                //    existingIcons.forEach(function (icon) {
+                //        svg.removeChild(icon);
+                //    });
+
+                //    var centerX = chartContainer.clientWidth / 2;
+                //    var centerY = chartContainer.clientHeight / 2;
+
+                //    var titleText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                //    titleText.setAttribute('x', centerX);
+                //    titleText.setAttribute('y', centerY - 40);
+                //    titleText.setAttribute('text-anchor', 'middle');
+                //    titleText.setAttribute('dominant-baseline', 'middle');
+                //    titleText.setAttribute('font-size', '12');
+                //    titleText.setAttribute('font-weight', 'bold');
+                //    titleText.textContent = title;
+
+                //    createAndAppendTextElement(svg, 'Present: ', centerX, centerY + 120, '#58F3D1', presentValue);
+                //    createAndAppendTextElement(svg, 'Absent: ', centerX, centerY + 140, '#FF8E8E', absentValue);
+                //    createAndAppendTextElement(svg, 'Leave: ', centerX, centerY + 160, '#383838', leaveValue);
+                //    createAndAppendTextElement(svg, 'Total: ' + totalValue, centerX, centerY, '#FFFFFF');
+
+                //    svg.appendChild(titleText);
+                //}
+
+                //function createAndAppendTextElement(svg, label, x, y, color, value) {
+                //    var textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                //    textElement.setAttribute('x', x);
+                //    textElement.setAttribute('y', y);
+                //    textElement.setAttribute('text-anchor', 'middle');
+                //    textElement.setAttribute('dominant-baseline', 'middle');
+                //    textElement.setAttribute('font-size', '12');
+                //    textElement.setAttribute('font-weight', 'bold');
+                //    textElement.textContent = label;
+
+                //    var icon = createIcon(color, x - 45, y - 5);
+                //    svg.appendChild(icon);
+                //    svg.appendChild(textElement);
+
+                //    var valueText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                //    valueText.setAttribute('x', x + 30);
+                //    valueText.setAttribute('y', y);
+                //    valueText.setAttribute('text-anchor', 'start');
+                //    valueText.setAttribute('dominant-baseline', 'start');
+                //    valueText.setAttribute('font-size', '12');
+                //    valueText.textContent = value;
+                //    svg.appendChild(valueText);
+                //}
+
+                //function createIcon(color, x, y) {
+                //    var icon = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+                //    icon.setAttribute('class', 'icon');
+                //    icon.setAttribute('width', '10');
+                //    icon.setAttribute('height', '10');
+                //    icon.setAttribute('x', x);
+                //    icon.setAttribute('y', y);
+                //    icon.setAttribute('fill', color);
+                //    return icon;
+                //}

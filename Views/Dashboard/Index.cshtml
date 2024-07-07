@@ -1,0 +1,706 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@RenderPage("~/Views/Shared/Sidebar.cshtml")
+
+
+<html>
+<head>
+    <link rel="stylesheet" href="https://www.cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js'></script>
+    <meta charset=utf-8 />
+    <title></title>
+  
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+   
+</head>
+
+
+
+<body>
+ 
+    
+
+        <style>
+            .morris-hover {
+                position: absolute;
+                z-index: 1000;
+            }
+
+                .morris-hover.morris-default-style {
+                    border-radius: 10px;
+                    padding: 6px;
+                    color: #666;
+                    background: rgba(255, 255, 255, 0.8);
+                    border: solid 2px rgba(230, 230, 230, 0.8);
+                    font-family: sans-serif;
+                    font-size: 12px;
+                    text-align: center;
+                }
+
+                    .morris-hover.morris-default-style .morris-hover-row-label {
+                        font-weight: bold;
+                        margin: 0.25em 0;
+                    }
+
+                    .morris-hover.morris-default-style .morris-hover-point {
+                        white-space: nowrap;
+                        margin: 0.1em 0;
+                    }
+
+            svg {
+                width: 100%;
+            }
+
+        </style>
+        <br />
+        <br />
+        <br />
+        <br />
+    <script>
+
+
+
+        //google.load("visualization", "44", { packages: ["corechart"] });
+
+        //google.setOnLoadCallback(drawAttendanceChart);
+
+        //function drawAttendanceChart() {
+        //    var options = {
+               
+               
+                
+        //            pieHole: 0.9,
+        //            legend: 'none', 
+        //            title: '', 
+        //            colors: ['#58F3D1', '#FF8E8E', '#383838']
+        //    };
+
+        //    $.ajax({
+        //        url: '/Attendence/mGetPercent',
+        //        dataType: "json",
+        //        type: "GET",
+        //        success: function (data) {
+        //            console.log(data);
+
+        //            var arrValues = [['Category', 'Count']];
+        //            var totalValue = 0;
+        //            var presentId = 0;
+        //            var absentValue = 0;
+        //            var leaveValue = 0;
+
+        //            $.each(data, function (index, item) {
+        //                var presentValue = item.intTotal - item.intAbsent - item.intLeave;
+        //                arrValues.push(['Present', presentValue]);
+        //                arrValues.push(['Absent', item.intAbsent]);
+        //                arrValues.push(['Leave', item.intLeave]);
+
+
+        //                totalValue += presentValue + item.intAbsent + item.intLeave;
+        //                presentId += item.intTotal - item.intAbsent - item.intLeave;
+        //                absentValue += item.intAbsent;
+        //                leaveValue += item.intLeave;
+                        
+
+
+
+        //            });
+
+                    
+
+        //            var dataTable = google.visualization.arrayToDataTable(arrValues);
+
+        //            var chart = new google.visualization.PieChart(document.getElementById('b_sale'));
+        //            chart.draw(dataTable, options);
+
+            
+
+        //            drawTitleAndTotal(chart, options.title, totalValue, presentId, absentValue, leaveValue);
+        //        },
+        //        error: function (XMLHttpRequest, textStatus, errorThrown) {
+        //            alert('There was an Error');
+        //        }
+        //    });
+        //}
+
+
+
+        //function drawTitleAndTotal(chart, title, totalValue, presentId, absentValue, leaveValue) {
+        //    var chartContainer = chart.getContainer();
+
+          
+        //    var svg = chartContainer.getElementsByTagName('svg')[0];
+
+            
+        //    var existingTitleText = svg.querySelector('#titleText');
+        //    var existingPresentText = svg.querySelector('#presentText');
+        //    var existingAbsentText = svg.querySelector('#absentText');
+        //    var existingLeaveText = svg.querySelector('#leaveText');
+        //    var existingTotalText = svg.querySelector('#totalText');
+
+        //    if (existingTitleText) {
+        //        svg.removeChild(existingTitleText);
+        //    }
+        //    if (existingPresentText) {
+        //        svg.removeChild(existingPresentText);
+        //    }
+        //    if (existingAbsentText) {
+        //        svg.removeChild(existingAbsentText);
+        //    }
+        //    if (existingLeaveText) {
+        //        svg.removeChild(existingLeaveText);
+        //    }
+        //    if (existingTotalText) {
+        //        svg.removeChild(existingTotalText);
+        //    }
+
+
+           
+        //    var centerX = chartContainer.clientWidth / 2.5;
+        //    var centerY = chartContainer.clientHeight / 2;
+
+            
+        //    var titleText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        //    titleText.setAttribute('id', 'titleText');
+        //    titleText.setAttribute('x', centerX);
+        //    titleText.setAttribute('y', centerY - 40); 
+        //    titleText.setAttribute('text-anchor', 'middle');
+        //    titleText.setAttribute('dominant-baseline', 'middle');
+        //    titleText.setAttribute('font-size', '18');
+        //    titleText.setAttribute('font-weight', 'bold');
+        //    titleText.setAttribute('fill', 'transparent');
+        //    titleText.textContent = title;
+
+          
+        //    createAndAppendTextElement(svg, 'Present: ' + presentId, centerX - 0, centerY + 120);
+        //    createAndAppendTextElement(svg, 'Absent: ' + absentValue, centerX - 0, centerY + 140);
+        //    createAndAppendTextElement(svg, 'Leave: ' + leaveValue, centerX + 0, centerY + 160);
+        //    createAndAppendTextElement(svg, 'Total: ' + totalValue, centerX + 20, centerY + 0);
+
+           
+        //    svg.appendChild(titleText);
+
+
+
+        //}
+
+        //function createAndAppendTextElement(svg, text, x, y) {
+        //    var textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        //    textElement.setAttribute('x', x);
+        //    textElement.setAttribute('y', y);
+        //    textElement.setAttribute('text-anchor', 'middle');
+        //    textElement.setAttribute('dominant-baseline', 'middle');
+        //    textElement.setAttribute('font-size', '12');
+        //    textElement.setAttribute('font-weight', 'bold');
+        //    textElement.textContent = text;
+
+        //    svg.appendChild(textElement);
+        //}
+
+
+        google.load("visualization", "44", { packages: ["corechart"] });
+
+        google.setOnLoadCallback(drawAttendanceChart);
+
+        function drawAttendanceChart() {
+            var options = {
+                pieHole: 0.850,
+                legend: 'none',
+                title: '',
+                colors: ['#58F3D1', '#FF8E8E', '#383838']
+            };
+
+            $.ajax({
+                url: '/Attendence/mGetPercent',
+                dataType: "json",
+                type: "GET",
+                success: function (data) {
+                    //console.log(data);
+
+                    var arrValues = [['Category', 'Count']];
+                    var totalValue = 0;
+                    var presentId = 0;
+                    var absentValue = 0;
+                    var leaveValue = 0;
+
+                    $.each(data, function (index, item) {
+                        var presentValue = item.intTotal - item.intAbsent - item.intLeave;
+                        arrValues.push(['Present', presentValue]);
+                        arrValues.push(['Absent', item.intAbsent]);
+                        arrValues.push(['Leave', item.intLeave]);
+
+                        totalValue += presentValue + item.intAbsent + item.intLeave;
+                        presentId += item.intTotal - item.intAbsent - item.intLeave;
+                        absentValue += item.intAbsent;
+                        leaveValue += item.intLeave;
+                    });
+
+                    var dataTable = google.visualization.arrayToDataTable(arrValues);
+                    var chart = new google.visualization.PieChart(document.getElementById('b_sale'));
+                    chart.draw(dataTable, options);
+
+                    drawTitleAndTotal(chart, options.title, totalValue, presentId, absentValue, leaveValue);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('There was an Error');
+                }
+            });
+        }
+
+        function drawTitleAndTotal(chart, title, totalValue, presentId, absentValue, leaveValue) {
+            var chartContainer = chart.getContainer();
+            var svg = chartContainer.getElementsByTagName('svg')[0];
+
+            var existingIcons = svg.querySelectorAll('.icon');
+            existingIcons.forEach(function (icon) {
+                svg.removeChild(icon);
+            });
+
+            var centerX = chartContainer.clientWidth / 2.5;
+            var centerY = chartContainer.clientHeight / 2;
+
+            var titleText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            titleText.setAttribute('id', 'titleText');
+            titleText.setAttribute('x', centerX);
+            titleText.setAttribute('y', centerY - 40);
+            titleText.setAttribute('text-anchor', 'middle');
+            titleText.setAttribute('dominant-baseline', 'middle');
+            titleText.setAttribute('font-size', '18');
+            titleText.setAttribute('font-weight', 'bold');
+            titleText.setAttribute('fill', 'transparent');
+            titleText.textContent = title;
+
+            createAndAppendTextElement(svg, 'Present: ', centerX - 0, centerY + 120, '#58F3D1', presentId);
+            createAndAppendTextElement(svg, 'Absent: ', centerX - 0, centerY + 140, '#FF8E8E', absentValue);
+            createAndAppendTextElement(svg, 'Leave: ', centerX + 0, centerY + 160, '#383838', leaveValue);
+            createAndAppendTextElement(svg, 'Total: ' + totalValue, centerX + 20, centerY + 0, '#FFFFFF');
+
+            svg.appendChild(titleText);
+        }
+
+        function createAndAppendTextElement(svg, label, x, y, color, value) {
+            var textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            textElement.setAttribute('x', x);
+            textElement.setAttribute('y', y);
+            textElement.setAttribute('text-anchor', 'middle');
+            textElement.setAttribute('dominant-baseline', 'middle');
+            textElement.setAttribute('font-size', '12');
+            textElement.setAttribute('font-weight', 'bold');
+            textElement.textContent = label;
+
+            var icon = createIcon(color, x - 45, y - 5);
+            svg.appendChild(icon);
+            svg.appendChild(textElement);
+
+            var valueText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            valueText.setAttribute('x', x + 30);
+            valueText.setAttribute('y', y);
+            valueText.setAttribute('text-anchor', 'start');
+            valueText.setAttribute('dominant-baseline', 'start');
+            valueText.setAttribute('font-size', '12');
+            valueText.textContent = value;
+            svg.appendChild(valueText);
+        }
+
+        function createIcon(color, x, y) {
+            var icon = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            icon.setAttribute('class', 'icon');
+            icon.setAttribute('width', '10');
+            icon.setAttribute('height', '10');
+            icon.setAttribute('x', x);
+            icon.setAttribute('y', y);
+            icon.setAttribute('fill', color);
+            return icon;
+        }
+
+
+       
+
+
+
+    </script>
+
+
+ 
+    
+
+        <section class="container-fluid">
+
+
+
+            <div class="row">
+                <div class="col-sm-3">
+                    @*<div class="well">
+
+                  
+                        @*<div class="card-body"  >*@
+
+                            <div class="card" >
+                               
+
+
+                                <div style=" width:300px; height:370px" id="b_sale"></div>
+
+                                
+
+                            </div>
+                        @*</div>*@
+                                      
+                                    
+                                
+                            </div>
+                     
+                <div class="col-sm-6">
+                    <div class="well">
+                        <table class="table  " id="idshifttable">
+                            <h4>Team Wise Attendance</h4>
+                            <thead>
+                                <tr>
+                                    <th>Team</th>
+                                    <th>Total</th>
+                                    <th>Present</th>
+                                    <th>Leave</th>
+                                    <th>Absent</th>
+                                    <th>%</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="well">
+                        <table class="table">
+                            <h4>Role Wise Attendance</h4>
+                            <thead>
+                                <tr>
+                                    <th>Role</th>
+                                    <th>Total</th>
+                                    <th>Present</th>
+                                    <th>Leave</th>
+                                    <th>Absent</th>
+                                    <th>%</th>
+                                </tr>
+                            </thead>
+                         
+                            <tbody class="tbody">
+                                <tr>
+                                    <td>MPO</td>
+
+                                </tr>
+                            
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="well">
+                        <table class="table  " id="idshifttable">
+                            <h4>TEAM HERBAL</h4>
+                            <thead>
+                                <tr>
+                                    <th>Role</th>
+                                    <th>Default</th>
+
+                                </tr>
+                            </thead>
+                            
+                            <tbody class="datatable">
+                               
+                            </tbody>
+                          
+                                
+                                
+
+</table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="well">
+                    <div id="line-chart"></div>
+
+
+                </div>
+                <div class="well">
+                    <div id="bar-chart"></div>
+
+
+                </div>
+                <div class="well">
+                    <div id="area-chart"></div>
+
+
+                </div>
+              
+            </div>
+
+
+
+
+       
+
+
+
+
+
+
+
+        </section>
+        <script>
+
+
+
+            $(document).ready(function () {
+                loadData();
+
+            });
+
+
+            function loadData() {
+
+
+
+                $.ajax({
+                    url: "/Attendence/mGetPercent",
+                    type: "GET",
+                    contentType: 'application/json;charset=utf-8',
+                    dataType: "json",
+
+
+                    success: function (result) {
+
+                        //console.log(result)
+
+                        var html = '';
+
+
+                        $.each(result, function (key, item) {
+
+
+
+                            html += '<tr>';
+
+
+                            html += '<td>' + item.strROLE + '  </td>';
+                            html += '<td>' + item.intTotal + ' </td>';
+                            html += '<td>' + item.intPresent + ' </td>';
+                            html += '<td>' + item.intLeave + ' </td>';
+                            html += '<td>' + item.intAbsent + ' </td>';
+                            html += '<td>' + item.dblPercentage + '% </td>';
+                          
+
+
+
+                            html += '</tr>';
+
+
+
+
+                        });
+
+
+                        $('.tbody').html(html);
+                    },
+                    error: function (errormessage) {
+                        alert(errormessage.responseText);
+                    }
+                });
+            }
+
+
+
+
+
+
+
+
+            $(document).ready(function () {
+                loadData1();
+
+            });
+
+
+            function loadData1() {
+
+
+
+                $.ajax({
+                    url: "/Attendence/mGetTotal",
+                    type: "GET",
+                    contentType: 'application/json;charset=utf-8',
+                    dataType: "json",
+
+
+                    success: function (result) {
+
+                        //console.log(result)
+
+
+                        var html = '';
+
+
+                        $.each(result, function (key, item) {
+
+
+
+                            html += '<tr>';
+
+
+                            html += '<td>' + item.strROLE + '  </td>';
+                            html += '<td>' + item.intCountt + ' </td>';
+
+
+
+                            html += '</tr>';
+
+
+
+
+                        });
+
+
+                        $('.datatable').html(html);
+                    },
+                    error: function (errormessage) {
+                        alert(errormessage.responseText);
+                    }
+                });
+            }
+
+
+
+            
+
+
+
+            $(document).ready(function () {
+                barChart();
+                lineChart();
+                areaChart();
+                donutChart();
+
+                $(window).resize(function () {
+                    window.barChart.redraw();
+                    window.lineChart.redraw();
+                    window.areaChart.redraw();
+                    window.donutChart.redraw();
+                });
+            });
+
+            function barChart() {
+                window.barChart = Morris.Bar({
+                    element: 'bar-chart',
+                    data: [
+                      { y: '2006', a: 100, b: 90 },
+                      { y: '2007', a: 75, b: 65 },
+                      { y: '2008', a: 50, b: 40 },
+                      { y: '2009', a: 75, b: 65 },
+                      { y: '2010', a: 50, b: 40 },
+                      { y: '2011', a: 75, b: 65 },
+                      { y: '2012', a: 100, b: 90 }
+                    ],
+                    xkey: 'y',
+                    ykeys: ['a', 'b'],
+                    labels: ['Series A', 'Series B'],
+                    lineColors: ['#1e88e5', '#ff3321'],
+                    lineWidth: '3px',
+                    resize: true,
+                    redraw: true
+                });
+            }
+
+            function lineChart() {
+                window.lineChart = Morris.Line({
+                    element: 'line-chart',
+                    data: [
+                      { y: '2006', a: 100, b: 90 },
+                      { y: '2007', a: 75, b: 65 },
+                      { y: '2008', a: 50, b: 40 },
+                      { y: '2009', a: 75, b: 65 },
+                      { y: '2010', a: 50, b: 40 },
+                      { y: '2011', a: 75, b: 65 },
+                      { y: '2012', a: 100, b: 90 }
+                    ],
+                    xkey: 'y',
+                    ykeys: ['a', 'b'],
+                    labels: ['Series A', 'Series B'],
+                    lineColors: ['#1e88e5', '#ff3321'],
+                    lineWidth: '3px',
+                    resize: true,
+                    redraw: true
+                });
+            }
+
+            function areaChart() {
+                window.areaChart = Morris.Area({
+                    element: 'area-chart',
+                    data: [
+                      { y: '2006', a: 100, b: 90 },
+                      { y: '2007', a: 75, b: 65 },
+                      { y: '2008', a: 50, b: 40 },
+                      { y: '2009', a: 75, b: 65 },
+                      { y: '2010', a: 50, b: 40 },
+                      { y: '2011', a: 75, b: 65 },
+                      { y: '2012', a: 100, b: 90 }
+                    ],
+                    xkey: 'y',
+                    ykeys: ['a', 'b'],
+                    labels: ['Series A', 'Series B'],
+                    lineColors: ['#1e88e5', '#ff3321'],
+                    lineWidth: '3px',
+                    resize: true,
+                    redraw: true
+                });
+            }
+
+            function donutChart() {
+                window.donutChart = Morris.Donut({
+                    element: 'donut-chart',
+                    data: [
+                      { label: "Present", value: 50 },
+                      { label: "Absence", value: 30 },
+                      { label: "Leave", value: 20 },
+
+                    ],
+
+                    resize: true,
+                    redraw: true
+                });
+            }
+
+            function pieChart() {
+                var paper = Raphael("pie-chart");
+                paper.piechart(
+                  100, // pie center x coordinate
+                  100, // pie center y coordinate
+                  90,  // pie radius
+                   [18.373, 18.686, 2.867, 23.991, 9.592, 0.213], // values
+                   {
+                       legend: ["Windows/Windows Live", "Server/Tools", "Online Services", "Business", "Entertainment/Devices", "Unallocated/Other"]
+                   }
+                 );
+
+            }
+
+
+        </script>
+
+
+   
+
+</body>
+</html>
+
+
+    
+
+    
+     

@@ -1,0 +1,217 @@
+﻿/*select[multiple], select[size] {
+    height: 300px;
+    width: 100%;
+    max-width: 700px;
+    margin-bottom: 40px;
+    box-sizing: border-box;
+}
+
+
+@media (min-width: 768px) {
+    select[multiple], select[size] {
+        height: 300px;
+        width: 80%;
+    }
+}
+
+@media (min-width: 1024px) {
+    select[multiple], select[size] {
+        height: 300px;
+        width: 300%;
+    }
+}
+
+
+@media (max-width: 767px) {
+    select[multiple], select[size] {
+        height: 200px;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    select[multiple], select[size] {
+        height: 150px;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+
+
+.input-group1 {
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 700px;
+    display: ruby-text;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    border: solid 0.5px;
+    border-radius: 2px;
+}
+
+
+@media (min-width: 768px) {
+    .input-group1 {
+        width: 80%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .input-group1 {
+        width: 300%;
+    }
+}
+
+
+@media (max-width: 767px) {
+    .input-group1 {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .input-group1 {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}*/
+
+#buttonposition {
+    margin-left: 270px;
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    #buttonposition {
+        margin-left: 50px; 
+        margin-top: 50px;  
+    }
+}
+
+@media (max-width: 576px) {
+    #buttonposition {
+        margin-left: 20px; 
+        margin-top: 10px;  
+    }
+}
+
+
+
+
+/* Base styles for the centerContainer */
+.centerContainer {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%; 
+    height: 100%; 
+    margin-top: -100px;
+}
+
+/* Responsive adjustments */
+
+/* For small screens (mobile devices) */
+@media (max-width: 600px) {
+    .centerContainer {
+        flex-direction: column; /* Stack items vertically */
+        padding: 10px; /* Add some padding for better spacing */
+    }
+}
+
+/* For medium screens (tablets) */
+@media (min-width: 601px) and (max-width: 1024px) {
+    .centerContainer {
+        flex-direction: row; /* Arrange items horizontally */
+        padding: 20px; /* Adjust padding for medium screens */
+    }
+}
+
+/* For large screens (desktops) */
+@media (min-width: 1025px) {
+    .centerContainer {
+        flex-direction: row; /* Keep items in a row */
+        padding: 5px; /* Add more padding for larger screens */
+    }
+}
+
+
+/* Base styles for the item */
+.item {
+    width: 60em; /* Base width */
+    display: ruby-text; /* Display as ruby-text */
+}
+
+/* Responsive adjustments */
+
+/* For small screens (mobile devices) */
+@media (max-width: 600px) {
+    .item {
+        width: 100%; /* Full width of the container */
+    }
+}
+
+/* For medium screens (tablets) */
+@media (min-width: 601px) and (max-width: 1024px) {
+    .item {
+        width: 80%; /* Adjust the width for medium screens */
+    }
+}
+
+/* For large screens (desktops) */
+@media (min-width: 1025px) {
+    .item {
+        width: 60em; /* Keep the original width for large screens */
+    }
+}
+
+/*}*/
+
+
+
+
+.table-wrapper1 {
+            min-width: 1450px;
+            background: #fff;
+            padding: 20px 25px;
+            border-radius: 3px;
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+            margin-left:240px;
+        }
+
+
+
+@media (max-width: 600px) {
+    .table-wrapper1 {
+        margin-left:0px;
+    }
+}
+
+
+
+
+.p-2 {
+    padding: 0.5rem !important;
+    margin-left: 330px;
+    margin-top: -150px;
+    width: 50%;
+}
+
+/* For tablets and below */
+@media (max-width: 768px) {
+    .p-2 {
+        margin-left: 0;
+        margin-top: 0;
+        width: 100%;
+    }
+}
+
+/* For mobile devices */
+@media (max-width: 480px) {
+    .p-2 {
+        margin-left: 0;
+        margin-top: 0;
+        width: 100%;
+    }
+}

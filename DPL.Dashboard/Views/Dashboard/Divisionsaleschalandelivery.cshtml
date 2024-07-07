@@ -1,0 +1,237 @@
+﻿
+@{
+    ViewBag.Title = "Divisionsaleschalandelivery";
+}
+
+@RenderPage("~/Views/Shared/Sidebar.cshtml")
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <style>
+        button {
+            background: cornflowerblue;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-family: 'Lato';
+            margin: 5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            outline: none;
+        }
+
+            button:hover {
+                background: orange;
+            }
+
+        .bordercolor {
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+
+        .centerContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item {
+            width: 50em;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            margin: auto;
+            text-align: center;
+            font-family: arial;
+        }
+
+
+        .centerContain {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .border {
+            border: 1px solid #dee2e6 !important;
+        }
+
+        .p-2 {
+            padding: 0.5rem !important;
+        }
+
+        legend {
+            display: block;
+            width: auto;
+            margin-bottom: 2px;
+            padding-left: 2px;
+            padding-right: 2px;
+            border: none;
+        }
+
+        button:hover {
+            background: orange;
+        }
+
+        .bordercolor {
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+
+        .centerContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item {
+            width: 60em;
+        }
+
+
+        /**auther: aktarul
+              only for button css.
+            **/
+        .linkbutton:hover {
+            background: #2b8eed;
+            color: white;
+        }
+
+        .pcenter {
+            margin: auto;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+        }
+
+        .linkbutton {
+            border: 1px solid black;
+            height: 35px;
+            border-radius: 5px;
+            text-align: center;
+            background-color: #a8a7b9;
+            color: white;
+            padding-left: 5px;
+            padding-right: 5px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            justify-content: center;
+        }
+
+        /*.fa-file-invoice-dollar {
+            color: blue;
+        }*/
+
+        .il {
+            color: #dcf588;
+        }
+
+        .ilF {
+            color: #ffffff;
+        }
+
+        .ilF1 {
+            color: #00ff90;
+        }
+
+        .imagecenter {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 25%;
+        }
+    </style>
+
+</head>
+<body>
+
+
+    <div class="centerContainer ">
+        <div class="item bordercolor" style="padding: 20px; margin:100px; background-color:azure">
+            <h4> Division Sales Chalan Delivery </h4><br />
+            
+                    @*<div id="dividBranchSCD" class="row" style="display: none;">
+                        <label class="control-label"> Branch Name:</label>
+                        <select id="idBranchNameSCD" class="form-control" onchange="mloadLocation(this.values)">
+                            <option value="">--Select One--</option>
+                            <option value="All">All</option>
+                        </select>
+                    </div>*@
+                 
+
+                    <br>
+                  
+                    <div id="DivLocation" class="col-md-12">
+                        <div>
+                            <div class="row">
+                                <label  class="control-label col-md-3">Location Name: </label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        <select id="cboLocation" class="form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true"><option value="Jessore Depot">Jessore Depot</option><option value="Main Location">Main Location</option></select><span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-cboLocation-container"><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><br>
+                    </div>
+            <div class="row" style="margin-bottom:10px">
+
+                <div class="col-md-6">
+                    @*<fieldset class="border p-2">
+                        <legend class="w-auto">Selection</legend>
+
+                        <div class="row" style="margin-left:4px">
+                            <label style="font-size: 15px;"><input type="radio" name="status" value="1" style="height: 12px; width: 25px; margin-top: 5px" checked="">Details</label>
+
+                        </div>
+
+                        <div class="row" style="margin-left:4px">
+                            <label style="font-size: 15px;"><input type="radio" name="status" value="3" style="height: 12px; width: 25px; margin-top: 5px">Summary</label>
+
+                        </div>
+                    </fieldset>*@
+                </div>
+                <div class="col-md-6">
+                    <fieldset class="border p-2">
+                        <legend class="w-auto">Period Selection</legend>
+                        <div class="row" style="margin-left:4px"><br />
+                            <label class="control-label col-md-3">From: </label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+
+                                    <input type="date" id="FDateML">
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                        @*<div class="row" style="margin-left:4px">
+                            <label class="control-label col-md-3">To: </label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <input type="date" id="TDateML" name="toDate">
+                                </div>
+                            </div>
+                        </div>*@
+                    </fieldset>
+                </div>
+            </div>
+            <br />
+                    <div class="row" style=" float:right;">
+                        <div>
+                            <button title="Commission Cal." style="margin: 2px; text-transform: capitalize;" class="btn btn-success" onclick="Print();">
+                                <i class="fa fa-floppy-o"></i> Preview
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+</body>
+
+
+</html>

@@ -1,0 +1,685 @@
+﻿
+@{
+    ViewBag.Title = "Areampoledger";
+}
+
+
+@RenderPage("~/Views/Shared/Sidebar.cshtml")
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <style>
+        button {
+            background: cornflowerblue;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-family: 'Lato';
+            margin: 5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            outline: none;
+        }
+
+            button:hover {
+                background: orange;
+            }
+
+        .bordercolor {
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+
+        .centerContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item {
+            width: 50em;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            margin: auto;
+            text-align: center;
+            font-family: arial;
+        }
+
+
+        .centerContain {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .border {
+            border: 1px solid #dee2e6 !important;
+        }
+
+        .p-2 {
+            padding: 0.5rem !important;
+        }
+
+        legend {
+            display: block;
+            width: auto;
+            margin-bottom: 2px;
+            padding-left: 2px;
+            padding-right: 2px;
+            border: none;
+        }
+
+        button:hover {
+            background: orange;
+        }
+
+        .bordercolor {
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+
+        .centerContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item {
+            width: 60em;
+        }
+
+
+        /**auther: aktarul
+              only for button css.
+            **/
+        .linkbutton:hover {
+            background: #2b8eed;
+            color: white;
+        }
+
+        .pcenter {
+            margin: auto;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+        }
+
+        .linkbutton {
+            border: 1px solid black;
+            height: 35px;
+            border-radius: 5px;
+            text-align: center;
+            background-color: #a8a7b9;
+            color: white;
+            padding-left: 5px;
+            padding-right: 5px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            justify-content: center;
+        }
+
+        /*.fa-file-invoice-dollar {
+            color: blue;
+        }*/
+
+        .il {
+            color: #dcf588;
+        }
+
+        .ilF {
+            color: #ffffff;
+        }
+
+        .ilF1 {
+            color: #00ff90;
+        }
+
+        .imagecenter {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 25%;
+        }
+    </style>
+
+</head>
+<body>
+
+
+    <div class="centerContainer ">
+        <div class="item bordercolor" style="padding: 20px; margin:100px; background-color:azure">
+            <h4>Area Mpo Ledger</h4>
+
+
+            <br>
+
+            <div id="DivMPO_GROUPText" class="col-md-12">
+                <div>
+                    <div class="row">
+                        <label class="control-label col-md-3">MPO Name: </label>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <select id="cboParticulars" class="form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true"><option value="Select">Select</option><option value="001-Prokash Biswas-Natore Sadar">001-Prokash Biswas-Natore Sadar</option><option value="002-Md Shahin Ali-Nachole">002-Md Shahin Ali-Nachole</option><option value="003-Dilip Kumar Das-Bagha">003-Dilip Kumar Das-Bagha</option><option value="004-Masud Rana-004-Rajshahi Sadar">004-Masud Rana-004-Rajshahi Sadar</option><option value="005-Mohammed Bayazid-Baghmara">005-Mohammed Bayazid-Baghmara</option><option value="006-Abdus Sabur-Shibganj">006-Abdus Sabur-Shibganj</option><option value="007-Al-Kuddus-Chapainawabganj">007-Al-Kuddus-Chapainawabganj</option><option value="009-Nabirul Islam-Sirajganj Sadar">009-Nabirul Islam-Sirajganj Sadar</option><option value="010-Md. Abdul Halim-Chandaikona">010-Md. Abdul Halim-Chandaikona</option><option value="011-Mohammad Shaharul Islam-Pabna Sadar">011-Mohammad Shaharul Islam-Pabna Sadar</option><option value="012-Rubel Hossain-Bera">012-Rubel Hossain-Bera</option><option value="013-Abdul Motin-Chatmohar">013-Abdul Motin-Chatmohar</option><option value="014-Md. Ripon Ahmed-Belkuchi">014-Md. Ripon Ahmed-Belkuchi</option><option value="015-MD. Mofizul Islam-Naogaon Sadar">015-MD. Mofizul Islam-Naogaon Sadar</option><option value="016-Md. Moniruzzaman-016-Nazipur">016-Md. Moniruzzaman-016-Nazipur</option><option value="017-Md. Sahid Hossen-Joypurhat Sadar">017-Md. Sahid Hossen-Joypurhat Sadar</option><option value="018-Narun-Nabi-Bogra Sadar">018-Narun-Nabi-Bogra Sadar</option><option value="019-Bakul Islam-Sherpur-Bogra">019-Bakul Islam-Sherpur-Bogra</option><option value="020-Md. Mydul Islam-Mahadevpur">020-Md. Mydul Islam-Mahadevpur</option><option value="021-Md. Mizanur Rahman-Dinajpur Sadar">021-Md. Mizanur Rahman-Dinajpur Sadar</option><option value="022-Belayet Hossain-Birampur">022-Belayet Hossain-Birampur</option><option value="023-Khisna Sarma-Birganj">023-Khisna Sarma-Birganj</option><option value="024-Md. Abdullah Al Mamun-Ranisankail">024-Md. Abdullah Al Mamun-Ranisankail</option><option value="025-Meherullah-Chirirbandar">025-Meherullah-Chirirbandar</option><option value="026-Ershad-Saidpur">026-Ershad-Saidpur</option><option value="027-Md. Hatem Ali-Jaldhaka">027-Md. Hatem Ali-Jaldhaka</option><option value="028-Alokanta Chandra Barman-Atwari">028-Alokanta Chandra Barman-Atwari</option><option value="029-Amir Fysal Munna Khan-Debiganj">029-Amir Fysal Munna Khan-Debiganj</option><option value="030-MD. Anowar Hossain-030-Thakurgaon Sadar">030-MD. Anowar Hossain-030-Thakurgaon Sadar</option><option value="031-Md. Jakirul Islam-031-Panchagarh">031-Md. Jakirul Islam-031-Panchagarh</option><option value="032-Bishal Chandro Bormon-Kurigram Sadar">032-Bishal Chandro Bormon-Kurigram Sadar</option><option value="033-Rana Babu Saha-Raumari">033-Rana Babu Saha-Raumari</option><option value="034-Shadesh Chandra Sarker-Nageshwari">034-Shadesh Chandra Sarker-Nageshwari</option><option value="035-Md. Mizanur Rahman-035-Lalmonirhat">035-Md. Mizanur Rahman-035-Lalmonirhat</option><option value="036-Khorsid Alam-Hatibandha">036-Khorsid Alam-Hatibandha</option><option value="037-Sree Shachindranath Gosshami-Rangpur Sadar">037-Sree Shachindranath Gosshami-Rangpur Sadar</option><option value="038-Md. Rafikul Islam Rubel-Pirgacha">038-Md. Rafikul Islam Rubel-Pirgacha</option><option value="039-Shahen Molla-Pirganj">039-Shahen Molla-Pirganj</option><option value="040-Fahim Shahariar-Parbatipur">040-Fahim Shahariar-Parbatipur</option><option value="041-Md. Selim Hossen-Sadullapur">041-Md. Selim Hossen-Sadullapur</option><option value="042-Ali Akon-Polasbari">042-Ali Akon-Polasbari</option><option value="043-Md. Shamim Hossain-043-Saghata">043-Md. Shamim Hossain-043-Saghata</option><option value="044-Md. Suzat Mia-Bhaluka">044-Md. Suzat Mia-Bhaluka</option><option value="045-Harolal Howlader-Mymensingh Sadar">045-Harolal Howlader-Mymensingh Sadar</option><option value="046-Uttam Chandra Dhor-Ishwarganj">046-Uttam Chandra Dhor-Ishwarganj</option><option value="047-Md. Khaleduzzaman-Fulpur">047-Md. Khaleduzzaman-Fulpur</option><option value="048-Md. Likhon Pk-Muktagacha">048-Md. Likhon Pk-Muktagacha</option><option value="049-Md. Robayet Hassan Sifat-Netrokona Sadar">049-Md. Robayet Hassan Sifat-Netrokona Sadar</option><option value="050-Uttom Kumar Dhor-Mohanganj">050-Uttom Kumar Dhor-Mohanganj</option><option value="051-Farid Ahamed-Durgapur">051-Farid Ahamed-Durgapur</option><option value="052-Md. Abul Kalam Azad 052-Purbadhala">052-Md. Abul Kalam Azad 052-Purbadhala</option><option value="053-Ashutosh Dey-Ghatail">053-Ashutosh Dey-Ghatail</option><option value="054-Md. Jahangir Alam-Tangail">054-Md. Jahangir Alam-Tangail</option><option value="055-Saiful Islam 055-Madhupur">055-Saiful Islam 055-Madhupur</option><option value="056-Habibur Rahman Fakir-Gopalpur">056-Habibur Rahman Fakir-Gopalpur</option><option value="057-Habibur Rahman-057-Sherpur Sadar">057-Habibur Rahman-057-Sherpur Sadar</option><option value="058-Pabithra Chandra Das-Nalitabari">058-Pabithra Chandra Das-Nalitabari</option><option value="059-Dulal Sheikh-Jamalpur Sadar">059-Dulal Sheikh-Jamalpur Sadar</option><option value="060-Norol Amin-Sarishabari">060-Norol Amin-Sarishabari</option><option value="061-Yunuch Ali-Dohar">061-Yunuch Ali-Dohar</option><option value="062-Rajesh Kumar Gosh-Nawabganj">062-Rajesh Kumar Gosh-Nawabganj</option><option value="063-Md. Nazmul Hasan-Jatrabari">063-Md. Nazmul Hasan-Jatrabari</option><option value="064-Md. Abul Hossain-064-Wari">064-Md. Abul Hossain-064-Wari</option><option value="065-Md. Abdur Rahim-Narayanganj Sadar">065-Md. Abdur Rahim-Narayanganj Sadar</option><option value="066-Md. Imran-Kanchpur">066-Md. Imran-Kanchpur</option><option value="067-Md. Zia Uddin-Araihazar">067-Md. Zia Uddin-Araihazar</option><option value="068-Md. Rashidul Islam-Keraniganj">068-Md. Rashidul Islam-Keraniganj</option><option value="069-Md. Shamim Islam-Munshiganj">069-Md. Shamim Islam-Munshiganj</option><option value="070-Md. Abbas-Maniknagar">070-Md. Abbas-Maniknagar</option><option value="071-Anower Hossain Molla-Mirpur-1">071-Anower Hossain Molla-Mirpur-1</option><option value="072-Md. Alomgir Mia-Farmgate">072-Md. Alomgir Mia-Farmgate</option><option value="073-Harun Or Rashid-Mirpur-10">073-Harun Or Rashid-Mirpur-10</option><option value="074-Babul Talukder-Hazaribag">074-Babul Talukder-Hazaribag</option><option value="075-Abul Hasan-Kafrul">075-Abul Hasan-Kafrul</option><option value="076-Md. Somel Hasan-Lalbag">076-Md. Somel Hasan-Lalbag</option><option value="077-Abdus Samad-Savar">077-Abdus Samad-Savar</option><option value="078-Tonmoy Kumar-Manikganj">078-Tonmoy Kumar-Manikganj</option><option value="079-Md. Ismail Hossen-Shibalaya">079-Md. Ismail Hossen-Shibalaya</option><option value="080-Md. Hasibur Rahman-Dhamrai">080-Md. Hasibur Rahman-Dhamrai</option><option value="081-Md Al-Amin Shah-Baipal">081-Md Al-Amin Shah-Baipal</option><option value="082-Rahiduzzaman Khan-Kaliakair">082-Rahiduzzaman Khan-Kaliakair</option><option value="083-Md. Bellal Akon-Joydebpur Chowrasta">083-Md. Bellal Akon-Joydebpur Chowrasta</option><option value="084-Md. Tawhid-Mawna">084-Md. Tawhid-Mawna</option><option value="085-Babu Mia-Tongi">085-Babu Mia-Tongi</option><option value="086-H M Tarikul Islam-Kapasia">086-H M Tarikul Islam-Kapasia</option><option value="087-Moktadir Hossen-Badda">087-Moktadir Hossen-Badda</option><option value="088-Md. Nahid Hasan-Rampura">088-Md. Nahid Hasan-Rampura</option><option value="089-Binondra Chandra Sarker-Manohardi">089-Binondra Chandra Sarker-Manohardi</option><option value="090-Abdul Rahim Akon-Narsingdi Sadar">090-Abdul Rahim Akon-Narsingdi Sadar</option><option value="091-Md. Bossir Miah-Bhairab">091-Md. Bossir Miah-Bhairab</option><option value="092-Md. Maruf Hossen-Palash">092-Md. Maruf Hossen-Palash</option><option value="094-Shahed Ahammad-Karimgonj">094-Shahed Ahammad-Karimgonj</option><option value="095-Rafiqul Islam-Katiadi">095-Rafiqul Islam-Katiadi</option><option value="096-Md. Dulal Hossain-Pakundia">096-Md. Dulal Hossain-Pakundia</option><option value="097-Md. Hasan-097-Gournadi">097-Md. Hasan-097-Gournadi</option><option value="098-Abul Kalam Azad-Barisal Sadar">098-Abul Kalam Azad-Barisal Sadar</option><option value="099-Md. Saiful Islam-099-Wazirpur">099-Md. Saiful Islam-099-Wazirpur</option><option value="100-Saddam Hossain-Mehendiganj">100-Saddam Hossain-Mehendiganj</option><option value="101-Rahul Amin Hoque-Kendua">101-Rahul Amin Hoque-Kendua</option><option value="102-Md. Nirob-Bhola Sadar">102-Md. Nirob-Bhola Sadar</option><option value="103-Md. Elias Khanchon-Charfassion">103-Md. Elias Khanchon-Charfassion</option><option value="104-Apurba Lal Roy-Pirojpur Sadar">104-Apurba Lal Roy-Pirojpur Sadar</option><option value="105-Md. Mamun-Swarupkathi">105-Md. Mamun-Swarupkathi</option><option value="106-Md. Rahat Bepary-106-Jhalakati Sadar">106-Md. Rahat Bepary-106-Jhalakati Sadar</option><option value="107-Md. Afzalur Rahaman Taluckder-Rajapur">107-Md. Afzalur Rahaman Taluckder-Rajapur</option><option value="108-Hasibul Islam-108-Mathbaria">108-Hasibul Islam-108-Mathbaria</option><option value="109-Md. Hossain-Patharghata">109-Md. Hossain-Patharghata</option><option value="110-Md. Suruj Khan-Patuakhali-1">110-Md. Suruj Khan-Patuakhali-1</option><option value="111-Nayem Sharif-Galachipa">111-Nayem Sharif-Galachipa</option><option value="112-Jakir Hossen-Bawfal">112-Jakir Hossen-Bawfal</option><option value="113-Nahid Hossen-Barguna Sadar">113-Nahid Hossen-Barguna Sadar</option><option value="114-Abdullah All Mamun-Amtali">114-Abdullah All Mamun-Amtali</option><option value="115-Abu Abdullah-Bagerhat Sadar">115-Abu Abdullah-Bagerhat Sadar</option><option value="116-Nazmul Hasan Sumon-Morrelganj">116-Nazmul Hasan Sumon-Morrelganj</option><option value="117-Md. Anamul Molla-Mongla">117-Md. Anamul Molla-Mongla</option><option value="118-Molla Rezanur Rahman-Satkhira Sadar">118-Molla Rezanur Rahman-Satkhira Sadar</option><option value="119-Md. Ariful Islam-119-Kaliganj (Satkhira)">119-Md. Ariful Islam-119-Kaliganj (Satkhira)</option><option value="120-Indrojit Roy-Paikgachha">120-Indrojit Roy-Paikgachha</option><option value="121-Md. Boshirul Islam-Khulna Sadar">121-Md. Boshirul Islam-Khulna Sadar</option><option value="122-Rasel Talukdar-Fultola">122-Rasel Talukdar-Fultola</option><option value="123-Md. Murshidul Islam-Dumuria">123-Md. Murshidul Islam-Dumuria</option><option value="124-Uzzal Hossain-Gopalganj Sadar">124-Uzzal Hossain-Gopalganj Sadar</option><option value="125-Omar Faruk Sohag-Kotalipara">125-Omar Faruk Sohag-Kotalipara</option><option value="126-Md. Hasib Howlader-Kashiani">126-Md. Hasib Howlader-Kashiani</option><option value="127-Sukhen Mozumdar-Madhukhali">127-Sukhen Mozumdar-Madhukhali</option><option value="128-Shuvo Ahmed-Narail">128-Shuvo Ahmed-Narail</option><option value="129-Syed Jahid Hossain-Pangsha">129-Syed Jahid Hossain-Pangsha</option><option value="130-Md. Ismail Hosen-Rajbari Sadar">130-Md. Ismail Hosen-Rajbari Sadar</option><option value="131-Mehedi Hasan Sagor-Kushtia Sadar">131-Mehedi Hasan Sagor-Kushtia Sadar</option><option value="132-Masum Billa-Khoksha">132-Masum Billa-Khoksha</option><option value="133-Md. Ekramul Islam-Bheramara">133-Md. Ekramul Islam-Bheramara</option><option value="134-Abu Kawsar Ali-Faridpur Sadar">134-Abu Kawsar Ali-Faridpur Sadar</option><option value="135-Md. Solaiman Fakir-Bhanga">135-Md. Solaiman Fakir-Bhanga</option><option value="136-Iqramul-Shariatpur">136-Iqramul-Shariatpur</option><option value="137-Md. Shakib Munsi-Damudya">137-Md. Shakib Munsi-Damudya</option><option value="138-Md. Elias Biswas-Madaripur">138-Md. Elias Biswas-Madaripur</option><option value="139-Shamim Ahmed-Shibchar">139-Shamim Ahmed-Shibchar</option><option value="140-Humaun Kabir-Keshobpur">140-Humaun Kabir-Keshobpur</option><option value="141-Jakir Hossain-Newmarket-Jessore">141-Jakir Hossain-Newmarket-Jessore</option><option value="142-Ahasanur Rahman-Sharsha">142-Ahasanur Rahman-Sharsha</option><option value="143-Zayed Hosen-Jhikargachha">143-Zayed Hosen-Jhikargachha</option><option value="144-Fahim Haolader-Avaynagor">144-Fahim Haolader-Avaynagor</option><option value="145-Md. Omor Faruk Amirul-Keshobmor">145-Md. Omor Faruk Amirul-Keshobmor</option><option value="146-Ziaur Rahman-Bhainarmor">146-Ziaur Rahman-Bhainarmor</option><option value="147-Md. Sajol Rana-Chuadanga Sadar">147-Md. Sajol Rana-Chuadanga Sadar</option><option value="148-Md. Nadim Hossain-Meherpur">148-Md. Nadim Hossain-Meherpur</option><option value="149-Md. Rakib-Kotchandpur">149-Md. Rakib-Kotchandpur</option><option value="150-Md. Yeakub Ali-Jhenaidaha Sadar">150-Md. Yeakub Ali-Jhenaidaha Sadar</option><option value="151-Sagir Hossain-Habiganj Sadar-1">151-Sagir Hossain-Habiganj Sadar-1</option><option value="152-Nakul Acharjee-Chunarughat">152-Nakul Acharjee-Chunarughat</option><option value="153-Md. Rashedul Hasan-Nabiganj">153-Md. Rashedul Hasan-Nabiganj</option><option value="154-Abu Musa-Madhabpur">154-Abu Musa-Madhabpur</option><option value="155-Md. Zahid Hasan-Bhuapur">155-Md. Zahid Hasan-Bhuapur</option><option value="156-Mohammad Muradul Islam-Kulaura">156-Mohammad Muradul Islam-Kulaura</option><option value="157-Rubel Miah-Barlekha">157-Rubel Miah-Barlekha</option><option value="158-Sankar Halder-Biani Bazar">158-Sankar Halder-Biani Bazar</option><option value="159-Md. Muhibur Rahman-159-Osmaninagar">159-Md. Muhibur Rahman-159-Osmaninagar</option><option value="160-G. M. Badol-Sunamganj Sadar">160-G. M. Badol-Sunamganj Sadar</option><option value="161-Md. Shamim Hossin-Bhangura">161-Md. Shamim Hossin-Bhangura</option><option value="162-Saidur Rahman-Sylhet Sadar">162-Saidur Rahman-Sylhet Sadar</option><option value="163-Forhadul Alam-Dokhin Surma">163-Forhadul Alam-Dokhin Surma</option><option value="164-Md. Nur Nobi-Jaintapur">164-Md. Nur Nobi-Jaintapur</option><option value="165-Md. Ali Akbar-Kotwali-Ctg">165-Md. Ali Akbar-Kotwali-Ctg</option><option value="166-Md. Jabed-Bondartila">166-Md. Jabed-Bondartila</option><option value="167-Salauddin-Agrabad">167-Salauddin-Agrabad</option><option value="168-Md. Borhan Uddin-Pahartali">168-Md. Borhan Uddin-Pahartali</option><option value="169-Md. Tarikul Islam-Mirsharai">169-Md. Tarikul Islam-Mirsharai</option><option value="170-Md. Ismil Hossain-Sitakunda">170-Md. Ismil Hossain-Sitakunda</option><option value="171-Rajib Datta-Khagrachhari">171-Rajib Datta-Khagrachhari</option><option value="172-Jafor Hossain-Halishahar">172-Jafor Hossain-Halishahar</option><option value="173-Oadudur Rahman-Baized">173-Oadudur Rahman-Baized</option><option value="175-Mostafa Kamal-Raozan">175-Mostafa Kamal-Raozan</option><option value="176-Md. Sabbir Hossen-Bakolia">176-Md. Sabbir Hossen-Bakolia</option><option value="177-Nayeem Khan-Fatikchhari">177-Nayeem Khan-Fatikchhari</option><option value="178-Md. Ahsanul Haque-Gouripur">178-Md. Ahsanul Haque-Gouripur</option><option value="179-Tamim Hasan-Patiya">179-Tamim Hasan-Patiya</option><option value="180-Md. Nasir Uddin-Pekua">180-Md. Nasir Uddin-Pekua</option><option value="181-Miraj Hossain-Cox Bazar Sadar">181-Miraj Hossain-Cox Bazar Sadar</option><option value="182-Md. Rasel Howlader-Chakoria">182-Md. Rasel Howlader-Chakoria</option><option value="183-Md. Oli Ullah-Keranirhat">183-Md. Oli Ullah-Keranirhat</option><option value="184-Sekh Md. Rabbi-Banshkhali">184-Sekh Md. Rabbi-Banshkhali</option><option value="185-Rakibul Islam-Sadar Dakkhin (Comilla)">185-Rakibul Islam-Sadar Dakkhin (Comilla)</option><option value="186-Md. Shakil Khandaker-Laksham">186-Md. Shakil Khandaker-Laksham</option><option value="187-Nazmul Hosen Khan-Chauddagram">187-Nazmul Hosen Khan-Chauddagram</option><option value="188-Jasim Uddin-188-Chandpur Sadar">188-Jasim Uddin-188-Chandpur Sadar</option><option value="189-Fakhrul Hasan Khan-Matlab">189-Fakhrul Hasan Khan-Matlab</option><option value="190-Shekh Farid-Hajiganj">190-Shekh Farid-Hajiganj</option><option value="191-Md. Saddam Hossain-Muradnagar">191-Md. Saddam Hossain-Muradnagar</option><option value="192-Alamin Miah-Burichang">192-Alamin Miah-Burichang</option><option value="193-Santosh Chandra Sarkar-Daudkandi">193-Santosh Chandra Sarkar-Daudkandi</option><option value="194-Md. Akimuzzaman-B.Baria Sadar">194-Md. Akimuzzaman-B.Baria Sadar</option><option value="195-Md. Masum Billah-Bancharampur">195-Md. Masum Billah-Bancharampur</option><option value="196-Mohibul Molla-Kasba">196-Mohibul Molla-Kasba</option><option value="197-Mosarraf Hossain Patwary-Laxmipur Sadar">197-Mosarraf Hossain Patwary-Laxmipur Sadar</option><option value="198-Md. Idris-Hatia">198-Md. Idris-Hatia</option><option value="199-Md. Mohidul Kabir Tamim-Begumganj">199-Md. Mohidul Kabir Tamim-Begumganj</option><option value="200-Shahriar Parvez Muyen-Sonapur">200-Shahriar Parvez Muyen-Sonapur</option><option value="201-Md. Naimul Islam-Chatkhil">201-Md. Naimul Islam-Chatkhil</option><option value="202-Md. Tanim Akon-Feni Sadar">202-Md. Tanim Akon-Feni Sadar</option><option value="203-Md. Liton Miah-Dagonbhuiyan">203-Md. Liton Miah-Dagonbhuiyan</option><option value="204-Abdul Muttalib-Fulbaria">204-Abdul Muttalib-Fulbaria</option><option value="205-Md. Nurul Amin-Uttara">205-Md. Nurul Amin-Uttara</option><option value="206-Md. Sabbir Hossain-Ishwardi">206-Md. Sabbir Hossain-Ishwardi</option><option value="207-Md. Habibur Rahman-207-Lohagara">207-Md. Habibur Rahman-207-Lohagara</option><option value="208-Md. Ibrahim-Lalmohan">208-Md. Ibrahim-Lalmohan</option><option value="209-Sohel Rana-Borhanuddin">209-Sohel Rana-Borhanuddin</option><option value="210-Md. Aktarul Islam-Mohakhali">210-Md. Aktarul Islam-Mohakhali</option><option value="211-Gias Uddin Howlader-Monirampur">211-Gias Uddin Howlader-Monirampur</option><option value="212-Majharul Islam Juael-Trishal">212-Majharul Islam Juael-Trishal</option><option value="213-Mehedi Hasan-Chaugachha">213-Mehedi Hasan-Chaugachha</option><option value="214-Emdadul Haque Emu-Daulatpur">214-Emdadul Haque Emu-Daulatpur</option><option value="215-Nurnabi Khan-Islampur">215-Nurnabi Khan-Islampur</option><option value="216-Md. Mahmudul Hasan-216-Boxiganj">216-Md. Mahmudul Hasan-216-Boxiganj</option><option value="217-Jahidul Islam-Fatullah">217-Jahidul Islam-Fatullah</option><option value="218-Sazzad Molla-Sreenagar">218-Sazzad Molla-Sreenagar</option><option value="219-Md. Saiful Islam-219-Bhandaria">219-Md. Saiful Islam-219-Bhandaria</option><option value="220-Mynuddin-Bakerganj">220-Mynuddin-Bakerganj</option><option value="221-Md. Al-Amin-Shyamnagar">221-Md. Al-Amin-Shyamnagar</option><option value="222-Hasan Mohammad Javed-Ukhia">222-Hasan Mohammad Javed-Ukhia</option><option value="223-Md. Abdul Alim Khan-Mollahat">223-Md. Abdul Alim Khan-Mollahat</option><option value="224-Jahid Hosain-Rajendrapur">224-Jahid Hosain-Rajendrapur</option><option value="225-Raza Mia-Jessore Sadar">225-Raza Mia-Jessore Sadar</option><option value="226-Md. Kawser Hosan-Kalaroa">226-Md. Kawser Hosan-Kalaroa</option><option value="227-Farhad Hossen-Shosivusion">227-Farhad Hossen-Shosivusion</option><option value="228-Beplop Adikary-Nagorkanda">228-Beplop Adikary-Nagorkanda</option><option value="229-Md. Jobayer Hossen-Dupchacia">229-Md. Jobayer Hossen-Dupchacia</option><option value="230-Al Amin-230-Gafargaon">230-Al Amin-230-Gafargaon</option><option value="231-Mohammad Ariful Islam-Barura">231-Mohammad Ariful Islam-Barura</option><option value="232-Md. Ashraful Islam-232-Jamgora">232-Md. Ashraful Islam-232-Jamgora</option><option value="233-Md. Shakil Mia-Sakhipur">233-Md. Shakil Mia-Sakhipur</option><option value="234-Md. Jahidul Islam Leon-Mirzapur">234-Md. Jahidul Islam Leon-Mirzapur</option><option value="235-Md. Saiful Islam-235-Kalapara">235-Md. Saiful Islam-235-Kalapara</option><option value="236-Md. Jewel Rana-Kalshi">236-Md. Jewel Rana-Kalshi</option><option value="237-Ahsanullah-Gangachhara">237-Ahsanullah-Gangachhara</option><option value="238-Biplob Chandra Sarma-Panchbibi">238-Biplob Chandra Sarma-Panchbibi</option><option value="239-Md. Khashem Kha-Bormi">239-Md. Khashem Kha-Bormi</option><option value="240-Md. Arman Nahid-Rangamati">240-Md. Arman Nahid-Rangamati</option><option value="241-Amit Kumar Das-Bajua">241-Amit Kumar Das-Bajua</option><option value="242-Md. Hiriday-Lama">242-Md. Hiriday-Lama</option><option value="243-Md. Murad Hasan Sajib-Manda (Naogaon)">243-Md. Murad Hasan Sajib-Manda (Naogaon)</option><option value="244-Md. Aminur Molla-Raipura">244-Md. Aminur Molla-Raipura</option><option value="245-Md. Jahidul Islam-245-Tahirpur">245-Md. Jahidul Islam-245-Tahirpur</option><option value="246-Md. Nijam-Ramgati">246-Md. Nijam-Ramgati</option><option value="247-Mohammad Ibrahim-Chandina">247-Mohammad Ibrahim-Chandina</option><option value="248-Billal Hossain-Bajitpur">248-Billal Hossain-Bajitpur</option><option value="249-Md. Ebrahim-Banaripara">249-Md. Ebrahim-Banaripara</option><option value="250-Kamrul Islam-Muladi">250-Kamrul Islam-Muladi</option><option value="251-Md. Al Amin-251-Daulatkhan">251-Md. Al Amin-251-Daulatkhan</option><option value="252-Md. Didar-Monpura">252-Md. Didar-Monpura</option><option value="253-Shahin-Nazirpur">253-Shahin-Nazirpur</option><option value="254-Md. Abdur Rauf Rahat-Patuakhali-2">254-Md. Abdur Rauf Rahat-Patuakhali-2</option><option value="255-Md. Riaz Hosen-Chitolmari">255-Md. Riaz Hosen-Chitolmari</option><option value="256-Rayhan Shaikh-Kachua">256-Rayhan Shaikh-Kachua</option><option value="257-Abdur Rahim-Hathazari-2">257-Abdur Rahim-Hathazari-2</option><option value="258-MD. Hanif-Nangalkot">258-MD. Hanif-Nangalkot</option><option value="259-Md. Anwar Hossain-Nabinagar">259-Md. Anwar Hossain-Nabinagar</option><option value="260-Md. Redoan-Bijoynagar">260-Md. Redoan-Bijoynagar</option><option value="261-Mahabur Molla-Chowmuhani">261-Mahabur Molla-Chowmuhani</option><option value="262-Md. Akter Hossen-Agailjhara">262-Md. Akter Hossen-Agailjhara</option><option value="264-Ujjal Kumar Saha-Ulipur">264-Ujjal Kumar Saha-Ulipur</option><option value="266-Amit Kumar Pal-Gabtoli (Bogra)">266-Amit Kumar Pal-Gabtoli (Bogra)</option><option value="267-Shoriful Islam-Raninagar (Naogaon)">267-Shoriful Islam-Raninagar (Naogaon)</option><option value="268-Sohir Uddin-Sapahar (Naogaon)">268-Sohir Uddin-Sapahar (Naogaon)</option><option value="269-Md. Sharif Munjur-Gomastapur">269-Md. Sharif Munjur-Gomastapur</option><option value="270-Al Amin-Bonpara">270-Al Amin-Bonpara</option><option value="271-Md. Mahabubur Rahman-Tarash">271-Md. Mahabubur Rahman-Tarash</option><option value="272-Mahatab-Jibonnagar">272-Mahatab-Jibonnagar</option><option value="273-Abu Raihan-Kaliganj (Chuadanga)">273-Abu Raihan-Kaliganj (Chuadanga)</option><option value="274-Razu Ahmed-Kushtia-2">274-Razu Ahmed-Kushtia-2</option><option value="275-Babul Hasan-Kalkini">275-Babul Hasan-Kalkini</option><option value="276-Sobuj Chokder-Zanjira">276-Sobuj Chokder-Zanjira</option><option value="277-Habibullah-Tala">277-Habibullah-Tala</option><option value="278-Tanvir Hossan Sabbir-Gopalgonj-2">278-Tanvir Hossan Sabbir-Gopalgonj-2</option><option value="279-Gulam Salekin Khondwer-Atpara">279-Gulam Salekin Khondwer-Atpara</option><option value="281-Md. Kamrul Hasan-Tungipara">281-Md. Kamrul Hasan-Tungipara</option><option value="282-Md. Nasim Ahmed-Chhatak">282-Md. Nasim Ahmed-Chhatak</option><option value="283-Sanjoy Howlader-Jamalganj">283-Sanjoy Howlader-Jamalganj</option><option value="284-Tarikul Islam Dipu-Demra">284-Tarikul Islam Dipu-Demra</option><option value="285-Alam Mia-Board Bazar">285-Alam Mia-Board Bazar</option><option value="287-Rakibul Hafiz-Adabor">287-Rakibul Hafiz-Adabor</option><option value="288-Md. Shahadat Hossain-Dharmapasha">288-Md. Shahadat Hossain-Dharmapasha</option><option value="290-Sajib Howlader-Nawabganj (Dinajpur)">290-Sajib Howlader-Nawabganj (Dinajpur)</option><option value="291-Md. Sajib Hossain-Shibpur">291-Md. Sajib Hossain-Shibpur</option><option value="292-Md. Masudur Rahman 292-Amin Bazar">292-Md. Masudur Rahman 292-Amin Bazar</option><option value="293-Bivash Mondol-Daulatpur (Khulna)">293-Bivash Mondol-Daulatpur (Khulna)</option><option value="294-Md. Amanullah-Kansat">294-Md. Amanullah-Kansat</option><option value="295-Pallab Mandol-295-Boalmari">295-Pallab Mandol-295-Boalmari</option><option value="296-MD. Shamim Reza-Domar">296-MD. Shamim Reza-Domar</option><option value="297-Md. Mehedi Hasan-Kashinathpur">297-Md. Mehedi Hasan-Kashinathpur</option><option value="298-Md. Mahbubur Rahman Sakib-Sonagazi">298-Md. Mahbubur Rahman Sakib-Sonagazi</option><option value="299-Md. Azizul Haque-Alamdanga">299-Md. Azizul Haque-Alamdanga</option><option value="301-Md. Moniruzzaman-Dimla">301-Md. Moniruzzaman-Dimla</option><option value="302-Md. Shahadot Hossin-Charghat">302-Md. Shahadot Hossin-Charghat</option><option value="303-Md. Abdur Rahman-303-Raipura-2">303-Md. Abdur Rahman-303-Raipura-2</option><option value="304-MD. Abdur Rahman-Baliadangi">304-MD. Abdur Rahman-Baliadangi</option><option value="305-Md. Kamrujjaman-Gaibandha Sadar">305-Md. Kamrujjaman-Gaibandha Sadar</option><option value="306-Md. Mithun Ali-Godagari">306-Md. Mithun Ali-Godagari</option><option value="307-Md Ohiduzzam Shaikh-Patiya-2">307-Md Ohiduzzam Shaikh-Patiya-2</option><option value="308-MD. Ruman Talukder-Singra">308-MD. Ruman Talukder-Singra</option><option value="309-Md. Abdulla Al Mamun-Gobindaganj">309-Md. Abdulla Al Mamun-Gobindaganj</option><option value="310-Md. Aslam Hossain-Kamarkhando">310-Md. Aslam Hossain-Kamarkhando</option><option value="311-Piash Kumar Biswas-Shailokupa">311-Piash Kumar Biswas-Shailokupa</option><option value="312-Md. Nayeem Hossain-Palbari">312-Md. Nayeem Hossain-Palbari</option><option value="313-Md. Yeasin-Shibchar-2">313-Md. Yeasin-Shibchar-2</option><option value="314-Md. Akramul Haque-314-Setabganj">314-Md. Akramul Haque-314-Setabganj</option><option value="315-Moniruzzaman-Mahasthangarh">315-Moniruzzaman-Mahasthangarh</option><option value="316-M.M Shahin-DC Market Chapai">316-M.M Shahin-DC Market Chapai</option><option value="317-Md. Hasibul Hasan-Paba">317-Md. Hasibul Hasan-Paba</option><option value="318-Royes Uddin-Debhata">318-Royes Uddin-Debhata</option><option value="319-Md. Mohidul Islam-Ullahpara-2">319-Md. Mohidul Islam-Ullahpara-2</option><option value="320-Azizul Hakim-Khukni">320-Azizul Hakim-Khukni</option><option value="321-Md. Kawser Ali-Kumarkhali">321-Md. Kawser Ali-Kumarkhali</option><option value="322-Md. Kawsar Ali-Mohanpur">322-Md. Kawsar Ali-Mohanpur</option><option value="323-Md. Arif Khan-Baniachong">323-Md. Arif Khan-Baniachong</option><option value="324-Abu Lais-Sreemongol">324-Abu Lais-Sreemongol</option><option value="325-Raju Das Gupta-Matiranga">325-Raju Das Gupta-Matiranga</option><option value="326-Md. Jahid Hasan-Bandarban">326-Md. Jahid Hasan-Bandarban</option><option value="327-Ripan Chandra Sutradhar-Kashimpur">327-Ripan Chandra Sutradhar-Kashimpur</option><option value="328-Md. Samim Khan-Cheragali">328-Md. Samim Khan-Cheragali</option><option value="329-Md. Jahidul Islam-329-Ashuganj">329-Md. Jahidul Islam-329-Ashuganj</option><option value="330-Nurul Amin-Kaliganj (Tongi)">330-Nurul Amin-Kaliganj (Tongi)</option><option value="331-Md. Saiful Islam Palash-Kalihati">331-Md. Saiful Islam Palash-Kalihati</option><option value="332-Md. Noman Hossain Howladar-Subarnachar">332-Md. Noman Hossain Howladar-Subarnachar</option><option value="333-Anamul Haque-Dhobaura">333-Anamul Haque-Dhobaura</option><option value="334-Sumon Ahmmed-Benapole">334-Sumon Ahmmed-Benapole</option><option value="335-Md. Obydul Haque-Gazipur Chowrasta">335-Md. Obydul Haque-Gazipur Chowrasta</option><option value="336-Md. Reyez Uddin-Bosarhat">336-Md. Reyez Uddin-Bosarhat</option><option value="337-Priyonath Barman-Terokhada">337-Priyonath Barman-Terokhada</option><option value="338-Krisno Chandra Roy-Gangni">338-Krisno Chandra Roy-Gangni</option><option value="339-Md. Shamim Hossain-Baliakandi">339-Md. Shamim Hossain-Baliakandi</option><option value="340-Md Masud Rana-Lalpur">340-Md Masud Rana-Lalpur</option><option value="341-Minhaj Uddin-Turag">341-Minhaj Uddin-Turag</option><option value="342-Md. Akthar Hossen-Debidwar">342-Md. Akthar Hossen-Debidwar</option><option value="343-Md. Mamun Howlader-Homna">343-Md. Mamun Howlader-Homna</option><option value="344-Rabiul Sarder-Kachua (Chandpur)">344-Rabiul Sarder-Kachua (Chandpur)</option><option value="345-Md. Abu Rayhan-345-Haluaghat">345-Md. Abu Rayhan-345-Haluaghat</option><option value="346-Md. Sabbir Hossain Morol-Harirampur">346-Md. Sabbir Hossain Morol-Harirampur</option><option value="347-Md. Rejon Gazi-Gheor">347-Md. Rejon Gazi-Gheor</option><option value="348-Mohammad Ali-Bhurungamari">348-Mohammad Ali-Bhurungamari</option><option value="349-Redoy Kumar Roy-Kaliganj (Lalmonirhat)">349-Redoy Kumar Roy-Kaliganj (Lalmonirhat)</option><option value="350-Md. Yeamin-Lalmai">350-Md. Yeamin-Lalmai</option><option value="351-Md. Limon Sheikh-Salanga">351-Md. Limon Sheikh-Salanga</option><option value="352-Nur Mohammad-Thakurgaon-2">352-Nur Mohammad-Thakurgaon-2</option><option value="353-Md. Sharif Hossain Suhag-Nasirnagar">353-Md. Sharif Hossain Suhag-Nasirnagar</option><option value="354-Md. Al-Amin-354-Badalgachhi">354-Md. Al-Amin-354-Badalgachhi</option><option value="355-Dhrubo Sarker-Kalmakanda">355-Dhrubo Sarker-Kalmakanda</option><option value="356-Md. Mahfuzur Rahman-Singair">356-Md. Mahfuzur Rahman-Singair</option><option value="357-Md Shahadat Hossen-Chalna">357-Md Shahadat Hossen-Chalna</option><option value="358-Rakibul Islam-358-Taltali">358-Rakibul Islam-358-Taltali</option><option value="359-Anitosh Basu-Nolcity">359-Anitosh Basu-Nolcity</option><option value="360-Md. Suman Islam-Poilanpur">360-Md. Suman Islam-Poilanpur</option><option value="361-Ismail Hossen Sabuj-Kishoreganj-1">361-Ismail Hossen Sabuj-Kishoreganj-1</option><option value="362-Nur E Alam-Kishoreganj-2">362-Nur E Alam-Kishoreganj-2</option><option value="363-Md. Jahidul Islam-Muksudpur">363-Md. Jahidul Islam-Muksudpur</option><option value="364-Md. Shamim Hossain-364-Keraniganj-2">364-Md. Shamim Hossain-364-Keraniganj-2</option><option value="365-Md. Rasel Kazi-Madhabdi">365-Md. Rasel Kazi-Madhabdi</option><option value="366-Sree Sopon Kumar Saha-Sandwip">366-Sree Sopon Kumar Saha-Sandwip</option><option value="367-Md. Anayet Ullah-Senbag">367-Md. Anayet Ullah-Senbag</option><option value="368-Shubroto Kumar Sarker-Enayetpur">368-Shubroto Kumar Sarker-Enayetpur</option><option value="369-Md. Hossain Ali-Balshabari">369-Md. Hossain Ali-Balshabari</option><option value="370-Mulla Omar-Shahrasti">370-Mulla Omar-Shahrasti</option><option value="371-Md. Habibur Rahman -371-Netrokona-2">371-Md. Habibur Rahman -371-Netrokona-2</option><option value="372-Pankoj Sarker-Atharobari">372-Pankoj Sarker-Atharobari</option><option value="373-Azmir Gazi-Nurnagar">373-Azmir Gazi-Nurnagar</option><option value="375-Md. Fahad Hossain-Fulgazi">375-Md. Fahad Hossain-Fulgazi</option><option value="376-Md. Al-Amin-376-Oskhali">376-Md. Al-Amin-376-Oskhali</option><option value="377-Md. Shamimur Hossain Shamim-Mymensingh-2">377-Md. Shamimur Hossain Shamim-Mymensingh-2</option><option value="378-Reaz Hossain-Moulvibazar">378-Reaz Hossain-Moulvibazar</option><option value="379-Md. Zohorul Islam-Bhola Hat">379-Md. Zohorul Islam-Bhola Hat</option><option value="380-Shree Pappu Kumar Das-Rohonpur">380-Shree Pappu Kumar Das-Rohonpur</option><option value="382-Md. Solayman Akon-Nandail">382-Md. Solayman Akon-Nandail</option><option value="383-Md. Abdul Wadud-Kazipur">383-Md. Abdul Wadud-Kazipur</option><option value="384-Mustafizur Rahman-384-Masterbari">384-Mustafizur Rahman-384-Masterbari</option><option value="385-Md. Rubel-385-Sutrapur">385-Md. Rubel-385-Sutrapur</option><option value="386-Md. Rezaul Karim-Nondigram">386-Md. Rezaul Karim-Nondigram</option><option value="387-Rabby Sheikh-Sreepur">387-Rabby Sheikh-Sreepur</option><option value="388-Rajon Biswas-Derai">388-Rajon Biswas-Derai</option><option value="389-Md Moniruzzaman-389-Faridganj">389-Md Moniruzzaman-389-Faridganj</option><option value="390-Md. Monoarul Islam-390-Itna">390-Md. Monoarul Islam-390-Itna</option><option value="392-S M Aminul Islam-392-Damurhuda">392-S M Aminul Islam-392-Damurhuda</option><option value="394-Abu Saleh Shamim-Nokla">394-Abu Saleh Shamim-Nokla</option><option value="395-Md. Rubel Rana-Mirpur (Kustia)">395-Md. Rubel Rana-Mirpur (Kustia)</option><option value="396-Shakil Ahmmed-Rupsha">396-Shakil Ahmmed-Rupsha</option><option value="397-Mashud Hasan-Harinakundu">397-Mashud Hasan-Harinakundu</option><option value="398-Md. Nobin Hossain-Ghoshairhat">398-Md. Nobin Hossain-Ghoshairhat</option><option value="399-Sujon Chandra-Badargonj">399-Sujon Chandra-Badargonj</option><option value="5000-Herbal Sample-Sample">5000-Herbal Sample-Sample</option><option value="5011-Md. Ruhul Amin-5011-Dupchachia (Bogura)">5011-Md. Ruhul Amin-5011-Dupchachia (Bogura)</option><option value="5012-Md. Masum Mondal-Sherpur-1">5012-Md. Masum Mondal-Sherpur-1</option><option value="5016-Lalit Mohan Roy-Rangpur-2">5016-Lalit Mohan Roy-Rangpur-2</option><option value="5027-Md. Deloar Hossain-Bogura-1">5027-Md. Deloar Hossain-Bogura-1</option><option value="5029-Herbal Corporate-Sales">5029-Herbal Corporate-Sales</option><option value="5032-Md. Abu Taleb-Sirajganj">5032-Md. Abu Taleb-Sirajganj</option><option value="5034-Md. Shohag-Burhanuddin">5034-Md. Shohag-Burhanuddin</option><option value="5035-Kamal-5035-Charfasson">5035-Kamal-5035-Charfasson</option><option value="5036-Biplab Saha-Jashore-1">5036-Biplab Saha-Jashore-1</option><option value="5037-Md. Akram Hossain-Jashore-2">5037-Md. Akram Hossain-Jashore-2</option><option value="5040-Mohammed Moazzem Hossain-Rupnagar">5040-Mohammed Moazzem Hossain-Rupnagar</option><option value="5042-Md. Amir Hamza-Manirampur">5042-Md. Amir Hamza-Manirampur</option><option value="5043-Md. Kamaruzzaman-Chaugacha">5043-Md. Kamaruzzaman-Chaugacha</option><option value="5044-Md. Obaidul Islam-Pirgachha">5044-Md. Obaidul Islam-Pirgachha</option><option value="5045-Md. Abu Zafor-Pawtana">5045-Md. Abu Zafor-Pawtana</option><option value="5046-Md. Razu Mia-Sundarganj">5046-Md. Razu Mia-Sundarganj</option><option value="5047-Showrov Kumar-Kaunia-1">5047-Showrov Kumar-Kaunia-1</option><option value="5048-Md. Saddam Hossain-5048-Abdullahpur">5048-Md. Saddam Hossain-5048-Abdullahpur</option><option value="5049-Md. Shohag-5049-Shoshivushon">5049-Md. Shohag-5049-Shoshivushon</option><option value="5050-Md. Jahidul Islam-5050-Chowrasta">5050-Md. Jahidul Islam-5050-Chowrasta</option><option value="5052-Md. Mizanur Rahman-5052-Board Bazar">5052-Md. Mizanur Rahman-5052-Board Bazar</option><option value="5054-Shihab Uddin-Sonargaon">5054-Shihab Uddin-Sonargaon</option><option value="5057-Anamul Haq-5057-Dhakshinkhan">5057-Anamul Haq-5057-Dhakshinkhan</option><option value="5058-Rabin Chandra Sarkar-Mehendiganj">5058-Rabin Chandra Sarkar-Mehendiganj</option><option value="5059-Md. Jasim Uddin-Barishal-1">5059-Md. Jasim Uddin-Barishal-1</option><option value="5060-Md. Seragul Islam-Muladi">5060-Md. Seragul Islam-Muladi</option><option value="5061-Kayum Gazi-Kaliganj">5061-Kayum Gazi-Kaliganj</option><option value="5062-Md. Tarikul Islam Shamim-Konabari">5062-Md. Tarikul Islam Shamim-Konabari</option><option value="5066-Shamol Kumar Ray-Kallyanpur">5066-Shamol Kumar Ray-Kallyanpur</option><option value="5068-Md. Rubel Mia-5068-Mahiganj">5068-Md. Rubel Mia-5068-Mahiganj</option><option value="5069-Sabbir Ahmed Osmani-Chapainawabganj Sadar">5069-Sabbir Ahmed Osmani-Chapainawabganj Sadar</option><option value="5070-Md. Abdul Mannan-Mohespur">5070-Md. Abdul Mannan-Mohespur</option><option value="5071-Md. Sirajul Azam-Dinajpur-1">5071-Md. Sirajul Azam-Dinajpur-1</option><option value="5072-Rofiqul Islam-5072-Badarganj">5072-Rofiqul Islam-5072-Badarganj</option><option value="5074-Md. Helal Uddin-5074-Nekmarad">5074-Md. Helal Uddin-5074-Nekmarad</option><option value="5075-Md. Liton Mir-Bakerganj">5075-Md. Liton Mir-Bakerganj</option><option value="5077-Md. Rafiqul Islam-5077-Birganj">5077-Md. Rafiqul Islam-5077-Birganj</option><option value="5078-Md. Samiul Islam-5078-Birampur">5078-Md. Samiul Islam-5078-Birampur</option><option value="5079-Md. Abul Kalam-5079-Bogura-3">5079-Md. Abul Kalam-5079-Bogura-3</option><option value="5082-Md. Sultanul Islam Musa-PMC (Rangpur)">5082-Md. Sultanul Islam Musa-PMC (Rangpur)</option><option value="5083-Md. Al-Amin-5083-Mithapukur-2">5083-Md. Al-Amin-5083-Mithapukur-2</option><option value="5087-Md. Harunur Rashid-Fulbari">5087-Md. Harunur Rashid-Fulbari</option><option value="5088-Md. Atikul Islam-Birol">5088-Md. Atikul Islam-Birol</option><option value="5089-Md. Enamul Haque-Haripur-1">5089-Md. Enamul Haque-Haripur-1</option><option value="5090-Md. Ebrahim Ali-Haripur-2">5090-Md. Ebrahim Ali-Haripur-2</option><option value="5093-Mohammad Mohasin-Nalchity">5093-Mohammad Mohasin-Nalchity</option><option value="5094-Md. Houjifa Ratul-Barishal-2">5094-Md. Houjifa Ratul-Barishal-2</option><option value="5095-Md. Monir Hossain Patwary-Basila">5095-Md. Monir Hossain Patwary-Basila</option><option value="5098-Md. Soliman Hossain-Kaliganj (Jhenaidah)">5098-Md. Soliman Hossain-Kaliganj (Jhenaidah)</option><option value="5099-Md. Rubel Hossain-5099-Jhalokathi-1">5099-Md. Rubel Hossain-5099-Jhalokathi-1</option><option value="5100-S. M. Khairul Islam-Jhalokathi-2">5100-S. M. Khairul Islam-Jhalokathi-2</option><option value="5101-Kamol Krishna Brah-Kathalia">5101-Kamol Krishna Brah-Kathalia</option><option value="5103-Md. Al Amin-5103-Sundarganj-2">5103-Md. Al Amin-5103-Sundarganj-2</option><option value="5105-Khan Mohammad Shahin Shah-Tongi">5105-Khan Mohammad Shahin Shah-Tongi</option><option value="5106-Md. Suruz Mia-Bamondanga">5106-Md. Suruz Mia-Bamondanga</option><option value="5107-Md. Rabeul Islam-Nageswari-1">5107-Md. Rabeul Islam-Nageswari-1</option><option value="5108-Razu Ahmed-5108-Rajshahi-1">5108-Razu Ahmed-5108-Rajshahi-1</option><option value="5109-Md. Raich Uddin-Rajshahi-2">5109-Md. Raich Uddin-Rajshahi-2</option><option value="5111-Mohammad Mokhlesur Rahman-Chirirbandar">5111-Mohammad Mokhlesur Rahman-Chirirbandar</option><option value="5112-Md. Arif Hossain-Thakurgaon-2">5112-Md. Arif Hossain-Thakurgaon-2</option><option value="5114-Md. Abdur Rahim-5114-Rajapur">5114-Md. Abdur Rahim-5114-Rajapur</option><option value="5116-Tawhidul Islam Shimul-Kanchpur">5116-Tawhidul Islam Shimul-Kanchpur</option><option value="5117-Md. Humayun Kabir Mirda-Ershadnagar">5117-Md. Humayun Kabir Mirda-Ershadnagar</option><option value="5119-Tasirul Islam-Chapainawabganj-1">5119-Tasirul Islam-Chapainawabganj-1</option><option value="5120-Md. Shakhawat Hossain-Natore-1">5120-Md. Shakhawat Hossain-Natore-1</option><option value="5121-Md. Sazedur Rahman-Singra">5121-Md. Sazedur Rahman-Singra</option><option value="5122-Md. Omar Faruk-5122-Poba">5122-Md. Omar Faruk-5122-Poba</option><option value="5123-Amiruzzaman-Chapainawabganj-2">5123-Amiruzzaman-Chapainawabganj-2</option><option value="5124-Md. Aminul Islam-Mongla">5124-Md. Aminul Islam-Mongla</option><option value="5125-Md. Mosier Rahman-Taraganj">5125-Md. Mosier Rahman-Taraganj</option><option value="5126-Manik Miah-5126-Sadullahpur">5126-Manik Miah-5126-Sadullahpur</option><option value="5127-Sifatulla-Jhikarghacha">5127-Sifatulla-Jhikarghacha</option><option value="5129-Shakibul Hasan-Bagerhat-1">5129-Shakibul Hasan-Bagerhat-1</option><option value="5130-Tareque Hamid-Patharghata">5130-Tareque Hamid-Patharghata</option><option value="5131-Md. Sarowar Pervez-Naldanga">5131-Md. Sarowar Pervez-Naldanga</option><option value="5132-S. M. Nazmul Hossain-Singra-2">5132-S. M. Nazmul Hossain-Singra-2</option><option value="5133-S. M. Nadir Kaysar-Natore-2">5133-S. M. Nadir Kaysar-Natore-2</option><option value="5134-Abdul Alim-5134-Sirajganj-2">5134-Abdul Alim-5134-Sirajganj-2</option><option value="5135-Mohammad Zakir Hossain-Joydebpur">5135-Mohammad Zakir Hossain-Joydebpur</option><option value="NC-Head Office Sample-No Code">NC-Head Office Sample-No Code</option><option value="OD-Corporate Customer-Other Debtors">OD-Corporate Customer-Other Debtors</option><option value="OD-Manager Sale Center-Other Debtors">OD-Manager Sale Center-Other Debtors</option></select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-cboParticulars-container"><span class="select2-selection__rendered" id="select2-cboParticulars-container" title="Select"></span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div><br>
+            </div>
+            <div class="row" style="margin-bottom:10px">
+
+                <div class="col-md-6">
+                    <fieldset class="border p-2">
+                        <legend class="w-auto">Selection</legend>
+
+                        <div class="row" style="margin-left:4px">
+                            <label style="font-size: 15px;"><input type="radio" name="status" value="1" style="height: 12px; width: 25px; margin-top: 5px" checked="">Details</label>
+
+                        </div>
+
+                        <div class="row" style="margin-left:4px">
+                            <label style="font-size: 15px;"><input type="radio" name="status" value="3" style="height: 12px; width: 25px; margin-top: 5px">Summary</label>
+
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="col-md-6">
+                    <fieldset class="border p-2">
+                        <legend class="w-auto">Period Selection</legend>
+                        <div class="row" style="margin-left:4px">
+                            <label class="control-label col-md-3">From: </label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+
+                                    <input type="date" id="FDateML">
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row" style="margin-left:4px">
+                            <label class="control-label col-md-3">To: </label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <input type="date" id="TDateML" name="toDate">
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <br />
+            <div class="row" style="  float:right;">
+                <div>
+                    <button title="Commission Cal." style="margin: 2px; text-transform: capitalize;" class="btn btn-success" onclick="Print();">
+                        <i class="fa fa-floppy-o"></i> Preview
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+
+
+        var strLedger = "";
+        var radioStatus = 0;
+        var radioUser = 0;
+        var selectBranch = "";
+        var branchName = "";
+        var fdate;
+        var today;
+        var intDetailsSummary = 0;
+
+        $(document).ready(function () {
+            BranchNamechangeFunc();
+            divMPO_GROUPShow();
+            diveHideShow();
+            var idddbranchName = $("#idBranchName");
+            $("#cboParticulars").select2({ "width": '100%' });
+            var date = new Date();
+
+            var day = date.getDate();
+
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+
+            if (month < 10) month = "0" + month;
+            if (day < 10) day = "0" + day;
+            fdate = year + "-" + month + "-" + "01";
+            today = year + "-" + month + "-" + day;
+            console.log('kib', day)
+
+            getcheckData();
+            document.getElementById('FDateML').value = fdate;
+            document.getElementById('TDateML').value = today;
+            //$("#idSearch").hide();
+            documentFunc();
+
+        });
+
+
+
+        function divMPO_GROUPShow() {
+
+            //ddllstRight.html('');
+            radioStatus = 2;
+            radioStatus = $("input[name='status']:checked").val();
+
+            if (radioStatus == 2) {
+                $("#DivMPO_GROUP").hide();
+                $("#DivMPO_GROUPText").hide();
+            }
+            else {
+                $("#DivMPO_GROUP").show();
+                $("#DivMPO_GROUPText").show();
+            }
+        }
+        function diveHideShow() {
+            //ddllstLeft.html('');
+            //ddllstRight.html('');
+            radioStatus = 2;
+            radioStatus = $("input[name='status']:checked").val();
+
+            if (radioStatus == 2) {
+                $("#idSearch").hide();
+            }
+            else {
+                $("#idSearch").show();
+            }
+        }
+
+        function documentFunc() {
+            debugger
+
+
+            if ("MPO" == "Division") {
+
+
+
+                var dividLedgerStatusD = document.getElementById("dividLedgerStatusD");
+                dividLedgerStatusD.style.display = "none";
+
+                var dividBranch = document.getElementById("dividBranchML");
+                dividBranch.style.display = "none";
+                //var DivMPO_GROUP = document.getElementById("DivMPO_GROUP");
+                //DivMPO_GROUP.style.display = "none";
+
+                //var dividLedgerStatus = document.getElementById("dividLedgerStatusSS");
+                //dividLedgerStatus.style.display = "none";
+
+                //var dividAM = document.getElementById("dividAMSS");
+                //dividAM.style.display = "none";
+                //var dividDSM = document.getElementById("dividDSMSS");
+                //dividDSM.style.display = "none";
+                //var dividZONE = document.getElementById("dividZONESS");
+                //dividZONE.style.display = "none";
+                //var dividTeam = document.getElementById("dividTeamSS");
+                //dividTeam.style.display = "none";
+            }
+
+            if ("Area" == "Division") {
+
+
+                var dividBranch = document.getElementById("dividBranchML");
+                dividBranch.style.display = "none";
+                //var idLedgerGroup = document.getElementById("dividLedgerGroup");
+                //DivMPO_GROUP.style.display = "none";
+
+                //var dividLedgerStatus = document.getElementById("dividLedgerStatusSS");
+                //dividLedgerStatus.style.display = "none";
+
+                //var dividAM = document.getElementById("dividAMSS");
+                //dividAM.style.display = "none";
+                //var dividDSM = document.getElementById("dividDSMSS");
+                //dividDSM.style.display = "none";
+                //var dividZONE = document.getElementById("dividZONESS");
+                //dividZONE.style.display = "none";
+                //var dividTeam = document.getElementById("dividTeamSS");
+                //dividTeam.style.display = "none";
+            }
+            if ("Division" == "Division") {
+
+
+                var dividBranch = document.getElementById("dividBranchML");
+                dividBranch.style.display = "none";
+                //var idLedgerGroup = document.getElementById("dividLedgerGroup");
+                //idLedgerGroup.style.display = "none";
+                //var dividLedgerStatus = document.getElementById("dividLedgerStatusSS");
+                //dividLedgerStatus.style.display = "none";
+
+                //var dividDSM = document.getElementById("dividDSMSS");
+                //dividDSM.style.display = "none";
+                //var dividZONE = document.getElementById("dividZONESS");
+                //dividZONE.style.display = "none";
+                //var dividTeam = document.getElementById("dividTeamSS");
+                //dividTeam.style.display = "none";
+
+            }
+        }
+
+
+        function BranchNamechangeFunc() {
+            var idddbranchName = $("#idBranchNameMPO");
+            $.ajax({
+                url: '/SalesReport/mGetBranchName',
+                datatype: "json",
+                success: function (data) {
+                    $.each(data, function (id, option) {
+                        idddbranchName.append($('<option value="' + option.Key + '">' + option.Value + '</option>'));
+                    });
+
+
+                    //$('#idddbranchName').val(1);
+                    //$('#idddbranchName').trigger('change');
+                }
+            })
+        }
+
+        //function diveHideShow() {
+
+        //    $("#idSearch").show();
+        //}
+
+
+
+        function getcheckData() {
+
+
+
+            selectBranch = $("#idBranchNameMPO").val();
+
+            radioStatus = $("input[name='status']:checked").val();
+
+            radioUser = $("input[name='userType']:checked").val();
+
+            var ListBox = document.getElementById('<%= lstRightM.ClientID %>');
+
+            console.log('Kib', radioStatus + radioUser);
+
+            var ddllstLeft = $("#lstLeftsv");
+            var ddllstRight = $("#lstRightsv");
+            ddllstLeft.html('');
+            ddllstRight.html('');
+
+
+            var ddlUnder = $("#cboParticulars");
+            $.ajax({
+                url: '/SalesReport/mGetMPOLedger',
+                datatype: "json",
+                data: {
+                    selectBranchID: selectBranch,
+                    radioStatus: 0,
+                    radioUser: 4
+                },
+                success: function (data) {
+                    ddlUnder.html('');
+                    ddlUnder.append($('<option value=Select>Select</option>'));
+                    $.each(data, function (id, option) {
+                        ddlUnder.append($('<option value="' + option.strGRName + '">' + option.strGRName + '</option>'));
+                    });
+                }
+            })
+
+
+        };
+
+
+        function mloadParticulars(drcr) {
+
+
+            var ddlUnder = $("#cboParticulars");
+            $.ajax({
+
+                datatype: "json",
+                data: {},
+                success: function (data) {
+                    ddlUnder.html('');
+                    ddlUnder.append($('<option value=Select>Select</option>'));
+                    $.each(data, function (id, option) {
+                        ddlUnder.append($('<option value="' + option.strLedgerName + '">' + option.strLedgerName + '</option>'));
+                    });
+                    $('#ddlUnder').val(selectdata.strLedgerName);
+
+                }
+            })
+        }
+
+        function mloadBranch() {
+            var ddlidBranchlist = $("#bName");
+            $.ajax({
+                url: '/SalesReport/mGetBranch',
+                datatype: "json",
+
+                success: function (data) {
+                    //console.log(data);
+                    ddlidBranchlist.html('');
+                    $.each(data, function (id, option) {
+                        console.log(option.Value);
+                        ddlidBranchlist.append($('<option value="' + option.Key + '">' + option.Value + '</option>'));
+                    });
+                    //$('#ddlidBranchlist').val(selectdata.Value);
+                    //$('#ddlidBranchlist').trigger('change');
+                }
+            })
+
+        };
+        $(function () {
+            $("#ShiftRight,#ShiftLeft").click(function (event) {
+                var ID = $(event.target).attr("ID");
+                var ChooseFrom = ID == "ShiftRight" ? "#ChooseLeft" : "#ChooseRight";
+                var moveTo = ID == "ShiftRight" ? "#ChooseRight" : "#ChooseLeft";
+                var SelectData = $(ChooseFrom + " :selected").toArray();
+                $(moveTo).append(SelectData);
+                SelectData.remove;
+            });
+        });
+
+
+
+
+        //-----------------------------Filter starts
+        //declare
+        var keys = [];
+        var values = [];
+
+        var options = $('#ChooseLeft option');
+        //load all list key and value
+        $.each(options, function (index, item) {
+            keys.push(item.value);
+            values.push(item.innerHTML);
+        });
+
+        //event on key up
+        $('#txtSearchBy').keyup(function () {
+            var filter = $(this).val();
+            doListBoxFilter('#ChooseLeft', filter, keys, values);
+        });
+
+        //private helper method to search
+        function doListBoxFilter(listBoxSelector, filter, keys, values) {
+            var list = $(listBoxSelector);
+            var selectBase = '<option value="{0}">{1}</option>';
+
+
+            list.empty();
+            for (i = 0; i < values.length; ++i) {
+
+
+                var value = values[i];
+
+
+                if (value == "" || value.toLowerCase().indexOf(filter.toLowerCase()) >= 0) {
+                    var temp = '<option value="' + keys[i] + '">' + value + '</option>';
+                    list.append(temp);
+                }
+            }
+        }
+        //-----------------------------Filter end
+
+
+
+        //-------------- left right
+
+
+        $(function () {
+            $("#leftsv").bind("click", function () {
+
+                //alert("SSS");
+
+                var options = $("[id*=lstLeftsv] option:selected");
+                console.log(options.length);
+                var lstRightMt = $("#lstRightsv");
+                for (var i = 0; i < options.length; i++) {
+                    var opt = $(options[i]).clone();
+                    console.log(opt);
+                    $(options[i]).remove();
+                    $("[id*=lstRightsv]").append(opt);
+                }
+            });
+
+            $("#rightsv").bind("click", function () {
+
+
+
+                var options = $("[id*=lstRightsv] option:selected");
+                console.log(options.length);
+                var lstLeftsv = $("#lstLeftsv");
+                for (var i = 0; i < options.length; i++) {
+                    var opt = $(options[i]).clone();
+                    console.log(opt);
+                    $(options[i]).remove();
+                    $("[id*=lstLeftsv]").append(opt);
+                }
+            });
+
+
+
+            $("#allleftsv").bind("click", function () {
+                var options = $("[id*=lstRightsv] option");
+
+                for (var i = 0; i < options.length; i++) {
+                    var opt = $(options[i]).clone();
+                    console.log(opt);
+                    $(options[i]).remove();
+                    $("[id*=lstLeftsv]").append(opt);
+                }
+            });
+            $("#allRightsv").bind("click", function () {
+                var options = $("[id*=lstLeftsv] option");
+
+                for (var i = 0; i < options.length; i++) {
+                    var opt = $(options[i]).clone();
+                    console.log(opt);
+                    $(options[i]).remove();
+                    $("[id*=lstRightsv]").append(opt);
+                }
+            });
+
+        });
+
+
+
+
+
+
+
+        function Print() {
+
+
+
+
+
+
+            branchName = document.getElementById("idBranchNameMPO").value;
+
+            //selectBranch = $("#idBranchNamee").tex();
+
+            var t = document.getElementById("idBranchNameMPO");
+            selectBranch = t.options[t.selectedIndex].text;
+
+            console.log("Kibria test ip");
+
+            radioStatus = $("input[name='status']:checked").val();
+
+            //radioUser = $("input[name='userType']:checked").val();
+
+            //strCoustomer = $("input[name='Customerstatus']:checked").val();
+            //intDetailsSummary = $("input[name='DetailsSummary']:checked").val();
+
+            debugger;
+            var statusSalesCollAch = 0;
+
+            //var chkboxSpecilaMonitort = 0;
+            //var chkboxDetails = 0;
+            //if (document.getElementById("idcheckboxTypeGiftSearch").checked == true) {
+            //    chkboxSpecilaMonitort = 1;
+            //}
+            //if (document.getElementById("idcheckboxDetails").checked == true) {
+            //    chkboxDetails = 1;
+            //}
+            var ListBox = document.getElementById("lstRightSS");
+            var rList = [];
+            var rListstrring = "";
+
+            fdate = document.getElementById('FDateML').value;
+            today = document.getElementById('TDateML').value;
+
+            console.log('Fdate', fdate);
+            console.log('Tdate', today);
+            //GetStatisticalProductSales(string strBranchName, int intMode, int intLedgerMode, string strString, string strFdate, string strTDate)
+
+
+
+            radioStatus = $("input[name='status']:checked").val();///all=2,ind=3
+
+            radioUser = $("input[name='userType']:checked").val();//Group=3,MPO=4
+
+            if (radioStatus == 3) {
+                if ($('#cboParticulars').val() == "Select") {
+                    swal('Required!!!', 'Please Select Location', 'warning')
+                    return;
+                }
+            }
+
+            if (radioStatus == 2) {
+
+                strLedger = "";
+
+            }
+            else {
+                strLedger = $('#cboParticulars').val();
+            }
+            $.ajax({
+
+                url: '/SalesReport/GetMpoLedgerReport',
+                type: "POST",
+                datatype: "json",
+                data: {
+                    strBranchName: selectBranch,
+                    intMode: radioStatus,
+                    strString: strLedger,
+                    strFdate: fdate,
+                    strTdate: today,
+                    intNarration: 0,
+                    intSignatory: 0
+                },
+                success: function (data) {
+                    console.log('Path', data)
+                    window.open(data);
+                }
+            });
+
+        };
+
+
+
+    </script>
+
+</body>
+
+
+</html>

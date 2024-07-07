@@ -1,0 +1,729 @@
+﻿@{
+    ViewBag.Title = "Examlist";
+}
+
+@RenderPage("~/Views/Shared/SidebarDh.cshtml")
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam List</title>
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.36/moment-timezone-with-data.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link href="~/Content/css/custom.max.css" rel="stylesheet">
+
+
+    <style>
+        body {
+            font-family: 'Varela Round', sans-serif;
+            font-size: 13px;
+            max-width: 100%;
+            background: #c2e3f6;
+        }
+
+        .table-responsive {
+            margin: 10px 0;
+           
+        }
+
+        /*.table-wrapper {
+            min-width: 1400px;
+            background: #fff;
+            padding: 20px 25px;
+           
+           
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+            margin-top: 80px;
+        }*/
+
+        .table-title {
+            padding-bottom: 15px;
+            padding: 16px 30px;
+            margin: -20px -25px 10px;
+            border-radius: 3px 3px 0 0;
+        }
+
+            .table-title h2 {
+                margin: 5px 0 0;
+                font-size: 24px;
+            }
+
+            .table-title .btn-group {
+                float: right;
+            }
+
+            .table-title .btn {
+                color: #fff;
+                float: right;
+                font-size: 13px;
+                border: none;
+                min-width: 50px;
+                border-radius: 2px;
+                border: none;
+                outline: none !important;
+                margin-left: 10px;
+            }
+
+                .table-title .btn i {
+                    float: left;
+                    font-size: 21px;
+                    margin-right: 5px;
+                }
+
+                .table-title .btn span {
+                    float: left;
+                    margin-top: 2px;
+                }
+
+        table.table tr th,
+        table.table tr td {
+            border-color: #e9e9e9;
+            padding: 12px 15px;
+            vertical-align: middle;
+        }
+
+            table.table tr th:first-child {
+                width: 60px;
+            }
+
+            table.table tr th:last-child {
+                width: 100px;
+            }
+
+        table.table-striped tbody tr:nth-of-type(odd) {
+            background-color: #fcfcfc;
+        }
+
+        table.table-striped.table-hover tbody tr:hover {
+            background: #f5f5f5;
+        }
+
+        table.table th i {
+            font-size: 13px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        table.table td:last-child i {
+            opacity: 0.9;
+            font-size: 22px;
+            margin: 0 5px;
+        }
+
+        table.table td a {
+            font-weight: bold;
+            color: #566787;
+            display: inline-block;
+            text-decoration: none;
+            outline: none !important;
+        }
+
+            table.table td a:hover {
+                color: #2196F3;
+            }
+
+            table.table td a.edit {
+                color: #FFC107;
+            }
+
+            table.table td a.delete {
+                color: #F44336;
+            }
+
+        table.table td i {
+            font-size: 19px;
+        }
+
+        table.table .avatar {
+            border-radius: 50%;
+            vertical-align: middle;
+            margin-right: 10px;
+            display: inline-block;
+        }
+
+        .pagination {
+            float: right;
+            margin: 0 0 5px;
+        }
+
+            .pagination li a {
+                border: none;
+                font-size: 13px;
+                min-width: 30px;
+                min-height: 30px;
+                color: #999;
+                margin: 0 2px;
+                line-height: 30px;
+                border-radius: 2px !important;
+                text-align: center;
+                padding: 0 6px;
+            }
+
+                .pagination li a:hover {
+                    color: #666;
+                }
+
+            .pagination li.active a,
+            .pagination li.active a.page-link {
+                background: #03A9F4;
+            }
+
+                .pagination li.active a:hover {
+                    background: #0397d6;
+                }
+
+            .pagination li.disabled i {
+                color: #ccc;
+            }
+
+            .pagination li i {
+                font-size: 16px;
+                padding-top: 6px;
+            }
+
+        .hint-text {
+            float: left;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+
+        .nav-tabs .nav-item .nav-link.active {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .nav-tabs .nav-item .nav-link {
+            background-color: #f8f9fa;
+            color: #212529;
+            border-color: transparent;
+        }
+
+           
+        .nav-tabs .nav-item {
+            margin-right: 10px;
+        }
+
+            .nav-tabs .nav-item .nav-link {
+                text-decoration: none;
+            }
+
+
+        .btn-success {
+            color: white;
+            background-color: green;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 8px;
+        }
+
+            .btn-success:hover {
+                background-color: darkgreen; 
+            }
+
+            .btn-success i {
+                vertical-align: middle; 
+                margin-right: 5px; 
+            }
+
+
+
+
+
+
+
+
+
+       
+        .modal-header {
+            background-color: #007bff; 
+            color: #fff; 
+        }
+
+       
+        .modal-title {
+            font-size: 1.25rem; 
+        }
+
+      
+        .modal-body {
+            padding: 1rem; 
+        }
+
+       
+        .modal-footer {
+            background-color: #f7f7f7; 
+            padding: 1rem; 
+        }
+
+       
+        .close {
+            color: #fff; 
+        }
+
+           
+            .close:hover {
+                color: #f8f9fa; 
+            }
+
+
+        .modal-body {
+            max-height: 1000px;
+            margin-left: 30px;
+        }
+
+
+        .modal-content {
+           
+            width: 800px;
+        }
+
+
+
+
+
+        #examDataContainer {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+            #examDataContainer th,
+            #examDataContainer td {
+                /*border: 1px solid #ddd;*/
+                padding: 8px;
+            }
+
+            #examDataContainer th {
+                background-color: #f2f2f2;
+                width: 145px;
+            }
+
+            #examDataContainer tr:nth-child(even) {
+                /*background-color: #f2f2f2;*/
+            }
+
+            #examDataContainer tr:hover {
+                background-color: #ddd;
+            }
+
+        .nav {
+            display: ruby-text;
+            padding-left: 0;
+            margin-bottom: 0;
+        }
+
+
+        .modal-dialog {
+            right: auto;
+            left: 0%;
+            width: 600px;
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="table-responsive">
+            <div class="table-wrapper">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Upcoming</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#tabs-2" role="tab">Past</a>
+                    </li>
+                    <li class="nav-item" style="float: right;">
+                        <button class="btn btn-success" onclick="location.href = '/Dashboard/QuestionAdd';">
+                            <i class="material-icons">&#xE147;</i> Add Question
+                        </button>
+
+                    </li>
+                </ul>
+
+                <br />
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Exam Name</th>
+                                    <th>Valid From</th>
+                                    <th>Valid To</th>
+                                    <th>Marks</th>
+                                    <th>Duration</th>
+                                    <th >Question</th>
+                                    <th  style="width: 150px;">Result Overview</th>
+                                  
+
+                                </tr>
+                            </thead>
+                            <tbody class="tbody-upcoming"></tbody>
+                        </table>
+                        <br>
+                        <div class="clearfix" style="float:right;">
+                            <a href="#" class="btn btn-primary btnPreviousUpcoming">Previous</a>
+                            <a href="#" class="btn btn-primary btnNextUpcoming">Next</a>
+                        </div>
+                        <br />
+                        <br />
+                        <br />
+                       
+                    </div>
+                    <div class="tab-pane" id="tabs-2" role="tabpanel">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Exam Name</th>
+                                    <th>Valid From</th>
+                                    <th>Valid To</th>
+                                    <th>Marks</th>
+                                    <th>Duration</th>
+                                    <th >Question</th>
+                                    <th style="width: 150px;">Result Overview</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbody-past"></tbody>
+
+                        </table>
+                        <br>
+                        <div class="clearfix" style="float:right;">
+                            <a href="#" class="btn btn-primary btnPreviousPast">Previous</a>
+                            <a href="#" class="btn btn-primary btnNextPast">Next</a>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+                <br />
+                <br />
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Exam Information</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="examDataContainer">
+
+                    <div class=" modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        @*<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Exam Information</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" id="examDataContainer">
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+
+
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+        <script>
+
+
+            function viewExamResult(examId) {
+                var apiUrl = '/Exam/mGetExamResultList';
+                var postData = { strexamId: examId };
+
+                $.ajax({
+                    url: apiUrl,
+                    type: 'POST',
+                    data: postData,
+                    success: function (response) {
+                        console.log('Exam data retrieved successfully:', response);
+
+                        var html = '';
+
+
+                        html += '<thead>';
+                        html += '<tr>';
+                        html += '<th>User</th>';
+                        html += '<th>Finished At</th>';
+                        html += '<th>Status</th>';
+                        html += '<th>Score</th>';
+                        html += '<th>Duration</th>';
+                        html += '</tr>';
+                        html += '</thead>';
+
+                        $.each(response, function (key, item) {
+                            html += '<tr>';
+                            html += '<td>' + item.strcardNO + ' (' + item.strledgerName + ')</td>';
+                            html += '<td>' + item.strcreatedate + '</td>';
+                            html += '<td>' + item.strresult + '</td>';
+                            html += '<td>' + item.strtotalScore + '/' + item.strtotalMark + ' (' + ((item.strtotalScore / item.strtotalMark) * 100).toFixed(0) + '%)</td>';
+                            html += '<td>' + item.strexamTime + ' min</td>';
+                            html += '</tr>';
+                        });
+
+                        $('#examDataContainer').html(html);
+
+                        $('#myModal').modal({ backdrop: 'static', keyboard: false });
+                        $('#exampleModal').modal('show');
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error:', error);
+                    }
+                });
+            }
+
+
+
+
+            function calculateTotalQuestions(data) {
+                var total = 0;
+                for (var i = 0; i < data.length; i++) {
+                    var title = data[i].strTITLE.split(',');
+                    total += title.length;
+                }
+                return total;
+            }
+
+            function viewExamQuestions(examId) {
+                var apiUrl = '/Exam/mGetExamAlldataList';
+                var postData = { strexamId: examId };
+
+                $.ajax({
+                    url: apiUrl,
+                    type: 'POST',
+                    data: postData,
+                    success: function (response) {
+                        console.log('Exam data retrieved successfully:', response);
+
+                        var totalQuestions = calculateTotalQuestions(response);
+
+                        var html = '';
+
+                        response.forEach(function (item, index) {
+                            if (index === 0) {
+                                html += '<tr>';
+                                html += '<td><h1 style="font-weight:bold;">' + item.strEXAM_TITLE + '</h1></td>';
+                                html += '</tr>';
+                                html += '<tr>';
+                                html += '<td><p style="font-size:16px; font-weight:bold;">' + item.strEXAM_NOTICE + '</p></td>';
+                                html += '</tr>';
+                                html += '<tr>';
+                                html += '<td style="font-weight:bold;"><i class="fa fa-question-circle" aria-hidden="true"></i> ' + totalQuestions + ' Questions</td>'; // Display total questions count
+                                html += '<td style="font-weight:bold;"><i class="fa fa-clock-o" aria-hidden="true"></i> ' + item.strTIMELIMIT + ' min</td>';
+                                html += '</tr>';
+                                html += '<tr>';
+                                html += '<td style="font-weight:bold;"><i class="fa fa-star" aria-hidden="true"></i> ' + item.strTOTAL_MARKS + ' Marks (Pass Marks ' + item.strPASS_MARKS + ')</td>';
+                                html += '<td style="font-weight:bold;"><i class="fa fa-user-o" aria-hidden="true"></i> ' + item.strROLE + '</td>';
+                                html += '</tr>';
+                                html += '<tr>';
+                                html += '<td style="font-weight:bold;"><div class="h-0 d-inline-block" style="width: 250px;">' + item.strNATIONAL_HEAD + ' National Head <br> Deeplaid Laboratories Ltd </div></td>';
+                                html += '<td style="font-weight:bold;">Schedule: <br><i class="fa fa-calendar" aria-hidden="true"></i> ' + item.strEXAM_DATE + ', ' + item.strSTART_TIME + ' to ' + item.strEND_TIME + '</td>';
+                                html += '<td><br></td>';
+                                html += '</tr>';
+                                html += '<tr>';
+                                html += '<td style="font-size:16px; font-weight:bold;">Question</td>';
+                                html += '</tr>';
+                            }
+
+                            html += '<tr>';
+                            html += '<td style="font-weight:bold;">' + (index + 1) + '.' + item.strTITLE + '</td>';
+
+                            function toRoman(num) {
+                                var romans = ['i', 'ii', 'iii', 'iv'];
+                                return romans[num - 1] || num;
+                            }
+
+                            var options = item.strOPTIONS.split(',');
+
+                            html += '<td>';
+                            html += '<ul>';
+                            for (var j = 0; j < options.length; j++) {
+                                html += toRoman(j + 1) + '. ' + options[j];
+                                if (j !== options.length - 1) {
+                                    html += '<br>';
+                                }
+                            }
+                            html += '</ul>';
+                            html += '</td>';
+
+                            html += '<td>Answer: ' + item.strANSWER + '</td>';
+                            html += '<td>Marks: ' + item.strMARKS + '</td>';
+                            html += '</tr>';
+                        });
+
+
+                        $('#examDataContainer').html(html);
+
+                        $('#myModal').modal({ backdrop: 'static', keyboard: false })
+                        $('#exampleModal').modal('show');
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error:', error);
+                    }
+                });
+            }
+
+
+
+
+
+
+            $(document).ready(function () {
+                loadData('upcoming');
+                loadData('past');
+            });
+
+            var pageSize = 25;
+            var currentPageUpcoming = 1;
+            var currentPagePast = 1;
+
+            function loadData(tab) {
+                var currentPage = tab === 'upcoming' ? currentPageUpcoming : currentPagePast;
+                var startIndex = (currentPage - 1) * pageSize;
+                var endIndex = startIndex + pageSize;
+
+                var apiUrl = '/Exam/mGetExamList';
+
+                $.ajax({
+                    url: apiUrl,
+                    type: 'GET',
+                    success: function (response) {
+
+
+                        console.log(response)
+
+
+                        var data = tab === 'upcoming' ? response.UpcomingExams : response.PastExams;
+
+                        var uniqueData = [];
+                        var examIds = {};
+                        $.each(data, function (index, item) {
+                            if (!examIds[item.strexamId]) {
+                                uniqueData.push(item);
+                                examIds[item.strexamId] = true;
+                            }
+                        });
+
+                        var filteredData = uniqueData.slice(startIndex, endIndex);
+
+                        var html = '';
+                        $.each(filteredData, function (index, item) {
+                            html += '<tr>';
+                            html += '<td><div class="h-0 d-inline-block" style="width: 250px;">' + item.strEXAM_TITLE + '</div></td>';
+                            html += '<td>' + item.strEXAM_DATE + ' ' + item.strSTART_TIME + '</td>';
+                            html += '<td>' + item.strEXAM_DATE + ' ' + item.strEND_TIME + '</td>';
+                            html += '<td>' + item.strTOTAL_MARKS + '</td>';
+                            html += '<td>' + item.strTIMELIMIT + ' min</td>';
+                            html += '<td><button class="btn btn-success"  data-toggle="modal" data-target=".bs-example-modal-lg" onclick="viewExamQuestions(\'' + item.strexamId + '\')"><span class="fa-stack fa-lg " style="margin-left: 6px;"><i class="fa fa-info-circle" aria-hidden="true"></i></span></button></td>';
+                            html += '<td><button class="btn btn-success"  data-toggle="modal" data-target=".bs-example-modal-lg" onclick="viewExamResult(\'' + item.strexamId + '\')" ><span class="fa-stack fa-lg pull-left"><i class="fa fa-eye fa-stack-1x "></i></span></button></td>';
+                            html += '</tr>';
+                        });
+
+                        if (tab === 'upcoming') {
+                            $('.tbody-upcoming').html(html);
+                            updatePaginationControls(currentPage, uniqueData.length, tab);
+                        } else if (tab === 'past') {
+                            $('.tbody-past').html(html);
+                            updatePaginationControls(currentPage, uniqueData.length, tab);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.log('Error:', error);
+                    }
+                });
+            }
+
+            function updatePaginationControls(currentPage, totalItems, tab) {
+                var totalPages = Math.ceil(totalItems / pageSize);
+                if (tab === 'upcoming') {
+                    $('.btnPreviousUpcoming').prop('disabled', currentPage === 1);
+                    $('.btnNextUpcoming').prop('disabled', currentPage === totalPages);
+                } else if (tab === 'past') {
+                    $('.btnPreviousPast').prop('disabled', currentPage === 1);
+                    $('.btnNextPast').prop('disabled', currentPage === totalPages);
+                }
+            }
+
+            ////function viewExamResult(examId) {
+            ////    window.location.href = '/Dashboard/ExamResult?examId=' + examId;
+            ////}
+
+            $('.btnPreviousUpcoming').click(function () {
+                if (currentPageUpcoming > 1) {
+                    currentPageUpcoming--;
+                    loadData('upcoming');
+                }
+            });
+
+            $('.btnNextUpcoming').click(function () {
+                currentPageUpcoming++;
+                loadData('upcoming');
+            });
+
+            $('.btnPreviousPast').click(function () {
+                if (currentPagePast > 1) {
+                    currentPagePast--;
+                    loadData('past');
+                }
+            });
+
+            $('.btnNextPast').click(function () {
+                currentPagePast++;
+                loadData('past');
+            });
+
+
+
+        </script>
+</body>
+ </html>
+
+
+
+

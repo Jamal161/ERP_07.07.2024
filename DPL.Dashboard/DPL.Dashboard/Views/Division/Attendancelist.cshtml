@@ -1,0 +1,1161 @@
+﻿@*@DPL.DASHBOARD.Models.AttendentCongfig;*@
+
+
+@{
+    ViewBag.Title = "Attendancelist";
+}
+
+@RenderPage("~/Views/Shared/SidebarDh.cshtml")
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Deeplaid</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+
+
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/alumuko/vanilla-datetimerange-picker@latest/dist/vanilla-datetimerange-picker.css">
+
+    <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alumuko/vanilla-datetimerange-picker@latest/dist/vanilla-datetimerange-picker.js"></script>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
+   
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+    <link href="~/Content/css/custom.max.css" rel="stylesheet">
+
+
+    <style>
+        body {
+            color: #566787;
+            background: #f5f5f5;
+           
+            font-size: 13px;
+            max-width: 100%;
+        }
+
+        .table-responsive {
+            margin: 10px 0;
+            overflow-x: unset;
+        }
+
+       
+
+        .table-title {
+            padding-bottom: 15px;
+            background: #435d7d;
+            color: #fff;
+            padding: 16px 30px;
+            margin: -20px -25px 10px;
+            border-radius: 3px 3px 0 0;
+        }
+
+            .table-title h2 {
+                margin: 5px 0 0;
+                font-size: 24px;
+            }
+
+            .table-title .btn-group {
+                float: right;
+            }
+
+            .table-title .btn {
+                color: #fff;
+                float: right;
+                font-size: 13px;
+                border: none;
+                min-width: 50px;
+                border-radius: 2px;
+                border: none;
+                outline: none !important;
+                margin-left: 10px;
+            }
+
+                .table-title .btn i {
+                    float: left;
+                    font-size: 21px;
+                    margin-right: 5px;
+                }
+
+                .table-title .btn span {
+                    float: left;
+                    margin-top: 2px;
+                }
+
+        table.table tr th, table.table tr td {
+            border-color: #e9e9e9;
+            padding: 12px 15px;
+            vertical-align: middle;
+        }
+
+            table.table tr th:first-child {
+                width: 60px;
+            }
+
+            table.table tr th:last-child {
+                width: 100px;
+            }
+
+        table.table-striped tbody tr:nth-of-type(odd) {
+            background-color: #fcfcfc;
+        }
+
+        table.table-striped.table-hover tbody tr:hover {
+            background: #f5f5f5;
+        }
+
+        table.table th i {
+            font-size: 13px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        table.table td:last-child i {
+            opacity: 0.9;
+            font-size: 22px;
+            margin: 0 5px;
+        }
+
+        table.table td a {
+            font-weight: bold;
+            color: #566787;
+            display: inline-block;
+            text-decoration: none;
+            outline: none !important;
+        }
+
+            table.table td a:hover {
+                color: #2196F3;
+            }
+
+            table.table td a.edit {
+                color: #FFC107;
+            }
+
+            table.table td a.delete {
+                color: #F44336;
+            }
+
+        table.table td i {
+            font-size: 19px;
+        }
+
+        table.table .avatar {
+            border-radius: 80%;
+            vertical-align: middle;
+            margin-right: 10px;
+            display: inline-block;
+            height: 60px;
+            width: 60px;
+        }
+
+        .pagination {
+            float: right;
+            margin: 0 0 5px;
+        }
+
+            .pagination li a {
+                border: none;
+                font-size: 13px;
+                min-width: 30px;
+                min-height: 30px;
+                color: #999;
+                margin: 0 2px;
+                line-height: 30px;
+                border-radius: 2px !important;
+                text-align: center;
+                padding: 0 6px;
+            }
+
+                .pagination li a:hover {
+                    color: #666;
+                }
+
+            .pagination li.active a, .pagination li.active a.page-link {
+                background: #03A9F4;
+            }
+
+                .pagination li.active a:hover {
+                    background: #0397d6;
+                }
+
+            .pagination li.disabled i {
+                color: #ccc;
+            }
+
+            .pagination li i {
+                font-size: 16px;
+                padding-top: 6px;
+            }
+
+        .hint-text {
+            float: left;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+        /* Custom checkbox */
+        .custom-checkbox {
+            position: relative;
+        }
+
+            .custom-checkbox input[type="checkbox"] {
+                opacity: 0;
+                position: absolute;
+                margin: 5px 0 0 3px;
+                z-index: 9;
+            }
+
+            .custom-checkbox label:before {
+                width: 18px;
+                height: 18px;
+            }
+
+            .custom-checkbox label:before {
+                content: '';
+                margin-right: 10px;
+                display: inline-block;
+                vertical-align: text-top;
+                background: white;
+                border: 1px solid #bbb;
+                border-radius: 2px;
+                box-sizing: border-box;
+                z-index: 2;
+            }
+
+            .custom-checkbox input[type="checkbox"]:checked + label:after {
+                content: '';
+                position: absolute;
+                left: 6px;
+                top: 3px;
+                width: 6px;
+                height: 11px;
+                border: solid #000;
+                border-width: 0 3px 3px 0;
+                transform: inherit;
+                z-index: 3;
+                transform: rotateZ(45deg);
+            }
+
+            .custom-checkbox input[type="checkbox"]:checked + label:before {
+                border-color: #03A9F4;
+                background: #03A9F4;
+            }
+
+            .custom-checkbox input[type="checkbox"]:checked + label:after {
+                border-color: #fff;
+            }
+
+            .custom-checkbox input[type="checkbox"]:disabled + label:before {
+                color: #b8b8b8;
+                cursor: auto;
+                box-shadow: none;
+                background: #ddd;
+            }
+
+        /*Modal styles*/
+
+
+        .modal .modal-dialog {
+            max-width: 400px;
+        }
+
+        .modal .modal-header, .modal .modal-body, .modal .modal-footer {
+            padding: 20px 30px;
+        }
+
+        .modal .modal-content {
+            border-radius: 3px;
+        }
+
+        .modal .modal-footer {
+            background: #ecf0f1;
+            border-radius: 0 0 3px 3px;
+        }
+
+        .modal .modal-title {
+            display: inline-block;
+        }
+
+        .modal .form-control {
+            border-radius: 2px;
+            box-shadow: none;
+            border-color: #dddddd;
+        }
+
+        .modal textarea.form-control {
+            resize: vertical;
+        }
+
+        .modal .btn {
+            border-radius: 2px;
+            min-width: 100px;
+        }
+
+        .modal form label {
+            font-weight: normal;
+        }
+
+        mark {
+            background-color: white;
+            color: #319AF8;
+            font-weight: normal;
+        }
+
+
+
+        .toggle {
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .toggle-switch {
+            display: inline-block;
+            background: #ccc;
+            border-radius: 16px;
+            width: 40px;
+            height: 15px;
+            position: relative;
+            vertical-align: middle;
+            transition: background 0.25s;
+        }
+
+            .toggle-switch:before, .toggle-switch:after {
+                content: "";
+            }
+
+            .toggle-switch:before {
+                display: block;
+                background: linear-gradient(to bottom, #fff 0%, #eee 100%);
+                border-radius: 50%;
+                box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
+                width: 15px;
+                height: 15px;
+                position: absolute;
+                left: 4px;
+                transition: left 0.25s;
+            }
+
+        .toggle:hover .toggle-switch:before {
+            background: linear-gradient(to bottom, #fff 0%, #fff 100%);
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
+        }
+
+        .toggle-checkbox:checked + .toggle-switch {
+            background: #56c080;
+        }
+
+            .toggle-checkbox:checked + .toggle-switch:before {
+                left: 30px;
+            }
+
+        .toggle-checkbox {
+            position: absolute;
+            visibility: hidden;
+        }
+
+        .toggle-label {
+            margin-left: 5px;
+            position: relative;
+            top: 2px;
+        }
+
+
+        .rotate-icon {
+            transform: rotate(90deg);
+            transition: transform 0.3s ease;
+        }
+
+
+
+
+
+        .nav-link.active.custom-color p {
+            color: white;
+            background-color: #0069d9;
+        }
+
+
+        .dropdown-menu {
+            background-color: #ffffff;
+        }
+
+        div:where(.swal2-container) .swal2-select {
+            min-width: 48%;
+            max-width: 90%;
+            margin-right: 5px;
+            padding: .375em .625em;
+            background: rgba(0, 0, 0, 0);
+            color: inherit;
+            font-size: 1.125em;
+            border: 1px solid green;
+        }
+
+
+
+        .pending-row {
+            background-color: #ffeeba;
+        }
+
+
+
+        input[type="date"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 4px;
+            
+        }
+
+
+        .nav {
+            display: ruby-text;
+            padding-left: 0;
+            margin-bottom: 0;
+        }
+
+        /*.btn {
+            border-radius: 3px;
+            width: 70px;
+            height: 35px;
+            padding: 10px;
+        }*/
+
+        .modal-dialog {
+            right: auto;
+            left: 0%;
+            width: 600px;
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+
+    </style>
+
+
+    <script>
+
+
+
+        $(document).ready(function () {
+            $('.nav-link').on('click', function () {
+
+                $('.nav-link').removeClass('active');
+
+
+                $(this).addClass('active');
+
+
+                $('.nav-link').removeClass('custom-color');
+
+
+                $(this).addClass('custom-color');
+            });
+
+
+            $('.nav-link.active').addClass('custom-color');
+        });
+
+
+
+
+
+     
+
+
+        function toggleDropdownMenu(event) {
+            event.stopPropagation();
+            var dropdownMenu = event.target.nextElementSibling;
+            dropdownMenu.style.display = (dropdownMenu.style.display === 'none') ? 'block' : 'none';
+            var ellipsisIcon = document.getElementById('ellipsisIcon');
+            ellipsisIcon.classList.toggle('rotate-icon');
+        }
+
+        document.addEventListener('click', function(event) {
+            var dropdownMenus = document.querySelectorAll('.dropdown-menu');
+            dropdownMenus.forEach(function(menu) {
+                if (menu.style.display === 'block') {
+                    menu.style.display = 'none';
+                    var ellipsisIcon = document.getElementById('ellipsisIcon');
+                    ellipsisIcon.classList.remove('rotate-icon');
+                }
+            });
+        });
+
+
+
+    </script>
+
+
+
+</head>
+<body>
+
+
+            <div class="container">
+                <div class="table-responsive">
+                    <div class="table-wrapper" >
+
+                        <h4>Attendence List</h4>
+                        <ul class="nav nav-tabs" role="tablist">
+                         
+                            <li class="nav-item">
+                                <a href="#" class="nav-link active" id="btnShowAll"><p class="btn btn-light">All</p></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" id="btnShowApproved"><p class="btn btn-light">Approved</p></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" id="btnShowPending"><p class="btn btn-light">Pending</p></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" id="btnShowRejected"><p class="btn btn-light">Reject</p></a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="#" class="nav-link"><p class="btn btn-light"><input type="checkbox" id="select_all"> Select All</p></a>
+                            </li>
+
+
+                            <li class="nav-item">
+                                <a href="#" class="btnUpdateBtn" data-vist-id="' + item.intATTEN_SERIAL + '" data-actions-id="' + item.strACTION + '"><button class="nav-link" id="approveButton" style="display: none;">Approve</button></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="btnUpdateBtn" data-vist-id="' + item.intATTEN_SERIAL + '" data-actions-id="' + item.strACTION + '"> <button class="nav-link" id="rejectButton" style="display: none;"> Reject</button></a>
+                            </li>
+
+
+
+
+
+                            <li class="nav-item" style="float: right; margin-right:20px;">
+
+
+
+
+                                <input type="date" id="fromDateInput">
+                                <input type="date" id="toDateInput">
+                                <button onclick="filterDataByDateRange()">Apply Filter</button>
+                                <script>
+
+                                    var today = new Date();
+
+
+                                    var year = today.getFullYear();
+                                    var month = String(today.getMonth() + 1).padStart(2, '0');
+                                    var day = String(today.getDate()).padStart(2, '0');
+                                    var formattedDate = year + '-' + month + '-' + day;
+
+
+                                    document.getElementById('fromDateInput' ).value = formattedDate;
+                                    document.getElementById( 'toDateInput').value = formattedDate;
+                                </script>
+
+
+
+
+
+                            </li>
+                        </ul>
+
+
+
+                        <div class="tab-pane active" id="tabs-1" role="tabpanel">
+
+
+                            <p class="container">
+
+
+                            <table class="table table-bordered table-hover" id="idshifttable">
+                                <thead>
+                                    <tr>
+                                        <th>
+
+
+
+                                        </th>
+                                        <th>Name</th>
+                                        <div id="myModal" class="modal">
+                                            <span class="close">&times;</span>
+                                            <img class="modal-content" id="img01">
+                                            <div id="caption"></div>
+                                        </div>
+                                        <th>Date & Time (Shift)</th>
+                                        <th>Location</th>
+                                        <th>Distance</th>
+                                        <th>Type & Note	</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody class="tbody"></tbody>
+                            </table>
+                            </p>
+
+
+                        </div>
+
+                 
+
+                    <div class="clearfix" style="float:right">
+
+                        @*<button class="btn btn-default" onclick="window.print();"><i class="fa fa-print"></i> Print</button>*@
+                        @*<a href="#" class="btn btn-primary btnPrevious" id="paginationPrevious">&laquo; Previous</a>
+                        <a href="#" class="btn btn-primary btnNext" id="paginationNext">Next &raquo;</a>*@
+
+
+                        <div id="paginationControls">
+                            <button class="btn btn-primary" onclick="window.print();"><i class="fa fa-print"></i> Print</button>
+                            <button id="paginationPrevious">Previous</button>
+                            <span id="paginationNumbers"></span>
+                            <button id="paginationNext">Next</button>
+                        </div>
+
+
+
+                    </div>
+
+                    <br /><br /><br />
+
+                </div>
+            </div>
+        </div>
+
+   
+  
+
+
+
+
+        <script>
+
+
+
+
+            $(document).ready(function () {
+
+                function updateSelectAllCheckbox(status) {
+                    if (status === "Pending") {
+                        $('#select_all').show();
+                    } else {
+                        $('#select_all').hide();
+                    }
+                }
+
+
+                loadData('all');
+                $('.select_all').hide();
+                $('#approveButton').hide();
+                $('#rejectButton').hide();
+                $('#select_all').hide();
+
+
+                $('#select_all').on('click', function () {
+                    var isChecked = $(this).prop('checked');
+                    $('.select_all').prop('checked', isChecked);
+
+                    if (isChecked) {
+                        $('#approveButton').show();
+                        $('#rejectButton').show();
+                    } else {
+                        $('#approveButton').hide();
+                        $('#rejectButton').hide();
+                    }
+                });
+
+
+                $('#btnShowRejected').on('click', function () {
+                    loadData('reject');
+                    $('.select_all').hide();
+                    updateSelectAllCheckbox('');
+                });
+
+                $('#btnShowApproved').on('click', function () {
+                    loadData('approve');
+                    $('.select_all').hide();
+                    updateSelectAllCheckbox('');
+                });
+
+                $('#btnShowAll').on('click', function () {
+                    loadData('all');
+                    $('.select_all').hide();
+                    updateSelectAllCheckbox('');
+                });
+
+                $('#btnShowPending').on('click', function () {
+                    loadData('pending');
+                    updateSelectAllCheckbox('Pending');
+                    $('.select_all').show();
+                });
+            });
+
+            function filterDataByDateRange() {
+                var fromDate = new Date($('#fromDateInput').val());
+                var toDate = new Date($('#toDateInput').val());
+                loadData('all', fromDate, toDate);
+            }
+
+
+
+            $(document).ready(function () {
+                loadData('all');
+            });
+
+            var currentPage = 1;
+            var currentStatus = 'all';
+            var pageSize = 15;
+
+            function loadData(status, fromDate = null, toDate = null, page = 1) {
+                var startIndex = (page - 1) * pageSize;
+                var endIndex = startIndex + pageSize;
+
+
+                var currentDate = new Date();
+                var formattedCurrentDate = currentDate.toISOString().split('T')[0];
+
+
+                $.ajax({
+                    url: "/Attendence/mGetAttendance",
+                    type: "GET",
+                    contentType: 'application/json;charset=utf-8',
+                    dataType: "json",
+                    success: function (result) {
+
+                        console.log(result)
+
+                        if (fromDate && toDate) {
+                            result = result.filter(function (item) {
+                                var date = new Date(item.strATTEN_DATEIN);
+                                return date >= fromDate && date <= toDate;
+                            });
+                        } else if (status === 'all' || status === 'pending') {
+
+                            result = result.filter(function (item) {
+                                var date = new Date(item.strATTEN_DATEIN);
+                                var formattedDate = date.toISOString().split('T')[0];
+                                return formattedDate === formattedCurrentDate;
+                            });
+                        }
+
+
+                        if (status !== 'all') {
+                            result = result.filter(function (item) {
+                                return item.strACTION.toLowerCase() === status;
+                            });
+                        }
+
+
+                        result.sort(function (a, b) {
+                            return new Date(b.strATTEN_DATEIN) - new Date(a.strATTEN_DATEIN);
+                        });
+
+                        var slicedData = result.slice(startIndex, endIndex);
+                        var html = '';
+                        $.each(slicedData, function (key, item) {
+                            if (status === 'all' || item.strACTION.toLowerCase() === status) {
+                                var rowClass = (item.strACTION.toLowerCase() === 'pending') ? 'pending-row' : '';
+                                html += '<tr class="' + rowClass + '">';
+                                if (item.strACTION.toLowerCase() === 'pending') {
+                                    html += '<td> <a href="#" class="btnUpdateBtn" data-vist-id="' + item.intATTEN_SERIAL + '" data-actions-id="' + item.strACTION + '"><input type="checkbox" class="btnUpdateBtn" value="' + item.intATTEN_SERIAL + '"></a> </td>';
+                                } else {
+                                    html += '<td></td>';
+                                }
+                                html += '<td>';
+
+                                var modalId = 'exampleModal' + key;
+                                html += '<div class="row"><div class="col-sm-4" id="gallery" data-toggle="modal" data-target="#' + modalId + '"> <img src="data:image/png;base64,' + item.strEMP_IMAGE + '" class="avatar" alt="Avatar"></div><div class="col-sm-8">' + item.strUSER_NAME + ' <br>Code: ' + item.strEMP_CARD_NO + ' <br>Role: ' + item.strROLE + '</div></div>';
+
+                                html += '<div class="modal fade" id="' + modalId + '" tabindex="-1" role="dialog" aria-hidden="true"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body"><div class="carousel-inner"><div class="carousel-item active"> <img src="data:image/png;base64,' + item.strEMP_IMAGE + '" style="display: block; margin: auto; width:500px; height:500px;"></div></div></div><div class="modal-footer"><h5 style="margin-right: 50px">' + item.strEMP_CARD_NO + ' | ' + item.strUSER_NAME + '</h5></div></div></div></div></td>';
+                                html += '<td>' + item.strATTEN_DATEIN + ', ' + item.strATTEN_TIMEIN + ' <br> ' + item.strATTEN_SHIFT + '</td>';
+                                html += '<td><a href="https://www.google.com/maps/search/'  + item.strLATITUDE +', '+item.strLONGITUDE + '" onclick="Show(' + item.strADDRESS +  ')" target="_blank"><mark>' + item.strADDRESS + '</mark></a></td>';
+                                html += '<td>' + item.intDISTANCE + '</td>';
+                                html += '<td><button type="button" class="btn btn-success btn-sm">' + item.strATTEN_STATUS + '</button><br><br>Note: ' + item.strATTEN_COMMENTS + '</td>';
+                                html += '<td>' + item.strACTION + '</td>';
+                                html += '<td> <a href="#" class="btnUpdateBtn" data-vist-id="' + item.intATTEN_SERIAL + '" data-actions-id="' + item.strACTION + '"><button ><input type="checkbox" class="btnUpdateBtn" value="' + item.intATTEN_SERIAL + '"></button></a></td>';
+
+                                html += '</tr>';
+                            }
+                        });
+                        $('.tbody').html(html);
+                        updatePaginationControls(page, pageSize, result.length);
+                    },
+                    error: function (errormessage) {
+                        alert(errormessage.responseText);
+                    }
+                });
+            }
+
+
+
+
+                function calculateTotalPages(totalItems) {
+                    return Math.ceil(totalItems / pageSize);
+                }
+
+                function updatePaginationControls(currentPage, pageSize, totalItems) {
+                    var totalPages = Math.ceil(totalItems / pageSize);
+                    $('#paginationPrevious').prop('disabled', currentPage === 1);
+                    $('#paginationNext').prop('disabled', currentPage === totalPages);
+
+                    var paginationNumbers = $('#paginationNumbers');
+                    paginationNumbers.empty();
+                    for (var i = 1; i <= totalPages; i++) {
+                        var pageButton = $('<button class="page-number"></button>').text(i);
+                        if (i === currentPage) {
+                            pageButton.addClass('active');
+                        }
+                        pageButton.on('click', function () {
+                            var page = parseInt($(this).text());
+                            currentPage = page;
+                            loadData(currentStatus, null, null, currentPage);
+                        });
+                        paginationNumbers.append(pageButton);
+                    }
+                }
+
+                $('#paginationPrevious').on('click', function () {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        loadData(currentStatus, null, null, currentPage);
+                    }
+                });
+
+                $('#paginationNext').on('click', function () {
+                    var totalPages = calculateTotalPages();
+                    if (currentPage < totalPages) {
+                        currentPage++;
+                        loadData(currentStatus, null, null, currentPage);
+                    }
+                });
+
+                $('#btnShowAll').on('click', function () {
+                    currentStatus = 'all';
+                    currentPage = 1;
+                    loadData(currentStatus, null, null, currentPage);
+                });
+
+                $('#btnShowApproved').on('click', function () {
+                    currentStatus = 'approve';
+                    currentPage = 1;
+                    loadData(currentStatus, null, null, currentPage);
+                });
+
+                $('#btnShowRejected').on('click', function () {
+                    currentStatus = 'reject';
+                    currentPage = 1;
+                    loadData(currentStatus, null, null, currentPage);
+                });
+
+                $('#btnShowPending').on('click', function () {
+                    currentStatus = 'pending';
+                    currentPage = 1;
+                    loadData(currentStatus, null, null, currentPage);
+                });
+         
+
+                //$('#btnShowAll').on('click', function () {
+                //    loadData('all');
+                //});
+
+                //$('#btnShowApproved').on('click', function () {
+                //    loadData('approve');
+                //});
+
+                //$('#btnShowRejected').on('click', function () {
+                //    loadData('reject');
+                //});
+
+                //$('#btnShowPending').on('click', function () {
+                //    loadData('pending');
+                //});
+
+
+
+                //function calculateTotalPages(totalItems) {
+
+                //    return Math.ceil(totalItems / pageSize);
+                //}
+
+
+
+
+                //function updatePaginationControls(currentPage, pageSize, totalItems) {
+                //    var totalPages = Math.ceil(totalItems / pageSize);
+
+
+
+                //    $('#paginationPrevious').prop('disabled', currentPage === 1);
+                //    $('#paginationNext').prop('disabled', currentPage === totalPages);
+                //}
+
+
+
+
+                //$('#btnShowAll').on('click', function () {
+                //    loadData('all');
+                //});
+
+
+                //$('#paginationPrevious').on('click', function () {
+
+                //    currentPage--;
+                //    loadData(currentStatus, currentPage);
+                //});
+
+                //$('#paginationNext').on('click', function () {
+
+                //    currentPage++;
+                //    loadData(currentStatus, currentPage);
+                //});
+
+
+
+
+
+                //$('#btnShowAll').on('click', function () {
+                //    currentStatus = 'all';
+                //    currentPage = 1;
+                //    loadData(currentStatus, currentPage);
+                //});
+
+
+                //$('#paginationPrevious').on('click', function () {
+                //    if (currentPage > 1) {
+                //        currentPage--;
+                //        loadData(currentStatus, currentPage);
+                //    }
+                //});
+
+                //$('#paginationNext').on('click', function () {
+
+                //    var totalPages = calculateTotalPages();
+
+                //    if (currentPage < totalPages) {
+                //        currentPage++;
+                //        loadData(currentStatus, currentPage);
+                //    }
+                //});
+
+
+
+
+                //$(document).ready(function () {
+                //    // Load all data initially
+                //    loadData('all');
+                //});
+
+                //var currentPage = 1;
+                //var currentStatus = 'all';
+                //var pageSize = 15;
+
+                //function loadData(status, fromDate = null, toDate = null, page = 1) {
+                //    var startIndex = (page - 1) * pageSize;
+                //    var endIndex = startIndex + pageSize;
+
+                //    var currentDate = new Date();
+                //    var formattedCurrentDate = currentDate.toISOString().split('T')[0];
+
+                //    $.ajax({
+                //        url: "/Attendence/mGetAttendance",
+                //        type: "GET",
+                //        contentType: 'application/json;charset=utf-8',
+                //        dataType: "json",
+                //        success: function (result) {
+                //            // No need for filtering when loading all data
+                //            result.sort(function (a, b) {
+                //                return new Date(b.strATTEN_DATEIN) - new Date(a.strATTEN_DATEIN);
+                //            });
+
+                //            var slicedData = result.slice(startIndex, endIndex);
+                //            var html = '';
+                //            $.each(slicedData, function (key, item) {
+                //                if (status === 'all' || item.strACTION.toLowerCase() === status) {
+                //                    var rowClass = (item.strACTION.toLowerCase() === 'pending') ? 'pending-row' : '';
+                //                    html += '<tr class="' + rowClass + '">';
+                //                    if (item.strACTION.toLowerCase() === 'pending') {
+                //                        html += '<td> <a href="#" class="btnUpdateBtn" data-vist-id="' + item.intATTEN_SERIAL + '" data-actions-id="' + item.strACTION + '"><input type="checkbox" class="btnUpdateBtn" value="' + item.intATTEN_SERIAL + '"></a> </td>';
+                //                    } else {
+                //                        html += '<td></td>';
+                //                    }
+                //                    html += '<td>';
+                //                    var modalId = 'exampleModal' + key;
+                //                    html += '<div class="row"><div class="col-sm-4" id="gallery" data-toggle="modal" data-target="#' + modalId + '"> <img src="data:image/png;base64,' + item.strEMP_IMAGE + '" class="avatar" alt="Avatar"></div><div class="col-sm-8">' + item.strUSER_NAME + ' <br>Code: ' + item.strEMP_CARD_NO + ' <br>Role: ' + item.strROLE + '</div></div>';
+
+                //                    html += '<div class="modal fade" id="' + modalId + '" tabindex="-1" role="dialog" aria-hidden="true"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body"><div class="carousel-inner"><div class="carousel-item active"> <img src="data:image/png;base64,' + item.strEMP_IMAGE + '" style="display: block; margin: auto; width:500px; height:500px;"></div></div></div><div class="modal-footer"><h5 style="margin-right: 50px">' + item.strEMP_CARD_NO + ' | ' + item.strUSER_NAME + '</h5></div></div></div></div></td>';
+                //                    html += '<td>' + item.strATTEN_TIMEIN + ' <br> ' + item.strATTEN_SHIFT + '</td>';
+                //                    html += '<td><a href="https://www.google.com/maps/search/' + item.strADDRESS + '" onclick="Show(' + item.strLATITUDE + +item.strLONGITUDE + ')" target="_blank"><mark>' + item.strADDRESS + '</mark></a></td>';
+                //                    html += '<td>' + item.intDISTANCE + '</td>';
+                //                    html += '<td><button type="button" class="btn btn-success btn-sm">' + item.strATTEN_STATUS + '</button><br><br>Note: ' + item.strATTEN_COMMENTS + '</td>';
+                //                    html += '<td>' + item.strACTION + '</td>';
+                //                    html += '<td> <a href="#" class="btnUpdateBtn" data-vist-id="' + item.intATTEN_SERIAL + '" data-actions-id="' + item.strACTION + '"><button ><input type="checkbox" class="btnUpdateBtn" value="' + item.intATTEN_SERIAL + '"></button></a></td>';
+
+                //                    html += '</tr>';
+                //                    html += '</tr>';
+                //                }
+                //            });
+                //            $('.tbody').html(html);
+                //            updatePaginationControls(page, pageSize, result.length);
+                //        },
+                //        error: function (errormessage) {
+                //            alert(errormessage.responseText);
+                //        }
+                //    });
+                //}
+
+                //    // Function to update pagination controls
+                //    function updatePaginationControls(currentPage, pageSize, totalItems) {
+                //        var totalPages = Math.ceil(totalItems / pageSize);
+                //        $('#paginationInfo').text('Page ' + currentPage + ' of ' + totalPages);
+                //        $('#paginationPrevious').prop('disabled', currentPage === 1);
+                //        $('#paginationNext').prop('disabled', currentPage === totalPages);
+                //    }
+
+
+
+
+
+
+
+
+                function switchStyle() {
+                    if (document.getElementById('styleSwitch').checked) {
+                        document.getElementById('gallery').classList.add("custom");
+                        document.getElementById('exampleModal').classList.add("custom");
+                    } else {
+                        document.getElementById('gallery').classList.remove("custom");
+                        document.getElementById('exampleModal').classList.remove("custom");
+                    }
+                }
+
+
+
+
+
+
+
+                $(document).ready(function() {
+                    $(document).on("click", ".btnUpdateBtn", function () {
+                        var vistID = $(this).data("vist-id");
+                        var Actions = $(this).data("actions-id");
+
+                        $("#select_all").click(function() {
+                            $(".btnUpdateBtn").prop("checked", $(this).prop("checked"));
+                        });
+
+                        Swal.fire({
+                            title: 'Update Status',
+                            html:
+                                '<div>Actions:  <select id="swal-input2" class="swal2-select">'  +
+                                '<option value="Approve"' + (Actions === "Approve" ? ' selected' : '') + '>Approve</option>' +
+                                '<option value="Reject"' + (Actions === "Reject" ? ' selected' : '') + '>Reject</option>' +
+                                '<option value="Pending"' + (Actions === "Pending" ? ' selected' : '') + '>Pending</option>' +
+                                '</select></div>',
+                            inputPlaceholder: 'Select action',
+                            showCancelButton: true,
+                            allowOutsideClick: false,
+                            confirmButtonText: 'Update',
+                            cancelButtonText: 'Cancel',
+                            inputValidator: (value) => {
+                                if (!value) {
+                                    return 'You need to select an action!';
+                    }
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var newActions = document.getElementById('swal-input2').value;
+            var selectedItems = [];
+
+            $(".btnUpdateBtn:checked").each(function() {
+                var vistID = $(this).val();
+                selectedItems.push({
+                    intATTEN_SERIAL: vistID,
+                    strACTION: newActions
+                });
+            });
+
+            if (selectedItems.length > 0) {
+                $.ajax({
+                    url: "/Attendence/mUpdateConfig",
+                    type: "POST",
+                    data: JSON.stringify(selectedItems),
+                    contentType: 'application/json;charset=utf-8',
+                    success: function (response) {
+                        Swal.fire({
+                            title: "Success!",
+                            text: "Actions updated successfully!",
+                            icon: "success"
+                        }).then(() => {
+                            location.reload();
+                    });
+            },
+            error: function (err) {
+                Swal.fire({
+                    title: "Error!",
+                    text: "Error updating actions: " + err.responseText,
+                    icon: "error"
+                });
+            }
+            });
+            } else {
+                var checkbox = $('input[type="checkbox"][value="' + vistID + '"]');
+                checkbox.prop('checked', false);
+            }
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                // If cancel button is clicked, uncheck checkboxes
+                $(".btnUpdateBtn").prop("checked", false);
+            }
+            });
+            });
+            });
+
+
+
+
+
+
+        </script>
+
+
+
+
+
+
+
+</body>
+</html>

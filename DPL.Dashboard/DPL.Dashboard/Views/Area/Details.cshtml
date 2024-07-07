@@ -1,0 +1,429 @@
+﻿
+@{
+    ViewBag.Title = "Details";
+}
+
+@RenderPage("~/Views/Shared/SidebarAh.cshtml")
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Exam System</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.7.0/dist/css/bootstrap.min.css'>
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Animate CSS -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+    <style>
+        body {
+            font-family: 'Varela Round', sans-serif;
+            font-size: 13px;
+            max-width: 100%;
+        }
+
+        .table-responsive {
+            margin: 100px 0;
+        }
+
+        .table-wrapper {
+            min-width: 1550px;
+            background: #fff;
+            padding: 20px 25px;
+            margin-left: -40px;
+            border-radius: 25px;
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+            margin-top: 80px;
+        }
+
+        .table-title {
+            padding-bottom: 15px;
+            padding: 16px 30px;
+            margin: -20px -25px 10px;
+            border-radius: 3px 3px 0 0;
+        }
+
+            .table-title h2 {
+                margin: 5px 0 0;
+                font-size: 24px;
+            }
+
+            .table-title .btn-group {
+                float: right;
+            }
+
+            .table-title .btn {
+                color: #fff;
+                float: right;
+                font-size: 13px;
+                border: none;
+                min-width: 50px;
+                border-radius: 2px;
+                border: none;
+                outline: none !important;
+                margin-left: 10px;
+            }
+
+                .table-title .btn i {
+                    float: left;
+                    font-size: 21px;
+                    margin-right: 5px;
+                }
+
+                .table-title .btn span {
+                    float: left;
+                    margin-top: 2px;
+                }
+
+        table.table tr th,
+        table.table tr td {
+            border-color: #e9e9e9;
+            padding: 12px 15px;
+            vertical-align: middle;
+            border: none;
+        }
+
+            table.table tr th:first-child {
+                width: 60px;
+            }
+
+            table.table tr th:last-child {
+                width: 100px;
+            }
+
+        table.table-striped tbody tr:nth-of-type(odd) {
+            background-color: #fcfcfc;
+        }
+
+        table.table-striped.table-hover tbody tr:hover {
+            background: #f5f5f5;
+        }
+
+        table.table th i {
+            font-size: 13px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        table.table td:last-child i {
+            opacity: 0.9;
+            font-size: 22px;
+            margin: 0 5px;
+        }
+
+        table.table td a {
+            font-weight: bold;
+            color: #566787;
+            display: inline-block;
+            text-decoration: none;
+            outline: none !important;
+        }
+
+            table.table td a:hover {
+                color: #2196F3;
+            }
+
+            table.table td a.edit {
+                color: #FFC107;
+            }
+
+            table.table td a.delete {
+                color: #F44336;
+            }
+
+        table.table td i {
+            font-size: 19px;
+        }
+
+        table.table .avatar {
+            border-radius: 50%;
+            vertical-align: middle;
+            margin-right: 10px;
+            display: inline-block;
+        }
+
+        .pagination {
+            float: right;
+            margin: 0 0 5px;
+        }
+
+            .pagination li a {
+                border: none;
+                font-size: 13px;
+                min-width: 30px;
+                min-height: 30px;
+                color: #999;
+                margin: 0 2px;
+                line-height: 30px;
+                border-radius: 2px !important;
+                text-align: center;
+                padding: 0 6px;
+            }
+
+                .pagination li a:hover {
+                    color: #666;
+                }
+
+            .pagination li.active a,
+            .pagination li.active a.page-link {
+                background: #03A9F4;
+            }
+
+                .pagination li.active a:hover {
+                    background: #0397d6;
+                }
+
+            .pagination li.disabled i {
+                color: #ccc;
+            }
+
+            .pagination li i {
+                font-size: 16px;
+                padding-top: 6px;
+            }
+
+        .hint-text {
+            float: left;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+
+        .nav-tabs .nav-item .nav-link.active {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .nav-tabs .nav-item .nav-link {
+            background-color: #f8f9fa;
+            color: #212529;
+            border-color: transparent;
+        }
+
+
+        .nav-tabs .nav-item {
+            margin-right: 10px;
+        }
+
+            .nav-tabs .nav-item .nav-link {
+                text-decoration: none;
+            }
+
+
+        .btn-success {
+            color: white;
+            background-color: green;
+            border: none;
+            padding: 8px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 65px;
+        }
+
+            .btn-success:hover {
+                background-color: darkgreen;
+            }
+
+            .btn-success i {
+                vertical-align: middle;
+                margin-right: 5px;
+            }
+
+
+        .nav-tabs {
+            border-bottom: none;
+        }
+    </style>
+
+
+
+</head>
+
+<body>
+
+
+    <div class="container">
+        <div class="table-responsive">
+            <div class="table-wrapper">
+
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item" style="float: right;">
+                        <button class="btn btn-success" onclick="location.href = '/Dashboard/Examlist';">
+                            Back Previous
+                        </button>
+
+                    </li>
+                </ul>
+                <div class="container">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody id="examDataContainer"></tbody>
+                        </table>
+                        <div class="pagination">
+                            <a href="#" class="btnPrevious btn btn-primary">Previous</a>
+                            <a href="#" class="btnNext btn btn-primary">Next</a>
+                        </div>
+                    </div>
+                </div>
+               
+
+            </div>
+        </div>
+    </div>
+
+
+
+    @*<script>
+        $(document).ready(function () {
+            var urlParams = new URLSearchParams(window.location.search);
+            var examId = urlParams.get('examId');
+            var examType = urlParams.get('examType'); // Assuming examType is passed to differentiate between upcoming and past exams
+            loadData(examId, examType);
+        });
+
+        var pageSize = 25;
+        var currentPage = 1;
+        var totalQuestions = 0;
+
+        function loadData(examId, examType) {
+            var startIndex = (currentPage - 1) * pageSize;
+            var endIndex = startIndex + pageSize;
+
+            var apiUrl = '/Exam/mGetExamAlldataList';
+
+            $.ajax({
+                url: apiUrl,
+                type: 'GET',
+                data: { examType: examType },
+                success: function (response) {
+                    console.log(response);
+                    var exams = [];
+
+                    // Filter exams based on the provided examId
+                    if (examType === 'upcoming') {
+                        exams = response.UpcomingExams.filter(function (exam) {
+                            return exam.strexamId === examId;
+                        });
+                    } else if (examType === 'past') {
+                        exams = response.PastExams.filter(function (exam) {
+                            return exam.strexamId === examId;
+                        });
+                    }
+
+                    totalQuestions = calculateTotalQuestions(exams);
+                    renderData(exams, startIndex, endIndex);
+                },
+                error: function (xhr, status, error) {
+                    console.log('Error:', error);
+                }
+            });
+        }
+
+        function calculateTotalQuestions(data) {
+            var total = 0;
+            data.forEach(function (item) {
+                if (item.stroptions && typeof item.stroptions === 'string') {
+                    var options = item.stroptions.split(',');
+                    total += options.length;
+                }
+            });
+            return total;
+        }
+
+        function renderData(data, startIndex, endIndex) {
+            var html = '';
+
+            for (var i = 0; i < data.length; i++) {
+                var exam = data[i];
+
+                html += '<tr>';
+                html += '<td colspan="2"><h1 style="font-weight:bold;">Exam ID: ' + exam.strexamId + '</h1></td>';
+                html += '</tr>';
+
+                html += '<tr>';
+                html += '<td style="font-weight:bold;">Exam Title: ' + exam.strExamTitle + '</td>';
+                html += '<td style="font-weight:bold;">Exam Notice: ' + exam.strExamNotice + '</td>';
+                html += '</tr>';
+
+                html += '<tr>';
+                html += '<td style="font-weight:bold;">Exam Date: ' + exam.strexamDate + '</td>';
+                html += '<td style="font-weight:bold;">Time Limit: ' + exam.strtimeLimit + ' min</td>';
+                html += '</tr>';
+
+                html += '<tr>';
+                html += '<td style="font-weight:bold;">Total Marks: ' + exam.strtotalMarks + '</td>';
+                html += '<td style="font-weight:bold;">Pass Marks: ' + exam.strpassmarks + '</td>';
+                html += '</tr>';
+
+                html += '<tr>';
+                html += '<td style="font-weight:bold;">National Head: ' + exam.strNATIONAL_HEAD + '</td>';
+                html += '<td style="font-weight:bold;">Role: ' + exam.strROLE + '</td>';
+                html += '</tr>';
+
+                html += '<tr>';
+                html += '<td style="font-weight:bold;">Schedule: ' + exam.strexamDate + ', ' + exam.strstarttime + ' to ' + exam.strendtime + '</td>';
+                html += '</tr>';
+
+                html += '<tr>';
+                html += '<td style="font-weight:bold;">Question</td>';
+                html += '</tr>';
+
+                var options = exam.stroptions.split(',');
+                options.forEach(function (option, index) {
+                    html += '<tr>';
+                    html += '<td style="font-weight:bold;">' + (index + 1) + '. ' + option + '</td>';
+                    html += '<td>Answer: ' + exam.stranswer + '</td>';
+                    html += '<td>Marks: ' + exam.strmarks + '</td>';
+                    html += '</tr>';
+                });
+            }
+
+            $('.tbody-all-exams').html(html);
+            updatePaginationControls(currentPage, data.length);
+        }
+
+        function updatePaginationControls(currentPage, totalItems) {
+            var totalPages = Math.ceil(totalItems / pageSize);
+            $('.btnPrevious').prop('disabled', currentPage === 1);
+            $('.btnNext').prop('disabled', currentPage === totalPages);
+        }
+
+        $('.btnPrevious').click(function () {
+            if (currentPage > 1) {
+                currentPage--;
+                loadData();
+            }
+        });
+
+        $('.btnNext').click(function () {
+            currentPage++;
+            loadData();
+        });*@
+
+
+
+
+
+    </script>
+
+
+</body>
+</html>

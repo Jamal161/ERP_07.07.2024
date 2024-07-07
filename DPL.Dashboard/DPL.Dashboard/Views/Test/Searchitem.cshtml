@@ -1,0 +1,361 @@
+﻿@{
+    ViewBag.Title = "Searchitem";
+}
+
+
+@RenderPage("~/Views/Shared/Sidebar.cshtml")
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Search with Select2</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet">
+    <script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <style>
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.428571429;
+            color: #333;
+            background-color: #C2E3F6;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .table-responsive {
+            margin: 10px 0;
+        }
+
+
+        .table-wrapper {
+            min-width: 100px;
+            padding: 50px;
+            border-radius: 3px;
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        }
+
+
+
+
+
+
+        #selectAll {
+            width: 80px;
+            height: 50px;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #searchBox {
+            width: 500px;
+            height: 30px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid green;
+        }
+
+            #searchBox:focus {
+                outline: none;
+            }
+
+        .button-container {
+            display: flexbox;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        .button-container {
+            display: inline-block;
+            vertical-align: top;
+            margin-right: 10px;
+        }
+
+        .search-container {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .button-container {
+            display: inline-block;
+            vertical-align: -webkit-baseline-middle;
+            margin-right: 10px;
+        }
+
+        #box1 {
+            width: 500px;
+            height: 500px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        #box2 {
+            width: 500px;
+            height: 500px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 5px;
+            box-sizing: border-box;
+            margin-top: 40px;
+
+        }
+
+        #selectAll {
+            display: block;
+            margin-bottom: 10px;
+            margin-top: 50px;
+        }
+
+
+        #selectAllBack {
+            width: 80px;
+            height: 50px;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        
+        
+         .mobile-layout .button-container {
+            display: block;
+        }
+
+
+
+        .table-wrapper.desktop-layout {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+            .table-wrapper.desktop-layout .button-container {
+                margin-bottom: 0;
+                flex: 1 1 100%;
+            }
+
+            .table-wrapper.desktop-layout #box1Container,
+            .table-wrapper.desktop-layout #box2Container {
+                flex: 1 1 calc(50% - 20px);
+            }
+
+            .table-wrapper.desktop-layout #selectAllContainer {
+                flex: 1 1 100%;
+            }
+
+            .table-wrapper.desktop-layout #box1,
+            .table-wrapper.desktop-layout #box2 {
+                width: calc(50% - 20px);
+                margin: 0 10px;
+            }
+
+            .table-wrapper.desktop-layout #selectAll {
+                width: auto;
+            }
+
+
+        #box1:focus,
+        #box2:focus {
+            outline: none;
+            border-color: transparent;
+            box-shadow: none;
+
+        }
+
+
+
+
+    </style>
+
+
+</head>
+
+
+
+
+<body>
+
+
+    <div class="container">
+        <div class="table-responsive">
+            <div class="table-wrapper" id="tableWrapper">
+
+                <div class="button-container" id="box1Container">
+
+                    <input type="text" id="searchBox" placeholder="Search..."><br />
+                    <select id="box1" multiple autofocus></select>
+                </div>
+                <div class="button-container" id="selectAllContainer">
+                    <button id="selectAll">Select All</button>
+                    <button id="selectAllBack">Back</button>
+                </div>
+                <div class="button-container" id="box2Container">
+                    <select id="box2" multiple></select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <script>
+
+
+
+        function adjustLayout() {
+            const tableWrapper = document.getElementById('tableWrapper');
+            const box1Container = document.getElementById('box1Container');
+            const selectAllContainer = document.getElementById('selectAllContainer');
+            const box2Container = document.getElementById('box2Container');
+
+            if (window.innerWidth < 768) {
+
+                tableWrapper.classList.add('mobile-layout');
+
+                tableWrapper.appendChild(box1Container);
+                tableWrapper.appendChild(selectAllContainer);
+                tableWrapper.appendChild(box2Container);
+            } else {
+                tableWrapper.classList.remove('mobile-layout');
+
+                tableWrapper.appendChild(box1Container);
+                tableWrapper.appendChild(selectAllContainer);
+                tableWrapper.appendChild(box2Container);
+            }
+        }
+
+
+        window.addEventListener('load', adjustLayout);
+
+        window.addEventListener('resize', adjustLayout);
+
+        adjustLayout();
+
+
+
+
+
+        $(document).ready(function () {
+            function loadAllData() {
+                $.ajax({
+                    url: '/ProductName/mGetProductNameList',
+                    dataType: 'json',
+                    success: function (data) {
+                        populateBox1(data);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error fetching data:", error);
+                    }
+                });
+            }
+
+            function populateBox1(data) {
+                $('#box1').empty();
+                $.each(data, function (index, item) {
+                    $('#box1').append(
+                        '<option value="' + item.strSTOCKITEM_NAME + '">' + item.strSTOCKITEM_NAME + '</option>'
+                    );
+                });
+            }
+
+            function filterItems(query) {
+                query = query.toLowerCase();
+                $('#box1 option').each(function () {
+                    var text = $(this).text().toLowerCase();
+                    if (text.includes(query)) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            }
+
+            $('#searchBox').keyup(function () {
+                var query = $(this).val();
+                filterItems(query);
+            });
+
+            $('#selectAll').click(function () {
+                $('#box1 option').each(function () {
+                    $('#box2').append('<option value="' + $(this).val() + '">' + $(this).text() + '</option>');
+                    $(this).remove();
+                });
+            });
+
+            $('#selectAllBack').click(function () {
+                $('#box2 option').each(function () {
+                    $('#box1').append('<option value="' + $(this).val() + '">' + $(this).text() + '</option>');
+                    $(this).remove();
+                });
+            });
+
+            function moveToBox2(option) {
+                $('#box2').append('<option value="' + option.val() + '">' + option.text() + '</option>');
+                option.remove();
+            }
+
+            function moveToBox1(option) {
+                $('#box1').append('<option value="' + option.val() + '">' + option.text() + '</option>');
+                option.remove();
+            }
+
+           
+            $('#box1').on('dblclick', 'option', function () {
+                moveToBox2($(this));
+            });
+
+            $('#box2').on('dblclick', 'option', function () {
+                moveToBox1($(this));
+            });
+
+         
+            $('#box1').on('touchend', 'option', function () {
+                moveToBox2($(this));
+            });
+
+            $('#box2').on('touchend', 'option', function () {
+                moveToBox1($(this));
+            });
+
+            loadAllData();
+        });
+
+
+       
+
+
+    </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,861 @@
+﻿
+@{
+    ViewBag.Title = "NoticesAdd";
+}
+
+
+@RenderPage("~/Views/Shared/Sidebar.cshtml")
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notice</title>
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.7.0/dist/css/bootstrap.min.css'>
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Animate CSS -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <style>
+        body {
+            color: #566787;
+            background: #f5f5f5;
+            font-family: 'Varela Round', sans-serif;
+            font-size: 13px;
+            max-width: 100%;
+        }
+
+        .table-responsive {
+            margin: 100px 0;
+        }
+
+        .table-wrapper {
+            min-width: 1550px;
+            background: #fff;
+            padding: 20px 25px;
+            margin-left: -40px;
+            border-radius: 25px;
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        }
+
+        #container {
+            max-width: 100%;
+        }
+
+        .step-container {
+            position: relative;
+            margin-top: -19px;
+            transform: translateY(-43%);
+        }
+
+        .step-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #fff;
+            border: 2px solid #007bff;
+            line-height: 30px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .step-line {
+            position: absolute;
+            top: 16px;
+            left: 50px;
+            width: calc(100% - 100px);
+            height: 2px;
+            background-color: #007bff;
+            z-index: -1;
+        }
+
+        #multi-step-form {
+            overflow-x: hidden;
+        }
+
+
+        input[type="date"] {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 5px;
+        }
+
+        #strANNOUNCEMENT {
+            width: 100%;
+            height: 250px;
+            resize: vertical;
+        }
+
+        label {
+            display: inline-block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            padding: 2px;
+        }
+
+
+
+
+        .dropdown-container select {
+            width: 160px;
+            height: 30px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+
+        .dropdown-container label {
+            width: 150px;
+            display: inline-block;
+            font-weight: bold;
+        }
+
+
+        .container table {
+            width: 500px;
+            border-collapse: collapse;
+        }
+
+
+        .container th; {
+            width: 150px;
+            padding: 10px;
+            text-align: left;
+            background-color: #f2f2f2;
+            border-bottom: 1px solid #ddd;
+        }
+
+
+        .container td {
+            width: 150px;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+
+
+
+        .mb-3 {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            margin-bottom: 20px;
+        }
+
+
+        .form-group label {
+            font-weight: bold;
+        }
+
+
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+
+
+        .form-control-file {
+            margin-top: 5px;
+        }
+
+
+
+        legend {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+
+        .btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+
+        .progress-bar {
+            height: 20px;
+            background-color: #007bff;
+            width: 0;
+            transition: width 0.5s ease;
+        }
+
+
+
+        .step-container {
+            text-align: center;
+        }
+
+
+
+
+        legend {
+            display: inline-block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .step-container {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+            .step-container div {
+                cursor: pointer;
+                padding: 5px 11px;
+                background-color: #fff;
+                border: 1.8px solid #fff;
+                border-radius: 2px;
+            }
+
+                .step-container div:hover {
+                    background-color: #e0e0e0;
+                }
+    </style>
+</head>
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        var currentStep = 1;
+        var updateProgressBar;
+
+        function displayStep(stepNumber) {
+            if (stepNumber >= 1 && stepNumber <= 3) {
+                $(".step-" + currentStep).hide();
+                $(".step-" + stepNumber).show();
+                currentStep = stepNumber;
+                updateProgressBar();
+            }
+        }
+
+        $(document).ready(function () {
+            $('#multi-step-form').find('.step').slice(1).hide();
+
+            $(".next-step").click(function () {
+                if (currentStep < 3) {
+                    $(".step-" + currentStep).addClass("animate__animated animate__fadeOutLeft");
+                    currentStep++;
+                    setTimeout(function () {
+                        $(".step").removeClass("animate__animated animate__fadeOutLeft").hide();
+                        $(".step-" + currentStep).show().addClass("animate__animated animate__fadeInRight");
+                        updateProgressBar();
+                    }, 500);
+                }
+            });
+
+            $(".prev-step").click(function () {
+                if (currentStep > 1) {
+                    $(".step-" + currentStep).addClass("animate__animated animate__fadeOutRight");
+                    currentStep--;
+                    setTimeout(function () {
+                        $(".step").removeClass("animate__animated animate__fadeOutRight").hide();
+                        $(".step-" + currentStep).show().addClass("animate__animated animate__fadeInLeft");
+                        updateProgressBar();
+                    }, 500);
+                }
+            });
+
+            updateProgressBar = function () {
+                var progressPercentage = ((currentStep - 1) / 2) * 100;
+                $(".progress-bar").css("width", progressPercentage + "%");
+            }
+        });
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+    <div class="container">
+        <div class="table-responsive">
+            <div class="table-wrapper">
+                <div id="container" class="container mt-5">
+
+                    <div class="progress px-1" style="height: 3px;">
+                        <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+
+
+                    <div class="step-container" style="text-align: center;">
+                        <div onclick="displayStep(1)" style="display: inline-block; margin-right: 580px;"><i class="fa fa-pencil-square" aria-hidden="true"></i> Basic Info</div>
+                        <div onclick="displayStep(2)" style="display: inline-block; margin-right: 593px;"><i class="fa fa-pencil-square" aria-hidden="true"></i> Market Access</div>
+                        <div onclick="displayStep(3)" style="display: inline-block; margin-left: 4.4px;"><i class="fa fa-pencil-square" aria-hidden="true"></i> User</div>
+                    </div>
+
+
+
+                    <form id="multi-step-form">
+                        <!-- Step 1 -->
+                        <div class="step step-1">
+                            <h4>Basic Info</h4><br />
+                            <div class="mb-3">
+
+
+                                <div class="form-group">
+                                    <label for="strTITLE">Title</label>
+                                    <input type="text" class="form-control" id="strTITLE" placeholder="Name">
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="strANNOUNCEMENT">Announcement</label>
+                                    <textarea class="form-control" id="strANNOUNCEMENT" rows="3"></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="strSTART_DATE">Start date:</label>
+                                    <input type="date" id="strSTART_DATE" name="startDate">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="strEND_DATE">End date:</label>
+                                    <input type="date" id="strEND_DATE" name="endDate"><br />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="strNOTICE_IMG">Notice Image</label>
+                                    <input type="file" id="strNOTICE_IMG" accept="image/*">
+                                    <br />
+                                    <img id="strNOTICE_IMG_preview" src="#" alt="Selected Image Preview" style="width:100px; height:100px;">
+                                    <textarea id="strNOTICE_IMG_base64" rows="4" cols="50" readonly hidden></textarea>
+
+                                    <script>
+                                        function readFile() {
+                                            if (!this.files || !this.files[0]) return;
+
+                                            const FR = new FileReader();
+
+                                            FR.addEventListener("load", function (evt) {
+                                                document.querySelector("#strNOTICE_IMG_preview").src = evt.target.result;
+                                                document.querySelector("#strNOTICE_IMG_base64").textContent = evt.target.result;
+                                            });
+
+                                            FR.readAsDataURL(this.files[0]);
+                                        }
+
+                                        document.querySelector("#strNOTICE_IMG").addEventListener("change", readFile);
+                                    </script>
+                                </div><br />
+
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="strACTION" checked>
+                                    <label class="form-check-label" for="strACTION">
+                                        Active
+                                    </label>
+                                </div><br />
+
+                                <div class="form-group">
+                                    <label for="strCREATED_BY">Created by</label>
+                                    <input type="text" class="form-control" id="strCREATED_BY" placeholder="Name">
+                                </div>
+
+
+                            </div>
+                            <button type="button" class="btn btn-primary next-step" style="display: inline-block; margin-top: 20px;">Next</button>
+                        </div>
+                        <!-- Step 2 -->
+                        <div class="step step-2">
+                            <h4>Market Access</h4>
+                            <p class="container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                @*<div class="d-flex flex-wrap">*@
+                                                <div class="dropdown-container">
+                                                    <label for="branchSelect">National Head:</label>
+                                                    <select id="branchSelect" onchange="updateSelections()">
+                                                        <option value="0">All</option>
+                                                        <option value="1">Deeplaid Laboratories Ltd.</option>
+                                                        <option value="3">Deeplaid Herbal &amp; Nutraceuticals Ltd.</option>
+                                                    </select>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="dropdown-container p-2">
+                                                    <label for="teamSelect">Team:</label>
+                                                    <select id="teamSelect" onchange="updateSelections()"></select>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="dropdown-container p-2">
+                                                    <label for="zoneSelect">Zone:</label>
+                                                    <select id="zoneSelect" onchange="updateSelections()"></select>
+                                                </div>
+                                            </th>
+                                            <th>
+
+                                                <div class="dropdown-container p-2">
+                                                    <label for="divisionSelect">Division:</label>
+                                                    <select id="divisionSelect" onchange="updateSelections()"></select>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="dropdown-container p-2">
+                                                    <label for="areaSelect">Area:</label>
+                                                    <select id="areaSelect" onchange="updateSelections()"></select>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="dropdown-container p-2">
+                                                    <label for="territorySelect">Market:</label>
+                                                    <select id="territorySelect" onchange="updateSelections()"></select>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="dropdown-container p-2">
+                                                    <label for="routeSelect">Route:</label>
+                                                    <select id="routeSelect" onchange="updateSelections()"></select>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+
+                                </table>
+                            </p>
+
+
+
+                            <div id="selectedOptions" class="mt-3"></div>
+
+                            <script>
+                                function updateSelections() {
+                                    var selectedOptionsDiv = document.getElementById("selectedOptions");
+                                    selectedOptionsDiv.innerHTML = "<strong>List of Data</strong><br>";
+
+                                    var branchSelect = document.getElementById("branchSelect");
+                                    var selectedBranch = branchSelect.options[branchSelect.selectedIndex].text;
+                                    selectedOptionsDiv.innerHTML += "National Head: " + selectedBranch + "<br>";
+
+                                    var teamSelect = document.getElementById("teamSelect");
+                                    if (teamSelect.selectedIndex !== -1) {
+                                        var selectedTeam = teamSelect.options[teamSelect.selectedIndex].text;
+                                        selectedOptionsDiv.innerHTML += "Team: " + selectedTeam + "<br>";
+                                    }
+
+                                    var zoneSelect = document.getElementById("zoneSelect");
+                                    if (zoneSelect.selectedIndex !== -1) {
+                                        var selectedZone = zoneSelect.options[zoneSelect.selectedIndex].text;
+                                        selectedOptionsDiv.innerHTML += "Zone: " + selectedZone + "<br>";
+                                    }
+
+                                    var divisionSelect = document.getElementById("divisionSelect");
+                                    if (divisionSelect.selectedIndex !== -1) {
+                                        var selectedDivision = divisionSelect.options[divisionSelect.selectedIndex].text;
+                                        selectedOptionsDiv.innerHTML += "Division: " + selectedDivision + "<br>";
+                                    }
+
+                                    var areaSelect = document.getElementById("areaSelect");
+                                    if (areaSelect.selectedIndex !== -1) {
+                                        var selectedArea = areaSelect.options[areaSelect.selectedIndex].text;
+                                        selectedOptionsDiv.innerHTML += "Area: " + selectedArea + "<br>";
+                                    }
+
+                                    var territorySelect = document.getElementById("territorySelect");
+                                    if (territorySelect.selectedIndex !== -1) {
+                                        var selectedTerritory = territorySelect.options[territorySelect.selectedIndex].text;
+                                        selectedOptionsDiv.innerHTML += "Market: " + selectedTerritory + "<br>";
+                                    }
+
+                                    var routeSelect = document.getElementById("routeSelect");
+                                    if (routeSelect.selectedIndex !== -1) {
+                                        var selectedRoute = routeSelect.options[routeSelect.selectedIndex].text;
+                                        selectedOptionsDiv.innerHTML += "Route: " + selectedRoute + "<br>";
+                                    }
+                                }
+                            </script>
+
+                            <button type="button" class="btn btn-primary next-step " style="display: inline-block; margin-top: 20px;">Next</button>
+                            <button type="button" class="btn btn-primary  prev-step" style="display: inline-block; margin-top: 20px;">Previous</button>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="step step-3">
+                            <h4>User</h4>
+
+                            <p class="container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <div class="dropdown-container">
+                                                    <label for="branchSelectnew">National Head:</label>
+                                                    <select id="branchSelectnew" onchange="updateSelectionsnew()">
+                                                        <option value="0">All</option>
+                                                        <option value="1">Deeplaid Laboratories Ltd.</option>
+                                                        <option value="3">Deeplaid Herbal &amp; Nutraceuticals Ltd.</option>
+                                                    </select>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="dropdown-container p-2">
+                                                    <label for="teamSelectnew">Team:</label>
+                                                    <select id="teamSelectnew" onchange="updateSelectionsnew()"></select>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="dropdown-container p-2">
+                                                    <label for="zoneSelectnew">Zone:</label>
+                                                    <select id="zoneSelectnew" onchange="updateSelectionsnew()"></select>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="dropdown-container p-2">
+                                                    <label for="divisionSelectnew">Division:</label>
+                                                    <select id="divisionSelectnew" onchange="updateSelectionsnew()"></select>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="dropdown-container p-2">
+                                                    <label for="areaSelectnew">Area:</label>
+                                                    <select id="areaSelectnew" onchange="updateSelectionsnew()"></select>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="dropdown-container p-2">
+                                                    <label for="territorySelectnew">Market:</label>
+                                                    <select id="territorySelectnew" onchange="updateSelectionsnew()"></select>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="dropdown-container p-2">
+                                                    <label for="routeSelectnew">Route:</label>
+                                                    <select id="routeSelectnew" onchange="updateSelectionsnew()"></select>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="dropdown-container p-2">
+                                                    <label for="cardSelectnew">User:</label>
+                                                    <select id="cardSelectnew" onchange="updateSelectionsnew()"></select>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="dropdown-container p-2">
+                                                    <label for="roleSelectnew">Role:</label>
+                                                    <select id="roleSelectnew" onchange="updateSelectionsnew()"></select>
+                                                </div>
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </p>
+
+                            <div id="selectedOptionsnew" class="mt-3"></div>
+
+                            <script>
+                                function updateSelectionsnew() {
+                                    var selectedOptionsDiv = document.getElementById("selectedOptionsnew");
+                                    selectedOptionsDiv.innerHTML = "<strong>List of Data</strong><br>";
+
+                                    var branchSelect = document.getElementById("branchSelectnew");
+                                    var selectedBranch = branchSelect.options[branchSelect.selectedIndex].text;
+                                    selectedOptionsDiv.innerHTML += "National Head: " + selectedBranch + "<br>";
+
+                                    var teamSelect = document.getElementById("teamSelectnew");
+                                    if (teamSelect.selectedIndex !== -1) {
+                                        var selectedTeam = teamSelect.options[teamSelect.selectedIndex].text;
+                                        selectedOptionsDiv.innerHTML += "Team: " + selectedTeam + "<br>";
+                                    }
+
+                                    var zoneSelect = document.getElementById("zoneSelectnew");
+                                    if (zoneSelect.selectedIndex !== -1) {
+                                        var selectedZone = zoneSelect.options[zoneSelect.selectedIndex].text;
+                                        selectedOptionsDiv.innerHTML += "Zone: " + selectedZone + "<br>";
+                                    }
+
+                                    var divisionSelect = document.getElementById("divisionSelectnew");
+                                    if (divisionSelect.selectedIndex !== -1) {
+                                        var selectedDivision = divisionSelect.options[divisionSelect.selectedIndex].text;
+                                        selectedOptionsDiv.innerHTML += "Division: " + selectedDivision + "<br>";
+                                    }
+
+                                    var areaSelect = document.getElementById("areaSelectnew");
+                                    if (areaSelect.selectedIndex !== -1) {
+                                        var selectedArea = areaSelect.options[areaSelect.selectedIndex].text;
+                                        selectedOptionsDiv.innerHTML += "Area: " + selectedArea + "<br>";
+                                    }
+
+                                    var territorySelect = document.getElementById("territorySelectnew");
+                                    if (territorySelect.selectedIndex !== -1) {
+                                        var selectedTerritory = territorySelect.options[territorySelect.selectedIndex].text;
+                                        selectedOptionsDiv.innerHTML += "Market: " + selectedTerritory + "<br>";
+                                    }
+
+                                    var routeSelect = document.getElementById("routeSelectnew");
+                                    if (routeSelect.selectedIndex !== -1) {
+                                        var selectedRoute = routeSelect.options[routeSelect.selectedIndex].text;
+                                        selectedOptionsDiv.innerHTML += "Route: " + selectedRoute + "<br>";
+                                    }
+
+                                    var cardSelect = document.getElementById("cardSelectnew");
+                                    if (cardSelect.selectedIndex !== -1) {
+                                        var selectedCard = cardSelect.options[cardSelect.selectedIndex].text;
+                                        selectedOptionsDiv.innerHTML += "User: " + selectedCard + "<br>";
+                                    }
+
+                                    var roleSelect = document.getElementById("roleSelectnew");
+                                    if (roleSelect.selectedIndex !== -1) {
+                                        var selectedRole = roleSelect.options[roleSelect.selectedIndex].text;
+                                        selectedOptionsDiv.innerHTML += "Role: " + selectedRole + "<br>";
+                                    }
+
+
+                                }
+                            </script>
+
+
+
+                            <button type="button" class="btn btn-primary prev-step" style="display: inline-block; margin-top: 20px;">Previous</button>
+                            <button type="submit" class="btn btn-success" style="display: inline-block; margin-top: 20px;">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+
+
+        $(document).ready(function () {
+
+            function navigateSteps(currentStep, nextStep) {
+                $(currentStep).hide();
+                $(nextStep).show();
+            }
+
+
+            $('.next-step').click(function () {
+                var currentStep = $(this).closest('.step');
+                var nextStep = currentStep.next('.step');
+                navigateSteps(currentStep, nextStep);
+            });
+
+
+            $('.prev-step').click(function () {
+                var currentStep = $(this).closest('.step');
+                var prevStep = currentStep.prev('.step');
+                navigateSteps(currentStep, prevStep);
+            });
+
+
+
+            $('#multi-step-form').submit(function (event) {
+                event.preventDefault();
+
+                var formData = [
+                    {
+                        strTITLE: $('#strTITLE').val(),
+                        strANNOUNCEMENT: $('#strANNOUNCEMENT').val(),
+                        strSTART_DATE: $('#strSTART_DATE').val(),
+                        strEND_DATE: $('#strEND_DATE').val(),
+                        strNOTICE_IMG: $('#strNOTICE_IMG_base64').val(),
+                        strACTION: $('#strACTION').is(':checked'),
+                        strCREATED_BY: $('#strCREATED_BY').val()
+                    },
+                    {
+                        strNATIONAL_HEAD: $('#branchSelect').val(),
+                        strTEAM: $('#teamSelect').val(),
+                        strZONE: $('#zoneSelect').val(),
+                        strDIVISION: $('#divisionSelect').val(),
+                        strAREA: $('#areaSelect').val(),
+                        strMARKET: $('#territorySelect').val(),
+                        strROUTE: $('#routeSelect').val()
+                    },
+                    {
+                        strNATIONAL_HEAD: $('#branchSelectnew').val(),
+                        strTEAM: $('#teamSelectnew').val(),
+                        strZONE: $('#zoneSelectnew').val(),
+                        strDIVISION: $('#divisionSelectnew').val(),
+                        strAREA: $('#areaSelectnew').val(),
+                        strMARKET: $('#territorySelectnew').val(),
+                        strROUTE: $('#routeSelectnew').val(),
+                        strUSER_NAME: $('#cardSelectnew').val(),
+                        strROLE: $('#roleSelectnew').val()
+                    }
+                ];
+
+
+
+                console.log(formData)
+
+                $.ajax({
+                    url: '/Notice/mPostNotice',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(formData),
+                    success: function (response) {
+
+
+                    },
+                    error: function (xhr, status, error) {
+                        alert('Error submitting form: ' + error);
+                    }
+                });
+            });
+        });
+
+
+
+
+        $(document).ready(function () {
+            $.ajax({
+                url: "/Notice/mGetNoticesLedgerList",
+                type: "GET",
+                contentType: 'application/json;charset=utf-8',
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+
+                    function populateDropdowns(branchId) {
+                        var filteredResult = result.filter(function (item) {
+                            return item.intBRANCH_ID === parseInt(branchId);
+                        });
+
+                        function generateDropdownOptions(items, propertyName) {
+                            var optionsHtml = '<option selected>All</option>';
+                            var uniqueValues = [];
+                            for (var i = 0; i < items.length; i++) {
+                                var value = items[i][propertyName];
+                                if (uniqueValues.indexOf(value) === -1) {
+                                    uniqueValues.push(value);
+                                    optionsHtml += '<option value="' + value + '">' + value + '</option>';
+                                }
+                            }
+                            return optionsHtml;
+                        }
+
+                        $('#teamSelect').html(generateDropdownOptions(filteredResult, 'strTEAM_NAME'));
+                        $('#zoneSelect').html(generateDropdownOptions(filteredResult, 'strZONE_NAME'));
+                        $('#divisionSelect').html(generateDropdownOptions(filteredResult, 'strDIVISION'));
+                        $('#areaSelect').html(generateDropdownOptions(filteredResult, 'strAREA'));
+                        $('#territorySelect').html(generateDropdownOptions(filteredResult, 'strTERRITORRY_NAME'));
+                        $('#routeSelect').html(generateDropdownOptions(filteredResult, 'strROUTE_NAME'));
+
+                    }
+
+                    populateDropdowns($('#branchSelect').val());
+
+                    $('#branchSelect').change(function () {
+                        populateDropdowns($(this).val());
+                    });
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        });
+
+
+
+
+
+
+
+        $(document).ready(function () {
+            $.ajax({
+                url: "/Notice/mGetNoticesLedgerList",
+                type: "GET",
+                contentType: 'application/json;charset=utf-8',
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+
+                    function populateDropdowns(branchId) {
+                        var filteredResult = result.filter(function (item) {
+                            return item.intBRANCH_ID === parseInt(branchId);
+                        });
+
+                        function generateDropdownOptions(items, propertyName, dropdownId) {
+                            var optionsHtml = '<option selected>All</option>';
+                            var uniqueValues = [];
+                            for (var i = 0; i < items.length; i++) {
+                                var value = items[i][propertyName];
+                                if (uniqueValues.indexOf(value) === -1) {
+                                    uniqueValues.push(value);
+                                    optionsHtml += '<option value="' + value + '">' + value + '</option>';
+                                }
+                            }
+
+
+                            if (dropdownId === 'roleSelectnew') {
+                                var providedOptions = ['Trainer', 'Head', 'Report Viewer', 'Audit', 'Admin', 'Team Leader', 'ZH', 'DH', 'AH', 'MPO'];
+                                for (var j = 0; j < providedOptions.length; j++) {
+                                    var option = providedOptions[j];
+                                    if (uniqueValues.indexOf(option) === -1) {
+                                        optionsHtml += '<option type="checkbox" value="' + option + '">' + option + '</option>';
+                                    }
+                                }
+                            }
+
+                            return optionsHtml;
+                        }
+
+                        $('#teamSelectnew').html(generateDropdownOptions(filteredResult, 'strTEAM_NAME'));
+                        $('#zoneSelectnew').html(generateDropdownOptions(filteredResult, 'strZONE_NAME'));
+                        $('#divisionSelectnew').html(generateDropdownOptions(filteredResult, 'strDIVISION'));
+                        $('#areaSelectnew').html(generateDropdownOptions(filteredResult, 'strAREA'));
+                        $('#territorySelectnew').html(generateDropdownOptions(filteredResult, 'strTERRITORRY_NAME'));
+                        $('#routeSelectnew').html(generateDropdownOptions(filteredResult, 'strROUTE_NAME'));
+                        $('#cardSelectnew').html(generateDropdownOptions(filteredResult, 'strMPO_CARD_NO'));
+                        $('#roleSelectnew').html(generateDropdownOptions(filteredResult, '', 'roleSelectnew'));
+
+                    }
+
+                    populateDropdowns($('#branchSelectnew').val());
+
+                    $('#branchSelectnew').change(function () {
+                        populateDropdowns($(this).val());
+                    });
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        });
+
+
+
+
+    </script>
+
+
+
+
+</body>
+</html>
+
+

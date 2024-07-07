@@ -1,0 +1,930 @@
+﻿
+@{
+    ViewBag.Title = "DhUser";
+}
+
+@*@RenderPage("~/Views/Shared/SidebarDh.cshtml")
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+<body>
+
+    <canvas id="canvas" width="400" height="400" style="background-color: none; padding: 20px; margin-right: 20px; margin-top: 50px; margin-left: 500px;">
+        Sorry, your browser does not support canvas.
+    </canvas>
+
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        let radius = canvas.height / 2;
+        ctx.translate(radius, radius);
+        radius = radius * 0.90
+        setInterval(drawClock, 1000);
+
+        function drawClock() {
+            drawFace(ctx, radius);
+            drawNumbers(ctx, radius);
+            drawTime(ctx, radius);
+        }
+
+        function drawFace(ctx, radius) {
+            const grad = ctx.createRadialGradient(0, 0, radius * 0.95, 0, 0, radius * 1.05);
+            grad.addColorStop(0, '#333');
+            grad.addColorStop(0.5, 'white');
+            grad.addColorStop(1, '#333');
+            ctx.beginPath();
+            ctx.arc(0, 0, radius, 0, 2 * Math.PI);
+            ctx.fillStyle = 'white';
+            ctx.fill();
+            ctx.strokeStyle = grad;
+            ctx.lineWidth = radius * 0.1;
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(0, 0, radius * 0.1, 0, 2 * Math.PI);
+            ctx.fillStyle = '#333';
+            ctx.fill();
+        }
+
+        function drawNumbers(ctx, radius) {
+            ctx.font = radius * 0.15 + "px arial";
+            ctx.textBaseline = "middle";
+            ctx.textAlign = "center";
+            for (let num = 1; num < 13; num++) {
+                let ang = num * Math.PI / 6;
+                ctx.rotate(ang);
+                ctx.translate(0, -radius * 0.85);
+                ctx.rotate(-ang);
+                ctx.fillText(num.toString(), 0, 0);
+                ctx.rotate(ang);
+                ctx.translate(0, radius * 0.85);
+                ctx.rotate(-ang);
+            }
+        }
+
+        function drawTime(ctx, radius) {
+            const now = new Date();
+            let hour = now.getHours();
+            let minute = now.getMinutes();
+            let second = now.getSeconds();
+            //hour
+            hour = hour % 12;
+            hour = (hour * Math.PI / 6) +
+            (minute * Math.PI / (6 * 60)) +
+            (second * Math.PI / (360 * 60));
+            drawHand(ctx, hour, radius * 0.5, radius * 0.07);
+            //minute
+            minute = (minute * Math.PI / 30) + (second * Math.PI / (30 * 60));
+            drawHand(ctx, minute, radius * 0.8, radius * 0.07);
+            // second
+            second = (second * Math.PI / 30);
+            drawHand(ctx, second, radius * 0.9, radius * 0.02);
+        }
+
+        function drawHand(ctx, pos, length, width) {
+            ctx.beginPath();
+            ctx.lineWidth = width;
+            ctx.lineCap = "round";
+            ctx.moveTo(0, 0);
+            ctx.rotate(pos);
+            ctx.lineTo(0, -length);
+            ctx.stroke();
+            ctx.rotate(-pos);
+        }
+    </script>
+
+
+
+</body>
+</html>*@
+
+
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@RenderPage("~/Views/Shared/SidebarDh.cshtml")
+
+
+<html>
+<head>
+    <link rel="stylesheet" href="https://www.cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js'></script>
+    <meta charset=utf-8 />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+
+</head>
+
+
+
+<body>
+
+
+
+    <style>
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.428571429;
+            color: #333;
+            background-color: #C2E3F6;
+            margin: 0px;
+        }
+
+        .table-responsive {
+            margin: 10px 0;
+        }
+
+
+
+
+        .table-wrapper {
+            min-width: 1400px;
+            padding: 20px 25px;
+            border-radius: 3px;
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        }
+
+        .morris-hover {
+            position: absolute;
+            z-index: 1000;
+        }
+
+            .morris-hover.morris-default-style {
+                border-radius: 10px;
+                padding: 6px;
+                color: #666;
+                background: rgba(255, 255, 255, 0.8);
+                border: solid 2px rgba(230, 230, 230, 0.8);
+                font-family: sans-serif;
+                font-size: 12px;
+                text-align: center;
+            }
+
+                .morris-hover.morris-default-style .morris-hover-row-label {
+                    font-weight: bold;
+                    margin: 0.25em 0;
+                }
+
+                .morris-hover.morris-default-style .morris-hover-point {
+                    white-space: nowrap;
+                    margin: 0.1em 0;
+                }
+
+        svg {
+            width: 100%;
+        }
+
+
+
+
+        .well {
+            min-height: 350px;
+            padding: 2px;
+            width: 1220px;
+            margin-left: -15px;
+            margin-bottom: 20px;
+            background-color: #fff;
+            border: 1px solid #e3e3e3;
+            border-radius: 4px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+        }
+
+
+
+        .card {
+            position: relative;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1px solid rgba(0, 0, 0, .125);
+            border-radius: .25rem;
+            width: 0px;
+        }
+
+
+
+        .table td, .table th {
+            padding: 10px;
+            vertical-align: top;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .table thead th {
+            vertical-align: bottom;
+            padding: 9px;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+
+
+        .row {
+            margin-right: -15px;
+            margin-left: -12px;
+        }
+
+        .team-name {
+            cursor: pointer;
+        }
+
+        .tbody td {
+            cursor: pointer;
+        }
+    </style>
+    <br />
+    <br />
+    <br />
+    <br />
+
+
+
+
+
+
+
+
+
+
+    <div class="container">
+
+
+
+        <div class="table-responsive">
+            <div class="table-wrapper">
+
+
+                <section class="container-fluid" style="width:1300px">
+
+
+
+                    <div class="row">
+                        <div class="col-sm-3">
+
+
+                            <div class="card">
+
+
+
+                                <div style=" width: 300px; height: 350px; margin-bottom: 10px; margin-left:-10px;" id="b_sale"></div>
+
+
+
+                            </div>
+                            @*</div>*@
+
+
+
+                        </div>
+
+
+
+                        <div class="col-sm-4" style="background-color: #fff; width: 490px; height: 350px; padding: 10px; margin-bottom: 10px; ">
+                            @*<div class="well">*@
+                            <table class="table  " id="idshifttable">
+                                <h4>Team Wise Attendance</h4>
+
+
+                                <thead>
+
+                                    <tr>
+                                        <th>Team</th>
+                                        <th>Total</th>
+                                        <th>Present</th>
+                                        <th>Leave</th>
+                                        <th>Absent</th>
+                                        <th>%</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tbody"> </tbody>
+                            </table>
+                            @*</div>*@
+                        </div>
+
+
+                        <div class="col-sm-4" style="background-color: #fff; width: 490px; height: 350px; margin-left: 10px; margin-bottom: 10px; padding: 10px; margin-left: 16px; ">
+                            @*<div class="well">*@
+                            <table class="table  " id="idshifttable">
+                                <h4>Role Wise Attendance</h4>
+                                <thead>
+                                    <tr>
+                                        <th>Role</th>
+                                        <th>Total</th>
+                                        <th>Present</th>
+                                        <th>Leave</th>
+                                        <th>Absent</th>
+                                        <th>%</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tbody-role"></tbody>
+
+                            </table>
+                            @*</div>*@
+                        </div>
+
+
+                        <div class="row">
+
+                            <div class="card-container" style="margin-left: 5px; margin-top: 4px; width: 1200px;"></div>
+
+                        </div>
+                        <div class="col-4">
+                            <div class="well">
+                                <h4 style="margin-left:20px; padding:20px">Team Wise RX</h4>
+                                <div id="bar-chart1"></div>
+
+
+                            </div>
+                            <div class="well">
+                                <h4 style="margin-left:20px; padding:20px">Team Wise DCR</h4>
+                                <div id="bar-chart2"></div>
+
+
+                            </div>
+                        </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+
+
+
+
+        $(document).ready(function () {
+            loadData2();
+        });
+
+        function loadData2() {
+            $.ajax({
+                url: "/Attendence/mGetTotal",
+                type: "GET",
+                contentType: 'application/json;charset=utf-8',
+                dataType: "json",
+                success: function (result) {
+                    console.log("Result from server:", result);
+
+                    let html = '';
+                    const groupedData = groupBy(result, 'TYPE');
+
+                    for (const [type, items] of Object.entries(groupedData)) {
+                        if (Array.isArray(items) && type && type.trim() !== '' && items.length > 0) {
+                        const totalMPOCounts = countTotalMPO(items);
+
+                        const totalMPOS = items.reduce((acc, obj) => acc + parseInt(obj.TOTALMPO.trim()), 0);
+                        const totalAH = items.reduce((acc, obj) => acc + parseInt(obj.TOTALAREA.trim()), 0);
+                        const totalDH = items.reduce((acc, obj) => acc + parseInt(obj.TOTALDIV.trim()), 0);
+                        const totalZH = items.reduce((acc, obj) => acc + parseInt(obj.TOTALZH.trim()), 0);
+
+                        const presentCount = items.reduce((acc, obj) => acc + (obj.PRESENT || 0), 0);
+                        const absentCount = items.reduce((acc, obj) => acc + (obj.ABSENT || 0), 0);
+                        //const leaveCount = items.reduce((acc, obj) => acc + (obj.LEAVE || 0), 0);
+                        const leaveCount = totalMPOS - presentCount - absentCount;
+                        const leaveCountah = totalAH - presentCount - absentCount;
+                        const leaveCountdh = totalDH - presentCount - absentCount;
+                        const leaveCountzh = totalZH - presentCount - absentCount;
+
+                        const presentPercentage = totalMPOS > 0 ? ((presentCount / totalMPOS) * 100).toFixed(2) : '0.00';
+                        const presentPercentageAH = totalAH > 0 ? ((presentCount / totalAH) * 100).toFixed(2) : '0.00';
+                        const presentPercentageDH = totalDH > 0 ? ((presentCount / totalDH) * 100).toFixed(2) : '0.00';
+                        const presentPercentageZH = totalZH > 0 ? ((presentCount / totalZH) * 100).toFixed(2) : '0.00';
+
+                        html += `<tr>`;
+                        html += `<td>${type}</td>`;
+                        html += `<td>${formatValue(totalMPOS)} ${formatValue(totalAH)} ${formatValue(totalDH)} ${formatValue(totalZH)}</td>`;
+                        html += `<td>${presentCount}</td>`;
+                        html += `<td>${formatValue(leaveCount)}${formatValue(leaveCountah)}${formatValue(leaveCountdh)}${formatValue(leaveCountzh)}</td>`;
+                        html += `<td>${absentCount}</td>`;
+                        html +=  `<td>${formatValue(presentPercentage)} ${formatValue(presentPercentageAH)} ${formatValue(presentPercentageDH)} ${formatValue(presentPercentageZH)}%</td>`;
+                        html += `</tr>`;
+                    } else {
+                            console.log("Invalid items for type:", type, items);
+                }
+            }
+                    $('.tbody-role').append(html);
+        },
+        error: function (errormessage) {
+            console.error("Error fetching data:", errormessage);
+            alert(errormessage.responseText);
+        }
+        });
+        }
+
+        function groupBy(array, key) {
+            if (!Array.isArray(array)) {
+                console.error("Expected array but got:", array);
+                return {};
+            }
+            return array.reduce((acc, obj) => {
+                const property = obj[key];
+            if (property) {
+                acc[property] = acc[property] || [];
+                acc[property].push(obj);
+            }
+            return acc;
+        }, {});
+        }
+
+        function countTotalMPO(items) {
+            const counts = {};
+            let total = 0;
+
+            items.forEach(item => {
+                const totalMPO = item.TOTALMPO.trim();
+            counts[totalMPO] = (counts[totalMPO] || 0) + 1;
+            total++;
+        });
+
+        return { counts, total };
+        }
+
+        function formatValue(value) {
+            return (value && value > 0) ? value.toLocaleString().trim() : '';
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        $(document).ready(function () {
+            google.charts.load('current', { 'packages': ['corechart'] });
+            google.charts.setOnLoadCallback(loadData);
+        });
+
+        function loadData() {
+            $.ajax({
+                url: '/Attendence/mGetTotal',
+                type: 'GET',
+                contentType: 'application/json;charset=utf-8',
+                dataType: 'json',
+                success: function (data) {
+                    displayData(data);
+                    $('.tbody').on('click', 'td.team-name', function () {
+                        var teamName = $(this).text();
+                        var zoneListData = data.filter(zone => zone.TEAM_NAME === teamName);
+                        displayZoneData(zoneListData);
+                        $('.tbody').append('<tr><td colspan="6"><button class="previousButton">Previous</button></td></tr>');
+
+                        $('.previousButton').on('click', function () {
+                            displayData(data);
+                            drawAttendanceChart(data, '');
+                        });
+                        drawAttendanceChart(zoneListData, teamName);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX Error:", error);
+                    $('.tbody').html('<tr><td colspan="6">Error loading data. Please try again later.</td></tr>');
+                }
+            });
+        }
+
+        function displayData(data) {
+            var html = '';
+            var teamList = [];
+            var teamData = {};
+
+            data.forEach(function (item) {
+                if (!teamList.includes(item.TEAM_NAME)) {
+                    teamList.push(item.TEAM_NAME);
+                    teamData[item.TEAM_NAME] = {
+                        TOTALMPO: parseInt(item.TOTALMPO),
+                        PRESENT: parseInt(item.PRESENT),
+                        ABSENT: parseInt(item.ABSENT)
+                    };
+                } else {
+                    teamData[item.TEAM_NAME].TOTALMPO += parseInt(item.TOTALMPO);
+                    teamData[item.TEAM_NAME].PRESENT += parseInt(item.PRESENT);
+                    teamData[item.TEAM_NAME].ABSENT += parseInt(item.ABSENT);
+                }
+            });
+
+            for (const [teamName, teamStats] of Object.entries(teamData)) {
+                html += '<tr>';
+                html += '<td class="team-name">' + teamName + '</td>';
+                html += '<td >' + teamStats.TOTALMPO + '</td>';
+                html += '<td >' + teamStats.PRESENT + '</td>';
+                html += '<td>' + (teamStats.TOTALMPO - teamStats.PRESENT - teamStats.ABSENT) + '</td>';
+                html += '<td>' + teamStats.ABSENT + '</td>';
+                html += '<td>' + ((teamStats.TOTALMPO > 0) ? ((teamStats.PRESENT / teamStats.TOTALMPO) * 100).toFixed(2) : 0) + '%</td>';
+                html += '</tr>';
+            }
+
+        $('.tbody').html(html);
+        drawAttendanceChart(data, '');
+        }
+
+        function displayZoneData(zoneListData) {
+            var html = '';
+            var zonList = [];
+            var totalMPO = 0;
+
+            zoneListData.forEach(function (zone) {
+                totalMPO += parseInt(zone.TOTALMPO);
+                if (!zonList.includes(zone.ZONE)) {
+                    zonList.push(zone.ZONE);
+                    html += '<tr>';
+                    html += '<td>' + zone.ZONE + '</td>';
+                    html += '<td>' + zone.TOTALMPO + '</td>';
+                    html += '<td>' + zone.PRESENT + '</td>';
+                    html += '<td>' + (zone.TOTALMPO - zone.PRESENT - zone.ABSENT) + '</td>';
+                    html += '<td>' + zone.ABSENT + '</td>';
+                    html += '<td>' + ((zone.TOTALMPO > 0) ? ((zone.PRESENT / zone.TOTALMPO) * 100).toFixed(2) : 0) + '%</td>';
+                    html += '</tr>';
+                }
+            });
+
+            $('.tbody').html(html);
+        }
+
+        function drawAttendanceChart(data, teamName) {
+            var options = {
+                pieHole: 0.8,
+                pieSliceTextStyle: { color: 'transparent' },
+                legend: 'none',
+                title: '',
+                colors: ['#58F3D1', '#FF8E8E', '#383838']
+            };
+
+            var presentValue = 0;
+            var absentValue = 0;
+            var leaveValue = 0;
+
+            data.forEach(function (item) {
+                presentValue += parseInt(item.PRESENT);
+                absentValue += parseInt(item.ABSENT);
+                leaveValue += parseInt(item.TOTALMPO) - parseInt(item.PRESENT) - parseInt(item.ABSENT);
+            });
+
+            var totalValue = presentValue + absentValue + leaveValue;
+            var arrValues = [['Status', 'Count'], ['Present', presentValue], ['Absent', absentValue], ['Leave', leaveValue]];
+
+            var dataTable = google.visualization.arrayToDataTable(arrValues);
+            var chart = new google.visualization.PieChart(document.getElementById('b_sale'));
+            chart.draw(dataTable, options);
+
+            drawTitleAndTotal(chart, teamName, totalValue, presentValue, absentValue, leaveValue);
+        }
+
+        function drawTitleAndTotal(chart, teamName, totalValue, presentValue, absentValue, leaveValue) {
+            var chartContainer = chart.getContainer();
+            var svg = chartContainer.getElementsByTagName('svg')[0];
+
+            var existingIcons = svg.querySelectorAll('.icon');
+            existingIcons.forEach(function (icon) {
+                svg.removeChild(icon);
+            });
+
+            var centerX = chartContainer.clientWidth / 2;
+            var centerY = chartContainer.clientHeight / 2;
+
+            var titleText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            titleText.setAttribute('x', centerX);
+            titleText.setAttribute('y', centerY - 40);
+            titleText.setAttribute('text-anchor', 'middle');
+            titleText.setAttribute('dominant-baseline', 'middle');
+            titleText.setAttribute('font-size', '12');
+            titleText.setAttribute('font-weight', 'bold');
+            titleText.textContent = teamName;
+
+            createAndAppendTextElement(svg, 'Present: ', centerX, centerY + 120, '#58F3D1', presentValue);
+            createAndAppendTextElement(svg, 'Absent: ', centerX, centerY + 140, '#FF8E8E', absentValue);
+            createAndAppendTextElement(svg, 'Leave: ', centerX, centerY + 160, '#383838', leaveValue);
+            createAndAppendTextElement(svg, 'Total: ' + totalValue, centerX, centerY, '#FFFFFF');
+
+            svg.appendChild(titleText);
+        }
+
+        function createAndAppendTextElement(svg, label, x, y, color, value) {
+            var textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            textElement.setAttribute('x', x);
+            textElement.setAttribute('y', y);
+            textElement.setAttribute('text-anchor', 'middle');
+            textElement.setAttribute('dominant-baseline', 'middle');
+            textElement.setAttribute('font-size', '12');
+            textElement.setAttribute('font-weight', 'bold');
+            textElement.textContent = label;
+
+            var icon = createIcon(color, x - 45, y - 5);
+            svg.appendChild(icon);
+            svg.appendChild(textElement);
+
+            var valueText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            valueText.setAttribute('x', x + 30);
+            valueText.setAttribute('y', y);
+            valueText.setAttribute('text-anchor', 'start');
+            valueText.setAttribute('dominant-baseline', 'start');
+            valueText.setAttribute('font-size', '12');
+            valueText.textContent = value;
+            svg.appendChild(valueText);
+        }
+
+        function createIcon(color, x, y) {
+            var icon = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            icon.setAttribute('class', 'icon');
+            icon.setAttribute('width', '10');
+            icon.setAttribute('height', '10');
+            icon.setAttribute('x', x);
+            icon.setAttribute('y', y);
+            icon.setAttribute('fill', color);
+            return icon;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        $(document).ready(function () {
+            loadData1();
+        });
+
+        function loadData1() {
+            $.ajax({
+                url: "/Attendence/mGetTotal",
+                type: "GET",
+                contentType: 'application/json;charset=utf-8',
+                dataType: "json",
+                success: function (result) {
+                    var teams = groupBy(result, 'TEAM_NAME');
+
+                    var html = '';
+                    var count = 0;
+                    $.each(teams, function (teamName, items) {
+
+
+                        if (teamName !== null && teamName.trim() !== '') {
+
+                            if (count % 4 === 0) {
+                                html += '<div class="row">';
+                            }
+                            html += '<div class="col-sm-3">';
+                            html += '<div class="card-product" style="  border-radius: 5px; margin-left:10px; margin-bottom: 10px;width:300px;">';
+                            html += '<div class="card-header" style="background-color: #fff; padding-top: 15px; padding-left: 10px;  font-size: 20px; font-weight: bold; ">' + teamName + '</div>';
+                            html += '<div class="card-header" style="background-color: #fff; padding-left: 28px; font-size: 14px;  border-bottom: 1px solid #ddd;"><strong>Role:</strong>  <strong style="margin-left: 160px">Default:</strong></div>';
+
+                            html += '<div class="card-body" style="padding: 20px; background-color:#fff">';
+
+                            var role = groupBy(items, 'TYPE');
+
+                            $.each(role, function (roles, item) {
+
+                                if (roles !== null && roles.trim() !== '' && item.length > 0) {
+                                    var presentCount = item.reduce(function (acc, obj) {
+                                        return acc + obj.PRESENT;
+                                    }, 0);
+
+                                    html += '<div class="card-section" style="margin-bottom: 15px;">';
+                                    html += '<p style="margin-left:10px;"> <span>' + roles + '</span> <span style="padding-right: 30px; float: right; ">' + presentCount + '</span></p>';
+                                    html += '</div>';
+                                }
+                            });
+                            html += '</div>';
+                            html += '</div>';
+                            html += '</div>';
+                            count++;
+                            if (count % 4 === 0 || count === teams.length) {
+                                html += '</div>';
+                            }
+                        }
+                    });
+                    $('.card-container').append(html);
+
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        }
+
+        function groupBy(array, key) {
+            return array.reduce(function (acc, obj) {
+                var property = obj[key];
+                acc[property] = acc[property] || [];
+                acc[property].push(obj);
+                return acc;
+            }, {});
+        }
+
+
+
+
+
+
+
+
+
+
+        $(document).ready(function () {
+            barChart1();
+
+            $(window).resize(function () {
+                if (window.barChart1) {
+                    window.barChart1.redraw();
+                }
+            });
+        });
+
+        function barChart1() {
+            $.ajax({
+                url: "/Attendence/mGetTotal",
+                type: "GET",
+                contentType: 'application/json;charset=utf-8',
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+
+                    var teamData = {};
+
+                    // Process and aggregate data
+                    result.forEach(function (item) {
+                        var teamName = item.TEAM_NAME.trim();
+                        if (teamName) {
+                            if (!teamData[teamName]) {
+                                teamData[teamName] = {
+                                    TEAM_NAME: teamName,
+                                    PRESENT: parseInt(item.PRESENT),
+                                    ABSENT: parseInt(item.ABSENT)
+                                };
+                            } else {
+                                teamData[teamName].PRESENT += parseInt(item.PRESENT);
+                                teamData[teamName].ABSENT += parseInt(item.ABSENT);
+                            }
+                        }
+                    });
+
+                    // Convert aggregated data to array
+                    var aggregatedData = Object.values(teamData);
+
+                    if (aggregatedData.length > 0) {
+                        window.barChart1 = Morris.Bar({
+                            element: 'bar-chart1',
+                            data: aggregatedData,
+                            xkey: 'TEAM_NAME',
+                            ykeys: ['PRESENT', 'ABSENT'],
+                            labels: ['PRESENT', 'ABSENT'],
+                            barColors: ['#1e88e5', '#ff3321'],
+                            resize: true
+                        });
+                    } else {
+                        console.error("Error: No valid data points to display.");
+                        alert("No valid data points found. Please check your data.");
+                    }
+                },
+                error: function (errormessage) {
+                    console.error("Error:", errormessage);
+                    alert("An error occurred while loading data.");
+                }
+            });
+        }
+
+
+
+
+
+
+
+
+
+        $(document).ready(function () {
+            barChart2();
+
+            $(window).resize(function () {
+                if (window.barChart2) {
+                    window.barChart2.redraw();
+                }
+            });
+        });
+
+        function barChart2() {
+            $.ajax({
+                url: "/Attendence/mGetTotal",
+                type: "GET",
+                contentType: 'application/json;charset=utf-8',
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+
+                    var teamData = {};
+
+                    // Process and aggregate data
+                    result.forEach(function (item) {
+                        var teamName = item.TEAM_NAME.trim();
+                        if (teamName) {
+                            if (!teamData[teamName]) {
+                                teamData[teamName] = {
+                                    TEAM_NAME: teamName,
+                                    PRESENT: parseInt(item.PRESENT),
+                                    ABSENT: parseInt(item.ABSENT)
+                                };
+                            } else {
+                                teamData[teamName].PRESENT += parseInt(item.PRESENT);
+                                teamData[teamName].ABSENT += parseInt(item.ABSENT);
+                            }
+                        }
+                    });
+
+                    // Convert aggregated data to array
+                    var aggregatedData = Object.values(teamData);
+
+                    if (aggregatedData.length > 0) {
+                        window.barChart2 = Morris.Bar({
+                            element: 'bar-chart2',
+                            data: aggregatedData,
+                            xkey: 'TEAM_NAME',
+                            ykeys: ['PRESENT', 'ABSENT'],
+                            labels: ['PRESENT', 'ABSENT'],
+                            barColors: ['#1e88e5', '#ff3321'],
+                            resize: true
+                        });
+                    } else {
+                        console.error("Error: No valid data points to display.");
+                        alert("No valid data points found. Please check your data.");
+                    }
+                },
+                error: function (errormessage) {
+                    console.error("Error:", errormessage);
+                    alert("An error occurred while loading data.");
+                }
+            });
+        }
+
+
+
+    </script>
+
+
+
+
+</body>
+</html>
+
+
+
+

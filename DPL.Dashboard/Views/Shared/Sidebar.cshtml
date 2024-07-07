@@ -1,0 +1,1183 @@
+﻿@{
+    ViewBag.Title = "Sidebar";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deeplaid Laboratories Ltd</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
+    <link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">*@
+
+
+
+
+
+    <style>
+        #wrapper {
+            transition: margin-left 0.3s ease;
+        }
+
+        #menu-toggle,
+        #menu-toggle-2 {
+            transition: transform 0.3s ease;
+        }
+
+
+
+        .dropdown-icon {
+            float: right;
+            margin-left: auto;
+            margin-top: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .rotate-icon {
+            transform: rotate(90deg);
+        }
+
+<<<<<<< HEAD
+
+
+
+
+        .navbar {
+            background-color: #fff;
+        }
+
+
+        .navbar-brand {
+            color: #fff;
+        }
+
+
+            .navbar-brand img {
+                margin-right: 10px;
+            }
+
+
+        .navbar-nav li a {
+            color: #fff;
+        }
+
+
+        .navbar-nav li.active a {
+            color: #ff0;
+        }
+
+
+        .dropdown-menu {
+            background-color: #333;
+        }
+
+
+            .dropdown-menu li a {
+                color: #fff;
+            }
+
+
+        .navbar-toggle .icon-bar {
+            background-color: #fff;
+        }
+
+        .navbar-inverse {
+            background-color: #eee;
+            border-color: #eee;
+        }
+
+            .navbar-inverse .navbar-brand {
+                color: #000000;
+            }
+
+                .navbar-inverse .navbar-brand:hover {
+                    color: #000000;
+                }
+
+            .navbar-inverse .navbar-nav > li > a {
+                color: #020202;
+                margin-right: 80px;
+                margin-bottom: 20px;
+            }
+
+
+                .navbar-inverse .navbar-nav > li > a :hover {
+                    color: #020202;
+                    margin-right: 80px;
+                    margin-bottom: 20px;
+                }
+
+
+        .container {
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+            margin-top: 15px;
+=======
+      
+
+
+       
+        .navbar {
+            background-color: #fff;
+>>>>>>> 315bc72564bcbc3e944fe0c26f6a3bab60462963
+        }
+
+       
+        .navbar-brand {
+            color: #fff;
+        }
+
+           
+            .navbar-brand img {
+                margin-right: 10px; 
+            }
+
+        
+        .navbar-nav li a {
+            color: #fff;
+        }
+
+       
+        .navbar-nav li.active a {
+            color: #ff0; 
+        }
+
+        
+        .dropdown-menu {
+            background-color: #333;
+        }
+
+            
+            .dropdown-menu li a {
+                color: #fff;
+            }
+
+        
+        .navbar-toggle .icon-bar {
+            background-color: #fff;
+        }
+
+        .navbar-inverse {
+            background-color: #eee;
+            border-color: #eee;
+        }
+
+            .navbar-inverse .navbar-brand {
+                color: #000000;
+            }
+
+                .navbar-inverse .navbar-brand:hover {
+                    color: #000000; 
+                }
+
+            .navbar-inverse .navbar-nav > li > a {
+                color: #020202;
+                margin-right: 80px;
+                margin-bottom: 20px;
+            }
+
+
+            .navbar-inverse .navbar-nav > li > a :hover {
+                color: #020202;
+                margin-right: 80px;
+                margin-bottom: 20px;
+            }
+
+
+        .container {
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+            margin-top: 15px;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<<<<<<< HEAD
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script>
+            $(document).ready(function () {
+
+                $("#menu-toggle").click(function (e) {
+                    e.preventDefault();
+                    $(".navbar-collapse").toggleClass("collapse");
+                });
+
+
+                $("#menu-toggle-2").click(function (e) {
+                    e.preventDefault();
+                    $(".navbar-collapse").toggleClass("collapse");
+                });
+            });
+        </script>
+
+    @*<nav class="navbar navbar-default no-margin">
+
+=======
+    @*<nav class="navbar navbar-default no-margin">
+>>>>>>> 315bc72564bcbc3e944fe0c26f6a3bab60462963
+        <div class="navbar-header fixed-brand">
+            
+            <a class="navbar-brand" href="#"><img src="http://localhost:15574/image.jpg" alt="Deeplaid Laboratories" height="20"> Deeplaid Laboratories</a>
+        </div>
+
+        <ul class="nav navbar-nav">
+            <li class="active">
+                <button class="navbar-toggle collapse in" id="menu-toggle-2">
+                    <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+                </button>
+            </li>
+        </ul>
+<<<<<<< HEAD
+        <ul class="nav  navbar-right"></ul>
+    </nav>*@
+=======
+
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user fa-stack-2x "></i>  </a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Logout</a></li>
+
+                </ul>
+            </li>
+        </ul>
+    </nav>*@
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" id="menu-toggle-2">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"><img src="http://192.168.1.146:8084/image.jpg" alt="Deeplaid Laboratories" height="20">Deeplaid Laboratories </a>
+              
+            </div>
+          
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user fa-stack-2x "></i>  </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Logout</a></li>
+
+                        </ul>
+                    </li>
+                </ul>
+                
+            </div>
+        </div>
+    </nav>
+    <br />
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $(".navbar-collapse").toggleClass("collapse");
+            });
+
+
+            $("#menu-toggle-2").click(function (e) {
+                e.preventDefault();
+                $(".navbar-collapse").toggleClass("collapse");
+            });
+        });
+    </script>*@
+
+>>>>>>> 315bc72564bcbc3e944fe0c26f6a3bab60462963
+
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" id="menu-toggle-2">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"><img src="http://192.168.1.146:8084/image.jpg" alt="Deeplaid Laboratories" height="20">Deeplaid Laboratories </a>
+              
+            </div>
+          
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user fa-stack-2x "></i>  </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Logout</a></li>
+
+                        </ul>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+    <div id="wrapper">
+
+
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+
+                <li class="active">
+                    <a href="#">
+                        <span class="fa-stack fa-lg pull-left" />
+                        <i class="fa fa-dashboard fa-stack-1x "></i>
+                        @Html.ActionLink("Dashboard", "Index", "Dashboard")
+                    </a>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-bullseye fa-stack-1x "></i></span>Attendance <span class="fa-stack fa-lg pull-right "><i class="fa fa-angle-right dropdown-icon"></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Attendance list", "Attendancelist", "Dashboard")
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Daily Shift", "Dailyshift", "Dashboard")
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-pencil-square-o fa-stack-1x "></i></span>Exam <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon"></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Exam list", "Examlist", "Dashboard")
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-calendar fa-stack-1x "></i></span>Doctor Visit <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon"></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Doctor Visit List", "DoctorVisitList", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Doctor Visit Type", "DoctorVisitType", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Doctor Visit Plan User List", "DoctorVisitPlanUserList", "Dashboard")
+                            </a>
+                        </li>
+                        @*<li>
+                                <a href="#">
+
+
+                                    @Html.ActionLink("Doctor Visit Plan OneUSer", "DoctorVisitPlanOneUSer", "Home")
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+
+
+                                    @Html.ActionLink("Doctor Visit Plan vs Visit", "DoctorVisitPlan", "Home")
+                                </a>
+                            </li>*@
+
+                    </ul>
+                </li>
+
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-bed fa-stack-1x "></i></span>Leave Management <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon"></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Holy Day List", "Holydaylist", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Leave Type List", "Leavetypelist", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Weekend List", "Weekendlist", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Leave Allocation List", "Leaveallocationlist", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Leave List", "Leavelist", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Leave Account", "Leaveaccount", "Dashboard")
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-map-marker fa-stack-1x "></i></span>Field Force Tracking <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon"></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Tracking", "Tracking", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("User Last Location", "Userlastlocation", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Multiple Dates", "Multipledates", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Doctor Location", "Doctorlocation", "Dashboard")
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+
+
+
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-calendar fa-stack-1x "></i></span>Tour Plan <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon"></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Tour Planned User List", "Tourplanneduserlist", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Tour Type List", "Tourtypelist", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+
+                        </li>
+
+
+                    </ul>
+                </li>
+
+
+
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-money fa-stack-1x "></i></span>Expense Claim <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon"></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        @*<li>
+<<<<<<< HEAD
+                    <a href="#">
+
+
+                        @Html.ActionLink("Expense Claim List", "Expenseclaimlist", "Dashboard")
+                    </a>
+                </li>*@
+=======
+                            <a href="#">
+
+
+                                @Html.ActionLink("Expense Claim List", "Expenseclaimlist", "Dashboard")
+                            </a>
+                        </li>*@
+>>>>>>> 315bc72564bcbc3e944fe0c26f6a3bab60462963
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Monthly Allows List", "Monthlyallowslist", "Dashboard")
+                            </a>
+                        </li>
+                        @*<li>
+<<<<<<< HEAD
+                    <a href="#">
+
+
+                        @Html.ActionLink("TA DA Market Rule List", "Tadamarketrulelist", "Dashboard")
+                    </a>
+                </li>*@
+=======
+                            <a href="#">
+
+
+                                @Html.ActionLink("TA DA Market Rule List", "Tadamarketrulelist", "Dashboard")
+                            </a>
+                        </li>*@
+>>>>>>> 315bc72564bcbc3e944fe0c26f6a3bab60462963
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("TA DA Claim List", "Tadaclaimlist", "Dashboard")
+                            </a>
+                        </li>
+                        @*<li>
+<<<<<<< HEAD
+                    <a href="#">
+
+
+                        @Html.ActionLink("Expense Type List", "Expensetypelist", "Dashboard")
+                    </a>
+                </li>*@
+                        @*<li>
+                    <a href="#">
+
+
+                        @Html.ActionLink("Milages Claim List", "Milagesclaimlist", "Dashboard")
+                    </a>
+                </li>*@
+=======
+                            <a href="#">
+
+
+                                @Html.ActionLink("Expense Type List", "Expensetypelist", "Dashboard")
+                            </a>
+                        </li>*@
+                        @*<li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Milages Claim List", "Milagesclaimlist", "Dashboard")
+                            </a>
+                        </li>*@
+>>>>>>> 315bc72564bcbc3e944fe0c26f6a3bab60462963
+
+
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-code-fork fa-stack-1x "></i></span>Market Structure <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon"></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("National Head", "NationalHead", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Team", "Team", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Zone", "Zone", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Division", "Division", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Area", "Area", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Market", "Market", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Route", "Route", "Dashboard")
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-file fa-stack-1x "></i></span>Prescription <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon"></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+
+
+
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Prescription List", "PrescriptionList", "Dashboard")
+                            </a>
+                        </li>
+
+
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Prescription Gallery", "PrescriptionGallery", "Dashboard")
+                            </a>
+                        </li>
+
+                        <li>
+
+                        </li>
+
+
+                    </ul>
+                </li>
+
+
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-bell-o fa-stack-1x "></i></span>Notice <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon"></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+
+
+
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Notices List", "Notices", "Dashboard")
+                            </a>
+                        </li>
+
+
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-tasks fa-stack-1x "></i></span>Today Task <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon"></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+
+
+
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Today Task List", "TodayTask", "Dashboard")
+                            </a>
+                        </li>
+
+
+                    </ul>
+                </li>
+
+
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-graduation-cap fa-stack-1x "></i></span>Training <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon"></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+
+
+
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Training List", "Training", "Dashboard")
+                            </a>
+                        </li>
+
+
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-shopping-bag fa-stack-1x "></i></span>Products <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon"></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+
+
+
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Product List", "productname", "Dashboard")
+                            </a>
+                        </li>
+
+
+                    </ul>
+                </li>
+
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-eye fa-stack-1x "></i></span>Mpo Report <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon"></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales Statement", "Salesstatement", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Market Monitoring Sheet", "Marketmonitoringsheet", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("MPO Ledger", "Mpoledger", "Dashboard")
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Touch & UnTouch", "Touchuntouch", "Dashboard")
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Daily Monitoring Sheet", "Dailymonitoringsheet", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales & Collection Achievement", "Salescollectionachievement", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales/Coll. Performance", "Salesperformance", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales Chalan Delivery", "Saleschalandelivery", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Product Wise Target", "Productwisetarget", "Dashboard")
+                            </a>
+                        </li>
+
+
+
+
+                    </ul>
+                </li>
+
+
+
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-eye fa-stack-1x "></i></span> Admin Report <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon "></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales Statement", "Adminsalesstatement", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Market Monitoring Sheet", "Adminmarketmonitoringsheet", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("MPO Ledger", "Adminmpoledger", "Dashboard")
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Touch & UnTouch", "Admintouchuntouch", "Dashboard")
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Daily Monitoring Sheet", "Admindailymonitoringsheet", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales & Collection Achievement", "Adminsalescollectionachievement", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales/Coll. Performance", "Adminsalesperformance", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales Chalan Delivery", "Adminsaleschalandelivery", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Product Wise Target", "Adminproductwisetarget", "Dashboard")
+                            </a>
+                        </li>
+
+
+
+
+                    </ul>
+                </li>
+
+
+
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-eye fa-stack-1x "></i></span> Division Report <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon"></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales Statement", "Divisionsalesstatement", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Market Monitoring Sheet", "Divisionmarketmonitoringsheet", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("MPO Ledger", "Divisionmpoledger", "Dashboard")
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Touch & UnTouch", "Divisiontouchuntouch", "Dashboard")
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Daily Monitoring Sheet", "Divisiondailymonitoringsheet", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales & Collection Achievement", "Divisionsalescollectionachievement", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales/Coll. Performance", "Divisionsalesperformance", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales Chalan Delivery", "Divisionsaleschalandelivery", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Product Wise Target", "Divisionproductwisetarget", "Dashboard")
+                            </a>
+                        </li>
+
+
+
+
+                    </ul>
+                </li>
+
+
+
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-eye fa-stack-1x "></i></span> Area Report <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon "></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales Statement", "Areasalesstatement", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Market Monitoring Sheet", "Areamarketmonitoringsheet", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("MPO Ledger", "Areampoledger", "Dashboard")
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Touch & UnTouch", "Areatouchuntouch", "Dashboard")
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Daily Monitoring Sheet", "Areadailymonitoringsheet", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales & Collection Achievement", "Areasalescollectionachievement", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales/Coll. Performance", "Areasalesperformance", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales Chalan Delivery", "Areasaleschalandelivery", "Dashboard")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+
+
+                                @Html.ActionLink("Product Wise Target", "Areaproductwisetarget", "Dashboard")
+                            </a>
+                        </li>
+
+
+
+
+                    </ul>
+                </li>
+
+            </ul>
+
+
+
+        </div>
+
+    </div>
+
+
+    <script>
+        $(document).ready(function () {
+            $("#menu-toggle, #menu-toggle-2").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+                $("#menu-toggle").toggleClass("active");
+            });
+
+            $("#menu-toggle-2").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled-2");
+                $('#menu ul').hide();
+            });
+
+
+            $("#menu ul ul").hide();
+            $("#menu li").click(function () {
+                $(this).children("ul").stop().slideToggle();
+
+                $(this).siblings().children("ul").stop().slideUp();
+            });
+
+
+            initMenu();
+        });
+
+        function initMenu() {
+            $('#menu ul').hide();
+            $('#menu ul').children('.current').parent().show();
+            $('#menu li a').click(
+                function () {
+                    var checkElement = $(this).next();
+                    if ((checkElement.is('ul')) && (checkElement.is(':visible'))) {
+                        checkElement.slideUp('normal');
+                        return false;
+                    }
+                    if ((checkElement.is('ul')) && (!checkElement.is(':visible'))) {
+                        $('#menu ul:visible').slideUp('normal');
+                        checkElement.slideDown('normal');
+                        return false;
+                    }
+                }
+            );
+        }
+
+        $(document).ready(function () {
+            $(".dropdown-toggle").click(function () {
+                $(this).find('.fa-angle-right').toggleClass('rotate-icon');
+            });
+        });
+    </script>
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+

@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Animation</title>
+    
+    @*<link href="https://cdn.jsdelivr.net/foundation/5.5.0/css/foundation.css" rel="stylesheet">*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js"></script>
+
+
+    <style>
+
+
+        body,
+        .overlay {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button,
+        .button {
+            outline: none;
+        }
+
+        .overlay {
+            z-index: 10;
+            background-color: #222;
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+
+        .overlay-loader {
+            width: 50px;
+            height: 50px;
+            background-color: #bada55;
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay">
+        <div class="overlay-loader"></div>
+    </div>
+
+    <script>
+        ; (function () {
+
+            'use strict';
+
+            var btn = document.querySelector('.button'),
+                overlay = document.querySelector('.overlay'),
+                loader = document.querySelector('.overlay-loader'),
+                overlayTL = new TimelineMax(),
+                loaderTL = new TimelineMax();
+
+            var animateOut = function () {
+                overlayTL.to(overlay, .6, { bottom: '100%', ease: Power4.easeInOut, delay: .25 });
+                loaderTL.to(loader, .5, { y: '-40', opacity: 0 });
+            };
+
+            var animateOut_2 = function () {
+                overlayTL.to(overlay, .6, { top: '100%', ease: Power4.easeInOut, delay: .25 });
+                loaderTL.to(loader, .5, { y: '40', opacity: 0 });
+            }
+
+            var animateIn = function () {
+                overlayTL.fromTo(overlay, .6, { top: '100%', bottom: 0 }, { top: 0, ease: Power4.easeInOut });
+                loaderTL.fromTo(loader, .5, { y: '40', opacity: 0, delay: .30 }, { y: 0, opacity: 1, delay: .6, ease: Power2.easeOut });
+            };
+
+            animateOut_2();
+
+            btn.onclick = function () {
+                animateIn();
+                setTimeout(animateOut_2, 2000);
+            };
+
+        })();
+    </script>
+</body>
+</html>

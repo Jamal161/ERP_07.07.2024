@@ -1,0 +1,642 @@
+﻿@{
+    ViewBag.Title = "DailyTaskAdd";
+}
+
+@RenderPage("~/Views/Shared/SidebarDh.cshtml")
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notice</title>
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.7.0/dist/css/bootstrap.min.css'>
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Animate CSS -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+    <link href="~/Content/css/custom.max.css" rel="stylesheet">
+
+    <style>
+        body {
+            color: #566787;
+            background: #f5f5f5;
+            font-family: 'Varela Round', sans-serif;
+            font-size: 13px;
+            max-width: 100%;
+        }
+
+        .table-responsive {
+            margin: 10px 0;
+        }
+
+        .nav {
+            display: ruby-text;
+            padding-left: 0;
+            margin-bottom: 0;
+
+        }
+        /*.table-wrapper {
+            min-width: 1550px;
+            background: #fff;
+            padding: 20px 25px;
+            margin-left: -40px;
+            margin-left: 250px;
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        }*/
+
+        #container {
+            max-width: 100%;
+        }
+
+        .step-container {
+            position: relative;
+            margin-top: -19px;
+            transform: translateY(-43%);
+        }
+
+        .step-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #fff;
+            border: 2px solid #007bff;
+            line-height: 30px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .step-line {
+            position: absolute;
+            top: 16px;
+            left: 50px;
+            width: calc(100% - 100px);
+            height: 2px;
+            background-color: #007bff;
+            z-index: -1;
+        }
+
+        /*#multi-step-form {
+            overflow-x: hidden;
+        }*/
+
+
+        input[type="date"] {
+            width: 150px;
+            height: 30px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 5px;
+        }
+
+        #strANNOUNCEMENT {
+            width: 100%;
+            height: 250px;
+            resize: vertical;
+        }
+
+        label {
+            display: inline-block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            padding: 2px;
+        }
+
+
+
+
+        .dropdown-container select {
+            width: 150px;
+            height: 30px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+
+        .dropdown-container label {
+            width: 150px;
+            display: inline-block;
+            font-weight: bold;
+        }
+
+
+        .container table {
+            width: 500px;
+            border-collapse: collapse;
+        }
+
+
+        .container th; {
+            width: 150px;
+            padding: 10px;
+            text-align: left;
+            background-color: #f2f2f2;
+            border-bottom: 1px solid #ddd;
+        }
+
+
+        .container td {
+            width: 150px;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+
+
+
+        .mb-3 {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            margin-bottom: 20px;
+        }
+
+
+        .form-group label {
+            font-weight: bold;
+        }
+
+
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+
+
+        .form-control-file {
+            margin-top: 5px;
+        }
+
+
+
+        legend {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+
+        .btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+
+        .progress-bar {
+            height: 20px;
+            background-color: #007bff;
+            width: 0;
+            transition: width 0.5s ease;
+        }
+
+
+
+        .step-container {
+            text-align: center;
+        }
+
+
+
+
+        legend {
+            display: inline-block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .step-container {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+            .step-container div {
+                cursor: pointer;
+                padding: 5px 11px;
+                background-color: #fff;
+                border: 1.8px solid #fff;
+                border-radius: 2px;
+            }
+
+                .step-container div:hover {
+                    background-color: #e0e0e0;
+                }
+
+        .nav-tabs {
+            border-bottom: none;
+        }
+
+    </style>
+</head>
+<body>
+
+
+
+
+
+    <div class="container">
+        <div class="table-responsive">
+            <div class="table-wrapper">
+
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item" style="float: right;">
+                        <button class="btn btn-success" onclick="location.href = '/Dashboard/TodayTask';">
+                            Back Previous
+                        </button>
+
+                    </li>
+                </ul>
+                <div id="container" class="container mt-5">
+
+
+
+
+                    <form id="multi-step-form">
+
+                        <h4>Daily Task Add</h4><br />
+                        <div class="mb-3">
+
+
+                            <div class="form-group">
+                                <label for="strTitle">Title</label>
+                                <input type="text" class="form-control" id="strTitle" placeholder="Name">
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="strBody">Announcement</label>
+                                <textarea class="form-control" id="strBody" rows="3"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="strDeadline">Deadline:</label><br />
+                                <input type="date" id="strDeadline" name="startDate">
+                            </div>
+                            <script>
+
+                                var today = new Date();
+
+
+                                var year = today.getFullYear();
+                                var month = String(today.getMonth() + 1).padStart(2, '0');
+                                var day = String(today.getDate()).padStart(2, '0');
+                                var formattedDate = year + '-' + month + '-' + day;
+
+
+                                document.getElementById('strDeadline').value = formattedDate;
+                            </script>
+                            <div class="form-group">
+
+
+                                <div class="dropdown-container">
+                                    <label for="strstatus">Status</label><br />
+                                    <select id="strstatus" onchange="updateSelectionsnew()">
+
+                                        <option value="Active">Active</option>
+                                        <option value="Inactive">Inactive</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <h4>User</h4>
+
+                            <p class="container">
+                                <script>
+                                    $(".js-example-tokenizer").select2({
+                                        tags: true,
+                                        tokenSeparators: [',', ' ']
+                                    })
+
+
+                                </script>
+
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <div class="dropdown-container">
+                                                    <label for="branchSelectnew">National Head:</label>
+                                                    <select id="branchSelectnew" onchange="updateSelectionsnew()">
+                                                        <option value="0">All</option>
+                                                        <option value="1">Deeplaid Laboratories Ltd.</option>
+                                                        <option value="3">Deeplaid Herbal &amp; Nutraceuticals Ltd.</option>
+                                                    </select>
+                                                </div>
+                                            </th>
+
+
+                                            <th>
+                                                <div class="dropdown-container p-2">
+                                                    <label for="teamSelectnew">Team:</label>
+                                                    <select id="teamSelectnew" class="form-control select2" onchange="updateSelectionsnew()"></select>
+                                                </div>
+                                            </th>
+
+                                            <th>
+                                                <div class="dropdown-container p-2">
+                                                    <label for="zoneSelectnew">Zone:</label>
+                                                    <select id="zoneSelectnew" onchange="updateSelectionsnew()" class="form-control select2"></select>
+                                                </div>
+                                            </th>
+
+                                            <th>
+                                                <div class="dropdown-container p-2">
+                                                    <label for="divisionSelectnew">Division:</label>
+                                                    <select id="divisionSelectnew" class="form-control select2" onchange="updateSelectionsnew()"></select>
+                                                </div>
+                                            </th>
+
+                                            <th>
+                                                <div class="dropdown-container p-2">
+                                                    <label for="areaSelectnew">Area:</label>
+                                                    <select id="areaSelectnew" class="form-control select2" onchange="updateSelectionsnew()"></select>
+                                                </div>
+                                            </th>
+
+                                            <th>
+                                                <div class="dropdown-container p-2">
+                                                    <label for="territorySelectnew">Market:</label>
+                                                    <select id="territorySelectnew" class="form-control select2" onchange="updateSelectionsnew()"></select>
+                                                </div>
+                                            </th>
+
+                                            <th>
+                                                <div class="dropdown-container p-2">
+                                                    <label for="routeSelectnew">Route:</label>
+                                                    <select id="routeSelectnew" class="form-control select2" onchange="updateSelectionsnew()"></select>
+                                                </div>
+                                            </th>
+
+                                            <th>
+                                                <div class="dropdown-container p-2">
+                                                    <label for="roleSelectnew">Role:</label>
+                                                    <select id="roleSelectnew" class="form-control select2" onchange="updateSelectionsnew()"></select>
+                                                </div>
+                                            </th>
+
+                                            <th>
+                                                <div class="dropdown-container p-2">
+                                                    <label for="cardSelectnew">User:</label>
+                                                    <select id="cardSelectnew" class="form-control select2" onchange="updateSelectionsnew()"></select>
+                                                </div>
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </p>
+
+
+                        </div>
+                        <button type="submit" class="btn btn-success" style="display: inline-block; margin-top: 20px;">Submit</button>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>*@
+
+    <script>
+
+
+
+
+        $(document).ready(function () {
+            $('#multi-step-form').submit(function (event) {
+                event.preventDefault();
+
+
+                var strTitle = $('#strTitle').val();
+                var strBody = $('#strBody').val();
+                var strDeadline = $('#strDeadline').val();
+                var strstatus = $('#strstatus').val();
+                var strNationalHead = $('#branchSelectnew').val();
+                var strTeam = $('#teamSelectnew').val();
+                var strZone = $('#zoneSelectnew').val();
+                var strDivision = $('#divisionSelectnew').val();
+                var strArea = $('#areaSelectnew').val();
+                var strMarket = $('#territorySelectnew').val();
+                var strRoute = $('#routeSelectnew').val();
+                var strRole = $('#roleSelectnew').val();
+                var strCardNo = $('#cardSelectnew').val();
+
+
+                if (!strTitle || !strBody || !strDeadline || !strstatus || !strNationalHead || !strTeam || !strZone || !strDivision || !strArea || !strMarket || !strRoute || !strRole || !strCardNo) {
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'All fields are required!',
+                    });
+                    return;
+                }
+
+
+                var formData = {
+                    strTitle: strTitle,
+                    strBody: strBody,
+                    strDeadline: strDeadline,
+                    strstatus: strstatus,
+                    strNationalHead: strNationalHead,
+                    strTeam: strTeam,
+                    strZone: strZone,
+                    strDivision: strDivision,
+                    strArea: strArea,
+                    strMarket: strMarket,
+                    strRoute: strRoute,
+                    strRole: strRole,
+                    strCardNo: strCardNo
+                };
+
+
+                $.ajax({
+                    url: '/DailyTask/mPostDailyTask',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(formData),
+                    success: function (response) {
+
+                        Swal.fire({
+                            title: "Success!",
+                            text: "Daily task added successfully!",
+                            icon: "success"
+                        }).then(() => {
+                            location.reload();
+                    });
+            },
+                error: function (xhr, status, error) {
+
+                    console.error("Error submitting form:", error);
+                }
+        });
+        });
+        });
+
+
+
+
+
+
+
+        $(document).ready(function () {
+            $("#teamSelectnew").select2();
+            $("#zoneSelectnew").select2();
+            $("#divisionSelectnew").select2();
+            $("#areaSelectnew").select2();
+            $("#territorySelectnew").select2();
+            $("#routeSelectnew").select2();
+            $("#cardSelectnew").select2();
+            $("#roleSelectnew").select2();
+
+            $.ajax({
+                url: "/Notice/mGetNoticesLedgerList",
+                type: "GET",
+                contentType: 'application/json;charset=utf-8',
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+
+                    function populateDropdowns(branchId) {
+                        var filteredResult = result.filter(function (item) {
+                            return item.intBRANCH_ID === parseInt(branchId);
+                        });
+
+                        function generateDropdownOptions(items, propertyName, dropdownId) {
+                            var optionsHtml = '<option selected>  </option>';
+                            var uniqueValues = [];
+                            for (var i = 0; i < items.length; i++) {
+                                var value = items[i][propertyName];
+                                if (uniqueValues.indexOf(value) === -1) {
+                                    uniqueValues.push(value);
+                                    optionsHtml += '<option value="' + value + '">' + value + '</option>';
+                                }
+                            }
+
+                            if (dropdownId === 'roleSelectnew') {
+                                var providedOptions = ['Trainer', 'Head', 'Report Viewer', 'Audit', 'Admin', 'Team Leader', 'ZH', 'DH', 'AH', 'MPO'];
+                                for (var j = 0; j < providedOptions.length; j++) {
+                                    var option = providedOptions[j];
+                                    if (uniqueValues.indexOf(option) === -1) {
+                                        optionsHtml += '<option type="checkbox" value="' + option + '">' + option + '</option>';
+                                    }
+                                }
+                            }
+
+                            return optionsHtml;
+                        }
+
+                        $('#teamSelectnew').html(generateDropdownOptions(filteredResult, 'strTEAM_NAME', 'teamSelectnew'));
+                        $('#zoneSelectnew').html(generateDropdownOptions(filteredResult, 'strZONE_NAME', 'zoneSelectnew'));
+                        $('#divisionSelectnew').html(generateDropdownOptions(filteredResult, 'strDIVISION', 'divisionSelectnew'));
+                        $('#areaSelectnew').html(generateDropdownOptions(filteredResult, 'strAREA', 'areaSelectnew'));
+                        $('#territorySelectnew').html(generateDropdownOptions(filteredResult, 'strTERRITORRY_NAME', 'territorySelectnew'));
+                        $('#routeSelectnew').html(generateDropdownOptions(filteredResult, 'strROUTE_NAME', 'routeSelectnew'));
+                        $('#cardSelectnew').html(generateDropdownOptions(filteredResult, 'strMPO_CARD_NO', 'cardSelectnew'));
+                        $('#roleSelectnew').html(generateDropdownOptions(filteredResult, '', 'roleSelectnew'));
+
+                    }
+
+                    populateDropdowns($('#branchSelectnew').val());
+
+                    $('#branchSelectnew').change(function () {
+                        populateDropdowns($(this).val());
+                    });
+
+
+                    $('#searchTeam').on('keyup', function () {
+                        var searchText = $(this).val().toLowerCase();
+                        filterDropdown('teamSelectnew', searchText);
+                    });
+
+                    $('#searchZone').on('keyup', function () {
+                        var searchText = $(this).val().toLowerCase();
+                        filterDropdown('zoneSelectnew', searchText);
+                    });
+
+                    $('#searchDivision').on('keyup', function () {
+                        var searchText = $(this).val().toLowerCase();
+                        filterDropdown('divisionSelectnew', searchText);
+                    });
+
+                    $('#searchArea').on('keyup', function () {
+                        var searchText = $(this).val().toLowerCase();
+                        filterDropdown('areaSelectnew', searchText);
+                    });
+
+                    $('#searchTerritory').on('keyup', function () {
+                        var searchText = $(this).val().toLowerCase();
+                        filterDropdown('territorySelectnew', searchText);
+                    });
+
+                    $('#searchRoute').on('keyup', function () {
+                        var searchText = $(this).val().toLowerCase();
+                        filterDropdown('routeSelectnew', searchText);
+                    });
+
+                    $('#searchCard').on('keyup', function () {
+                        var searchText = $(this).val().toLowerCase();
+                        filterDropdown('cardSelectnew', searchText);
+                    });
+
+                    $('#searchRole').on('keyup', function () {
+                        var searchText = $(this).val().toLowerCase();
+                        filterDropdown('roleSelectnew', searchText);
+                    });
+
+                    function filterDropdown(dropdownId, searchText) {
+                        $('#' + dropdownId + ' option').each(function () {
+                            var optionText = $(this).text().toLowerCase();
+                            var isVisible = optionText.indexOf(searchText) > -1;
+                            $(this).toggle(isVisible);
+                        });
+                    }
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        });
+
+
+
+
+
+    </script>
+
+
+
+
+</body>
+</html>
+
+

@@ -1,0 +1,2033 @@
+﻿
+@{
+    ViewBag.Title = "SidebarDh";
+}
+
+@*<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deeplaid Laboratories Ltd</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">*@
+
+    @*<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>*@
+    @*<script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>*@
+    @*<link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css" />*@
+    @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">*@
+
+
+    @*<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    <style>
+        #wrapper {
+            transition: margin-left 0.3s ease;
+        }
+
+        #menu-toggle,
+        #menu-toggle-2 {
+            transition: transform 0.3s ease;
+        }
+
+
+
+        .dropdown-icon {
+            float: right;
+            margin-left: auto;
+            margin-top: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .rotate-icon {
+            transform: rotate(90deg);
+        }
+
+
+
+
+
+        .navbar {
+            background-color: #fff;
+        }
+
+
+        .navbar-brand {
+            color: #fff;
+        }
+
+
+            .navbar-brand img {
+                margin-right: 10px;
+            }
+
+
+        .navbar-nav li a {
+            color: #fff;
+        }
+
+
+        .navbar-nav li.active a {
+            color: #ff0;
+        }
+
+
+        .dropdown-menu {
+            background-color: #333;
+        }
+
+
+            .dropdown-menu li a {
+                color: #fff;
+            }
+
+
+        .navbar-toggle .icon-bar {
+            background-color: #fff;
+        }
+
+        .navbar-inverse {
+            background-color: #eee;
+            border-color: #eee;
+        }
+
+            .navbar-inverse .navbar-brand {
+                color: #000000;
+            }
+
+                .navbar-inverse .navbar-brand:hover {
+                    color: #000000;
+                }
+
+            .navbar-inverse .navbar-nav > li > a {
+                color: #020202;
+                margin-right: 80px;
+                margin-bottom: 20px;
+            }*@
+
+
+        @*/*.navbar-inverse .navbar-nav > li > a :hover {
+                    color: #020202;
+                    margin-right: 80px;
+                    margin-bottom: 20px;
+                }*/
+
+
+        .container {
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+            margin-top: 15px;
+        }
+
+        .navbar {
+            background-color: #eee;
+            border: none;
+            height: 55px;
+        }
+
+
+        .navbar-brand {
+            color: #fff;
+            font-size: 20px;
+        }
+
+
+            .navbar-brand img {
+                height: 20px;
+                margin-right: 10px;
+            }
+
+
+        .navbar-toggle .icon-bar {
+            background-color: #0026ff;
+        }
+
+
+        .dropdown-toggle .fa-stack-2x {
+            color: #0026ff;
+        }
+
+
+        .dropdown-menu {
+            background-color: #eee;
+        }
+
+
+            .dropdown-menu li a {
+                color: #020202;
+            }
+
+
+                .dropdown-menu li a:hover {
+                    background-color: #020202;
+                }
+
+        .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+            color: #ffffff;
+            background-color: rgba(0, 0, 0, 0.0001);
+        }
+
+        .navbar-collapse .navbar-nav.navbar-right:last-child {
+            margin-right: -100px;
+        }
+
+
+
+        .navbar-nav > li > .dropdown-menu {
+            margin-top: -26px;
+            border-top-right-radius: 0;
+            border-top-left-radius: 0;
+            margin-right: 85px;
+        }
+
+
+        .navbar-nav .open .dropdown-menu {
+            background-color: #1D6BAB;
+            margin-top: -26px;
+        }
+
+        .navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
+            color: #fff;
+        }
+
+
+        ul.user-menu {
+            list-style-type: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+
+            ul.user-menu li {
+                border-radius: 4px;
+                margin-bottom: 5px;
+            }
+
+                ul.user-menu li a {
+                    text-decoration: none;
+                    color: #333;
+                }
+
+
+    </style>
+
+</head>
+<body>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $(".navbar-collapse").toggleClass("collapse");
+            });
+
+
+            $("#menu-toggle-2").click(function (e) {
+                e.preventDefault();
+                $(".navbar-collapse").toggleClass("collapse");
+            });
+        });
+    </script>
+
+
+
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" id="menu-toggle-2">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"><img src="data:image/jpg;base64,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" alt="Deeplaid Laboratories" height="20">Deeplaid Laboratories </a>
+
+            </div>
+
+
+
+
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li>
+                        <ul class="user-menu" id="user-menus"></ul>
+                    </li>
+
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">*@
+                            @*<i class="fa fa-user fa-stack-2x " ></i>*@
+
+                            @*<img src="data:image/jpg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAA8AAD/4QOBaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzE0NSA3OS4xNjM0OTksIDIwMTgvMDgvMTMtMTY6NDA6MjIgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9IkNCMTRFQUIyNkUyNEE3OTEyRUJBNDc3QkQyMzIyNjk1IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkIwMDYyNDY5MTk1ODExRTk5MEExQzU3MkY2NkQ0QzkzIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkIwMDYyNDY4MTk1ODExRTk5MEExQzU3MkY2NkQ0QzkzIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE5IChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjQ1OGZmMjM4LWVhMjItNWU0NC1iYzgzLTljYzg4ZDdjOTE3ZiIgc3RSZWY6ZG9jdW1lbnRJRD0iYWRvYmU6ZG9jaWQ6cGhvdG9zaG9wOmZjZGY5MTI5LTNiNTYtZTU0YS1hMjZlLThmMTRlOTg1OGNlYiIvPiA8L3JkZjpEZXNjcmlwdGlv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" width="40" alt="Deeplaid Laboratories" height="40" style="border-radius: 20px; margin-top: -8px">
+                        </a>
+                        <ul class="dropdown-menu" id="userDropdown"></ul>
+                    </li>
+                </ul>
+            </div>
+
+
+    </nav>
+    <script>
+
+
+     
+        $(document).ready(function () {
+            $("#loading").hide();
+
+            $("#loginForm").submit(function (event) {
+                event.preventDefault();
+                handleLogin();
+            });
+
+            $(document).on("click", "#logout", function (event) {
+                event.preventDefault();
+                handleLogout();
+            });
+
+            if (isLoggedIn()) {
+                updateDropdownMenu();
+                updateUserMenu();
+            }
+        });
+
+        function handleLogin() {
+            var userid = $("#UserID").val();
+            var empcardno = null;
+
+           
+            if (/^[a-zA-Z]-\d+$/.test(userid)) {
+                empcardno = userid;
+                userid = null; 
+            }
+
+            var password = $("#password").val();
+
+            if (!validateInputs(userid, empcardno, password)) {
+                return;
+            }
+
+            $("#loading").show();
+            sendLoginRequest(userid, empcardno, password);
+        }
+
+        function validateInputs(userid, empcardno, password) {
+            if ((!userid && !empcardno) || !password) {
+                alert("All fields are required.");
+                return false;
+            }
+            return true;
+        }
+
+        function sendLoginRequest(userid, empcardno, password) {
+            $.ajax({
+                url: '/Dashboard/gstrGetMpoAreaDevisionLists',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    "strPassWord": password,
+                    "intAdnin": 0,
+                    "strUserID": userid,
+                    "strCardNo": empcardno,
+                    "strDeComID": "0001"
+                },
+                success: function (response) {
+                    handleLoginSuccess(response);
+                },
+                error: handleLoginError
+            });
+        }
+
+        function handleLoginSuccess(response) {
+            console.log("Full response:", response);
+            $("#loading").hide();
+
+            let responseData = Array.isArray(response) ? response[0] : response;
+
+            if (responseData.strResponse === "Yes") {
+                console.log("Login successful");
+                storeUserData(responseData);
+                updateDropdownMenu();
+                updateUserMenu();
+                redirectUserBasedOnRole();
+            } else {
+                console.error('Login failed:', responseData.strResponse || "Unknown error");
+                alert('Login failed: ' + (responseData.strResponse || "An unknown error occurred"));
+            }
+        }
+
+        function handleLoginError(xhr, status, error) {
+            console.error('Error:', error);
+            console.error('XHR:', xhr);
+            console.error('Status:', status);
+            alert('Login failed. Make sure user name and password are correct.');
+            $("#loading").hide();
+        }
+
+        function storeUserData(userData) {
+            sessionStorage.setItem("userID", userData.strUserID);
+            sessionStorage.setItem("userRole", userData.strRole);
+            sessionStorage.setItem("userName", userData.strLedgerName);
+            sessionStorage.setItem("userCardNo", userData.strCardNo);
+        }
+
+        function updateDropdownMenu() {
+            var userName = sessionStorage.getItem("userName");
+            var userRole = sessionStorage.getItem("userRole");
+            var userCardNo = sessionStorage.getItem("userCardNo");
+            var userEmpCardNo = sessionStorage.getItem("userEMP_CARD_NO");
+
+            var cardNumberToShow = userEmpCardNo || userCardNo;
+
+            var dropdownMenu = $("#userDropdown");
+            dropdownMenu.empty();
+
+            dropdownMenu.append(`<li><a href="#">Welcome, ${userName} (${userRole.trim()})</a></li>`);
+        dropdownMenu.append(`<li><a href="#">Card No: ${cardNumberToShow}</a></li>`);
+        dropdownMenu.append(`<li role="separator" class="divider"></li>`);
+        dropdownMenu.append(`<li><a href="#" id="logout">Logout</a></li>`);
+        }
+
+        function updateUserMenu() {
+            var userName = sessionStorage.getItem("userName");
+            var userRole = sessionStorage.getItem("userRole");
+            var userMenu = $("#user-menus");
+            userMenu.empty();
+            userMenu.append(`<li><a href="#">Welcome, ${userName} (${userRole.trim()})</a></li>`);
+        }
+
+        function redirectUserBasedOnRole() {
+            var userRole = sessionStorage.getItem("userRole").trim();
+            if (userRole === "Admin") {
+                window.location.href = "/Dashboard/Index";
+            } else if (userRole === "MPO") {
+                window.location.href = "/Dashboard/User";
+            } else if (userRole === "DH") {
+                window.location.href = "/Dashboard/DhUser";
+            } else if (userRole === "AH") {
+                window.location.href = "/Dashboard/AhUser";
+            } else {
+                alert('Login failed. Make sure User Role');
+            }
+        }
+
+        function handleLogout() {
+            sessionStorage.clear();
+            window.location.href = "/Home/Login";
+        }
+
+        function isLoggedIn() {
+            return sessionStorage.getItem("userID") !== null;
+        }
+
+
+
+
+
+
+
+    </script>
+
+
+
+
+    <div id="wrapper">
+
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav nav-pills nav-stacked" id="menu">*@
+
+                @*<li class="active" id="adminMenu">
+                    <a href="#">
+                        <span class="fa-stack fa-lg pull-left" />
+                        <i class="fa fa-dashboard fa-stack-1x "></i>
+                        @Html.ActionLink("Dashboard", "Index", "Dashboard")
+                    </a>
+                </li>
+
+                <li id="adminMenu" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-bullseye fa-stack-1x "></i></span>Attendance <span class="fa-stack fa-lg pull-right "><i class="fa fa-angle-right dropdown-icon"></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Attendance list", "Attendancelist", "Dashboard")
+                            </a>
+                        </li>
+
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Daily Shift", "Dailyshift", "Dashboard")
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+
+
+                <li id="adminMenu" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-pencil-square-o fa-stack-1x "></i></span>Exam <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon"></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Exam list", "Examlist", "Dashboard")
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+
+                <li id="adminMenu" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-calendar fa-stack-1x "></i></span>Doctor Visit <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon"></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Doctor Visit List", "DoctorVisitList", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Doctor Visit Type", "DoctorVisitType", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Doctor Visit Plan User List", "DoctorVisitPlanUserList", "Dashboard")
+                            </a>
+                        </li>
+
+
+                    </ul>
+                </li>
+
+
+                <li id="adminMenu" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-bed fa-stack-1x "></i></span>Leave Management <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon"></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Holy Day List", "Holydaylist", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Leave Type List", "Leavetypelist", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Weekend List", "Weekendlist", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Leave Allocation List", "Leaveallocationlist", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Leave List", "Leavelist", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Leave Account", "Leaveaccount", "Dashboard")
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+
+
+                <li id="adminMenu" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-map-marker fa-stack-1x "></i></span>Field Force Tracking <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon"></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Tracking", "Tracking", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("User Last Location", "Userlastlocation", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Multiple Dates", "Multipledates", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Doctor Location", "Doctorlocation", "Dashboard")
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+
+
+
+
+                <li id="adminMenu" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-calendar fa-stack-1x "></i></span>Tour Plan <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon"></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Tour Planned User List", "Tourplanneduserlist", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Tour Type List", "Tourtypelist", "Dashboard")
+                            </a>
+                        </li>
+
+
+
+                    </ul>
+                </li>
+
+
+
+
+                <li id="adminMenu" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-money fa-stack-1x "></i></span>Expense Claim <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon"></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Monthly Allows List", "Monthlyallowslist", "Dashboard")
+                            </a>
+                        </li>
+
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("TA DA Claim List", "Tadaclaimlist", "Dashboard")
+                            </a>
+                        </li>
+
+
+
+                    </ul>
+                </li>
+
+                <li id="adminMenu" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-code-fork fa-stack-1x "></i></span>Market Structure <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon"></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("National Head", "NationalHead", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Team", "Team", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Zone", "Zone", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Division", "Division", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Area", "Area", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Market", "Market", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Route", "Route", "Dashboard")
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+
+                <li id="adminMenu" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-file fa-stack-1x "></i></span>Prescription <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon"></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+
+
+
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Prescription List", "PrescriptionList", "Dashboard")
+                            </a>
+                        </li>
+
+
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Prescription Gallery", "PrescriptionGallery", "Dashboard")
+                            </a>
+                        </li>
+
+                        <li>
+
+                        </li>
+
+
+                    </ul>
+                </li>
+
+
+
+                <li id="adminMenu" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-bell-o fa-stack-1x "></i></span>Notice <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon"></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+
+
+
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Notices List", "Notices", "Dashboard")
+                            </a>
+                        </li>
+
+
+                    </ul>
+                </li>
+
+                <li id="adminMenu" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-tasks fa-stack-1x "></i></span>Today Task <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon"></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+
+
+
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Today Task List", "TodayTask", "Dashboard")
+                            </a>
+                        </li>
+
+
+                    </ul>
+                </li>
+
+
+
+                <li id="adminMenu" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-graduation-cap fa-stack-1x "></i></span>Training <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon"></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+
+
+
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Training List", "Training", "Dashboard")
+                            </a>
+                        </li>
+
+
+                    </ul>
+                </li>
+
+                <li id="adminMenu" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-shopping-bag fa-stack-1x "></i></span>Products <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon"></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+
+
+
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Product List", "productname", "Dashboard")
+                            </a>
+                        </li>
+
+
+                    </ul>
+                </li>
+
+
+                <li id="mpoReportMenu" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-eye fa-stack-1x "></i></span>Mpo Report <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon"></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <li id="mpoReportMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales Statement", "Salesstatement", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="mpoReportMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Market Monitoring Sheet", "Marketmonitoringsheet", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="mpoReportMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("MPO Ledger", "Mpoledger", "Dashboard")
+                            </a>
+                        </li>
+
+                        <li id="mpoReportMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Touch & UnTouch", "Touchuntouch", "Dashboard")
+                            </a>
+                        </li>
+
+                        <li id="mpoReportMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Daily Monitoring Sheet", "Dailymonitoringsheet", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="mpoReportMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales & Collection Achievement", "Salescollectionachievement", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="mpoReportMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales/Coll. Performance", "Salesperformance", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="mpoReportMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales Chalan Delivery", "Saleschalandelivery", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="mpoReportMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Product Wise Target", "Productwisetarget", "Dashboard")
+                            </a>
+                        </li>
+
+
+
+
+                    </ul>
+                </li>
+
+
+
+
+                <li id="adminMenu" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-eye fa-stack-1x "></i></span> Admin Report <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon "></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales Statement", "Adminsalesstatement", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Market Monitoring Sheet", "Adminmarketmonitoringsheet", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("MPO Ledger", "Adminmpoledger", "Dashboard")
+                            </a>
+                        </li>
+
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Touch & UnTouch", "Admintouchuntouch", "Dashboard")
+                            </a>
+                        </li>
+
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Daily Monitoring Sheet", "Admindailymonitoringsheet", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales & Collection Achievement", "Adminsalescollectionachievement", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales/Coll. Performance", "Adminsalesperformance", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales Chalan Delivery", "Adminsaleschalandelivery", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="adminMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Product Wise Target", "Adminproductwisetarget", "Dashboard")
+                            </a>
+                        </li>
+
+
+
+
+                    </ul>
+                </li>*@
+
+
+
+
+                @*<li id="divisionReportMenu" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-filter fa-stack-1x "></i></span> Division Report <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon"></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <li id="divisionReportMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales Statement", "Divisionsalesstatement", "Division")
+                            </a>
+                        </li>
+                        <li id="divisionReportMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Market Monitoring Sheet", "Divisionmarketmonitoringsheet", "Division")
+                            </a>
+                        </li>
+                        <li id="divisionReportMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("MPO Ledger", "Divisionmpoledger", "Division")
+                            </a>
+                        </li>
+
+                        <li id="divisionReportMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Touch & UnTouch", "Divisiontouchuntouch", "Division")
+                            </a>
+                        </li>
+
+                        <li id="divisionReportMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Daily Monitoring Sheet", "Divisiondailymonitoringsheet", "Division")
+                            </a>
+                        </li>
+                        <li id="divisionReportMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales & Collection Achievement", "Divisionsalescollectionachievement", "Division")
+                            </a>
+                        </li>
+                        <li id="divisionReportMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales/Coll. Performance", "Divisionsalesperformance", "Division")
+                            </a>
+                        </li>
+                        <li id="divisionReportMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales Chalan Delivery", "Divisionsaleschalandelivery", "Division")
+                            </a>
+                        </li>
+                        <li id="divisionReportMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Product Wise Target", "Divisionproductwisetarget", "Division")
+                            </a>
+                        </li>
+
+
+
+
+                    </ul>
+                </li>*@
+
+
+
+
+                @*<li id="areaReportMenu" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa-stack fa-lg pull-left"><i class="fa fa-eye fa-stack-1x "></i></span> Area Report <span class="fa-stack fa-lg pull-right"><i class="fa fa-angle-right dropdown-icon "></i></span></a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <li id="areaReportMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales Statement", "Areasalesstatement", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="areaReportMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Market Monitoring Sheet", "Areamarketmonitoringsheet", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="areaReportMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("MPO Ledger", "Areampoledger", "Dashboard")
+                            </a>
+                        </li>
+
+                        <li id="areaReportMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Touch & UnTouch", "Areatouchuntouch", "Dashboard")
+                            </a>
+                        </li>
+
+                        <li id="areaReportMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Daily Monitoring Sheet", "Areadailymonitoringsheet", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="areaReportMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales & Collection Achievement", "Areasalescollectionachievement", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="areaReportMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales/Coll. Performance", "Areasalesperformance", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="areaReportMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Sales Chalan Delivery", "Areasaleschalandelivery", "Dashboard")
+                            </a>
+                        </li>
+                        <li id="areaReportMenu">
+                            <a href="#">
+
+
+                                @Html.ActionLink("Product Wise Target", "Areaproductwisetarget", "Dashboard")
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>*@
+            @*</ul>
+
+
+
+        </div>
+
+    </div>
+
+
+    <script>
+        $(document).ready(function () {
+            $("#menu-toggle, #menu-toggle-2").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+                $("#menu-toggle").toggleClass("active");
+            });
+
+            $("#menu-toggle-2").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled-2");
+                $('#menu ul').hide();
+            });
+
+
+            $("#menu ul ul").hide();
+            $("#menu li").click(function () {
+                $(this).children("ul").stop().slideToggle();
+
+                $(this).siblings().children("ul").stop().slideUp();
+            });
+
+
+            initMenu();
+        });
+
+        function initMenu() {
+            $('#menu ul').hide();
+            $('#menu ul').children('.current').parent().show();
+            $('#menu li a').click(
+                function () {
+                    var checkElement = $(this).next();
+                    if ((checkElement.is('ul')) && (checkElement.is(':visible'))) {
+                        checkElement.slideUp('normal');
+                        return false;
+                    }
+                    if ((checkElement.is('ul')) && (!checkElement.is(':visible'))) {
+                        $('#menu ul:visible').slideUp('normal');
+                        checkElement.slideDown('normal');
+                        return false;
+                    }
+                }
+            );
+        }
+
+        $(document).ready(function () {
+            $(".dropdown-toggle").click(function () {
+                $(this).find('.fa-angle-right').toggleClass('rotate-icon');
+            });
+        });
+    </script>
+
+
+
+
+</body>
+
+</html>*@
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="images/favicon.ico" type="image/ico" />
+
+    <title>Deeplaid Laboratories</title>
+
+    <!-- Bootstrap -->
+    <link href="~/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="~/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+
+
+    <!-- JQVMap -->
+    @*<link href="~/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />*@
+
+    <!-- Custom Theme Style -->
+    <link href="~/Content/css/custom.min.css" rel="stylesheet">
+
+
+    <style>
+        .nav li.current-page {
+            background: #fff;
+        }
+    </style>
+</head>
+
+<body class="nav-md">
+
+
+
+
+
+    <script>
+
+
+
+
+
+        //$(document).ready(function () {
+        //    $("#loading").hide();
+
+        //    $("#loginForm").submit(function (event) {
+        //        event.preventDefault();
+        //        handleLogin();
+        //    });
+
+        //    $(document).on("click", "#logout", function (event) {
+        //        event.preventDefault();
+        //        handleLogout();
+        //    });
+
+        //    if (isLoggedIn()) {
+        //        updateDropdownMenu();
+        //        updateUserMenu();
+        //    }
+        //});
+
+        //function handleLogin() {
+        //    var userid = $("#UserID").val();
+        //    var empcardno = null;
+
+
+        //    if (/^[a-zA-Z]-\d+$/.test(userid)) {
+        //        empcardno = userid;
+        //        userid = null;
+        //    }
+
+        //    var password = $("#password").val();
+
+        //    if (!validateInputs(userid, empcardno, password)) {
+        //        return;
+        //    }
+
+        //    $("#loading").show();
+        //    sendLoginRequest(userid, empcardno, password);
+        //}
+
+        //function validateInputs(userid, empcardno, password) {
+        //    if ((!userid && !empcardno) || !password) {
+        //        alert("All fields are required.");
+        //        return false;
+        //    }
+        //    return true;
+        //}
+
+        //function sendLoginRequest(userid, empcardno, password) {
+        //    $.ajax({
+        //        url: '/Dashboard/gstrGetMpoAreaDevisionLists',
+        //        type: 'POST',
+        //        dataType: 'json',
+        //        data: {
+        //            "strPassWord": password,
+        //            "intAdnin": 0,
+        //            "strUserID": userid,
+        //            "strCardNo": empcardno,
+        //            "strDeComID": "0001"
+        //        },
+        //        success: function (response) {
+        //            handleLoginSuccess(response);
+        //        },
+        //        error: handleLoginError
+        //    });
+        //}
+
+        //function handleLoginSuccess(response) {
+        //    console.log("Full response:", response);
+        //    $("#loading").hide();
+
+        //    let responseData = Array.isArray(response) ? response[0] : response;
+
+        //    if (responseData.strResponse === "Yes") {
+        //        console.log("Login successful");
+        //        storeUserData(responseData);
+        //        updateDropdownMenu();
+        //        updateUserMenu();
+        //        redirectUserBasedOnRole();
+        //    } else {
+        //        console.error('Login failed:', responseData.strResponse || "Unknown error");
+        //        alert('Login failed: ' + (responseData.strResponse || "An unknown error occurred"));
+        //    }
+        //}
+
+        //function handleLoginError(xhr, status, error) {
+        //    console.error('Error:', error);
+        //    console.error('XHR:', xhr);
+        //    console.error('Status:', status);
+        //    alert('Login failed. Make sure user name and password are correct.');
+        //    $("#loading").hide();
+        //}
+
+        //function storeUserData(userData) {
+        //    sessionStorage.setItem("userID", userData.strUserID);
+        //    sessionStorage.setItem("userRole", userData.strRole);
+        //    sessionStorage.setItem("userName", userData.strLedgerName);
+        //    sessionStorage.setItem("userCardNo", userData.strCardNo);
+        //    sessionStorage.setItem("userImage", userData.strImage);
+        //}
+
+        //function updateDropdownMenu() {
+        //    var userName = sessionStorage.getItem("userName");
+        //    var userRole = sessionStorage.getItem("userRole");
+        //    var userCardNo = sessionStorage.getItem("userCardNo");
+        //    var userEmpCardNo = sessionStorage.getItem("userEMP_CARD_NO");
+        //    var userImage = sessionStorage.getItem("userImage");
+
+        //    var cardNumberToShow = userEmpCardNo || userCardNo;
+
+        //    var dropdownMenu = $("#userDropdown");
+        //    dropdownMenu.empty();
+
+        //    dropdownMenu.append(`<li><a href="#">Welcome, ${userName} (${userRole.trim()})</a></li>`);
+        //dropdownMenu.append(`<li><a href="#">Card No: ${cardNumberToShow}</a></li>`);
+        //dropdownMenu.append(`<li><a href="#">Image Data: ${userImage}</a></li>`);
+        //dropdownMenu.append(`<li role="separator" class="divider"></li>`);
+        //dropdownMenu.append(`<li><a href="#" id="logout">Logout</a></li>`);
+        //}
+
+        //function updateUserMenu() {
+        //    var userName = sessionStorage.getItem("userName");
+        //    var userRole = sessionStorage.getItem("userRole");
+        //    var userMenu = $("#user-menus");
+        //    userMenu.empty();
+        //    userMenu.append(`<li><a href="#">Welcome, ${userName} (${userRole.trim()})</a></li>`);
+        //}
+
+        //    function updateUserProfileImage() {
+        //        var userImage = sessionStorage.getItem("userImage");
+        //        if (userImage) {
+        //            $("#userProfileImage").attr("src", "data:image/jpg;base64," + userImage);
+        //        }
+        //    }
+
+        //function redirectUserBasedOnRole() {
+        //    var userRole = sessionStorage.getItem("userRole").trim();
+        //    if (userRole === "Admin") {
+        //        window.location.href = "/Dashboard/Index";
+        //    } else if (userRole === "MPO") {
+        //        window.location.href = "/Dashboard/User";
+        //    } else if (userRole === "DH") {
+        //        window.location.href = "/Dashboard/DhUser";
+        //    } else if (userRole === "AH") {
+        //        window.location.href = "/Dashboard/AhUser";
+        //    } else {
+        //        alert('Login failed. Make sure User Role');
+        //    }
+        //}
+
+        //function handleLogout() {
+        //    sessionStorage.clear();
+        //    window.location.href = "/Home/Login";
+        //}
+
+        //function isLoggedIn() {
+        //    return sessionStorage.getItem("userID") !== null;
+        //}
+
+        $(document).ready(function () {
+            $("#loading").hide();
+
+            $("#loginForm").submit(function (event) {
+                event.preventDefault();
+                handleLogin();
+            });
+
+            $(document).on("click", "#logout", function (event) {
+                event.preventDefault();
+                handleLogout();
+            });
+
+            if (isLoggedIn()) {
+                updateDropdownMenu();
+                updateUserMenu();
+                updateUserProfileImage();
+            }
+        });
+
+        function handleLogin() {
+            var userid = $("#UserID").val();
+            var empcardno = null;
+
+            if (/^[a-zA-Z]-\d+$/.test(userid)) {
+                empcardno = userid;
+                userid = null;
+            }
+
+            var password = $("#password").val();
+
+            if (!validateInputs(userid, empcardno, password)) {
+                return;
+            }
+
+            $("#loading").show();
+            sendLoginRequest(userid, empcardno, password);
+        }
+
+        function validateInputs(userid, empcardno, password) {
+            if ((!userid && !empcardno) || !password) {
+                alert("All fields are required.");
+                return false;
+            }
+            return true;
+        }
+
+        function sendLoginRequest(userid, empcardno, password) {
+            $.ajax({
+                url: '/Dashboard/gstrGetMpoAreaDevisionLists',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    "strPassWord": password,
+                    "intAdnin": 0,
+                    "strUserID": userid,
+                    "strCardNo": empcardno,
+                    "strDeComID": "0001"
+                },
+                success: function (response) {
+                    handleLoginSuccess(response);
+                },
+                error: handleLoginError
+            });
+        }
+
+        function handleLoginSuccess(response) {
+            console.log("Full response:", response);
+            $("#loading").hide();
+
+            let responseData = Array.isArray(response) ? response[0] : response;
+
+            if (responseData.strResponse === "Yes") {
+                console.log("Login successful");
+                storeUserData(responseData);
+                updateDropdownMenu();
+                updateUserMenu();
+                updateUserProfileImage();
+                redirectUserBasedOnRole();
+            } else {
+                console.error('Login failed:', responseData.strResponse || "Unknown error");
+                alert('Login failed: ' + (responseData.strResponse || "An unknown error occurred"));
+            }
+        }
+
+        function handleLoginError(xhr, status, error) {
+            console.error('Error:', error);
+            console.error('XHR:', xhr);
+            console.error('Status:', status);
+            alert('Login failed. Make sure user name and password are correct.');
+            $("#loading").hide();
+        }
+
+        function storeUserData(userData) {
+            sessionStorage.setItem("userID", userData.strUserID);
+            sessionStorage.setItem("userRole", userData.strRole);
+            sessionStorage.setItem("userName", userData.strLedgerName);
+            sessionStorage.setItem("userCardNo", userData.strCardNo);
+            sessionStorage.setItem("userIamge", userData.strIamge);
+            sessionStorage.setItem("userTeritorryName", userData.strTeritorryName);
+
+            sessionStorage.setItem("userArea", userData.strArea);
+            sessionStorage.setItem("userDivision", userData.strDivision);
+            sessionStorage.setItem("userZone", userData.strZone);
+            sessionStorage.setItem("userTeam", userData.strTeam);
+            sessionStorage.setItem("userMobileNo", userData.strMobileNo);
+            sessionStorage.setItem("userlngUniqueNo", userData.lngUniqueNo);
+
+        }
+
+        function updateDropdownMenu() {
+            var userName = sessionStorage.getItem("userName");
+            var userRole = sessionStorage.getItem("userRole");
+            var userCardNo = sessionStorage.getItem("userCardNo");
+            var userEmpCardNo = sessionStorage.getItem("userEMP_CARD_NO");
+            var userImage = sessionStorage.getItem("userIamge");
+            var userTeritorryName = sessionStorage.getItem("userTeritorryName");
+
+            var userArea = sessionStorage.getItem("userArea");
+            var userDivision = sessionStorage.getItem("userDivision");
+            var userZone = sessionStorage.getItem("userZone");
+            var userTeam = sessionStorage.getItem("userTeam");
+            var userMobileNo = sessionStorage.getItem("userMobileNo");
+            var userlngUniqueNo = sessionStorage.getItem("userlngUniqueNo");
+
+            var cardNumberToShow = userEmpCardNo || userCardNo;
+
+            var dropdownMenu = $("#userDropdown");
+            dropdownMenu.empty();
+
+            dropdownMenu.append(`<li><img src="data:image/jpg;base64,${userImage}" width="100" height="100" style="border-radius: 10px; margin: 30px;margin-left: 60px;"></li>`);
+            dropdownMenu.append(`<li><a href="#">Welcome, ${userName} (${userRole.trim()})</a></li>`);
+        dropdownMenu.append(`<li><a href="#">Card No: ${cardNumberToShow}</a></li>`);
+        dropdownMenu.append(`<li><a href="#">Teritorry Name: ${userTeritorryName}</a></li>`);
+        dropdownMenu.append(`<li><a href="#">Area Name: ${userArea}</a></li>`);
+        dropdownMenu.append(`<li><a href="#">Division Name: ${userDivision}</a></li>`);
+        dropdownMenu.append(`<li><a href="#">Zone Name: ${userZone}</a></li>`);
+        dropdownMenu.append(`<li><a href="#">Team Name: ${userTeam}</a></li>`);
+        dropdownMenu.append(`<li><a href="#">MobileNo Name: ${userMobileNo}</a></li>`);
+        dropdownMenu.append(`<li><a href="#">User ID: ${userlngUniqueNo}</a></li>`);
+        dropdownMenu.append(`<li role="separator" class="divider"></li>`);
+        dropdownMenu.append(`<li><a href="#" id="logout">Logout</a></li>`);
+        }
+
+        function updateUserMenu() {
+            var userName = sessionStorage.getItem("userName");
+            var userRole = sessionStorage.getItem("userRole");
+            var userMenu = $("#user-menus");
+            userMenu.empty();
+            userMenu.append(`<li><a href="#">Welcome, ${userName} (${userRole.trim()})</a></li>`);
+        }
+
+        function updateUserProfileImage() {
+            var userImage = sessionStorage.getItem("userIamge");
+            if (userImage) {
+                $("#userProfileImage").attr("src", "data:image/jpg;base64," + userImage);
+            }
+        }
+
+        function redirectUserBasedOnRole() {
+            var userRole = sessionStorage.getItem("userRole").trim();
+            if (userRole === "Admin") {
+                window.location.href = "/Dashboard/Index";
+            } else if (userRole === "MPO") {
+                window.location.href = "/Dashboard/User";
+            } else if (userRole === "DH") {
+                window.location.href = "/Dashboard/DhUser";
+            } else if (userRole === "AH") {
+                window.location.href = "/Dashboard/AhUser";
+            } else {
+                alert('Login failed. Make sure User Role');
+            }
+        }
+
+        function handleLogout() {
+            sessionStorage.clear();
+            window.location.href = "/Home/Login";
+        }
+
+        function isLoggedIn() {
+            return sessionStorage.getItem("userID") !== null;
+        }
+
+
+
+
+    </script>
+
+
+    <div class="container body">
+
+
+        <div class="main_container">
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+
+                    <div class="clearfix"></div>
+
+                    <!-- menu profile quick info -->
+                    <div class="profile clearfix">
+                        <div class="profile_pic">
+                            <img src="data:image/jpg;base64,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" alt="..." class="img-circle profile_img">
+                        </div>
+                        <div class="profile_info">
+
+                            <h2>Deeplaid Laboratories</h2>
+                        </div>
+                    </div>
+                    <!-- /menu profile quick info -->
+
+                    <br />
+
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            @*<h2>Deeplaid Laboratories</h2>*@
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a href="/Division/index"><i class="fa fa-home"></i> Dashboard </a>
+                                    @*<ul class="nav child_menu">
+                                            <li><a href="/Dashboard/index">Dashboard</a></li>
+
+                                        </ul>*@
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-bullseye"></i> Attendance <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="/Division/Attendancelist">Attendancelist</a></li>
+                                        <li><a href="/Division/Dailyshift">Dailyshift</a></li>
+
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-edit"></i> Exam <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="/Division/Examlist">Examlist</a></li>
+
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a><i class="fa fa-calendar"></i> Doctor Visit  <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="/Division/DoctorVisitList">DoctorVisit List</a></li>
+                                        <li><a href="/Division/DoctorVisitType">DoctorVisit Type</a></li>
+                                        <li><a href="/Division/DoctorVisitPlanUserList">Doctor Visit Plan User List</a></li>
+
+                                    </ul>
+                                </li>
+
+
+
+                                <li>
+                                    <a><i class="fa fa-bed"></i> Leave Management  <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="/Division/Holydaylist">Holyday list</a></li>
+                                        <li><a href="/Division/Leavetypelist">Leavetype list</a></li>
+                                        <li><a href="/Division/Weekendlist">Weekend list</a></li>
+                                        <li><a href="/Division/Leaveallocationlist">Leaveallocation list</a></li>
+                                        <li><a href="/Division/Leavelist">Leave list</a></li>
+                                        <li><a href="/Division/Leaveaccount">Leave Account</a></li>
+
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-map-marker"></i> Field Force Tracking  <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="/Division/Tracking">Tracking</a></li>
+                                        <li><a href="/Division/Userlastlocation">User last location</a></li>
+                                        <li><a href="/Division/Multipledates">Multiple Dates</a></li>
+                                        <li><a href="/Division/Doctorlocation">Doctor location</a></li>
+
+                                    </ul>
+                                </li>
+
+                                @*</ul>*@
+                                @*</div>
+                                    <div class="menu_section">*@
+
+                                @*<ul class="nav side-menu">*@
+                                <li>
+                                    <a><i class="fa fa-calendar-check-o"></i>Tour Plan<span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="/Division/Tourplanneduserlist">Tour Planned User List</a></li>
+                                        <li><a href="/Division/Tourtypelist">Tourtype list</a></li>
+
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a><i class="fa fa-money"></i>Expense Claim<span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="/Division/Monthlyallowslist">Monthly Allows List</a></li>
+                                        <li><a href="/Division/Tadaclaimlist">Tadaclaim List</a></li>
+
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-sitemap"></i> Market Structure <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="/Division/NationalHead">NationalHead</a></li>
+                                        <li><a href="/Division/Team">Team</a></li>
+                                        <li><a href="/Division/Zone">Zone</a></li>
+                                        <li><a href="/Division/Division">Division</a></li>
+                                        <li><a href="/Division/Area">Area</a></li>
+                                        <li><a href="/Division/Market">Market</a></li>
+                                        <li><a href="/Division/Route">Route</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a><i class="fa fa-file-image-o"></i>Prescription <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="/Division/PrescriptionList">Prescription List</a></li>
+                                        <li><a href="/Division/PrescriptionGallery">PrescriptionGallery</a></li>
+
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a><i class="fa fa-bell-o"></i>Notice <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="/Division/Notices">Notices List</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a><i class="fa fa-tasks"></i>Today Task<span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="/Division/TodayTask">Today Task</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a><i class="fa fa-graduation-cap"></i>Training <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="/Division/Training">Training</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-cart-plus"></i>Products  <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="/Division/productname">Product Name List</a></li>
+                                    </ul>
+                                </li>
+
+
+
+                                <li>
+                                    <a><i class="fa fa-pie-chart"></i> Reports <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+
+                                        <li>
+                                            <a>Sales<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li class="sub_menu">
+                                                    <a href="/Division/Adminmarketmonitoringsheet">Marketmonitoring Sheet</a>
+                                                </li>
+                                                <li>
+                                                    <a href="/Division/Admindailymonitoringsheet">Admindailymonitoring Sheet</a>
+                                                </li>
+                                                @*<li>
+                                                        <a href="#level2_2">Level Two</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#level2_1">Level Two</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#level2_2">Level Two</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#level2_1">Level Two</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#level2_2">Level Two</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#level2_1">Level Two</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#level2_2">Level Two</a>
+                                                    </li>*@
+                                            </ul>
+                                        </li>
+
+
+                                        @*<li>
+                                                <a>Accounts<span class="fa fa-chevron-down"></span></a>
+                                                <ul class="nav child_menu">
+                                                    <li class="sub_menu">
+                                                        <a href="level2.html">Level Two</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#level2_1">Level Two</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#level2_2">Level Two</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#level2_1">Level Two</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#level2_2">Level Two</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#level2_1">Level Two</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#level2_2">Level Two</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#level2_1">Level Two</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#level2_2">Level Two</a>
+                                                    </li>
+                                                </ul>
+                                            </li>*@
+
+
+
+                                        @*<li>
+                                                <a>Inventory<span class="fa fa-chevron-down"></span></a>
+                                                <ul class="nav child_menu">
+                                                    <li class="sub_menu">
+                                                        <a href="level2.html">Level Two</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#level2_1">Level Two</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#level2_2">Level Two</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#level2_1">Level Two</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#level2_2">Level Two</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#level2_1">Level Two</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#level2_2">Level Two</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#level2_1">Level Two</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#level2_2">Level Two</a>
+                                                    </li>
+                                                </ul>
+                                            </li>*@
+
+
+                                        @*<li>
+                                                <a>Purchase<span class="fa fa-chevron-down"></span></a>
+                                                <ul class="nav child_menu">
+                                                    <li class="sub_menu">
+                                                        <a href="level2.html">Level Two</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#level2_1">Level Two</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#level2_2">Level Two</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#level2_1">Level Two</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#level2_2">Level Two</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#level2_1">Level Two</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#level2_2">Level Two</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#level2_1">Level Two</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#level2_2">Level Two</a>
+                                                    </li>
+                                                </ul>
+                                            </li>*@
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <div class="nav toggle">
+                        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                    </div>
+
+                    <ul class=" navbar-right">
+
+
+                        <li class="nav-item dropdown open" style="padding-left: 15px;">
+                            <a href="javascript:;" class="user-profile dropdown-toggle" role="button" aria-haspopup="true" id="navbarDropdown"
+                               data-toggle="dropdown" aria-expanded="false">
+                                <img id="userProfileImage" src="data:image/jpg;base64,updateUserProfileImage" alt="Deeplaid Laboratories" style="border-radius: 10px; margin-top: -8px; width: 40px; height:40px">
+                            </a>
+
+                            <div class="dropdown">
+                                <ul class="dropdown-menu" id="userDropdown"></ul>
+
+                            </div>
+
+                        </li>
+                        <li>
+                            <ul class="user-menu" id="user-menus"></ul>
+                        </li>
+
+                        <style>
+                            .dropdown-menu.show {
+                                display: none;
+                                position: absolute;
+                                will-change: transform;
+                                top: 25px;
+                                left: -100px;
+                                transform: translate3d(-19px, 18px, 0px);
+                                x-placement: bottom-start;
+                                margin-left: -180px;
+                            }
+                        </style>
+                        <script>
+
+                            function toggleDropdown() {
+                                var dropdownMenu = document.getElementById("userDropdown");
+                                if (dropdownMenu.style.display === "none" || dropdownMenu.style.display === "") {
+                                    dropdownMenu.style.display = "block";
+                                } else {
+                                    dropdownMenu.style.display = "none";
+                                }
+                            }
+
+                            // Close dropdown when clicking outside of it
+                            document.addEventListener("click", function(event) {
+                                var dropdownMenu = document.getElementById("userDropdown");
+                                var dropdownToggle = document.querySelector(".dropdown-toggle");
+
+                                if (!dropdownToggle.contains(event.target)) {
+                                    dropdownMenu.style.display = "none";
+                                }
+                            });
+                        </script>
+
+                    </ul>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="~/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="~/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- FastClick -->
+    @*<script src="~/vendors/fastclick/lib/fastclick.js"></script>
+        <!-- NProgress -->
+        <script src="~/vendors/nprogress/nprogress.js"></script>
+        <!-- Chart.js -->
+        <script src="~/vendors/Chart.js/dist/Chart.min.js"></script>
+        <!-- gauge.js -->
+        <script src="~/vendors/gauge.js/dist/gauge.min.js"></script>
+        <!-- bootstrap-progressbar -->
+        <script src="~/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+        <!-- iCheck -->
+        <script src="~/vendors/iCheck/icheck.min.js"></script>
+        <!-- Skycons -->
+        <script src="~/vendors/skycons/skycons.js"></script>
+        <!-- Flot -->
+        <script src="~/vendors/Flot/jquery.flot.js"></script>
+        <script src="~/vendors/Flot/jquery.flot.pie.js"></script>
+        <script src="~/vendors/Flot/jquery.flot.time.js"></script>
+        <script src="~/vendors/Flot/jquery.flot.stack.js"></script>
+        <script src="~/vendors/Flot/jquery.flot.resize.js"></script>
+        <!-- Flot plugins -->
+        <script src="~/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+        <script src="~/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+        <script src="~/vendors/flot.curvedlines/curvedLines.js"></script>
+        <!-- DateJS -->
+        <script src="~/vendors/DateJS/build/date.js"></script>
+        <!-- JQVMap -->
+        <script src="~/vendors/jqvmap/dist/jquery.vmap.js"></script>
+        <script src="~/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+        <script src="~/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+        <!-- bootstrap-daterangepicker -->
+        <script src="~/vendors/moment/min/moment.min.js"></script>
+        <script src="~/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>*@
+
+    <!-- Custom Theme Scripts -->
+    <script src="~/Content/js/custom.min.js"></script>
+
+
+
+</body>
+
+</html>

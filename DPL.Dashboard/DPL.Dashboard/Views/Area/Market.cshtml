@@ -1,0 +1,4806 @@
+﻿
+@{
+    ViewBag.Title = "Market";
+}
+
+
+@RenderPage("~/Views/Shared/SidebarAh.cshtml")
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap CRUD Data Table for Database with Modal Form</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link href="~/Content/css/custom.max.css" rel="stylesheet">
+
+    <style>
+        body {
+            color: #566787;
+            background: #f5f5f5;
+            font-family: 'Varela Round', sans-serif;
+            font-size: 13px;
+            max-width: 100%;
+        }
+
+        .table-responsive {
+            margin: 10px 0;
+            /*margin-left:250px;*/
+        }
+
+        /*.nav {
+            display: block;
+            padding-left: 0;
+            margin-bottom: 0;
+        }
+
+        .btn {
+            border-radius: 3px;
+            width: 70px;
+            height: 35px;
+            padding: 10px;
+        }*/
+
+
+        /*.table-wrapper {
+            min-width: 1450px;
+            background: #fff;
+            padding: 20px 25px;
+            border-radius: 3px;
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        }*/
+
+        .table-title {
+            padding-bottom: 15px;
+            background: #435d7d;
+            color: #fff;
+            padding: 16px 30px;
+            margin: -20px -25px 10px;
+            border-radius: 3px 3px 0 0;
+        }
+
+            .table-title h2 {
+                margin: 5px 0 0;
+                font-size: 24px;
+            }
+
+            .table-title .btn-group {
+                float: right;
+            }
+
+            .table-title .btn {
+                color: #fff;
+                float: right;
+                font-size: 13px;
+                border: none;
+                min-width: 50px;
+                border-radius: 2px;
+                border: none;
+                outline: none !important;
+                margin-left: 10px;
+            }
+
+                .table-title .btn i {
+                    float: left;
+                    font-size: 21px;
+                    margin-right: 5px;
+                }
+
+                .table-title .btn span {
+                    float: left;
+                    margin-top: 2px;
+                }
+
+        table.table tr th, table.table tr td {
+            border-color: #e9e9e9;
+            padding: 12px 15px;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+            table.table tr th:first-child {
+                width: 60px;
+            }
+
+            table.table tr th:last-child {
+                width: 100px;
+            }
+
+        table.table-striped tbody tr:nth-of-type(odd) {
+            background-color: #fcfcfc;
+        }
+
+        table.table-striped.table-hover tbody tr:hover {
+            background: #f5f5f5;
+        }
+
+        table.table th i {
+            font-size: 13px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        table.table td:last-child i {
+            opacity: 0.9;
+            font-size: 22px;
+            margin: 0 5px;
+        }
+
+        table.table td a {
+            font-weight: bold;
+            color: #566787;
+            display: inline-block;
+            text-decoration: none;
+            outline: none !important;
+        }
+
+            table.table td a:hover {
+                color: #2196F3;
+            }
+
+            table.table td a.edit {
+                color: #FFC107;
+            }
+
+            table.table td a.delete {
+                color: #F44336;
+            }
+
+        table.table td i {
+            font-size: 19px;
+        }
+
+        table.table .avatar {
+            border-radius: 50%;
+            vertical-align: middle;
+            margin-right: 10px;
+            display: inline-block;
+        }
+
+        .pagination {
+            float: right;
+            margin: 0 0 5px;
+        }
+
+            .pagination li a {
+                border: none;
+                font-size: 13px;
+                min-width: 30px;
+                min-height: 30px;
+                color: #999;
+                margin: 0 2px;
+                line-height: 30px;
+                border-radius: 2px !important;
+                text-align: center;
+                padding: 0 6px;
+            }
+
+                .pagination li a:hover {
+                    color: #666;
+                }
+
+            .pagination li.active a, .pagination li.active a.page-link {
+                background: #03A9F4;
+            }
+
+                .pagination li.active a:hover {
+                    background: #0397d6;
+                }
+
+            .pagination li.disabled i {
+                color: #ccc;
+            }
+
+            .pagination li i {
+                font-size: 16px;
+                padding-top: 6px;
+            }
+
+        .hint-text {
+            float: left;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+        /* Custom checkbox */
+        .custom-checkbox {
+            position: relative;
+        }
+
+            .custom-checkbox input[type="checkbox"] {
+                opacity: 0;
+                position: absolute;
+                margin: 5px 0 0 3px;
+                z-index: 9;
+            }
+
+            .custom-checkbox label:before {
+                width: 18px;
+                height: 18px;
+            }
+
+            .custom-checkbox label:before {
+                content: '';
+                margin-right: 10px;
+                display: inline-block;
+                vertical-align: text-top;
+                background: white;
+                border: 1px solid #bbb;
+                border-radius: 2px;
+                box-sizing: border-box;
+                z-index: 2;
+            }
+
+            .custom-checkbox input[type="checkbox"]:checked + label:after {
+                content: '';
+                position: absolute;
+                left: 6px;
+                top: 3px;
+                width: 6px;
+                height: 11px;
+                border: solid #000;
+                border-width: 0 3px 3px 0;
+                transform: inherit;
+                z-index: 3;
+                transform: rotateZ(45deg);
+            }
+
+            .custom-checkbox input[type="checkbox"]:checked + label:before {
+                border-color: #03A9F4;
+                background: #03A9F4;
+            }
+
+            .custom-checkbox input[type="checkbox"]:checked + label:after {
+                border-color: #fff;
+            }
+
+            .custom-checkbox input[type="checkbox"]:disabled + label:before {
+                color: #b8b8b8;
+                cursor: auto;
+                box-shadow: none;
+                background: #ddd;
+            }
+
+        /*Modal styles*/
+
+
+        .modal .modal-dialog {
+            max-width: 400px;
+        }
+
+        .modal .modal-header, .modal .modal-body, .modal .modal-footer {
+            padding: 20px 30px;
+        }
+
+        .modal .modal-content {
+            border-radius: 3px;
+        }
+
+        .modal .modal-footer {
+            background: #ecf0f1;
+            border-radius: 0 0 3px 3px;
+        }
+
+        .modal .modal-title {
+            display: inline-block;
+        }
+
+        .modal .form-control {
+            border-radius: 2px;
+            box-shadow: none;
+            border-color: #dddddd;
+        }
+
+        .modal textarea.form-control {
+            resize: vertical;
+        }
+
+        .modal .btn {
+            border-radius: 2px;
+            /*min-width: 100px;*/
+        }
+
+        .modal form label {
+            font-weight: normal;
+        }
+
+
+
+        .page-link {
+            padding: 5px 10px;
+            margin: 0 5px;
+            background-color: #007bff;
+            color: #fff;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            cursor: pointer;
+            display: ruby;
+        }
+
+            .page-link:hover {
+                background-color: #0056b3;
+                border-color: #0056b3;
+            }
+
+
+    </style>
+    <script>
+        $(document).ready(function () {
+            // Activate tooltip
+            $('[data-toggle="tooltip"]').tooltip();
+
+            // Select/Deselect checkboxes
+            var checkbox = $('table tbody input[type="checkbox"]');
+            $("#selectAll").click(function () {
+                if (this.checked) {
+                    checkbox.each(function () {
+                        this.checked = true;
+                    });
+                } else {
+                    checkbox.each(function () {
+                        this.checked = false;
+                    });
+                }
+            });
+            checkbox.click(function () {
+                if (!this.checked) {
+                    $("#selectAll").prop("checked", false);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+
+
+    <div class="container">
+        <div class="table-responsive">
+            <div class="table-wrapper">
+                <h3>Market</h3>
+                <table class="table table-bordered table-hover" id="idshifttable">
+                    <thead>
+                        <tr>
+                            <th style="width:250px;">Market</th>
+                            <th>Area</th>
+                            <th>Division/Region</th>
+                            <th>Zone</th>
+                            <th style="width:200px;">Team</th>
+                            <th>National Head</th>
+                            <th style="width:250px;">National Head Code</th>
+                        </tr>
+                    </thead>
+                    <tbody class="tbody"></tbody>
+                </table>
+                <div id="pagination"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+
+        $(document).ready(function () {
+            
+            var jsonData = [
+    {
+        "Market": "Abdullahpur",
+        "Area": "Uttara",
+        "Division/Region": "Dhaka",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Adabor",
+        "Area": "Mirpur",
+        "Division/Region": "Dhaka",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Agailjhara",
+        "Area": "Madaripur Sadar",
+        "Division/Region": "Faridpur",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Agrabad",
+        "Area": "Patiya",
+        "Division/Region": "Ctg. Division",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Akkelpur",
+        "Area": "Joypurhat",
+        "Division/Region": "Bogura",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Alamdanga",
+        "Area": "Chuadanga",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Amin Bazar",
+        "Area": "Mirpur",
+        "Division/Region": "Dhaka",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Amtali",
+        "Area": "Patuakhali",
+        "Division/Region": "Barisal",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Araihazar",
+        "Area": "Narayanganj",
+        "Division/Region": "Narsingdi",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Ashuganj",
+        "Area": "B.Baria Sadar",
+        "Division/Region": "Cumilla",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Atharobari",
+        "Area": "Ishwarganj",
+        "Division/Region": "Mymensingh",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Atpara",
+        "Area": "Ishwarganj",
+        "Division/Region": "Mymensingh",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Atwari",
+        "Area": "Thakurgaon",
+        "Division/Region": "Dinajpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Avaynagor",
+        "Area": "Khulna 1",
+        "Division/Region": "Khulna",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Badalgachhi",
+        "Area": "Naogaon",
+        "Division/Region": "Bogura",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Badarganj",
+        "Area": "Rangpur B",
+        "Division/Region": "Rangpur",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Badargonj",
+        "Area": "Rangpur",
+        "Division/Region": "Rangpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Badda",
+        "Area": "Mohakhali",
+        "Division/Region": "Dhaka",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Bagerhat-1",
+        "Area": "Pirojpur",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Bagerhat Sadar",
+        "Area": "Bagerhat Sadar",
+        "Division/Region": "Khulna",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Bagha",
+        "Area": "Rajshahi Sadar",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Baghmara",
+        "Area": "Rajshahi Sadar",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Baized",
+        "Area": "Ctg. Sadar",
+        "Division/Region": "Ctg. Division",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Bajitpur",
+        "Area": "Kishoreganj",
+        "Division/Region": "Narsingdi",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Bajua",
+        "Area": "Khulna 2",
+        "Division/Region": "Khulna",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Bakerganj",
+        "Area": "Patuakhali",
+        "Division/Region": "Barisal",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Bakerganj",
+        "Area": "Barishal",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Bakolia",
+        "Area": "Patiya",
+        "Division/Region": "Ctg. Division",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Baliadangi",
+        "Area": "Thakurgaon",
+        "Division/Region": "Dinajpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Baliakandi",
+        "Area": "Rajbari",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Balshabari",
+        "Area": "Ullapara",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Bamondanga",
+        "Area": "Pirgacha",
+        "Division/Region": "Rangpur",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Banaripara",
+        "Area": "Barishal Sadar",
+        "Division/Region": "Barisal",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Bancharampur",
+        "Area": "B.Baria Sadar",
+        "Division/Region": "Cumilla",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Bandarban",
+        "Area": "Patiya",
+        "Division/Region": "Ctg. Division",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Baniachong",
+        "Area": "Habiganj",
+        "Division/Region": "Sylhet",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Banshkhali",
+        "Area": "Chakaria",
+        "Division/Region": "Ctg. Division",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Barguna Sadar",
+        "Area": "Bhandaria",
+        "Division/Region": "Barisal",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Barisal Sadar",
+        "Area": "Barishal Sadar",
+        "Division/Region": "Barisal",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Barishal-1",
+        "Area": "Barishal",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Barishal-2",
+        "Area": "Barishal",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Barlekha",
+        "Area": "Moulvibazar",
+        "Division/Region": "Sylhet",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Barura",
+        "Area": "Cumilla North",
+        "Division/Region": "Cumilla",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Basila",
+        "Area": "Mohammadpur",
+        "Division/Region": "Dhaka",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Bawfal",
+        "Area": "Patuakhali",
+        "Division/Region": "Barisal",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "B.Baria Sadar",
+        "Area": "B.Baria Sadar",
+        "Division/Region": "Cumilla",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Begumganj",
+        "Area": "Noakhali",
+        "Division/Region": "Noakhali",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Belkuchi",
+        "Area": "Ullapara",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Benapole",
+        "Area": "Jessore Sadar",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Bera",
+        "Area": "Pabna Sadar",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Bhainarmor",
+        "Area": "Faridpur Sadar",
+        "Division/Region": "Faridpur",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Bhairab",
+        "Area": "Narsingdi",
+        "Division/Region": "Narsingdi",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Bhaluka",
+        "Area": "Trishal",
+        "Division/Region": "Mymensingh",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Bhandaria",
+        "Area": "Bhandaria",
+        "Division/Region": "Barisal",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Bhandaria",
+        "Area": "Pirojpur",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Bhanga",
+        "Area": "Faridpur-2",
+        "Division/Region": "Faridpur",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Bhangura",
+        "Area": "Pabna Sadar",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Bheramara",
+        "Area": "Kushtia Sadar",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Bholahat",
+        "Area": "Chapainawabganj",
+        "Division/Region": "Rajshahi",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Bhola Hat",
+        "Area": "Chapainawabganj",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Bhola Sadar",
+        "Area": "Bhola Sadar",
+        "Division/Region": "Barisal",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Bhuapur",
+        "Area": "Tangail",
+        "Division/Region": "Tangail",
+        "Zone": "WEST 2 ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Bhurungamari",
+        "Area": "Kurigram",
+        "Division/Region": "Rangpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Biani Bazar",
+        "Area": "Sylhet Sadar",
+        "Division/Region": "Sylhet",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Bijoynagar",
+        "Area": "B.Baria Sadar",
+        "Division/Region": "Cumilla",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Birampur",
+        "Area": "Dinajpur",
+        "Division/Region": "Dinajpur",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Birampur",
+        "Area": "Dinajpur",
+        "Division/Region": "Dinajpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Birganj",
+        "Area": "Dinajpur",
+        "Division/Region": "Dinajpur",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Birganj",
+        "Area": "Dinajpur",
+        "Division/Region": "Dinajpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Birol",
+        "Area": "Dinajpur",
+        "Division/Region": "Dinajpur",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Boalmari",
+        "Area": "Faridpur Sadar",
+        "Division/Region": "Faridpur",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Board Bazar",
+        "Area": "Gazipur",
+        "Division/Region": "Dhaka",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Board Bazar",
+        "Area": "Tongi",
+        "Division/Region": "Gazipur",
+        "Zone": "WEST 2 ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Bogra Sadar",
+        "Area": "Bogura",
+        "Division/Region": "Bogura",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Bogura-1",
+        "Area": "Bogura",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Bogura-2",
+        "Area": "Bogura B",
+        "Division/Region": "Bogura",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Bogura-3",
+        "Area": "Bogura",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Bogura 4",
+        "Area": "Bogura B",
+        "Division/Region": "Bogura",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Bondartila",
+        "Area": "Ctg. Sadar",
+        "Division/Region": "Ctg. Division",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Bonpara",
+        "Area": "Natore",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Borhanuddin",
+        "Area": "Bhola Sadar",
+        "Division/Region": "Barisal",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Bormi",
+        "Area": "Gazipur",
+        "Division/Region": "Gazipur",
+        "Zone": "WEST 2 ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Bosarhat",
+        "Area": "Feni",
+        "Division/Region": "Noakhali",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Boxiganj",
+        "Area": "Jamalpur",
+        "Division/Region": "Tangail",
+        "Zone": "WEST 2 ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Burhanuddin",
+        "Area": "Bhola",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Burichang",
+        "Area": "Cumilla South",
+        "Division/Region": "Cumilla",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Chakoria",
+        "Area": "Chakaria",
+        "Division/Region": "Ctg. Division",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Chalna",
+        "Area": "Khulna 2",
+        "Division/Region": "Khulna",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Chandaikona",
+        "Area": "Sirajganj",
+        "Division/Region": "Bogura",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Chandina",
+        "Area": "Cumilla North",
+        "Division/Region": "Cumilla",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Chandpur Sadar",
+        "Area": "Chandpur",
+        "Division/Region": "Cumilla",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Chapainawabganj",
+        "Area": "Chapainawabganj",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Chapainawabganj-1",
+        "Area": "Chapainawabganj",
+        "Division/Region": "Rajshahi",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Chapainawabganj-2",
+        "Area": "Chapainawabganj",
+        "Division/Region": "Rajshahi",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Chapainawabganj Sadar",
+        "Area": "Chapainawabganj",
+        "Division/Region": "Rajshahi",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Charfassion",
+        "Area": "Bhola Sadar",
+        "Division/Region": "Barisal",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Charfasson",
+        "Area": "Bhola",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Charghat",
+        "Area": "Rajshahi Sadar",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Chatkhil",
+        "Area": "Noakhali",
+        "Division/Region": "Noakhali",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Chatmohar",
+        "Area": "Pabna Sadar",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Chauddagram",
+        "Area": "Cumilla South",
+        "Division/Region": "Cumilla",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Chaugacha",
+        "Area": "Jashore",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Chaugachha",
+        "Area": "Jhenaidah",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Cheragali",
+        "Area": "Tongi",
+        "Division/Region": "Gazipur",
+        "Zone": "WEST 2 ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Chhatak",
+        "Area": "Sunamganj",
+        "Division/Region": "Sylhet",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Chirirbandar",
+        "Area": "Dinajpur",
+        "Division/Region": "Dinajpur",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Chirirbandar",
+        "Area": "Dinajpur",
+        "Division/Region": "Dinajpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Chitolmari",
+        "Area": "Bagerhat Sadar",
+        "Division/Region": "Khulna",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Chowmuhani",
+        "Area": "Feni",
+        "Division/Region": "Noakhali",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Chowrasta",
+        "Area": "Gazipur",
+        "Division/Region": "Dhaka",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Chuadanga Sadar",
+        "Area": "Chuadanga",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Chunarughat",
+        "Area": "Habiganj",
+        "Division/Region": "Sylhet",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Cox Bazar Sadar",
+        "Area": "Chakaria",
+        "Division/Region": "Ctg. Division",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Dagonbhuiyan",
+        "Area": "Feni",
+        "Division/Region": "Noakhali",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Damudya",
+        "Area": "Madaripur Sadar",
+        "Division/Region": "Faridpur",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Damurhuda",
+        "Area": "Chuadanga",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Daudkandi",
+        "Area": "Cumilla North",
+        "Division/Region": "Cumilla",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Daulatkhan",
+        "Area": "Bhola Sadar",
+        "Division/Region": "Barisal",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Daulatpur",
+        "Area": "Kushtia Sadar",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Daulatpur (Khulna)",
+        "Area": "Khulna 1",
+        "Division/Region": "Khulna",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "DC Market Chapai",
+        "Area": "Chapainawabganj",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Debhata",
+        "Area": "Satkhira",
+        "Division/Region": "Khulna",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Debidwar",
+        "Area": "Cumilla North",
+        "Division/Region": "Cumilla",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Debiganj",
+        "Area": "Nilphamari",
+        "Division/Region": "Dinajpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Demra",
+        "Area": "Narayanganj",
+        "Division/Region": "Narsingdi",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Derai",
+        "Area": "Sunamganj",
+        "Division/Region": "Sylhet",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Dhakshinkhan",
+        "Area": "Uttara",
+        "Division/Region": "Dhaka",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Dharmapasha",
+        "Area": "Netrokona",
+        "Division/Region": "Mymensingh",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Dhobaura",
+        "Area": "Ishwarganj",
+        "Division/Region": "Mymensingh",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Dimla",
+        "Area": "Nilphamari",
+        "Division/Region": "Dinajpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Dinajpur-1",
+        "Area": "Dinajpur",
+        "Division/Region": "Dinajpur",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Dinajpur Sadar",
+        "Area": "Dinajpur",
+        "Division/Region": "Dinajpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Dohar",
+        "Area": "Munshiganj",
+        "Division/Region": "Dhaka",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Dokhin Surma",
+        "Area": "Sylhet Sadar",
+        "Division/Region": "Sylhet",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Domar",
+        "Area": "Nilphamari",
+        "Division/Region": "Dinajpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Dumuria",
+        "Area": "Khulna 2",
+        "Division/Region": "Khulna",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Dupchacia",
+        "Area": "Bogura",
+        "Division/Region": "Bogura",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Durgapur",
+        "Area": "Netrokona",
+        "Division/Region": "Mymensingh",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Enayetpur",
+        "Area": "Ullapara",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Ershadnagar",
+        "Area": "Gazipur",
+        "Division/Region": "Dhaka",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Faridganj",
+        "Area": "Chandpur",
+        "Division/Region": "Cumilla",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Faridpur Sadar",
+        "Area": "Faridpur Sadar",
+        "Division/Region": "Faridpur",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Farmgate",
+        "Area": "Mohakhali",
+        "Division/Region": "Dhaka",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Fatikchhari",
+        "Area": "Hathazari",
+        "Division/Region": "Ctg. Division",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Fatullah",
+        "Area": "Narayanganj",
+        "Division/Region": "Narsingdi",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Feni Sadar",
+        "Area": "Feni",
+        "Division/Region": "Noakhali",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Fulbari",
+        "Area": "Dinajpur",
+        "Division/Region": "Dinajpur",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Fulbaria",
+        "Area": "Trishal",
+        "Division/Region": "Mymensingh",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Fulgazi",
+        "Area": "Feni",
+        "Division/Region": "Noakhali",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Fulpur",
+        "Area": "Mymensingh",
+        "Division/Region": "Mymensingh",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Fultola",
+        "Area": "Khulna 1",
+        "Division/Region": "Khulna",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Gabtoli (Bogra)",
+        "Area": "Bogura",
+        "Division/Region": "Bogura",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Gabtoli (Bogura)",
+        "Area": "Bogura B",
+        "Division/Region": "Bogura",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Gafargaon",
+        "Area": "Trishal",
+        "Division/Region": "Mymensingh",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Gaibandha 1",
+        "Area": "Bogura B",
+        "Division/Region": "Bogura",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Gaibandha Sadar",
+        "Area": "Gaibandha",
+        "Division/Region": "Rangpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Galachipa",
+        "Area": "Patuakhali",
+        "Division/Region": "Barisal",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Gangachhara",
+        "Area": "Rangpur",
+        "Division/Region": "Rangpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Gangni",
+        "Area": "Chuadanga",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Gazipur Chowrasta",
+        "Area": "Gazipur",
+        "Division/Region": "Gazipur",
+        "Zone": "WEST 2 ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Ghatail",
+        "Area": "Madhupur",
+        "Division/Region": "Tangail",
+        "Zone": "WEST 2 ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Gheor",
+        "Area": "Manikganj",
+        "Division/Region": "Gazipur",
+        "Zone": "WEST 2 ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Ghoshairhat",
+        "Area": "Madaripur Sadar",
+        "Division/Region": "Faridpur",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Gobindaganj",
+        "Area": "Gaibandha",
+        "Division/Region": "Rangpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Godagari",
+        "Area": "Rajshahi Sadar",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Gomastapur",
+        "Area": "Chapainawabganj",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Gopalganj Sadar",
+        "Area": "Gopalganj",
+        "Division/Region": "Faridpur",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Gopalgonj-2",
+        "Area": "Gopalganj",
+        "Division/Region": "Faridpur",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Gopalpur",
+        "Area": "Madhupur",
+        "Division/Region": "Tangail",
+        "Zone": "WEST 2 ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Goraghat",
+        "Area": "Dinajpur",
+        "Division/Region": "Dinajpur",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Gouripur",
+        "Area": "Ishwarganj",
+        "Division/Region": "Mymensingh",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Gournadi",
+        "Area": "Barishal Sadar",
+        "Division/Region": "Barisal",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Gurudaspur",
+        "Area": "Natore",
+        "Division/Region": "Rajshahi",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Habiganj Sadar-1",
+        "Area": "Habiganj",
+        "Division/Region": "Sylhet",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Hajiganj",
+        "Area": "Chandpur",
+        "Division/Region": "Cumilla",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Halishahar",
+        "Area": "Ctg. Sadar",
+        "Division/Region": "Ctg. Division",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Haluaghat",
+        "Area": "Mymensingh",
+        "Division/Region": "Mymensingh",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Harinakundu",
+        "Area": "Jhenaidah",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Haripur-1",
+        "Area": "Thakurgaon",
+        "Division/Region": "Dinajpur",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Haripur-2",
+        "Area": "Thakurgaon",
+        "Division/Region": "Dinajpur",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Harirampur",
+        "Area": "Manikganj",
+        "Division/Region": "Gazipur",
+        "Zone": "WEST 2 ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Hathazari-2",
+        "Area": "Hathazari",
+        "Division/Region": "Ctg. Division",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Hatia",
+        "Area": "Noakhali",
+        "Division/Region": "Noakhali",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Hatibandha",
+        "Area": "Nilphamari",
+        "Division/Region": "Dinajpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Hazaribag",
+        "Area": "Mirpur",
+        "Division/Region": "Dhaka",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Homna",
+        "Area": "Cumilla North",
+        "Division/Region": "Cumilla",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Ishwardi",
+        "Area": "Natore",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Ishwarganj",
+        "Area": "Ishwarganj",
+        "Division/Region": "Mymensingh",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Islampur",
+        "Area": "Jamalpur",
+        "Division/Region": "Tangail",
+        "Zone": "WEST 2 ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Itna",
+        "Area": "Kishoreganj",
+        "Division/Region": "Narsingdi",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Jaintapur",
+        "Area": "Sylhet Sadar",
+        "Division/Region": "Sylhet",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Jaldhaka",
+        "Area": "Nilphamari",
+        "Division/Region": "Dinajpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Jamalganj",
+        "Area": "Sunamganj",
+        "Division/Region": "Sylhet",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Jamalpur Sadar",
+        "Area": "Jamalpur",
+        "Division/Region": "Tangail",
+        "Zone": "WEST 2 ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Jashore-1",
+        "Area": "Jashore",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Jashore-2",
+        "Area": "Jashore",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Jatrabari",
+        "Area": "Keraniganj",
+        "Division/Region": "Dhaka",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Jessore Sadar",
+        "Area": "Jessore Sadar",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Jhalakati Sadar",
+        "Area": "Bhandaria",
+        "Division/Region": "Barisal",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Jhalokathi-1",
+        "Area": "Jhalokathi/Barishal",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Jhalokathi-2",
+        "Area": "Jhalokathi/Barishal",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Jhenaidaha Sadar",
+        "Area": "Jhenaidah",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Jhikargachha",
+        "Area": "Jessore Sadar",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Jhikarghacha",
+        "Area": "Jashore",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Jibonnagar",
+        "Area": "Chuadanga",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Joydebpur",
+        "Area": "Gazipur",
+        "Division/Region": "Dhaka",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Joydebpur Chowrasta",
+        "Area": "Gazipur",
+        "Division/Region": "Gazipur",
+        "Zone": "WEST 2 ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Joypurhat-1",
+        "Area": "Joypurhat",
+        "Division/Region": "Bogura",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Joypurhat-2",
+        "Area": "Joypurhat",
+        "Division/Region": "Bogura",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Joypurhat Sadar",
+        "Area": "Bogura",
+        "Division/Region": "Bogura",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kachua",
+        "Area": "Bagerhat Sadar",
+        "Division/Region": "Khulna",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kachua (Chandpur)",
+        "Area": "Chandpur",
+        "Division/Region": "Cumilla",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kafrul",
+        "Area": "Mirpur",
+        "Division/Region": "Dhaka",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kalai",
+        "Area": "Joypurhat",
+        "Division/Region": "Bogura",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Kalapara",
+        "Area": "Patuakhali",
+        "Division/Region": "Barisal",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kalaroa",
+        "Area": "Satkhira",
+        "Division/Region": "Khulna",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kaliganj",
+        "Area": "Barishal",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Kaliganj (Chuadanga)",
+        "Area": "Jhenaidah",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kaliganj (Jhenaidah)",
+        "Area": "Jashore",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Kaliganj (Lalmonirhat)",
+        "Area": "Rangpur",
+        "Division/Region": "Rangpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kaliganj (Satkhira)",
+        "Area": "Satkhira",
+        "Division/Region": "Khulna",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kaliganj (Tongi)",
+        "Area": "Tongi",
+        "Division/Region": "Gazipur",
+        "Zone": "WEST 2 ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kalihati",
+        "Area": "Tangail",
+        "Division/Region": "Tangail",
+        "Zone": "WEST 2 ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kalkini",
+        "Area": "Madaripur Sadar",
+        "Division/Region": "Faridpur",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kallyanpur",
+        "Area": "Mohammadpur",
+        "Division/Region": "Dhaka",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Kalmakanda",
+        "Area": "Netrokona",
+        "Division/Region": "Mymensingh",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kalshi",
+        "Area": "Mirpur",
+        "Division/Region": "Dhaka",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kalukhali",
+        "Area": "Rajbari",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kamarkhando",
+        "Area": "Ullapara",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kanchpur",
+        "Area": "Narayanganj",
+        "Division/Region": "Narsingdi",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kanchpur",
+        "Area": "Mohammadpur",
+        "Division/Region": "Dhaka",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Kansat",
+        "Area": "Chapainawabganj",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kapasia",
+        "Area": "Tongi",
+        "Division/Region": "Gazipur",
+        "Zone": "WEST 2 ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Karimgonj",
+        "Area": "Kishoreganj",
+        "Division/Region": "Narsingdi",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kasba",
+        "Area": "B.Baria Sadar",
+        "Division/Region": "Cumilla",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kashiani",
+        "Area": "Faridpur-2",
+        "Division/Region": "Faridpur",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kashinathpur",
+        "Area": "Pabna Sadar",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kathalia",
+        "Area": "Jhalokathi/Barishal",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Katiadi",
+        "Area": "Kishoreganj",
+        "Division/Region": "Narsingdi",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kaunia-1",
+        "Area": "Pirgacha",
+        "Division/Region": "Rangpur",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Kazipur",
+        "Area": "Sirajganj",
+        "Division/Region": "Bogura",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kendua",
+        "Area": "Ishwarganj",
+        "Division/Region": "Mymensingh",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Keraniganj",
+        "Area": "Keraniganj",
+        "Division/Region": "Dhaka",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Keranirhat",
+        "Area": "Patiya",
+        "Division/Region": "Ctg. Division",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Keshobmor",
+        "Area": "Faridpur Sadar",
+        "Division/Region": "Faridpur",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Keshobpur",
+        "Area": "Jessore Sadar",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Khagrachhari",
+        "Area": "Hathazari",
+        "Division/Region": "Ctg. Division",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Khansama",
+        "Area": "Dinajpur",
+        "Division/Region": "Dinajpur",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Khoksha",
+        "Area": "Rajbari",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Khukni",
+        "Area": "Ullapara",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Khulna Sadar",
+        "Area": "Khulna 2",
+        "Division/Region": "Khulna",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kishoreganj-1",
+        "Area": "Kishoreganj",
+        "Division/Region": "Narsingdi",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kishoreganj-2",
+        "Area": "Kishoreganj",
+        "Division/Region": "Narsingdi",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Konabari",
+        "Area": "Gazipur",
+        "Division/Region": "Dhaka",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Kotalipara",
+        "Area": "Gopalganj",
+        "Division/Region": "Faridpur",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kotchandpur",
+        "Area": "Jhenaidah",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kotwali-Ctg",
+        "Area": "Patiya",
+        "Division/Region": "Ctg. Division",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kulaura",
+        "Area": "Moulvibazar",
+        "Division/Region": "Sylhet",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kumarkhali",
+        "Area": "Kushtia Sadar",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kurigram Sadar",
+        "Area": "Kurigram",
+        "Division/Region": "Rangpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kushtia-2",
+        "Area": "Kushtia Sadar",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Kushtia Sadar",
+        "Area": "Kushtia Sadar",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Laksham",
+        "Area": "Cumilla South",
+        "Division/Region": "Cumilla",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Lalbag",
+        "Area": "Keraniganj",
+        "Division/Region": "Dhaka",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Lalmai",
+        "Area": "Cumilla South",
+        "Division/Region": "Cumilla",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Lalmohan",
+        "Area": "Bhola Sadar",
+        "Division/Region": "Barisal",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Lalmonirhat",
+        "Area": "Kurigram",
+        "Division/Region": "Rangpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Lalpur",
+        "Area": "Natore",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Lama",
+        "Area": "Chakaria",
+        "Division/Region": "Ctg. Division",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Laxmipur Sadar",
+        "Area": "Noakhali",
+        "Division/Region": "Noakhali",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Lohagara",
+        "Area": "Gopalganj",
+        "Division/Region": "Faridpur",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Madaripur",
+        "Area": "Madaripur Sadar",
+        "Division/Region": "Faridpur",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Madhabdi",
+        "Area": "Narayanganj",
+        "Division/Region": "Narsingdi",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Madhabpur",
+        "Area": "Habiganj",
+        "Division/Region": "Sylhet",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Madhukhali",
+        "Area": "Faridpur Sadar",
+        "Division/Region": "Faridpur",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Madhupur",
+        "Area": "Madhupur",
+        "Division/Region": "Tangail",
+        "Zone": "WEST 2 ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Mahadevpur",
+        "Area": "Naogaon",
+        "Division/Region": "Bogura",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Mahasthangarh",
+        "Area": "Bogura",
+        "Division/Region": "Bogura",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Mahiganj",
+        "Area": "Pirgacha",
+        "Division/Region": "Rangpur",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Manda (Naogaon)",
+        "Area": "Naogaon",
+        "Division/Region": "Bogura",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Manikganj",
+        "Area": "Manikganj",
+        "Division/Region": "Gazipur",
+        "Zone": "WEST 2 ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Maniknagar",
+        "Area": "Mohakhali",
+        "Division/Region": "Dhaka",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Manirampur",
+        "Area": "Jashore",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Manohardi",
+        "Area": "Narsingdi",
+        "Division/Region": "Narsingdi",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Masterbari",
+        "Area": "Trishal",
+        "Division/Region": "Mymensingh",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Mathbaria",
+        "Area": "Bhandaria",
+        "Division/Region": "Barisal",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Matiranga",
+        "Area": "Hathazari",
+        "Division/Region": "Ctg. Division",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Matlab",
+        "Area": "Chandpur",
+        "Division/Region": "Cumilla",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Mawna",
+        "Area": "Gazipur",
+        "Division/Region": "Gazipur",
+        "Zone": "WEST 2 ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Mehendiganj",
+        "Area": "Barishal",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Mehendiganj",
+        "Area": "Barishal Sadar",
+        "Division/Region": "Barisal",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Meherpur",
+        "Area": "Chuadanga",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Mirpur-1",
+        "Area": "Mirpur",
+        "Division/Region": "Dhaka",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Mirpur-10",
+        "Area": "Mirpur",
+        "Division/Region": "Dhaka",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Mirpur (Kustia)",
+        "Area": "Kushtia Sadar",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Mirsharai",
+        "Area": "Ctg. Sadar",
+        "Division/Region": "Ctg. Division",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Mirzapur",
+        "Area": "Tangail",
+        "Division/Region": "Tangail",
+        "Zone": "WEST 2 ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Mithapukur-1",
+        "Area": "Rangpur B",
+        "Division/Region": "Rangpur",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Mithapukur-2",
+        "Area": "Rangpur B",
+        "Division/Region": "Rangpur",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Mohakhali",
+        "Area": "Mohakhali",
+        "Division/Region": "Dhaka",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Mohanganj",
+        "Area": "Netrokona",
+        "Division/Region": "Mymensingh",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Mohanpur",
+        "Area": "Ullapara",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Mohespur",
+        "Area": "Jashore",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Mokamtola",
+        "Area": "Bogura",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Mollahat",
+        "Area": "Khulna 1",
+        "Division/Region": "Khulna",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Mongla",
+        "Area": "Pirojpur",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Mongla",
+        "Area": "Khulna 2",
+        "Division/Region": "Khulna",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Monirampur",
+        "Area": "Jessore Sadar",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Monpura",
+        "Area": "Bhola Sadar",
+        "Division/Region": "Barisal",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Morrelganj",
+        "Area": "Bagerhat Sadar",
+        "Division/Region": "Khulna",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Moulvibazar",
+        "Area": "Moulvibazar",
+        "Division/Region": "Sylhet",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Muksudpur",
+        "Area": "Faridpur-2",
+        "Division/Region": "Faridpur",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Muktagacha",
+        "Area": "Trishal",
+        "Division/Region": "Mymensingh",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Muladi",
+        "Area": "Barishal Sadar",
+        "Division/Region": "Barisal",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Muladi",
+        "Area": "Barishal",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Munshiganj",
+        "Area": "Munshiganj",
+        "Division/Region": "Dhaka",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Muradnagar",
+        "Area": "Cumilla North",
+        "Division/Region": "Cumilla",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Mymensingh-2",
+        "Area": "Trishal",
+        "Division/Region": "Mymensingh",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Mymensingh Sadar",
+        "Area": "Mymensingh",
+        "Division/Region": "Mymensingh",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Nabiganj",
+        "Area": "Habiganj",
+        "Division/Region": "Sylhet",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Nabinagar",
+        "Area": "B.Baria Sadar",
+        "Division/Region": "Cumilla",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Nachole",
+        "Area": "Chapainawabganj",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Nageshwari",
+        "Area": "Kurigram",
+        "Division/Region": "Rangpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Nageswari-1",
+        "Area": "Rangpur B",
+        "Division/Region": "Rangpur",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Nagorkanda",
+        "Area": "Faridpur-2",
+        "Division/Region": "Faridpur",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Nalchity",
+        "Area": "Jhalokathi/Barishal",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Naldanga",
+        "Area": "Natore",
+        "Division/Region": "Rajshahi",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Nalitabari",
+        "Area": "Jamalpur",
+        "Division/Region": "Tangail",
+        "Zone": "WEST 2 ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Nandail",
+        "Area": "Ishwarganj",
+        "Division/Region": "Mymensingh",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Nangalkot",
+        "Area": "Cumilla South",
+        "Division/Region": "Cumilla",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Naogaon Sadar",
+        "Area": "Naogaon",
+        "Division/Region": "Bogura",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Narail",
+        "Area": "Gopalganj",
+        "Division/Region": "Faridpur",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Narayanganj Sadar",
+        "Area": "Narayanganj",
+        "Division/Region": "Narsingdi",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Narsingdi Sadar",
+        "Area": "Narsingdi",
+        "Division/Region": "Narsingdi",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Nasirnagar",
+        "Area": "Habiganj",
+        "Division/Region": "Sylhet",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Natore-1",
+        "Area": "Natore",
+        "Division/Region": "Rajshahi",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Natore-2",
+        "Area": "Natore",
+        "Division/Region": "Rajshahi",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Natore Sadar",
+        "Area": "Natore",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Nawabganj",
+        "Area": "Munshiganj",
+        "Division/Region": "Dhaka",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Nawabganj (Dinajpur)",
+        "Area": "Dinajpur",
+        "Division/Region": "Dinajpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Nazipur",
+        "Area": "Naogaon",
+        "Division/Region": "Bogura",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Nazirpur",
+        "Area": "Bagerhat Sadar",
+        "Division/Region": "Khulna",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Nekmarad",
+        "Area": "Thakurgaon",
+        "Division/Region": "Dinajpur",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Netrokona-2",
+        "Area": "Netrokona",
+        "Division/Region": "Mymensingh",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Netrokona Sadar",
+        "Area": "Netrokona",
+        "Division/Region": "Mymensingh",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Newmarket-Jessore",
+        "Area": "Jessore Sadar",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Nokla",
+        "Area": "Mymensingh",
+        "Division/Region": "Mymensingh",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Nolcity",
+        "Area": "Bhandaria",
+        "Division/Region": "Barisal",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Nondigram 2",
+        "Area": "Bogura B",
+        "Division/Region": "Bogura",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Nurnagar",
+        "Area": "B.Baria Sadar",
+        "Division/Region": "Cumilla",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Oskhali",
+        "Area": "Noakhali",
+        "Division/Region": "Noakhali",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Osmaninagar",
+        "Area": "Sylhet Sadar",
+        "Division/Region": "Sylhet",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Paba",
+        "Area": "Rajshahi Sadar",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Pabna Sadar",
+        "Area": "Pabna Sadar",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Pahartali",
+        "Area": "Ctg. Sadar",
+        "Division/Region": "Ctg. Division",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Paikgachha",
+        "Area": "Satkhira",
+        "Division/Region": "Khulna",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Pakundia",
+        "Area": "Kishoreganj",
+        "Division/Region": "Narsingdi",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Palash",
+        "Area": "Narsingdi",
+        "Division/Region": "Narsingdi",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Palbari",
+        "Area": "Jessore Sadar",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Panchagarh",
+        "Area": "Thakurgaon",
+        "Division/Region": "Dinajpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Panchbibi",
+        "Area": "Gaibandha",
+        "Division/Region": "Rangpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Pangsha",
+        "Area": "Rajbari",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Parbatipur",
+        "Area": "Nilphamari",
+        "Division/Region": "Dinajpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Patharghata",
+        "Area": "Bhandaria",
+        "Division/Region": "Barisal",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Patharghata",
+        "Area": "Jhalokathi/Barishal",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Patiya",
+        "Area": "Patiya",
+        "Division/Region": "Ctg. Division",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Patiya-2",
+        "Area": "Patiya",
+        "Division/Region": "Ctg. Division",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Patuakhali-1",
+        "Area": "Patuakhali",
+        "Division/Region": "Barisal",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Patuakhali-1",
+        "Area": "Barishal",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Patuakhali-2",
+        "Area": "Patuakhali",
+        "Division/Region": "Barisal",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Pawtana",
+        "Area": "Pirgacha",
+        "Division/Region": "Rangpur",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Pekua",
+        "Area": "Chakaria",
+        "Division/Region": "Ctg. Division",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Pirgacha",
+        "Area": "Rangpur",
+        "Division/Region": "Rangpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Pirgachha",
+        "Area": "Pirgacha",
+        "Division/Region": "Rangpur",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Pirganj",
+        "Area": "Rangpur",
+        "Division/Region": "Rangpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Pirojpur-1",
+        "Area": "Pirojpur",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Pirojpur Sadar",
+        "Area": "Bagerhat Sadar",
+        "Division/Region": "Khulna",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "PMC (Rangpur)",
+        "Area": "Rangpur B",
+        "Division/Region": "Rangpur",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Poba",
+        "Area": "Rajshahi",
+        "Division/Region": "Rajshahi",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Poilanpur",
+        "Area": "Pabna Sadar",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Polasbari",
+        "Area": "Gaibandha",
+        "Division/Region": "Rangpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Purbadhala",
+        "Area": "Netrokona",
+        "Division/Region": "Mymensingh",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Raipura",
+        "Area": "Narsingdi",
+        "Division/Region": "Narsingdi",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Raipura-2",
+        "Area": "Narsingdi",
+        "Division/Region": "Narsingdi",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Rajapur",
+        "Area": "Jhalokathi/Barishal",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Rajapur",
+        "Area": "Bhandaria",
+        "Division/Region": "Barisal",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Rajbari Sadar",
+        "Area": "Rajbari",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Rajendrapur",
+        "Area": "Tongi",
+        "Division/Region": "Gazipur",
+        "Zone": "WEST 2 ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Rajshahi-1",
+        "Area": "Rajshahi",
+        "Division/Region": "Rajshahi",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Rajshahi-2",
+        "Area": "Rajshahi",
+        "Division/Region": "Rajshahi",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Rajshahi-3",
+        "Area": "Rajshahi",
+        "Division/Region": "Rajshahi",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Rajshahi-4",
+        "Area": "Rajshahi",
+        "Division/Region": "Rajshahi",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Rajshahi Sadar",
+        "Area": "Rajshahi Sadar",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Ramgati",
+        "Area": "Noakhali",
+        "Division/Region": "Noakhali",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Rampura",
+        "Area": "Mohakhali",
+        "Division/Region": "Dhaka",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Rangamati",
+        "Area": "Hathazari",
+        "Division/Region": "Ctg. Division",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Rangpur-1",
+        "Area": "Rangpur A",
+        "Division/Region": "Rangpur",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Rangpur-2",
+        "Area": "Rangpur A",
+        "Division/Region": "Rangpur",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Rangpur Sadar",
+        "Area": "Rangpur",
+        "Division/Region": "Rangpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Raninagar (Naogaon)",
+        "Area": "Natore",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Ranisankail",
+        "Area": "Thakurgaon",
+        "Division/Region": "Dinajpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Ranisankail 1",
+        "Area": "Thakurgaon",
+        "Division/Region": "Dinajpur",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Raozan",
+        "Area": "Hathazari",
+        "Division/Region": "Ctg. Division",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Raumari",
+        "Area": "Kurigram",
+        "Division/Region": "Rangpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Rohonpur",
+        "Area": "Chapainawabganj",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Rupnagar",
+        "Area": "Mohammadpur",
+        "Division/Region": "Dhaka",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Rupsha",
+        "Area": "Khulna 1",
+        "Division/Region": "Khulna",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Sadar Dakkhin (Comilla)",
+        "Area": "Cumilla South",
+        "Division/Region": "Cumilla",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Sadullahpur",
+        "Area": "Rangpur B",
+        "Division/Region": "Rangpur",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Sadullapur",
+        "Area": "Gaibandha",
+        "Division/Region": "Rangpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Saghata",
+        "Area": "Gaibandha",
+        "Division/Region": "Rangpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Saidpur",
+        "Area": "Nilphamari",
+        "Division/Region": "Dinajpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Sakhipur",
+        "Area": "Tangail",
+        "Division/Region": "Tangail",
+        "Zone": "WEST 2 ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Salanga",
+        "Area": "Sirajganj",
+        "Division/Region": "Bogura",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Sandwip",
+        "Area": "Ctg. Sadar",
+        "Division/Region": "Ctg. Division",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Sapahar (Naogaon)",
+        "Area": "Naogaon",
+        "Division/Region": "Bogura",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Sarishabari",
+        "Area": "Madhupur",
+        "Division/Region": "Tangail",
+        "Zone": "WEST 2 ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Satkhira Sadar",
+        "Area": "Satkhira",
+        "Division/Region": "Khulna",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Senbag",
+        "Area": "Feni",
+        "Division/Region": "Noakhali",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Setabganj",
+        "Area": "Dinajpur",
+        "Division/Region": "Dinajpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Shahrasti",
+        "Area": "Chandpur",
+        "Division/Region": "Cumilla",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Shailokupa",
+        "Area": "Jhenaidah",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Shariatpur",
+        "Area": "Madaripur Sadar",
+        "Division/Region": "Faridpur",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Sharsha",
+        "Area": "Jessore Sadar",
+        "Division/Region": "Jessore",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Sherpur-1",
+        "Area": "Bogura",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Sherpur 2",
+        "Area": "Bogura B",
+        "Division/Region": "Bogura",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Sherpur-Bogra",
+        "Area": "Sirajganj",
+        "Division/Region": "Bogura",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Sherpur Sadar",
+        "Area": "Jamalpur",
+        "Division/Region": "Tangail",
+        "Zone": "WEST 2 ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Shibalaya",
+        "Area": "Manikganj",
+        "Division/Region": "Gazipur",
+        "Zone": "WEST 2 ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Shibchar",
+        "Area": "Faridpur-2",
+        "Division/Region": "Faridpur",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Shibchar-2",
+        "Area": "Faridpur-2",
+        "Division/Region": "Faridpur",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Shibganj",
+        "Area": "Chapainawabganj",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Shibganj-1",
+        "Area": "Chapainawabganj",
+        "Division/Region": "Rajshahi",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Shibganj-2",
+        "Area": "Chapainawabganj",
+        "Division/Region": "Rajshahi",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Shibpur",
+        "Area": "Narsingdi",
+        "Division/Region": "Narsingdi",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Shoshivushon",
+        "Area": "Bhola",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Shosivusion",
+        "Area": "Bhola Sadar",
+        "Division/Region": "Barisal",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Shyamnagar",
+        "Area": "Satkhira",
+        "Division/Region": "Khulna",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Singra",
+        "Area": "Natore",
+        "Division/Region": "Rajshahi",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Singra",
+        "Area": "Natore",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Singra-2",
+        "Area": "Natore",
+        "Division/Region": "Rajshahi",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Sirajganj",
+        "Area": "Bogura",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Sirajganj-2",
+        "Area": "Bogura",
+        "Division/Region": "Herbal Division",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Sirajganj Sadar",
+        "Area": "Sirajganj",
+        "Division/Region": "Bogura",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Sitakunda",
+        "Area": "Ctg. Sadar",
+        "Division/Region": "Ctg. Division",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Sonagazi",
+        "Area": "Feni",
+        "Division/Region": "Noakhali",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Sonapur",
+        "Area": "Noakhali",
+        "Division/Region": "Noakhali",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Sonargaon",
+        "Area": "Mohammadpur",
+        "Division/Region": "Dhaka",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Sonatola",
+        "Area": "Bogura B",
+        "Division/Region": "Bogura",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Sreemongol",
+        "Area": "Moulvibazar",
+        "Division/Region": "Sylhet",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Sreenagar",
+        "Area": "Munshiganj",
+        "Division/Region": "Dhaka",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Sreepur",
+        "Area": "Faridpur Sadar",
+        "Division/Region": "Faridpur",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Subarnachar",
+        "Area": "Noakhali",
+        "Division/Region": "Noakhali",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Sujanagar",
+        "Area": "Pabna Sadar",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Sunamganj Sadar",
+        "Area": "Sunamganj",
+        "Division/Region": "Sylhet",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Sundarganj",
+        "Area": "Pirgacha",
+        "Division/Region": "Rangpur",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Sundarganj-2",
+        "Area": "Pirgacha",
+        "Division/Region": "Rangpur",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Sutrapur",
+        "Area": "Keraniganj",
+        "Division/Region": "Dhaka",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Swarupkathi",
+        "Area": "Barishal Sadar",
+        "Division/Region": "Barisal",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Sylhet Sadar",
+        "Area": "Sylhet Sadar",
+        "Division/Region": "Sylhet",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Tahirpur",
+        "Area": "Sunamganj",
+        "Division/Region": "Sylhet",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Tala",
+        "Area": "Khulna 2",
+        "Division/Region": "Khulna",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Taltali",
+        "Area": "Patuakhali",
+        "Division/Region": "Barisal",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Tangail",
+        "Area": "Tangail",
+        "Division/Region": "Tangail",
+        "Zone": "WEST 2 ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Taraganj",
+        "Area": "Rangpur A",
+        "Division/Region": "Rangpur",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Tarash",
+        "Area": "Sirajganj",
+        "Division/Region": "Bogura",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Terokhada",
+        "Area": "Khulna 1",
+        "Division/Region": "Khulna",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Thakurgaon-1",
+        "Area": "Thakurgaon",
+        "Division/Region": "Dinajpur",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Thakurgaon-2",
+        "Area": "Thakurgaon",
+        "Division/Region": "Dinajpur",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Thakurgaon-2",
+        "Area": "Thakurgaon",
+        "Division/Region": "Dinajpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Thakurgaon Sadar",
+        "Area": "Thakurgaon",
+        "Division/Region": "Dinajpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Tongi",
+        "Area": "Uttara",
+        "Division/Region": "Dhaka",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Tongi",
+        "Area": "Tongi",
+        "Division/Region": "Gazipur",
+        "Zone": "WEST 2 ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Tongi-2",
+        "Area": "Uttara",
+        "Division/Region": "Dhaka",
+        "Zone": "HERBAL ZONE",
+        "Team": "TEAM HERBAL",
+        "National Head": "Deeplaid Herbal & Nutraceuticals Ltd.",
+        "National Head Code": "10002"
+    },
+    {
+        "Market": "Trishal",
+        "Area": "Trishal",
+        "Division/Region": "Mymensingh",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Tungipara",
+        "Area": "Gopalganj",
+        "Division/Region": "Faridpur",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Turag",
+        "Area": "Mohakhali",
+        "Division/Region": "Dhaka",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Ukhia",
+        "Area": "Chakaria",
+        "Division/Region": "Ctg. Division",
+        "Zone": "EAST ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Ulipur",
+        "Area": "Kurigram",
+        "Division/Region": "Rangpur",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Ullahpara-2",
+        "Area": "Ullapara",
+        "Division/Region": "Rajshahi Sadar",
+        "Zone": "NORTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Uttara",
+        "Area": "Mohakhali",
+        "Division/Region": "Dhaka",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Wari",
+        "Area": "Keraniganj",
+        "Division/Region": "Dhaka",
+        "Zone": "WEST 1  ZONE",
+        "Team": "FIGHTER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Wazirpur",
+        "Area": "Barishal Sadar",
+        "Division/Region": "Barisal",
+        "Zone": "NOASHAL",
+        "Team": "NOASHAL",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    },
+    {
+        "Market": "Zanjira",
+        "Area": "Madaripur Sadar",
+        "Division/Region": "Faridpur",
+        "Zone": "SOUTH ZONE",
+        "Team": "CHALLENGER",
+        "National Head": "Deeplaid Laboratories Ltd.",
+        "National Head Code": "10001"
+    }
+            ];
+
+
+            
+            function populateTable(data) {
+                var tableBody = $('#idshifttable tbody');
+                tableBody.empty(); 
+
+                
+                data.forEach(function (rowData) {
+                    var row = $('<tr>');
+
+                   
+                    Object.values(rowData).forEach(function (value) {
+                        row.append($('<td>').text(value));
+                    });
+
+                    tableBody.append(row);
+                });
+            }
+
+          
+            function generatePagination(totalPages) {
+                var pagination = $('#pagination');
+                pagination.empty();
+
+                for (var i = 1; i <= totalPages; i++) {
+                    pagination.append($('<a>').addClass('page-link').attr('href', '#').text(i));
+                }
+
+                pagination.find('a').click(function (event) {
+                    event.preventDefault();
+                    var page = parseInt($(this).text());
+                    var startIndex = (page - 1) * 20;
+                    var endIndex = startIndex + 20;
+                    var dataToShow = jsonData.slice(startIndex, endIndex);
+                    populateTable(dataToShow);
+                });
+            }
+
+           
+            populateTable(jsonData.slice(0, 20));
+
+           
+            generatePagination(Math.ceil(jsonData.length / 20));
+        });
+
+
+    </script>
+</body>
+
+</html>
+
+
+

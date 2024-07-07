@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "Doctorlocation";
+}
+
+@RenderPage("~/Views/Shared/Sidebar.cshtml")
+
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<link href="~/Content/css/custom.max.css" rel="stylesheet">
+
+
+<style>
+
+    body {
+        color: #566787;
+        background: #f5f5f5;
+        font-family: 'Varela Round', sans-serif;
+        font-size: 13px;
+        max-width: 100%;
+      
+    }
+
+
+
+</style>
+
+<h2>Doctor location</h2>
+
+<div style="text-decoration:none; overflow:hidden;max-width:100%;width:1500px;height:700px;">
+    <div id="embed-ded-map-canvas" style="height:100%; width:100%;max-width:100%; margin-left:250px;"><iframe style="height:100%;width:100%;border:0;" frameborder="0" src="https://www.google.com/maps/embed/v1/place?q=Deeplaid+Laboratories+Limited,+Kaptan+Bazar,+Wari,+Dhaka,+Bangladesh&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"></iframe></div><a class="googl-ehtml" href="https://www.bootstrapskins.com/themes" id="get-data-for-embed-map">premium bootstrap themes</a>
+    <style>
+        #embed-ded-map-canvas img {
+            max-width: none !important;
+            background: none !important;
+            font-size: inherit;
+            font-weight: inherit;
+            margin-left:250px;
+        }
+    </style>
+</div>

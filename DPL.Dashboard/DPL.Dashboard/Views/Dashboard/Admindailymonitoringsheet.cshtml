@@ -1,0 +1,1591 @@
+﻿
+@{
+    ViewBag.Title = "Admindailymonitoringsheet";
+}
+
+@RenderPage("~/Views/Shared/Sidebar.cshtml")
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+    <title>Deeplaid</title>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+    <link rel='stylesheet' href='https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css'>
+    <link rel='stylesheet' href='https://cdn.datatables.net/1.10.19/css/dataTables.jqueryui.min.css'>
+    <link rel='stylesheet' href='https://cdn.datatables.net/buttons/1.5.2/css/buttons.jqueryui.min.css'>
+    <link rel='styleshee' t href='https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css'>
+    <link rel='stylesheet' href='https://cdn.datatables.net/responsive/2.2.5/css/responsive.dataTables.min.css'>
+
+
+
+
+
+
+
+    <link href="~/Content/css/boxsize.min.css" rel="stylesheet">
+
+
+    <style>
+        body {
+            color: #566787;
+            background-color: #f5f5f5;
+        }
+
+        button {
+            background: #1abb9c;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-family: 'Lato';
+            margin: 5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            outline: none;
+            color: white;
+        }
+
+            button:hover {
+                background: orange;
+            }
+
+
+
+
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            margin: auto;
+            text-align: center;
+            font-family: arial;
+        }
+
+
+        .centerContain {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .border {
+            border: 1px solid #dee2e6 !important;
+        }
+
+
+
+        legend {
+            display: block;
+            width: auto;
+            margin-bottom: 2px;
+            padding-left: 2px;
+            padding-right: 2px;
+            border: none;
+        }
+
+        button:hover {
+            background: #1abb9c;
+        }
+
+
+
+
+        .linkbutton:hover {
+            background: #2b8eed;
+            color: white;
+        }
+
+        .pcenter {
+            margin: auto;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+        }
+
+        .linkbutton {
+            border: 1px solid black;
+            height: 35px;
+            border-radius: 5px;
+            text-align: center;
+            background-color: #a8a7b9;
+            color: white;
+            padding-left: 5px;
+            padding-right: 5px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            justify-content: center;
+        }
+
+
+
+        .il {
+            color: #dcf588;
+        }
+
+        .ilF {
+            color: #ffffff;
+        }
+
+        .ilF1 {
+            color: #00ff90;
+        }
+
+        .imagecenter {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 25%;
+        }
+
+        .form-control {
+            display: ruby-text;
+            width: 40%;
+            height: calc(1.5em + .75rem + 2px);
+            padding: .375rem .75rem;
+            font-size: .75rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+            transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        }
+
+        .raw {
+            margin-right: 30px;
+            margin-left: 30px;
+            flex-direction: column;
+        }
+
+        .row {
+            display: -ms-flexbox;
+            display: grid;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+
+
+        h3 {
+            margin-top: 10px;
+            margin-bottom: 20px;
+            margin-left: -15px;
+            font-size: 3rem;
+        }
+
+        input[type=date], input[type=datetime-local], input[type=month], input[type=time] {
+            -webkit-appearance: listbox;
+            border: solid 1px;
+            width: 215px;
+        }
+
+
+        .table-responsive {
+            margin: 10px 0;
+        }
+
+
+        .table-wrapper {
+            min-width: 100px;
+            padding-left: 30px;
+            border-radius: 3px;
+        }
+
+
+
+
+
+
+        #selectAll {
+            width: 80px;
+            height: 50px;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #searchBox {
+            width: 500px;
+            height: 30px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid green;
+        }
+
+            #searchBox:focus {
+                outline: none;
+            }
+
+        .button-container {
+            display: flexbox;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        .button-container {
+            display: inline-block;
+            vertical-align: top;
+            margin-right: 10px;
+        }
+
+        .search-container {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .button-container {
+            display: inline-block;
+            vertical-align: -webkit-baseline-middle;
+            margin-right: 10px;
+        }
+
+        #box1 {
+            width: 500px;
+            height: 500px;
+            border: 1.5px solid #000;
+            border-radius: 5px;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        #box2 {
+            width: 500px;
+            height: 200px;
+            border: 1px solid black;
+            border-radius: 5px;
+            padding: 5px;
+            box-sizing: border-box;
+            margin-top: 0px;
+            overflow-y: scroll;
+        }
+
+
+
+
+        .mobile-layout .button-container {
+            display: block;
+        }
+
+
+
+        .table-wrapper.desktop-layout {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+            .table-wrapper.desktop-layout .button-container {
+                margin-bottom: 0;
+                flex: 1 1 100%;
+            }
+
+            .table-wrapper.desktop-layout #box1Container,
+            .table-wrapper.desktop-layout #box2Container {
+                flex: 1 1 calc(50% - 20px);
+            }
+
+            .table-wrapper.desktop-layout #selectAllContainer {
+                flex: 1 1 100%;
+            }
+
+            .table-wrapper.desktop-layout #box1,
+            .table-wrapper.desktop-layout #box2 {
+                width: calc(50% - 20px);
+                margin: 0 10px;
+            }
+
+            .table-wrapper.desktop-layout #selectAll {
+                width: auto;
+            }
+
+
+
+
+        label {
+            display: inline-block;
+            margin-bottom: .5rem;
+            width: 100px;
+        }
+
+
+
+        option {
+            display: table-row-group;
+        }
+
+
+
+        .table-responsive {
+            margin: 10px 0;
+            overflow-x: unset;
+        }
+
+
+
+        .table-title {
+            padding-bottom: 15px;
+            background: #435d7d;
+            color: #fff;
+            padding: 16px 30px;
+            margin: -20px -25px 10px;
+            border-radius: 3px 3px 0 0;
+        }
+
+            .table-title h2 {
+                margin: 5px 0 0;
+                font-size: 24px;
+            }
+
+            .table-title .btn-group {
+                float: right;
+            }
+
+            .table-title .btn {
+                color: #fff;
+                float: right;
+                font-size: 13px;
+                border: none;
+                min-width: 50px;
+                border-radius: 2px;
+                border: none;
+                outline: none !important;
+                margin-left: 10px;
+            }
+
+                .table-title .btn i {
+                    float: left;
+                    font-size: 21px;
+                    margin-right: 5px;
+                }
+
+                .table-title .btn span {
+                    float: left;
+                    margin-top: 2px;
+                }
+
+        table.table tr th, table.table tr td {
+            border-color: #e9e9e9;
+            padding: 12px 15px;
+            vertical-align: middle;
+        }
+
+            table.table tr th:first-child {
+                width: 60px;
+            }
+
+            table.table tr th:last-child {
+                width: 100px;
+            }
+
+        table.table-striped tbody tr:nth-of-type(odd) {
+            background-color: #fcfcfc;
+        }
+
+        table.table-striped.table-hover tbody tr:hover {
+            background: #f5f5f5;
+        }
+
+        table.table th i {
+            font-size: 13px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        table.table td:last-child i {
+            opacity: 0.9;
+            font-size: 22px;
+            margin: 0 5px;
+        }
+
+        table.table td a {
+            font-weight: bold;
+            color: #566787;
+            display: inline-block;
+            text-decoration: none;
+            outline: none !important;
+        }
+
+            table.table td a:hover {
+                color: #2196F3;
+            }
+
+            table.table td a.edit {
+                color: #FFC107;
+            }
+
+            table.table td a.delete {
+                color: #F44336;
+            }
+
+        table.table td i {
+            font-size: 19px;
+        }
+
+
+        input[type="search"] {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            border: 1px solid;
+        }
+
+        label {
+            display: inline;
+            margin-bottom: .5rem;
+            width: 100px;
+        }
+
+
+        .checkbox-inline {
+            display: table-row;
+            padding-left: 20px;
+            margin-bottom: 0;
+            font-weight: normal;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+<body>
+
+
+
+
+
+
+    <div class="centerContainer" id="multi-data">
+        <div class="item bordercolor" style="padding: 40px; margin: 100px; background-color: white; border: solid 1px;">
+            <h4 style="margin-bottom:40px">Market Monitoring Sheet</h4>
+            <form id="multi-step-form">
+                <div id="dividBranch">
+                    <label class="control-label">Branch Name</label>
+                    <select id="branchSelectnew" class="form-control">
+                        <option value="">--Select One--</option>
+                        <option value="All">All</option>
+                        <option value="0001">Deeplaid Laboratories Ltd.-2024</option>
+                        <option value="0002">Sale Center. Dhaka</option>
+                        <option value="0003">Herbal</option>
+                    </select>
+                </div>
+                <div id="dividLedgerStatus">
+                    <label class="control-label">Status</label>
+                    <select id="idLedgerStatus" class="form-control">
+                        <option value="">--Select One--</option>
+                        <option value="All">All</option>
+                        <option value="0">Active</option>
+                        <option value="1">Inactive</option>
+                    </select>
+                </div>
+                <br />
+                <fieldset class="border p-2">
+                    <legend class="w-auto">Period Selection</legend>
+                    <div class="row" style="margin-left:4px">
+                        <label class="control-label col-md-3">From: </label>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                <input type="date" id="fromDateM">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-left:4px">
+                        <label class="control-label col-md-3">To: </label>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                <input type="date" id="toDateM" name="toDate">
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <br />
+                <div class="container">
+                    <div class="table-responsive">
+                        <div class="table-wrapper" id="tableWrapper">
+                            <div class="button-container" id="box1Container">
+                                <div id="dividLedgerStatusOptions" class="row bordercolor">
+                                    <div class="col-lg-2">
+                                        <div class="row">
+                                            <label style="font-size: 15px;">
+                                                <input type="radio" name="status" value="0" style="height: 12px; width: 25px; margin-top: 5px"> MPO
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div class="row">
+                                            <label style="font-size: 15px;">
+                                                <input type="radio" name="status" value="1" style="height: 12px; width: 25px; margin-top: 5px"> AH
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div class="row">
+                                            <label style="font-size: 15px;">
+                                                <input type="radio" name="status" value="2" style="height: 12px; width: 25px; margin-top: 5px"> DH
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div class="row">
+                                            <label style="font-size: 15px;">
+                                                <input type="radio" name="status" value="3" style="height: 12px; width: 25px; margin-top: 5px"> ZH
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div class="row">
+                                            <label style="font-size: 15px;">
+                                                <input type="radio" name="status" value="4" style="height: 12px; width: 25px; margin-top: 5px"> TH
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div class="row">
+                                            <label style="font-size: 15px;">
+                                                <input type="radio" name="status" value=" " style="height: 12px; width: 25px; margin-top: 5px" checked> ALL
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="button-container" id="box2Container">
+                                <input type="text" id="searchBox" placeholder="Search..."><br />
+                                <div id="box2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom:10px" id="Partywisedata">
+                    <div class="col-md-12" style="margin-top: 20px; margin-bottom:20px;  margin-left: 30px;">
+                        <div class="col-lg-4">
+                            <div class="row">
+                                <div style="font-size: 15px; font-weight: bold;">
+                                    <input type="checkbox" id="idcheckboxTypeGiftSearch" class="checkboxTypeGiftSearch" value="1"> Special Monitor
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="row">
+                                <div style="font-size: 15px; font-weight: bold;">
+                                    <input type="checkbox" id="idcheckboxPartyCoverage" class="checkboxTypePartyCoverage" value="1"> Party Coverage
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="row">
+                                <div style="font-size: 15px; font-weight: bold;">
+                                    <input type="checkbox" id="idcheckboxDetails" class="checkboxDetails" value="1"> Details
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="buttonposition">
+                    <div>
+                        <button title="Commission Cal." class="btn btn-success" style="margin: 2px; text-transform: capitalize; height: 40px; width: 120px; font-size: 20px;" id="previewButton">
+                            <i class="fa fa-spinner" aria-hidden="true"></i> Preview
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 5px;
+        }
+
+        .header-table th, .header-table td {
+            border: none;
+        }
+
+        .sales-header {
+            color: green;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .collection-header {
+            color: blue;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .credit-limit-header {
+            color: red;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .note-section {
+            border: 1px solid black;
+            width: 20%;
+            margin: 0 auto;
+        }
+
+            .note-section td {
+                color: magenta;
+            }
+
+        .company-info {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+            .company-info h1 {
+                margin: 0;
+                font-size: 24px;
+            }
+
+            .company-info p {
+                margin: 2px 0;
+            }
+
+        table.dataTable, table.dataTable th, table.dataTable td {
+            box-sizing: content-box;
+            font-size: 11.5px;
+        }
+
+
+
+       
+        #example {
+            width: 100%;
+            border-collapse: collapse; 
+        }
+
+            #example th, #example td {
+                padding: 10px;
+                text-align: center;
+                border: 1px solid #ccc;
+            }
+
+            #example th {
+                background-color: #f0f0f0;
+                font-weight: bold;
+            }
+
+            
+            #example tbody tr:hover {
+                background-color: #e0e0e0;
+            }
+
+            
+            #example tbody td:first-child {
+                font-weight: bold;
+            }
+
+           
+            #example tbody td:nth-child(3), 
+            #example tbody td:nth-child(5) {
+                text-align: left; 
+            }
+
+           
+            #example tbody td.numeric {
+                text-align: right;
+            }
+
+                #example tbody td.numeric:before {
+                    content: "$"; 
+                }
+
+
+
+           
+            #example tbody {
+                max-height: 400px; 
+                overflow-y: auto; 
+            }
+       
+        .team-header,
+        .zone-header,
+        .division-header,
+        .area-header {
+            font-weight: bold; 
+            text-align: center; 
+            background-color: #f0f0f0; 
+            
+        }
+       
+
+        
+    </style>
+
+
+
+    <div class="table-responsive">
+        <div class="table-wrapper1">
+
+            <table id="example" class="display nowrap" style="width:100%">
+
+
+
+                <thead>
+
+                    <div class="company-info">
+                        <h1>Deeplaid Laboratories Ltd. - 2024</h1>
+                        <p>53/1, Kaptan Bazar, Wari, Dhaka-1203</p>
+                        <p>www.deeplaid.com.bd</p>
+                        <h2>Market Monitoring Sheet</h2>
+                    </div>
+                    <tr>
+                      
+                        <th rowspan="2">TC Code</th>
+                        <th rowspan="2">TC Name</th>
+                        <th width="10px" rowspan="2">MPO Name</th>
+                        <th rowspan="2">Class</th>
+                        <th rowspan="2">Opening <br>Balance</th>
+                        <th colspan="4" class="sales-header">Sales</th>
+                        <th colspan="4" class="collection-header">Collection</th>
+                        <th rowspan="2">Closing <br>Balance</th>
+                        <th colspan="2" class="credit-limit-header">Credit Limit</th>
+                    </tr>
+                    <tr>
+                        <td class="target">Target</td>
+                        <td class="achievement">Achv.</td>
+                        <td>Balance</td>
+                        <td>Achv.%</td>
+                        <td class="target">Target</td>
+                        <td class="achievement">Achv.</td>
+                        <td>Balance</td>
+                        <td>Achv.%</td>
+                        <td>Limit</td>
+                        <td>Pending <br> Limit</td>
+                    </tr>
+                  
+                </thead>
+                <tbody class="tbody"></tbody>
+
+
+
+
+                <tfoot>
+                    <tr>
+                        <th colspan="4" style="text-align:right">Total:</th>
+                        <th></th> 
+                        <th></th>
+                        <th></th> 
+                        <th></th> 
+                        <th></th> 
+                        <th></th> 
+                        <th></th> 
+                        <th></th> 
+                        <th></th> 
+                        <th></th> 
+                        <th></th>
+                        <th></th> 
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+
+   
+   
+
+        <script src='https://code.jquery.com/jquery-3.5.1.js'></script>
+        <script src='https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js'></script>
+        <script src='https://cdn.datatables.net/1.10.19/js/dataTables.jqueryui.min.js'></script>
+        <script src='https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js'></script>
+        <script src='https://cdn.datatables.net/buttons/1.5.2/js/buttons.jqueryui.min.js'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js'></script>
+        <script src='https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js'></script>
+        <script src='https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js'></script>
+        <script src='https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js'></script>
+        <script src='https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js'></script>
+
+
+
+        <script>
+
+
+
+
+
+
+
+            
+            $(document).ready(function ($) {
+                var table;
+                var initialFormData = collectFormData();
+                loadData(initialFormData);
+
+
+
+                function loadData(formData) {
+                    $.ajax({
+                        url: "/MarketMonitoringSheet/MarketMonitoringSheetList",
+                        type: "POST",
+                        contentType: 'application/json;charset=utf-8',
+                        dataType: "json",
+                        data: JSON.stringify(formData),
+                        success: function (result) {
+                            console.log("Result from server:", result);
+
+                            var groupedData = groupData(result);
+
+                            if (!table) {
+                                table = initializeDataTable();
+                            }
+
+                            table.clear().rows.add(groupedData).draw();
+                        },
+                        error: function (errormessage) {
+                            console.error("Error fetching data:", errormessage);
+                            alert(errormessage.responseText);
+                        }
+                    });
+                }
+
+                function groupData(data) {
+                    var grouped = [];
+
+                    data.forEach(function (item) {
+                        var team = grouped.find(g => g.strTeam === item.strTeam);
+                        if (!team) {
+                            team = {
+                                strTeam: item.strTeam,
+                                zones: []
+                            };
+                            grouped.push(team);
+                        }
+
+                        var zone = team.zones.find(z => z.strZone === item.strZone);
+                        if (!zone) {
+                            zone = {
+                                strZone: item.strZone,
+                                divisions: []
+                            };
+                            team.zones.push(zone);
+                        }
+
+                        var division = zone.divisions.find(d => d.strDivision === item.strDivision);
+                        if (!division) {
+                            division = {
+                                strDivision: item.strDivision,
+                                areas: []
+                            };
+                            zone.divisions.push(division);
+                        }
+
+                        var area = division.areas.find(a => a.strArea === item.strArea);
+                        if (!area) {
+                            area = {
+                                strArea: item.strArea,
+                                data: []
+                            };
+                            division.areas.push(area);
+                        }
+
+                        area.data.push(item);
+                    });
+
+                    return flattenGroupedData(grouped);
+
+                }
+
+                function flattenGroupedData(grouped) {
+                    var flatData = [];
+
+                    grouped.forEach(function (team) {
+                        flatData.push({
+                            strTeam: team.strTeam,
+                            strZone: '',
+                            strDivision: '',
+                            strArea: '',
+                            isHeader: true,
+                            headerLevel: 'team'
+                        });
+
+                        team.zones.forEach(function (zone) {
+                            flatData.push({
+                                strTeam: '',
+                                strZone: zone.strZone,
+                                strDivision: '',
+                                strArea: '',
+                                isHeader: true,
+                                headerLevel: 'zone'
+                            });
+
+                            zone.divisions.forEach(function (division) {
+                                flatData.push({
+                                    strTeam: '',
+                                    strZone: '',
+                                    strDivision: division.strDivision,
+                                    strArea: '',
+                                    isHeader: true,
+                                    headerLevel: 'division'
+                                });
+
+                                division.areas.forEach(function (area) {
+                                    flatData.push({
+                                        strTeam: '',
+                                        strZone: '',
+                                        strDivision: '',
+                                        strArea: area.strArea,
+                                        isHeader: true,
+                                        headerLevel: 'area'
+                                    });
+
+                                    area.data.forEach(function (item) {
+                                        flatData.push({
+                                            strTeam: '',
+                                            strZone: '',
+                                            strDivision: '',
+                                            strArea: '',
+                                            strTeritorryCode: item.strTeritorryCode,
+                                            strTerritory: item.strTerritory,
+                                            strMrname: item.strMrname,
+                                            strClass: item.strClass,
+                                            dblPreviousDues: item.dblPreviousDues,
+                                            dblCurrentSales: item.dblCurrentSales,
+                                            dblSpVoucher: item.dblSpVoucher,
+                                            dblCurrentSalesMinusSpVoucher: (item.dblCurrentSales - item.dblSpVoucher).toFixed(2),
+                                            percentageSpVoucher: ((item.dblSpVoucher / item.dblCurrentSales) * 100).toFixed(2) + '%',
+                                            dblCommitment: item.dblCommitment,
+                                            dblcollecCommi: item.dblcollecCommi,
+                                            dblCommitmentMinusCollecCommi: (item.dblCommitment - item.dblcollecCommi).toFixed(2),
+                                            percentageCollecCommi: ((item.dblcollecCommi / item.dblCommitment) * 100).toFixed(2) + '%',
+                                            dblClosing: item.dblClosing,
+                                            dblCreditLimit: item.dblCreditLimit,
+                                            dblPending: item.dblPending
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+
+                    return flatData;
+
+                }
+
+                //let total = 0;
+  
+                //t.cells(null, 6, { search: 'applied', order: 'applied' }).reverse().every(function (cell) {
+                //    total += t.row( this.index().row ).data().cash_in * 1;
+                //    this.data( total );
+                //});
+               
+                function cleanData(data) {
+                    return data.map(function (item) {
+                        return Object.fromEntries(Object.entries(item).filter(([key, value]) => value !== ''));
+                    });
+
+
+                }
+                function initializeDataTable() {
+                    return $('#example').DataTable({
+                        autoFill: true,
+
+                        buttons: [
+               {
+                   extend: 'csv',
+                   text: 'CSV',
+                   messageTop: '53/1, Kaptan Bazar, Wari, Dhaka-1203 <br> www.deeplaid.com.bd<br>Market Monitoring Sheet',
+                   exportOptions: {
+                       columns: ':visible'
+                   }
+               },
+               {
+                   extend: 'excel',
+                   text: 'Excel',
+                   messageTop: '53/1, Kaptan Bazar, Wari, Dhaka-1203 <br> www.deeplaid.com.bd<br>Market Monitoring Sheet',
+                   exportOptions: {
+                       columns: ':visible'
+                   }
+               },
+               {
+                   extend: 'pdf',
+                   text: 'PDF',
+                   orientation: 'landscape',
+                   pageSize: 'LEGAL',
+                   messageTop: '53/1, Kaptan Bazar, Wari, Dhaka-1203 <br> www.deeplaid.com.bd<br>Market Monitoring Sheet',
+                   exportOptions: {
+                       columns: ':visible'
+                   },
+                   customize: function (doc) {
+                       doc.pageSize = 'A3';
+                       doc.pageMargins = [20, 20, 20, 20];
+                       doc.defaultStyle.fontSize = 10;
+                       doc.styles.tableHeader.fontSize = 11;
+                       doc.styles.title = {
+                           alignment: 'center'
+                       };
+                   }
+               },
+               {
+                   extend: 'print',
+                   text: 'Print',
+
+                   exportOptions: {
+                       columns: ':visible'
+                   },
+                   customize: function (win) {
+                       $(win.document.body)
+                           .css('font-size', '10pt')
+                           .prepend(
+                               '<div style="text-align:center;"><b>53/1, Kaptan Bazar, Wari, Dhaka-1203</b><br><b>www.deeplaid.com.bd</b><br><b>Market Monitoring Sheet</b></div>'
+                           );
+
+                       $(win.document.body).find('table')
+                           .addClass('compact')
+                           .css('font-size', 'inherit');
+                   }
+               },
+               {
+                   extend: 'print',
+                   text: 'View',
+
+                   exportOptions: {
+                       columns: ':visible'
+                   },
+                   customize: function (win) {
+                       $(win.document.body)
+                           .css('font-size', '10pt')
+                           .prepend(
+                               '<div style="text-align:center;"><b>53/1, Kaptan Bazar, Wari, Dhaka-1203</b><br><b>www.deeplaid.com.bd</b><br><b>Market Monitoring Sheet</b></div>'
+                           );
+
+                       $(win.document.body).find('table')
+                           .addClass('compact')
+                           .css('font-size', 'inherit');
+                   },
+                   autoPrint: false
+               }
+                        ],
+                        responsive: true,
+                        retrieve: true,
+                        destroy: true,
+                        autoWidth: false,
+                        pageLength: 473,
+                        dom: 'Bfrtip',
+                        columns: [
+                           
+                            { data: '' },
+                            { data: 'strTeam' },
+                            { data: 'strZone' },
+                            { data: 'strDivision' },
+                            { data: 'strArea' },
+                            { data: 'strTeritorryCode' },
+                            { data: 'strTerritory' },
+                            { data: 'strMrname' },
+                            { data: 'strClass' },
+                            { data: 'dblPreviousDues' },
+                            { data: 'dblCurrentSales' },
+                            { data: 'dblSpVoucher' },
+                           
+                            {
+                                data: null,
+                                render: function(data) {
+                                    if (data.dblCurrentSales != null && data.dblSpVoucher != null) {
+                                        return (data.dblCurrentSales - data.dblSpVoucher).toFixed(2);
+                                    } else {
+                                        return ''; 
+                                    }
+                                }
+                            },
+
+                            
+                            {
+                                data: null,
+                                render: function(data) {
+                                    if (data.dblCurrentSales != null && data.dblCurrentSales !== 0) {
+                                        return ((data.dblSpVoucher / data.dblCurrentSales) * 100).toFixed(2) + '%';
+                                    } else {
+                                        return '';
+                                    }
+                                }
+                            },
+
+                            { data: 'dblCommitment' },
+                            { data: 'dblcollecCommi' },
+                           
+                            {
+                                data: null,
+                                render: function(data) {
+                                   
+                                    if (data.dblCommitment != null && data.dblcollecCommi != null) {
+                                        return (data.dblCommitment - data.dblcollecCommi).toFixed(2);
+                                    } else {
+                                        return ''; 
+                                    }
+                                }
+                            },
+
+                         
+                            {
+                                data: null,
+                                render: function(data) {
+                                   
+                                    if (data.dblCommitment != null && data.dblcollecCommi != null && data.dblCommitment !== 0) {
+                                        return ((data.dblcollecCommi / data.dblCommitment) * 100).toFixed(2) + '%';
+                                    } else {
+                                        return ''; 
+                                    }
+                                }
+                            },
+
+                            { data: 'dblClosing' },
+                            { data: 'dblCreditLimit' },
+                            { data: 'dblPending' }
+                        ],
+                        columnDefs: [
+                             {
+                                 targets: 0,
+                                 createdCell: function(td, cellData, rowData, row, col) {
+                                     if (rowData.isHeader && rowData.headerLevel === 'team') {
+                                         $(td).addClass('team-header');
+                                     }
+                                 }
+                             },
+                             {
+                                 targets: 1,
+                                 createdCell: function(td, cellData, rowData, row, col) {
+                                     if (rowData.isHeader && rowData.headerLevel === 'zone') {
+                                         $(td).addClass('zone-header');
+                                     }
+                                 }
+                             },
+                             {
+                                 targets: 2,
+                                 createdCell: function(td, cellData, rowData, row, col) {
+                                     if (rowData.isHeader && rowData.headerLevel === 'division') {
+                                         $(td).addClass('division-header');
+                                     }
+                                 }
+                             },
+                             {
+                                 targets: 3,
+                                 createdCell: function(td, cellData, rowData, row, col) {
+                                     if (rowData.isHeader && rowData.headerLevel === 'area') {
+                                         $(td).addClass('area-header');
+                                     }
+                                 }
+                             }
+                        ],
+                        footerCallback: function (row, data, start, end, display) {
+                            var api = this.api();
+
+                            var intVal = function (i) {
+                                return typeof i === 'string' ?
+                                    i.replace(/[\$,]/g, '') * 1 :
+                                    typeof i === 'number' ?
+                                    i : 0;
+                            };
+
+                            var totalPreviousDues = api
+                                .column(8, { search: 'applied' })
+                                .data()
+                                .reduce(function (a, b) {
+                                    return intVal(a) + intVal(b);
+                                }, 0);
+
+                            var totalCurrentSales = api
+                                .column(9, { search: 'applied' })
+                                .data()
+                                .reduce(function (a, b) {
+                                    return intVal(a) + intVal(b);
+                                }, 0);
+
+                            var totalSpVoucher = api
+                                .column(10, { search: 'applied' })
+                                .data()
+                                .reduce(function (a, b) {
+                                    return intVal(a) + intVal(b);
+                                }, 0);
+
+                            var totalCurrentSalesMinusSpVoucher = api
+                                .column(11, { search: 'applied' })
+                                .data()
+                                .reduce(function (accumulator, currentValue) {
+                                    if (currentValue && currentValue.dblCurrentSales !== null) {
+                                        var currentSales = parseFloat(currentValue.dblCurrentSales) || 0;
+                                        var spVoucher = parseFloat(currentValue.dblSpVoucher) || 0;
+                                        return accumulator + (currentSales - spVoucher);
+                                    } else {
+                                        return accumulator;
+                                    }
+                                }, 0);
+
+                            var totalSpVoucherPercentage = api
+                                .column(12, { search: 'applied' })
+                                .data()
+                                .reduce(function (accumulator, currentValue) {
+                                    if (currentValue && currentValue.dblSpVoucher !== null && currentValue.dblCurrentSales !== null && currentValue.dblCurrentSales !== 0) {
+                                        return accumulator + intVal(currentValue.dblSpVoucher / currentValue.dblCurrentSales * 100);
+                                    } else {
+                                        return accumulator;
+                                    }
+                                }, 0);
+
+                            var totalCommitment = api
+                                .column(13, { search: 'applied' })
+                                .data()
+                                .reduce(function (a, b) {
+                                    return intVal(a) + intVal(b);
+                                }, 0);
+
+                            var totalCollecCommi = api
+                                .column(14, { search: 'applied' })
+                                .data()
+                                .reduce(function (accumulator, currentValue) {
+                                    if (currentValue !== null) {
+                                        return accumulator + intVal(currentValue);
+                                    } else {
+                                        return accumulator;
+                                    }
+                                }, 0);
+
+                            var totalCommitmentMinusCollecCommi = api
+                                .column(15, { search: 'applied' })
+                                .data()
+                                .reduce(function (accumulator, currentValue) {
+                                    if (currentValue && currentValue.dblCommitment !== null) {
+                                        var commitment = parseFloat(currentValue.dblCommitment) || 0;
+                                        var collecCommi = parseFloat(currentValue.dblcollecCommi) || 0;
+                                        return accumulator + (commitment - collecCommi);
+                                    } else {
+                                        return accumulator;
+                                    }
+                                }, 0);
+
+                            var totalCollecCommiPercentage = api
+                                .column(16, { search: 'applied' })
+                                .data()
+                                .reduce(function (accumulator, currentValue) {
+                                    if (currentValue && currentValue.dblcollecCommi !== null && currentValue.dblCommitment !== null && currentValue.dblCommitment !== 0) {
+                                        return accumulator + intVal(currentValue.dblcollecCommi / currentValue.dblCommitment * 100);
+                                    } else {
+                                        return accumulator;
+                                    }
+                                }, 0);
+
+                            var totalClosing = api
+                                .column(17, { search: 'applied' })
+                                .data()
+                                .reduce(function (a, b) {
+                                    return intVal(a) + intVal(b);
+                                }, 0);
+
+                            var totalCreditLimit = api
+                                .column(18, { search: 'applied' })
+                                .data()
+                                .reduce(function (a, b) {
+                                    return intVal(a) + intVal(b);
+                                }, 0);
+
+                            var totalPending = api
+                                .column(19, { search: 'applied' })
+                                .data()
+                                .reduce(function (a, b) {
+                                    return intVal(a) + intVal(b);
+                                }, 0);
+
+                            $(api.column(8).footer()).html( totalPreviousDues.toFixed(2));
+                            $(api.column(9).footer()).html( totalCurrentSales.toFixed(2));
+                            $(api.column(10).footer()).html( totalSpVoucher.toFixed(2));
+                            $(api.column(11).footer()).html( totalCurrentSalesMinusSpVoucher.toFixed(2));
+                            $(api.column(12).footer()).html((totalSpVoucherPercentage / data.length).toFixed(2) + '%');
+                            $(api.column(13).footer()).html( totalCommitment.toFixed(2));
+                            $(api.column(14).footer()).html( totalCollecCommi.toFixed(2));
+                            $(api.column(15).footer()).html(totalCommitmentMinusCollecCommi.toFixed(2));
+                            $(api.column(16).footer()).html((totalCollecCommiPercentage / data.length).toFixed(2) + '%');
+                            $(api.column(17).footer()).html(totalClosing.toFixed(2));
+                            $(api.column(18).footer()).html(totalCreditLimit.toFixed(2));
+                            $(api.column(19).footer()).html(totalPending.toFixed(2));
+                        },
+                       
+
+                    });
+                }
+
+
+
+                function collectFormData() {
+                    var branchSelect = $('#branchSelectnew').val();
+                    var idLedgerStatus = parseInt($('#idLedgerStatus').val()) || 0;
+                    var box2Container = $('#ledgerCheckbox:checked').map(function () {
+                        return "'" + $(this).val() + "'";
+                    }).get().join(', ');
+
+                    var fromDateM = $('#fromDateM').val();
+                    var toDateM = $('#toDateM').val();
+                    var selectedStatus = $('#dividLedgerStatusOptions input[name="status"]:checked').val();
+                    var isSpecialMonitor = $('#idcheckboxTypeGiftSearch').is(':checked') ? 1 : 0;
+                    var isPartyCoverage = $('#idcheckboxPartyCoverage').is(':checked') ? 1 : 0;
+                    var isDetails = $('#idcheckboxDetails').is(':checked') ? 1 : 0;
+
+                    var intDay = totalDays(fromDateM, toDateM);
+
+                    var formData = {
+                        strBranchID: branchSelect || '',
+                        intstatus: idLedgerStatus || 0,
+                        strLedger: box2Container || '',
+                        gstrUserName: "Deeplaid",
+                        strFate: formatDate(fromDateM) || '',
+                        strTDate: formatDate(toDateM) || '',
+                        intOption: mapStatus(selectedStatus) || 0,
+                        intDay: intDay || 0,
+                        intUpdDay: 0,
+                        intSelection: isSpecialMonitor || 0,
+                        intPartyCoverage: isPartyCoverage || 0,
+                        intDetails: isDetails || 0
+                    };
+
+                    return formData;
+                }
+
+                function processData(data) {
+                    return data.map(function (item) {
+                        item.dblCurrentSalesMinusSpVoucher = isNaN(item.dblCurrentSales) || isNaN(item.dblSpVoucher) ? 0 : (item.dblCurrentSales - item.dblSpVoucher);
+                        item.percentageSpVoucher = isNaN(item.dblCurrentSales) || isNaN(item.dblSpVoucher) || item.dblCurrentSales === 0 ? '0.00%' : ((item.dblSpVoucher / item.dblCurrentSales) * 100).toFixed(2) + '%';
+                        item.dblCommitmentMinusCollecCommi = isNaN(item.dblCommitment) || isNaN(item.dblcollecCommi) ? 0 : (item.dblCommitment - item.dblcollecCommi);
+                        item.percentageCollecCommi = isNaN(item.dblCommitment) || isNaN(item.dblcollecCommi) || item.dblCommitment === 0 ? '0.00%' : ((item.dblcollecCommi / item.dblCommitment) * 100).toFixed(2) + '%';
+
+                        return item;
+                    });
+                }
+
+
+                function formatDate(dateString) {
+                    var dateParts = dateString.split("-");
+                    return dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0];
+                }
+
+                function totalDays(fromDate, toDate) {
+                    var date1 = new Date(fromDate);
+                    var date2 = new Date(toDate);
+                    var diffTime = Math.abs(date2 - date1);
+                    var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    return diffDays;
+                }
+
+                function mapStatus(selectedValue) {
+                    switch (selectedValue) {
+                        case "0":
+                            return "2";
+                        case "1":
+                            return "3";
+                        case "2":
+                            return "4";
+                        case "3":
+                            return "5";
+                        case "4":
+                            return "6";
+                        default:
+                            return "";
+                    }
+                }
+
+
+                
+                $('#previewButton').click(function (event) {
+                    event.preventDefault();
+                    var formData = collectFormData();
+                    loadData(formData);
+                    console.log(JSON.stringify(formData, null, 2));
+                });
+
+                function Print() {
+                    var title = 'Deeplaid Laboratories Ltd. - 2024 <br> 53/1, Kaptan Bazar, Wari, Dhaka-1203 <br> www.deeplaid.com.bd<br>Market Monitoring Sheet';
+                    var table = $('#example').DataTable();
+                    var tableHtml = table.table().container().outerHTML;
+
+                    var printWindow = window.open('', '', 'height=600,width=800');
+                    printWindow.document.write('<html><head><title>Print Preview</title>');
+                    printWindow.document.write('<style>body {font-family: Arial, sans-serif;} table {width: 100%; border-collapse: collapse;} table, th, td {border: 1px solid black; padding: 5px;} h1 {text-align: center;}</style>');
+                    printWindow.document.write('</head><body>');
+                    printWindow.document.write('<h1>' + title + '</h1>');
+                    printWindow.document.write(tableHtml);
+                    printWindow.document.write('</body></html>');
+                    printWindow.document.close();
+
+                    setTimeout(function () {
+                        printWindow.print();
+                        printWindow.close();
+                    }, 1000);
+                }
+
+            })
+
+        </script>
+
+
+
+
+
+
+        <script>
+
+
+
+            function getFirstDateOfMonth() {
+                const now = new Date();
+                const firstDay = new Date(now.getFullYear(), now.getMonth(), 2);
+                return firstDay.toISOString().split('T')[0];
+            }
+
+
+            function getLastDateOfMonth() {
+                const now = new Date();
+                const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+                return lastDay.toISOString().split('T')[0];
+            }
+
+
+            document.getElementById('fromDateM').value = getFirstDateOfMonth();
+            document.getElementById('toDateM').value = getLastDateOfMonth();
+
+
+
+            $(document).ready(function () {
+                var resultData;
+
+                $.ajax({
+                    url: "/Type/mGetTypesLedgerList",
+                    type: "GET",
+                    contentType: 'application/json;charset=utf-8',
+                    dataType: "json",
+                    success: function (result) {
+                        resultData = result;
+
+                        function populateDropdowns(branchId, ledgerStatus) {
+                            var filteredResult = resultData.filter(function (item) {
+                                return (branchId === '' || item.intBRANCH_ID === parseInt(branchId)) &&
+                                    (ledgerStatus === '' || item.intLEDGER_STATUS === parseInt(ledgerStatus));
+                            });
+
+                            function getcheckData() {
+                                var selectedValue = $('input[name="status"]:checked').val();
+
+                                var filteredOptions = new Set();
+
+                                if (!selectedValue || selectedValue === '4') {
+                                    filteredResult.forEach(function (item) {
+                                        filteredOptions.add(item.strTEAM_NAME);
+                                    });
+                                } else if (selectedValue === '0') {
+                                    filteredResult.forEach(function (item) {
+                                        filteredOptions.add(item.strLEDGER_NAME_MERZE);
+                                    });
+                                } else if (selectedValue === '1') {
+                                    filteredResult.forEach(function (item) {
+                                        filteredOptions.add(item.strAREA);
+                                    });
+                                } else if (selectedValue === '2') {
+                                    filteredResult.forEach(function (item) {
+                                        filteredOptions.add(item.strDIVISION);
+                                    });
+                                } else if (selectedValue === '3') {
+                                    filteredResult.forEach(function (item) {
+                                        filteredOptions.add(item.strZONE);
+                                    });
+                                }
+
+                                displayOptions(filteredOptions);
+                            }
+
+                            //function displayOptions(optionsSet) {
+                            //    $('#box2').empty();
+                            //    optionsSet.forEach(function (option) {
+                            //        $('#box2').append('<div class="option-item"><input type="checkbox" value="' + option + '" id="ledgerCheckbox" /><span> ' + option + '</span></div>');
+                            //    });
+                            //}
+
+                            function displayOptions(optionsSet) {
+                                var optionsArray = Array.from(optionsSet).sort();
+
+                                $('#box2').empty();
+
+                                $('#box2').append('<div class="option-item"><input type="checkbox" class="selectAllCheckbox" /><span>Select All</span></div>');
+
+                                optionsArray.forEach(function (option) {
+                                    $('#box2').append('<div class="option-item"><input type="checkbox" value="' + option + '" id="ledgerCheckbox" /><span>' + option + '</span></div>');
+                                });
+
+
+                                $('.selectAllCheckbox').change(function () {
+                                    var isChecked = $(this).prop('checked');
+                                    $('#box2 input[type="checkbox"]').prop('checked', isChecked);
+                                });
+                            }
+
+                            function filterOptions() {
+                                var searchTerm = $('#searchBox').val().toLowerCase();
+                                $('#box2 .option-item').each(function () {
+                                    var text = $(this).text().toLowerCase();
+                                    $(this).toggle(text.includes(searchTerm));
+                                });
+                            }
+
+                            getcheckData();
+
+                            $('#branchSelectnew, #idLedgerStatus').change(function () {
+                                populateDropdowns($('#branchSelectnew').val(), $('#idLedgerStatus').val());
+                            });
+
+                            $('input[name="status"]').change(function () {
+                                getcheckData();
+                            });
+
+                            $('#searchBox').on('input', function () {
+                                filterOptions();
+                            });
+                        }
+
+                        populateDropdowns($('#branchSelectnew').val(), $('#idLedgerStatus').val());
+                    },
+                    error: function (errormessage) {
+                        alert(errormessage.responseText);
+                    }
+                });
+
+                function Print() {
+                    alert('Print button clicked');
+                }
+            });
+
+
+
+
+
+
+        </script>
+
+</body>
+
+
+
+
+
+</html>

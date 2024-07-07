@@ -1,0 +1,771 @@
+﻿
+@{
+    ViewBag.Title = "Dailyshift";
+}
+
+
+@RenderPage("~/Views/Shared/Sidebar.cshtml")
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DPL</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+    <link href="~/Content/css/custom.max.css" rel="stylesheet">
+
+    <style>
+        body {
+            color: #566787;
+            background: #f5f5f5;
+            font-family: 'Varela Round', sans-serif;
+            font-size: 13px;
+            max-width: 100%;
+        }
+
+        .table-responsive {
+            margin: 10px 0;
+          
+        }
+
+        /*.table-wrapper {
+            min-width: 1450px;
+            background: #fff;
+            padding: 20px 25px;
+            border-radius: 3px;
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        }*/
+
+        .table-title {
+            padding-bottom: 15px;
+            background: #435d7d;
+            color: #fff;
+            padding: 16px 30px;
+            margin: -20px -25px 10px;
+            border-radius: 3px 3px 0 0;
+        }
+
+            .table-title h2 {
+                margin: 5px 0 0;
+                font-size: 24px;
+            }
+
+            .table-title .btn-group {
+                float: right;
+            }
+
+            .table-title .btn {
+                color: #fff;
+                float: right;
+                font-size: 13px;
+                border: none;
+                min-width: 50px;
+                border-radius: 2px;
+                border: none;
+                outline: none !important;
+                margin-left: 10px;
+            }
+
+                .table-title .btn i {
+                    float: left;
+                    font-size: 21px;
+                    margin-right: 5px;
+                }
+
+                .table-title .btn span {
+                    float: left;
+                    margin-top: 2px;
+                }
+
+        table.table tr th, table.table tr td {
+            border-color: #e9e9e9;
+            padding: 12px 15px;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+            table.table tr th:first-child {
+                width: 60px;
+            }
+
+            table.table tr th:last-child {
+                width: 100px;
+            }
+
+        table.table-striped tbody tr:nth-of-type(odd) {
+            background-color: #fcfcfc;
+        }
+
+        table.table-striped.table-hover tbody tr:hover {
+            background: #f5f5f5;
+        }
+
+        table.table th i {
+            font-size: 13px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        table.table td:last-child i {
+            opacity: 0.9;
+            font-size: 22px;
+            margin: 0 5px;
+        }
+
+        table.table td a {
+            font-weight: bold;
+            color: #566787;
+            display: inline-block;
+            text-decoration: none;
+            outline: none !important;
+        }
+
+            table.table td a:hover {
+                color: #2196F3;
+            }
+
+            table.table td a.edit {
+                color: #FFC107;
+            }
+
+            table.table td a.delete {
+                color: #F44336;
+            }
+
+        table.table td i {
+            font-size: 19px;
+        }
+
+        table.table .avatar {
+            border-radius: 50%;
+            vertical-align: middle;
+            margin-right: 10px;
+            display: inline-block;
+        }
+
+        .pagination {
+            float: right;
+            margin: 0 0 5px;
+        }
+
+            .pagination li a {
+                border: none;
+                font-size: 13px;
+                min-width: 30px;
+                min-height: 30px;
+                color: #999;
+                margin: 0 2px;
+                line-height: 30px;
+                border-radius: 2px !important;
+                text-align: center;
+                padding: 0 6px;
+            }
+
+                .pagination li a:hover {
+                    color: #666;
+                }
+
+            .pagination li.active a, .pagination li.active a.page-link {
+                background: #03A9F4;
+            }
+
+                .pagination li.active a:hover {
+                    background: #0397d6;
+                }
+
+            .pagination li.disabled i {
+                color: #ccc;
+            }
+
+            .pagination li i {
+                font-size: 16px;
+                padding-top: 6px;
+            }
+
+        .hint-text {
+            float: left;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+        /* Custom checkbox */
+        .custom-checkbox {
+            position: relative;
+        }
+
+            .custom-checkbox input[type="checkbox"] {
+                opacity: 0;
+                position: absolute;
+                margin: 5px 0 0 3px;
+                z-index: 9;
+            }
+
+            .custom-checkbox label:before {
+                width: 18px;
+                height: 18px;
+            }
+
+            .custom-checkbox label:before {
+                content: '';
+                margin-right: 10px;
+                display: inline-block;
+                vertical-align: text-top;
+                background: white;
+                border: 1px solid #bbb;
+                border-radius: 2px;
+                box-sizing: border-box;
+                z-index: 2;
+            }
+
+            .custom-checkbox input[type="checkbox"]:checked + label:after {
+                content: '';
+                position: absolute;
+                left: 6px;
+                top: 3px;
+                width: 6px;
+                height: 11px;
+                border: solid #000;
+                border-width: 0 3px 3px 0;
+                transform: inherit;
+                z-index: 3;
+                transform: rotateZ(45deg);
+            }
+
+            .custom-checkbox input[type="checkbox"]:checked + label:before {
+                border-color: #03A9F4;
+                background: #03A9F4;
+            }
+
+            .custom-checkbox input[type="checkbox"]:checked + label:after {
+                border-color: #fff;
+            }
+
+            .custom-checkbox input[type="checkbox"]:disabled + label:before {
+                color: #b8b8b8;
+                cursor: auto;
+                box-shadow: none;
+                background: #ddd;
+            }
+
+        /*Modal styles*/
+
+
+        .modal .modal-dialog {
+            max-width: 400px;
+        }
+
+        .modal .modal-header, .modal .modal-body, .modal .modal-footer {
+            padding: 20px 30px;
+        }
+
+        .modal .modal-content {
+            border-radius: 3px;
+        }
+
+        .modal .modal-footer {
+            background: #ecf0f1;
+            border-radius: 0 0 3px 3px;
+        }
+
+        .modal .modal-title {
+            display: inline-block;
+        }
+
+        .modal .form-control {
+            border-radius: 2px;
+            box-shadow: none;
+            border-color: #dddddd;
+        }
+
+        .modal textarea.form-control {
+            resize: vertical;
+        }
+
+        .modal .btn {
+            border-radius: 2px;
+            /*min-width: 100px;*/
+        }
+
+        .modal form label {
+            font-weight: normal;
+        }
+
+        .nav-link.active.custom-color p {
+            color: white;
+            background-color: #0069d9;
+        }
+
+        /*div:where(.swal2-container).swal2-center > .swal2-popup {
+            grid-column: 2;
+            grid-row: 2;
+            place-self: center center;
+            width: 400px;
+        }
+
+        div:where(.swal2-container) .swal2-select {
+            min-width: 48%;
+            max-width: 90%;
+            margin-right: 15px;
+            padding: .375em .625em;
+            background: rgba(0, 0, 0, 0);
+            color: inherit;
+            font-size: 1.125em;
+            border: 1px solid green;
+        }
+
+        div:where(.swal2-container) .swal2-input {
+            height: 2.625em;
+            padding: 0 .75em;
+            border: 1px solid green;
+        }
+
+
+        input, button, select, textarea {
+            font-family: inherit;
+            font-size: inherit;
+            line-height: inherit;
+            border: 1px solid green;
+        }
+        #swal-input2.swal2-input {
+            border-color: green;
+            font-size: 12px;
+            margin-left: 10px;
+            width: 48%;
+        }
+
+        #swal-input3.swal2-input {
+            border-color: green;
+            font-size: 12px;
+            margin-left: 25px;
+            width: 48%;
+        }
+
+        #swal-input4.swal2-input {
+            border-color: green;
+            font-size: 12px;
+            margin-left: 25px;
+            width: 48%;
+        }*/
+
+        .nav {
+            display: ruby-text;
+            padding-left: 0;
+            margin-bottom: 0;
+        }
+
+        /*.btn {
+            border-radius: 3px;
+            width: 50px;
+            height: 35px;
+            padding: 10px;
+        }*/
+
+
+
+
+
+        div:where(.swal2-container) {
+            display: flex;
+            flex-direction: row; /* Arrange items in a row */
+            justify-content: center; /* Center horizontally within the container */
+            align-items: center; /* Center vertically within the container */
+            flex-wrap: wrap; /* Allow wrapping if there are too many inputs to fit in one line */
+            gap: 10px; /* Optional: add some space between inputs */
+        }
+
+            div:where(.swal2-container) .swal2-input {
+                height: 2.2em;
+                padding: 0 .75em;
+                width: 250px;
+                align-items: center;
+                text-align: left; /* Align text to the left within inputs */
+                box-sizing: border-box;
+                transition: border-color .1s, box-shadow .1s;
+                border: 1px solid #d9d9d9;
+                border-radius: .1875em;
+                background: rgba(0, 0, 0, 0);
+                box-shadow: inset 0 1px 1px rgba(0, 0, 0, .06), 0 0 0 3px rgba(0, 0, 0, 0);
+                color: inherit;
+                font-size: 1.125em;
+            }
+
+            div:where(.swal2-container) .swal2-file,
+            div:where(.swal2-container) .swal2-textarea {
+                height: 2.2em;
+                padding: 0 .75em;
+                width: 250px;
+                align-items: center;
+                text-align: left; /* Align text to the left within inputs */
+                box-sizing: border-box;
+                transition: border-color .1s, box-shadow .1s;
+                border: 1px solid #d9d9d9;
+                border-radius: .1875em;
+                background: rgba(0, 0, 0, 0);
+                box-shadow: inset 0 1px 1px rgba(0, 0, 0, .06), 0 0 0 3px rgba(0, 0, 0, 0);
+                color: inherit;
+                font-size: 1.125em;
+            }
+
+
+            div:where(.swal2-container).swal2-center > .swal2-popup {
+                grid-column: 2;
+                grid-row: 2;
+                place-self: center center;
+                width: 500px;
+            }
+          
+
+
+    </style>
+    <script>
+        $(document).ready(function () {
+            $('.nav-link').on('click', function () {
+
+                $('.nav-link').removeClass('active');
+
+
+                $(this).addClass('active');
+
+
+                $('.nav-link').removeClass('custom-color');
+
+
+                $(this).addClass('custom-color');
+            });
+
+
+            $('.nav-link.active').addClass('custom-color');
+        });
+    </script>
+</head>
+<body>
+
+   
+    <div class="container">
+
+        
+
+        <div class="table-responsive">
+            <div class="table-wrapper">
+                <h3>Day Shift List</h3>
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">
+                            <p class="btn btn-light" id="btnShowAll">All</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#tabs-1" role="tab">
+                            <p class="btn btn-light" id="btnShowActive">Active</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">
+                            <p class="btn btn-light" id="btnShowInactive">Inactive</p>
+                        </a>
+                    </li>
+
+                   
+
+                    <li class="nav-item" style="float: right; margin-right:20px;">
+
+                        <button type="button" class="btn btn-primary" id="btnAdd"><i class="fa fa-plus fa-stack-2x" aria-hidden="true"></i>.</button>
+
+
+                    </li>
+                   
+
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tabs-1" role="tabpanel">
+
+
+
+                        <p class="container">
+
+                          
+                            <table class="table table-bordered table-hover" id="idshifttable">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Short Name</th>
+                                        <th>Start Time</th>
+                                        <th>End Time</th>
+                                        <th>Active</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tbody"></tbody>
+                            </table>
+                        </p>
+
+
+                    </div>
+
+
+
+                  
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+
+        $(document).ready(function () {
+            var currentStatus = 'all';
+            var currentPage = 1;
+            var pageSize = 10; // Adjust as needed
+
+            loadData(currentStatus, currentPage);
+
+            function loadData(status, page) {
+                $.ajax({
+                    url: "/Home/mGetHeader",
+                    type: "GET",
+                    contentType: 'application/json;charset=utf-8',
+                    dataType: "json",
+                    success: function (result) {
+                        var filteredData = filterDataByStatus(result, status);
+                        var paginatedData = paginateData(filteredData, page, pageSize);
+
+                        updatePaginationControls(page, filteredData.length);
+
+                        var html = '';
+                        $.each(paginatedData, function (key, item) {
+                            html += '<tr>';
+                            html += '<td>' + item.intShiftCongfigID + '</td>';
+                            html += '<td>' + item.strShiftName + '</td>';
+                            html += '<td>' + item.strShiftNameBangla + '</td>';
+                            html += '<td>' + item.strShiftCongfigStartTime + '</td>';
+                            html += '<td>' + item.strShiftCongfigEndTime + '</td>';
+                            html += '<td>' + item.strOtStatus + '</td>';
+                            html += '<td> <button type="button" class="btn btn-danger delete" data-id="' + item.intShiftCongfigID + '">Delete</button></td>';
+                            html += '</tr>';
+                        });
+                        $('.tbody').html(html);
+                    },
+                    error: function (errormessage) {
+                        alert(errormessage.responseText);
+                    }
+                });
+            }
+
+            function filterDataByStatus(data, status) {
+                if (status === 'Active') {
+                    return data.filter(item => item.strOtStatus === 'Active');
+                } else if (status === 'Inactive') {
+                    return data.filter(item => item.strOtStatus === 'Inactive');
+                } else {
+                    return data;
+                }
+            }
+
+            function paginateData(data, page, pageSize) {
+                var startIndex = (page - 1) * pageSize;
+                return data.slice(startIndex, startIndex + pageSize);
+            }
+
+            function updatePaginationControls(currentPage, totalItems) {
+                var totalPages = Math.ceil(totalItems / pageSize);
+                $('#paginationPrevious').prop('disabled', currentPage === 1);
+                $('#paginationNext').prop('disabled', currentPage === totalPages);
+            }
+
+            $('#btnShowAll').on('click', function () {
+                currentStatus = 'all';
+                currentPage = 1;
+                loadData(currentStatus, currentPage);
+            });
+
+            $('#btnShowActive').on('click', function () {
+                currentStatus = 'Active';
+                currentPage = 1;
+                loadData(currentStatus, currentPage);
+            });
+
+            $('#btnShowInactive').on('click', function () {
+                currentStatus = 'Inactive';
+                currentPage = 1;
+                loadData(currentStatus, currentPage);
+            });
+
+            $('#paginationPrevious').on('click', function () {
+                if (currentPage > 1) {
+                    currentPage--;
+                    loadData(currentStatus, currentPage);
+                }
+            });
+
+            $('#paginationNext').on('click', function () {
+                currentPage++;
+                loadData(currentStatus, currentPage);
+            });
+        });
+
+
+
+
+        $(document).ready(function () {
+            $('#btnAdd').click(function () {
+                Swal.fire({
+                    title: 'Add Information',
+                    html: '<div> Type Name: <input id="swal-input1" class="swal2-input" placeholder="Type Name"></div>' +
+                        '<div> Type Name: <input id="swal-input2" class="swal2-input" placeholder="Name Bangla"></div>' +
+                        '<div> Start Time: <input type="time" id="swal-input3" class="swal2-input" placeholder="Start Time"></div>' +
+                        '<div> End Time: <input type="time" id="swal-input4" class="swal2-input" placeholder="End Time"></div>' +
+                        '<div>Actions : <select id="swal-input5" class="swal2-select">' +
+                        '<option value="1">Active</option>' +
+                        '<option value="0">Inactive</option>' +
+                        '</select></div>',
+                    inputPlaceholder: 'Select action',
+                    showCancelButton: true,
+                    allowOutsideClick:false,
+                    confirmButtonText: 'Save',
+                    cancelButtonText: 'Cancel',
+                    preConfirm: () => {
+                        const typeName = $('#swal-input1').val().trim();
+                const nameBangla = $('#swal-input2').val().trim();
+                const startTime = $('#swal-input3').val().trim();
+                const endTime = $('#swal-input4').val().trim();
+                const actions = $('#swal-input5').val().trim();
+
+                // Format the time values with AM/PM
+                const formattedStartTime = formatTime(startTime);
+                const formattedEndTime = formatTime(endTime);
+
+                if (!typeName || !nameBangla || !formattedStartTime || !formattedEndTime || !actions) {
+                    return Swal.showValidationMessage('All fields are required');
+                }
+
+                return { typeName: typeName, nameBangla: nameBangla, startTime: formattedStartTime, endTime: formattedEndTime, actions: actions };
+            }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                  var typeName = result.value.typeName;
+        var nameBangla = result.value.nameBangla;
+        var startTime = result.value.startTime;
+        var endTime = result.value.endTime;
+        var actions = result.value.actions;
+
+        $.ajax({
+            url: "/Home/mPostShiftConfig",
+            data: JSON.stringify({ strEMPLOYEE_SHIFT_NAME: typeName, strEMPLOYEE_SHIFT_NAME_BANGLA: nameBangla, strSHIFT_CONFIG_START_TIME: startTime, strSHIFT_CONFIG_END_TIME: endTime, strOT_STATUS: actions }),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+                Swal.fire({
+                    title: "Success!",
+                    text: "Shift configuration added successfully!",
+                    icon: "success"
+                }).then(() => {
+                    location.reload();
+            });
+        },
+        error: function (errormessage) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'An error occurred while adding the shift configuration.',
+            });
+        }
+        });
+        }
+        });
+        });
+        });
+
+        // Function to format time to HH:mm AM/PM format
+        function formatTime(timeString) {
+            const parts = timeString.split(':');
+            let hours = parseInt(parts[0]);
+            const minutes = parts[1];
+            let ampm = 'AM';
+
+            if (hours >= 12) {
+                ampm = 'PM';
+            }
+
+            if (hours === 0) {
+                hours = 12;
+            } else if (hours > 12) {
+                hours -= 12;
+            }
+
+            // Ensure two-digit formatting for hours
+            hours = hours < 10 ? '0' + hours : hours;
+
+            return hours + ':' + minutes + ' ' + ampm;
+        }
+
+
+
+
+        $('#idshifttable tbody').on('click', '.delete', function () {
+            var id = $(this).data('id');
+            deleteShiftConfig(id);
+        });
+
+        function deleteShiftConfig(intShiftCongfigID) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                allowOutsideClick:false,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                url: "/Home/shiftConfigDelete",
+            type: "GET",
+            contentType: 'application/json;charset=utf-8',
+            dataType: "json",
+            data: {
+                intShiftCongfigID: intShiftCongfigID
+            },
+            success: function (result) {
+                Swal.fire({
+                    title: "Delete Success!",
+                    text: "Delete successfully!",
+                    icon: "success"
+                }).then(() => {
+                    location.reload();
+            });
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+        });
+        }
+        });
+        }
+
+
+
+    </script>
+
+
+
+
+</body>
+
+</html>

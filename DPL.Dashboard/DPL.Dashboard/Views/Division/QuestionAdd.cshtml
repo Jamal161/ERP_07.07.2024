@@ -1,0 +1,757 @@
+﻿
+@RenderPage("~/Views/Shared/SidebarDh.cshtml")
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Exam System</title>
+ 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.7.0/dist/css/bootstrap.min.css'>
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Animate CSS -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <link href="~/Content/css/custom.max.css" rel="stylesheet">
+
+    <style>
+
+        body {
+            font-family: 'Varela Round', sans-serif;
+            font-size: 13px;
+            max-width: 100%;
+            background-color: #ddd;
+        }
+
+        .table-responsive {
+            margin: 10px 0;
+            /*margin-left:250px;*/
+        }
+
+        /*.table-wrapper {
+            min-width: 1550px;
+            background: #fff;
+            padding: 20px 25px;
+          
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        }*/
+
+        #container {
+            max-width: 100%;
+        }
+
+
+        input[type="date"] {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 5px;
+        }
+
+        #ExamNotice {
+            width: 100%;
+            height: 250px;
+            resize: vertical;
+        }
+
+        label {
+            display: inline-block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            padding: 2px;
+        }
+
+
+
+
+        .dropdown-container select {
+            width: 160px;
+            height: 30px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+
+        .dropdown-container label {
+            width: 150px;
+            display: inline-block;
+            font-weight: bold;
+        }
+
+
+        .container table {
+            width: 500px;
+            border-collapse: collapse;
+        }
+
+
+        .container th; {
+            width: 150px;
+            padding: 10px;
+            text-align: left;
+            background-color: #f2f2f2;
+            border-bottom: 1px solid #ddd;
+        }
+
+
+        .container td {
+            width: 150px;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+
+
+
+        .mb-3 {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            margin-bottom: 20px;
+        }
+
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #exam {
+           
+            max-width: 1450px;
+            margin: 0 auto;
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"],
+        input[type="numbers"],
+        select {
+            width: calc(50% - 65px);
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            margin: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .options-container input[type="text"] {
+            width: calc(50% - 20px);
+            margin: 5px;
+        }
+
+        input[type="text"]:last-child,
+        select {
+            width: calc(50% - 20px);
+            margin: 5px;
+            float: left;
+        }
+
+ 
+        
+         button {
+            display: inline-block;
+            padding: 10px;
+            margin-top: 10px;
+            margin-right: 10px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+            button:hover {
+                background-color: #45a049;
+            }
+
+            button:active {
+                background-color: #3e8e41;
+            }
+
+
+        #exam-details input[type="number"] {
+            width: 8%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc; 
+            border-radius: 5px; 
+            
+        }
+
+        #exam-details input[type="date"] {
+            width: 10%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #exam-details input[type="time"] {
+            width: 10%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+
+        
+
+            .question label {
+                grid-row: 1; 
+                width:100%;
+            }
+
+        .nav-tabs {
+            border-bottom: none;
+        }
+
+
+        .nav {
+            display: block;
+            padding-left: 0;
+            margin-bottom: 0;
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="table-responsive">
+            <div class="table-wrapper">
+
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item" style="float: right;">
+                        <button class="btn btn-success" onclick="location.href = '/Dashboard/Examlist';">
+                           Previous
+                        </button>
+
+                    </li>
+                </ul>
+                <div id="container" class="container mt-5">
+
+
+                    <h1>Online Exam System</h1>
+                    
+
+                   
+
+                        <h4>Basic Info</h4><br />
+                        <div class="mb-3">
+
+
+                            <div class="form-group">
+                                <label for="ExamTitle">Exam Title</label>
+                                <input type="text" class="form-control" id="ExamTitle" placeholder="Name">
+                                <br />
+
+                               
+                                </div>
+                            <div class="form-group">
+                                <label for="ExamNotice">Exam Notice</label>
+                                <textarea class="form-control" id="ExamNotice" rows="3"></textarea>
+                            </div>
+
+                        </div>
+                        
+                    <br />
+                    <hr />
+                    <br />  
+
+                        <h4>Market Access</h4>
+                        <p class="container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="dropdown-container">
+                                                <label for="branchSelectnew">National Head:</label>
+                                                <select id="branchSelectnew" onchange="updateSelectionsnew()">
+                                                    <option value="0">All</option>
+                                                    <option value="1">Deeplaid Laboratories Ltd.</option>
+                                                    <option value="3">Deeplaid Herbal &amp; Nutraceuticals Ltd.</option>
+                                                </select>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="dropdown-container p-2">
+                                                <label for="teamSelectnew">Team:</label>
+                                                <select id="teamSelectnew" onchange="updateSelectionsnew()"></select>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="dropdown-container p-2">
+                                                <label for="zoneSelectnew">Zone:</label>
+                                                <select id="zoneSelectnew" onchange="updateSelectionsnew()"></select>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="dropdown-container p-2">
+                                                <label for="divisionSelectnew">Division:</label>
+                                                <select id="divisionSelectnew" onchange="updateSelectionsnew()"></select>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="dropdown-container p-2">
+                                                <label for="areaSelectnew">Area:</label>
+                                                <select id="areaSelectnew" onchange="updateSelectionsnew()"></select>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="dropdown-container p-2">
+                                                <label for="territorySelectnew">Market:</label>
+                                                <select id="territorySelectnew" onchange="updateSelectionsnew()"></select>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="dropdown-container p-2">
+                                                <label for="routeSelectnew">Route:</label>
+                                                <select id="routeSelectnew" onchange="updateSelectionsnew()"></select>
+                                            </div>
+                                        </th>
+
+                                        <th>
+                                            <div class="dropdown-container p-2">
+                                                <label for="roleSelectnew">Role:</label>
+                                                <select id="roleSelectnew" onchange="updateSelectionsnew()"></select>
+                                            </div>
+                                        </th>
+
+                                        <th>
+                                            <div class="dropdown-container p-2">
+                                                <label for="cardSelectnew">User:</label>
+                                                <select id="cardSelectnew" onchange="updateSelectionsnew()"></select>
+                                            </div>
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                            </table>
+                        </p>
+
+                        @*<div id="selectedOptionsnew" class="mt-3"></div>*@
+
+                </div>
+                <br />
+                <hr />
+                <br />
+                
+            <div id="exam">
+
+                <h4>Questions </h4><br />
+
+                <div id="exam-details">
+
+                   
+                        <label for="marks">Total Marks:</label>
+                        <input type="number" id="marks" min="0" value="100">
+
+                        <label for="passmarks">Pass Marks:</label>
+                        <input type="number" id="passmarks" min="0" value="100">
+
+                        <label for="time">Time Limit (minutes):</label>
+                        <input type="number" id="time" min="1" value="60">
+                    
+
+                        <label for="date">Exam Date:</label>
+                        <input type="date" id="date" value="">
+
+                    <script>
+
+                        var today = new Date();
+
+
+                        var year = today.getFullYear();
+                        var month = String(today.getMonth() + 1).padStart(2, '0');
+                        var day = String(today.getDate()).padStart(2, '0');
+                        var formattedDate = year + '-' + month + '-' + day;
+
+
+                        document.getElementById('date' ).value = formattedDate;
+                      
+                    </script>
+
+                         
+                       <label for="starttime">From Time:</label>
+                       <input type="time" id="starttime" value="">
+
+                       <label for="endtime">End Time:</label>
+                       <input type="time" id="endtime" value="">
+
+                    
+
+
+                   
+                    <br />
+                    <hr />
+                    <br />
+
+                <div id="questions-container">
+
+                </div>
+
+                <button onclick="addQuestion()" style="color: white; display: inline-block;">Add Question</button>
+                <button onclick="submitExam()" style="color: white; display: inline-block;">Submit Exam</button>
+            </div>
+
+              <br />
+                <br />
+
+              </div>
+            </div>
+        </div>
+        </div>
+    
+            <script>
+
+                var questionCount = 0;
+
+                function addQuestion() {
+                    var container = document.getElementById('questions-container');
+                    questionCount++;
+
+                    var questionDiv = document.createElement('div');
+                    questionDiv.classList.add('question');
+
+                    var questionNumberLabel = document.createElement('label');
+                    questionNumberLabel.textContent = 'Question ' + questionCount;
+                    questionDiv.appendChild(questionNumberLabel);
+
+                    var removeButton = document.createElement('button');
+                    removeButton.textContent = 'Remove';
+                    removeButton.addEventListener('click', function() {
+                        container.removeChild(questionDiv);
+                        questionCount--;
+                    });
+                    questionDiv.appendChild(removeButton);
+
+                    var questionTitle = document.createElement('input');
+                    questionTitle.type = 'text';
+                    questionTitle.placeholder = 'Enter your question';
+                    questionDiv.appendChild(questionTitle);
+
+                    var marksInput = document.createElement('input');
+                    marksInput.type = 'numbers';
+                    marksInput.placeholder = 'Marks';
+                    marksInput.min = '';
+                    marksInput.value = '';
+                    questionDiv.appendChild(marksInput);
+
+                    var typeSelect = document.createElement('select');
+                    var radioOption = document.createElement('option');
+                    radioOption.value = 'radio';
+                    radioOption.textContent = 'Radio';
+                    var checkboxOption = document.createElement('option');
+                    checkboxOption.value = 'checkbox';
+                    checkboxOption.textContent = 'Checkbox';
+                    var textareaOption = document.createElement('option');
+                    textareaOption.value = 'textarea';
+                    textareaOption.textContent = 'Textarea';
+                    typeSelect.appendChild(radioOption);
+                    typeSelect.appendChild(checkboxOption);
+                    typeSelect.appendChild(textareaOption);
+                    typeSelect.value = 'textarea';
+                    questionDiv.appendChild(typeSelect);
+
+                    var optionsContainer = document.createElement('div');
+                    optionsContainer.classList.add('options-container');
+                    questionDiv.appendChild(optionsContainer);
+
+                    typeSelect.addEventListener('change', function() {
+                        var selectedType = typeSelect.value;
+                        optionsContainer.innerHTML = '';
+
+                        if (selectedType === 'radio' || selectedType === 'checkbox') {
+                            for (var i = 1; i <= 4; i++) {
+                                var optionInput = document.createElement('input');
+                                optionInput.type = 'text';
+                                optionInput.placeholder = 'Option ' + i;
+                                optionsContainer.appendChild(optionInput);
+                            }
+                        }
+                    });
+
+                    var answerInput = document.createElement('input');
+                    answerInput.type = 'text';
+                    answerInput.placeholder = 'Enter the answer';
+                    answerInput.classList.add('answer');
+                    questionDiv.appendChild(answerInput);
+
+                    container.appendChild(questionDiv);
+                    container.appendChild(document.createElement('br'));
+                }
+
+
+              
+
+                function submitExam() {
+                    var examData = {
+                        totalMarks: parseInt(document.getElementById('marks').value) || 0,
+                        passMarks: parseInt(document.getElementById('passmarks').value) || 0,
+                        timeLimit: parseInt(document.getElementById('time').value) || 0,
+                        examDate: document.getElementById('date').value,
+                        startTime: document.getElementById('starttime').value,
+                        endTime: document.getElementById('endtime').value,
+                        questions: [],
+                        examTitle: $('#ExamTitle').val(),
+                        examNotice: $('#ExamNotice').val(),
+                        NATIONAL_HEAD: $('#branchSelectnew').val(),
+                        team: $('#teamSelectnew').val(),
+                        zone: $('#zoneSelectnew').val(),
+                        division: $('#divisionSelectnew').val(),
+                        area: $('#areaSelectnew').val(),
+                        market: $('#territorySelectnew').val(),
+                        route: $('#routeSelectnew').val(),
+                        role: $('#roleSelectnew').val(),
+                        EMP_CARD_NO: $('#cardSelectnew').val()
+                    };
+
+                    var questions = document.querySelectorAll('.question');
+                    questions.forEach(function(question, index) {
+                        var questionTitle = question.querySelector('input[type="text"]').value.trim();
+                        var marksInput = parseInt(question.querySelector('input[type="numbers"]').value) || 0;
+                        var typeSelect = question.querySelector('select').value.trim();
+                        var answerInput = question.querySelector('.answer').value.trim();
+
+                        var optionsArray = [];
+
+                        if (typeSelect === 'radio' || typeSelect === 'checkbox') {
+                            var optionInputs = question.querySelectorAll('.options-container input[type="text"]');
+                            optionInputs.forEach(function(optionInput) {
+                                optionsArray.push(optionInput.value.trim());
+                            });
+                        }
+
+                        examData.questions.push({
+                            title: questionTitle,
+                            marks: marksInput,
+                            type: typeSelect,
+                            answer: answerInput,
+                            options: optionsArray
+                        });
+                    });
+
+                    if (!isValidExamData(examData)) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'All fields are required!',
+                        });
+                        return;
+                    }
+
+
+
+                   console.log(examData)
+
+
+                    $.ajax({
+                        url: '/Exam/mPostExam',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify(examData),
+                        success: function(response) {
+                            Swal.fire({
+                                title: "Success!",
+                                text: "Exam submitted successfully!",
+                                icon: "success"
+                            }).then(() => {
+                                location.reload();
+                        });
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Failed to submit exam data. Please try again later.',
+                    });
+                }
+                });
+                }
+
+                function isValidExamData(examData) {
+                    if (!examData.totalMarks || !examData.passMarks || !examData.timeLimit || !examData.examDate || !examData.startTime || !examData.endTime || !examData.examTitle || !examData.examNotice || !examData.NATIONAL_HEAD || !examData.team || !examData.zone || !examData.division || !examData.area || !examData.market || !examData.route || !examData.role || !examData.EMP_CARD_NO || !examData.questions || examData.questions.length === 0) {
+                        return false;
+                    }
+
+                    for (var i = 0; i < examData.questions.length; i++) {
+                        var question = examData.questions[i];
+                        if (!question.title || !question.marks || !question.type || !question.answer || (question.type !== 'textarea' && (!question.options || question.options.length === 0))) {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                }
+
+
+
+                function updateSelectionsnew() {
+                    // Your code to update selections goes here
+                    console.log("Dropdown selection updated!");
+                }
+
+
+
+
+                $(document).ready(function () {
+                    $("#teamSelectnew").select2();
+                    $("#zoneSelectnew").select2();
+                    $("#divisionSelectnew").select2();
+                    $("#areaSelectnew").select2();
+                    $("#territorySelectnew").select2();
+                    $("#routeSelectnew").select2();
+                    $("#cardSelectnew").select2();
+                    $("#roleSelectnew").select2();
+
+                    $.ajax({
+                        url: "/Notice/mGetNoticesLedgerList",
+                        type: "GET",
+                        contentType: 'application/json;charset=utf-8',
+                        dataType: "json",
+                        success: function (result) {
+                            console.log(result);
+
+                            function populateDropdowns(branchId) {
+                                var filteredResult = result.filter(function (item) {
+                                    return item.intBRANCH_ID === parseInt(branchId);
+                                });
+
+                                function generateDropdownOptions(items, propertyName, dropdownId) {
+                                    var optionsHtml = '<option selected>  </option>';
+                                    var uniqueValues = [];
+                                    for (var i = 0; i < items.length; i++) {
+                                        var value = items[i][propertyName];
+                                        if (uniqueValues.indexOf(value) === -1) {
+                                            uniqueValues.push(value);
+                                            optionsHtml += '<option value="' + value + '">' + value + '</option>';
+                                        }
+                                    }
+
+                                    if (dropdownId === 'roleSelectnew') {
+                                        var providedOptions = ['Trainer', 'Head', 'Report Viewer', 'Audit', 'Admin', 'Team Leader', 'ZH', 'DH', 'AH', 'MPO'];
+                                        for (var j = 0; j < providedOptions.length; j++) {
+                                            var option = providedOptions[j];
+                                            if (uniqueValues.indexOf(option) === -1) {
+                                                optionsHtml += '<option type="checkbox" value="' + option + '">' + option + '</option>';
+                                            }
+                                        }
+                                    }
+
+                                    return optionsHtml;
+                                }
+
+                                $('#teamSelectnew').html(generateDropdownOptions(filteredResult, 'strTEAM_NAME', 'teamSelectnew'));
+                                $('#zoneSelectnew').html(generateDropdownOptions(filteredResult, 'strZONE_NAME', 'zoneSelectnew'));
+                                $('#divisionSelectnew').html(generateDropdownOptions(filteredResult, 'strDIVISION', 'divisionSelectnew'));
+                                $('#areaSelectnew').html(generateDropdownOptions(filteredResult, 'strAREA', 'areaSelectnew'));
+                                $('#territorySelectnew').html(generateDropdownOptions(filteredResult, 'strTERRITORRY_NAME', 'territorySelectnew'));
+                                $('#routeSelectnew').html(generateDropdownOptions(filteredResult, 'strROUTE_NAME', 'routeSelectnew'));
+                                $('#cardSelectnew').html(generateDropdownOptions(filteredResult, 'strMPO_CARD_NO', 'cardSelectnew'));
+                                $('#roleSelectnew').html(generateDropdownOptions(filteredResult, '', 'roleSelectnew'));
+
+                            }
+
+                            populateDropdowns($('#branchSelectnew').val());
+
+                            $('#branchSelectnew').change(function () {
+                                populateDropdowns($(this).val());
+                            });
+
+
+                            $('#searchTeam').on('keyup', function () {
+                                var searchText = $(this).val().toLowerCase();
+                                filterDropdown('teamSelectnew', searchText);
+                            });
+
+                            $('#searchZone').on('keyup', function () {
+                                var searchText = $(this).val().toLowerCase();
+                                filterDropdown('zoneSelectnew', searchText);
+                            });
+
+                            $('#searchDivision').on('keyup', function () {
+                                var searchText = $(this).val().toLowerCase();
+                                filterDropdown('divisionSelectnew', searchText);
+                            });
+
+                            $('#searchArea').on('keyup', function () {
+                                var searchText = $(this).val().toLowerCase();
+                                filterDropdown('areaSelectnew', searchText);
+                            });
+
+                            $('#searchTerritory').on('keyup', function () {
+                                var searchText = $(this).val().toLowerCase();
+                                filterDropdown('territorySelectnew', searchText);
+                            });
+
+                            $('#searchRoute').on('keyup', function () {
+                                var searchText = $(this).val().toLowerCase();
+                                filterDropdown('routeSelectnew', searchText);
+                            });
+
+                            $('#searchCard').on('keyup', function () {
+                                var searchText = $(this).val().toLowerCase();
+                                filterDropdown('cardSelectnew', searchText);
+                            });
+
+                            $('#searchRole').on('keyup', function () {
+                                var searchText = $(this).val().toLowerCase();
+                                filterDropdown('roleSelectnew', searchText);
+                            });
+
+                            function filterDropdown(dropdownId, searchText) {
+                                $('#' + dropdownId + ' option').each(function () {
+                                    var optionText = $(this).text().toLowerCase();
+                                    var isVisible = optionText.indexOf(searchText) > -1;
+                                    $(this).toggle(isVisible);
+                                });
+                            }
+                        },
+                        error: function (errormessage) {
+                            alert(errormessage.responseText);
+                        }
+                    });
+                });
+
+
+
+
+            </script>
+
+</body>
+
+
+
+</html>

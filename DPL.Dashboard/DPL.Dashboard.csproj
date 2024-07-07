@@ -1,0 +1,371 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{53BFB624-4BBE-4AA3-B6BA-1C425BB47E12}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DPL.DASHBOARD</RootNamespace>
+    <AssemblyName>DPL.DASHBOARD</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="Dutility">
+      <HintPath>..\bin\Dutility.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.4.3.1\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.2.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.3.0\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.3.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.3.0\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.3.0\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.3.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.3.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <Private>True</Private>
+      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Models\DailyTask.cs" />
+    <Compile Include="Models\Doctorlist.cs" />
+    <Compile Include="Models\DoctorVisit.cs" />
+    <Compile Include="Models\DoctorVisitGift.cs" />
+    <Compile Include="Models\DoctorVisitType.cs" />
+    <Compile Include="Models\Exam.cs" />
+    <Compile Include="Models\ExamResult.cs" />
+    <Compile Include="Models\ExpenseClaim.cs" />
+    <Compile Include="Models\ExpenseType.cs" />
+    <Compile Include="Models\LeaveConfig.cs" />
+    <Compile Include="Models\MileageClaim.cs" />
+    <Compile Include="Models\MonthlyAllowance.cs" />
+    <Compile Include="Models\Notice.cs" />
+    <Compile Include="Models\NoticeCofig.cs" />
+    <Compile Include="Models\PrescriptionConfig.cs" />
+    <Compile Include="Models\ProductName.cs" />
+    <Compile Include="Models\TADA.cs" />
+    <Compile Include="Models\TadaClaim.cs" />
+    <Compile Include="Models\TourConfig.cs" />
+    <Compile Include="Models\TourConfigLedger.cs" />
+    <Compile Include="Models\TourPlanConfig.cs" />
+    <Compile Include="Models\TourPlanShiftConfig.cs" />
+    <Compile Include="Models\Training.cs" />
+    <Compile Include="Repesetory\DailyTaskController.cs" />
+    <Compile Include="Repesetory\DoctorVisitTypeController.cs" />
+    <Compile Include="Repesetory\ExamController.cs" />
+    <Compile Include="Repesetory\ExpenseController.cs" />
+    <Compile Include="Repesetory\LeaveController.cs" />
+    <Compile Include="Repesetory\NoticeController.cs" />
+    <Compile Include="Repesetory\PrescriptionController.cs" />
+    <Compile Include="Repesetory\ProductNameController.cs" />
+    <Compile Include="Repesetory\RepositoryController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AttendentCongfig.cs" />
+    <Compile Include="Models\RAudit.cs" />
+    <Compile Include="Models\ShiftCongfig.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repesetory\AttendenceController.cs" />
+    <Compile Include="Repesetory\TourController.cs" />
+    <Compile Include="Repesetory\TrainingController.cs" />
+    <Compile Include="Views\CrystalReport1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CrystalReport1.rpt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> ce656143ef062e6753b534917d128a8bd1abaf5c
+    <Content Include="image.jpg" />
+    <Content Include="newanimation.gif" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\style.scss" />
+    <Content Include="data.json" />
+    <Content Include="welcome.gif" />
+    <None Include="Properties\PublishProfiles\WEBDASHBOARD.pubxml" />
+<<<<<<< HEAD
+=======
+=======
+    <Content Include="Content\style.scss" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+>>>>>>> 315bc72564bcbc3e944fe0c26f6a3bab60462963
+>>>>>>> ce656143ef062e6753b534917d128a8bd1abaf5c
+    <None Include="Scripts\jquery-3.7.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.7.1.js" />
+    <Content Include="Scripts\jquery-3.7.1.min.js" />
+    <Content Include="Scripts\jquery-3.7.1.slim.js" />
+    <Content Include="Scripts\jquery-3.7.1.slim.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\script.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Scripts\jquery-3.7.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.7.1.min.map" />
+    <Content Include="Views\Shared\Sidebar.cshtml" />
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> ce656143ef062e6753b534917d128a8bd1abaf5c
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Dashboard\About.cshtml" />
+    <Content Include="Views\Dashboard\Admindailymonitoringsheet.cshtml" />
+    <Content Include="Views\Dashboard\Adminmarketmonitoringsheet.cshtml" />
+    <Content Include="Views\Dashboard\Adminmpoledger.cshtml" />
+    <Content Include="Views\Dashboard\Adminproductwisetarget.cshtml" />
+    <Content Include="Views\Dashboard\Adminsaleschalandelivery.cshtml" />
+    <Content Include="Views\Dashboard\Adminsalescollectionachievement.cshtml" />
+    <Content Include="Views\Dashboard\Adminsalesperformance.cshtml" />
+    <Content Include="Views\Dashboard\Adminsalesstatement.cshtml" />
+    <Content Include="Views\Dashboard\Admintouchuntouch.cshtml" />
+    <Content Include="Views\Dashboard\Area.cshtml" />
+    <Content Include="Views\Dashboard\Areadailymonitoringsheet.cshtml" />
+    <Content Include="Views\Dashboard\Areamarketmonitoringsheet.cshtml" />
+    <Content Include="Views\Dashboard\Areampoledger.cshtml" />
+    <Content Include="Views\Dashboard\Areaproductwisetarget.cshtml" />
+    <Content Include="Views\Dashboard\Areasaleschalandelivery.cshtml" />
+    <Content Include="Views\Dashboard\Areasalescollectionachievement.cshtml" />
+    <Content Include="Views\Dashboard\Areasalesperformance.cshtml" />
+    <Content Include="Views\Dashboard\Areasalesstatement.cshtml" />
+    <Content Include="Views\Dashboard\Areatouchuntouch.cshtml" />
+    <Content Include="Views\Dashboard\Attendancelist.cshtml" />
+    <Content Include="Views\Dashboard\Contact.cshtml" />
+    <Content Include="Views\Dashboard\Dailymonitoringsheet.cshtml" />
+    <Content Include="Views\Dashboard\Dailyshift.cshtml" />
+    <Content Include="Views\Dashboard\DailyTaskAdd.cshtml" />
+    <Content Include="Views\Dashboard\Division.cshtml" />
+    <Content Include="Views\Dashboard\Divisiondailymonitoringsheet.cshtml" />
+    <Content Include="Views\Dashboard\Divisionmarketmonitoringsheet.cshtml" />
+    <Content Include="Views\Dashboard\Divisionmpoledger.cshtml" />
+    <Content Include="Views\Dashboard\Divisionproductwisetarget.cshtml" />
+    <Content Include="Views\Dashboard\Divisionsaleschalandelivery.cshtml" />
+    <Content Include="Views\Dashboard\Divisionsalescollectionachievement.cshtml" />
+    <Content Include="Views\Dashboard\Divisionsalesperformance.cshtml" />
+    <Content Include="Views\Dashboard\Divisionsalesstatement.cshtml" />
+    <Content Include="Views\Dashboard\Divisiontouchuntouch.cshtml" />
+    <Content Include="Views\Dashboard\Doctorlocation.cshtml" />
+    <Content Include="Views\Dashboard\DoctorVisitList.cshtml" />
+    <Content Include="Views\Dashboard\DoctorVisitPlan.cshtml" />
+    <Content Include="Views\Dashboard\DoctorVisitPlanOneUSer.cshtml" />
+    <Content Include="Views\Dashboard\DoctorVisitPlanUserList.cshtml" />
+    <Content Include="Views\Dashboard\DoctorVisitType.cshtml" />
+    <Content Include="Views\Dashboard\Examlist.cshtml" />
+    <Content Include="Views\Dashboard\ExamResult.cshtml" />
+    <Content Include="Views\Dashboard\Expenseclaimlist.cshtml" />
+    <Content Include="Views\Dashboard\Expensetypelist.cshtml" />
+    <Content Include="Views\Dashboard\Holydaylist.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Dashboard\Leaveaccount.cshtml" />
+    <Content Include="Views\Dashboard\Leaveallocationlist.cshtml" />
+    <Content Include="Views\Dashboard\Leavelist.cshtml" />
+    <Content Include="Views\Dashboard\Leavetypelist.cshtml" />
+    <Content Include="Views\Dashboard\Login.cshtml" />
+    <Content Include="Views\Dashboard\Market.cshtml" />
+    <Content Include="Views\Dashboard\Marketmonitoringsheet.cshtml" />
+    <Content Include="Views\Dashboard\Milagesclaimlist.cshtml" />
+    <Content Include="Views\Dashboard\Monthlyallowslist.cshtml" />
+    <Content Include="Views\Dashboard\Mpoledger.cshtml" />
+    <Content Include="Views\Dashboard\Multipledates.cshtml" />
+    <Content Include="Views\Dashboard\NationalHead.cshtml" />
+    <Content Include="Views\Dashboard\Notices.cshtml" />
+    <Content Include="Views\Dashboard\NoticesAdd.cshtml" />
+    <Content Include="Views\Dashboard\PrescriptionGallery.cshtml" />
+    <Content Include="Views\Dashboard\PrescriptionList.cshtml" />
+    <Content Include="Views\Dashboard\productname.cshtml" />
+    <Content Include="Views\Dashboard\Productwisetarget.cshtml" />
+    <Content Include="Views\Dashboard\QuestionAdd.cshtml" />
+    <Content Include="Views\Dashboard\Route.cshtml" />
+    <Content Include="Views\Dashboard\Saleschalandelivery.cshtml" />
+    <Content Include="Views\Dashboard\Salescollectionachievement.cshtml" />
+    <Content Include="Views\Dashboard\Salesperformance.cshtml" />
+    <Content Include="Views\Dashboard\Salesstatement.cshtml" />
+    <Content Include="Views\Dashboard\Tadaclaimlist.cshtml" />
+    <Content Include="Views\Dashboard\Tadamarketrulelist.cshtml" />
+    <Content Include="Views\Dashboard\Team.cshtml" />
+    <Content Include="Views\Dashboard\TodayTask.cshtml" />
+    <Content Include="Views\Dashboard\Touchuntouch.cshtml" />
+    <Content Include="Views\Dashboard\Tourplanneduserlist.cshtml" />
+    <Content Include="Views\Dashboard\Tourpurposelist.cshtml" />
+    <Content Include="Views\Dashboard\Tourtypelist.cshtml" />
+    <Content Include="Views\Dashboard\Tracking.cshtml" />
+    <Content Include="Views\Dashboard\Training.cshtml" />
+    <Content Include="Views\Dashboard\TrainingAdd.cshtml" />
+    <Content Include="Views\Dashboard\Userlastlocation.cshtml" />
+    <Content Include="Views\Dashboard\Weekendlist.cshtml" />
+    <Content Include="Views\Dashboard\Zone.cshtml" />
+<<<<<<< HEAD
+=======
+=======
+    <Content Include="Views\Shared\Loader.cshtml" />
+>>>>>>> 315bc72564bcbc3e944fe0c26f6a3bab60462963
+>>>>>>> ce656143ef062e6753b534917d128a8bd1abaf5c
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\CrystalReport1.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CrystalReport1.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>15574</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:15574/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

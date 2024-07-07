@@ -1,0 +1,702 @@
+﻿
+@{
+    ViewBag.Title = "Areasalesperformance";
+}
+@RenderPage("~/Views/Shared/SidebarAh.cshtml")
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        button {
+            background: cornflowerblue;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-family: 'Lato';
+            margin: 5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            outline: none;
+        }
+
+            button:hover {
+                background: orange;
+            }
+
+        .bordercolor {
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+
+        .centerContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item {
+            width: 50em;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            margin: auto;
+            text-align: center;
+            font-family: arial;
+        }
+
+
+        .centerContain {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .border {
+            border: 1px solid #dee2e6 !important;
+        }
+
+        .p-2 {
+            padding: 0.5rem !important;
+        }
+
+        legend {
+            display: block;
+            width: auto;
+            margin-bottom: 2px;
+            padding-left: 2px;
+            padding-right: 2px;
+            border: none;
+        }
+
+        button:hover {
+            background: orange;
+        }
+
+        .bordercolor {
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+
+        .centerContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item {
+            width: 60em;
+        }
+
+
+        /**auther: aktarul
+              only for button css.
+            **/
+        .linkbutton:hover {
+            background: #2b8eed;
+            color: white;
+        }
+
+        .pcenter {
+            margin: auto;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+        }
+
+        .linkbutton {
+            border: 1px solid black;
+            height: 35px;
+            border-radius: 5px;
+            text-align: center;
+            background-color: #a8a7b9;
+            color: white;
+            padding-left: 5px;
+            padding-right: 5px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            justify-content: center;
+        }
+
+        /*.fa-file-invoice-dollar {
+            color: blue;
+        }*/
+
+        .il {
+            color: #dcf588;
+        }
+
+        .ilF {
+            color: #ffffff;
+        }
+
+        .ilF1 {
+            color: #00ff90;
+        }
+
+        .imagecenter {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 25%;
+        }
+    </style>
+
+</head>
+<body>
+
+
+
+    <div class="centerContainer ">
+        <div class="item bordercolor" style="padding: 20px; margin:50px; background-color:azure">
+
+
+            <h4> Area Sales Performance </h4>
+            <br />
+
+            @*<div id="dividBranchs" class="row">
+                    <label class="control-label"> Branch Name</label>
+                    <select id="idBranchNamee" class="form-control">
+                        <option value="">--Select One--</option>
+                        <option value="All">All</option>
+                        <option value="0001">Deeplaid Laboratories Ltd.-2024</option>
+                        <option value="0002">Sale Center. Dhaka</option>
+                        <option value="0003">Herbal</option>
+                    </select>
+                </div>*@
+            <br />
+            @*<div id="dividLedgerStatuss" class="row bordercolor">
+                <div class="col-lg-2">
+                    <div class="row">
+                        <label style="font-size: 15px;"><input type="radio" name="status" value="3" style="height: 12px; width: 25px; margin-top: 5px" checked="" onchange="getcheckData()">All</label>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="row">
+                        <label style="font-size: 15px;"><input type="radio" name="status" value="0" style="height: 12px; width: 25px; margin-top: 5px" onchange="getcheckData()">Active</label>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="row">
+
+                        <label style="font-size: 15px;"><input type="radio" name="status" value="1" style="height: 12px; width: 25px; margin-top: 5px" onchange="getcheckData()">InActive</label>
+                    </div>
+                </div>
+            </div>*@
+            <br>
+            <div class="row bordercolor">
+                    <div id="dividalls" class="col-lg-2">
+                        <div class="row">
+                            <label style="font-size: 15px;"><input type="radio" name="userType" value="5" style="height: 12px; width: 25px; margin-top: 5px" checked="" onchange="getcheckData()">All</label>
+                        </div>
+                    </div>
+                    <div id="dividMpos" class="col-lg-2">
+                        <div class="row">
+                            <label style="font-size: 15px;"><input type="radio" name="userType" value="4" style="height: 12px; width: 25px; margin-top: 5px" onchange="getcheckData()">Mpo</label>
+                        </div>
+                    </div>
+                    @*<div id="dividAMs" class="col-lg-2">
+                        <div class="row">
+                            <label style="font-size: 15px;"><input type="radio" name="userType" value="3" style="height: 12px; width: 25px; margin-top: 5px" onchange="getcheckData()">AM/FM</label>
+                        </div>
+                    </div>
+                    <div id="dividDSMs" class="col-lg-2">
+                        <div class="row">
+
+                            <label style="font-size: 15px;"><input type="radio" name="userType" value="2" style="height: 12px; width: 25px; margin-top: 5px" onchange="getcheckData()">DSM/RSM</label>
+                        </div>
+                    </div>
+                    <div id="dividZONEs" class="col-lg-2">
+                        <div class="row">
+
+                            <label style="font-size: 15px;"><input type="radio" name="userType" value="1" style="height: 12px; width: 25px; margin-top: 5px" onchange="getcheckData()">ZONE</label>
+                        </div>
+                    </div>*@
+                </div>
+            <br />
+            <div class="row bordercolor" style="padding-top: 5px; padding-bottom: 5px">
+                <div class="col-md-5">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                    </div>
+                    <select id="lstLeftS" class="form-control" multiple="multiple" style="height:220px;"></select>
+                </div>
+                <div class="col-md-1" style="padding-top: 110px">
+                    <input type="button" style="width:40px" id="leftS" value=" > ">
+                    <br>
+                    <input type="button" id="allRightS" style="width:40px" value=">>">
+                    <br>
+                    <input type="button" id="rightS" style="width:40px" value=" < ">
+                    <br>
+                    <input type="button" id="allleftS" style="width:40px" value="<<">
+                </div>
+                <div class="col-md-5" style="margin-top: 38px">
+                    <select id="lstRightS" class="form-control" multiple="multiple" style="height:220px;"></select>
+                </div>
+            </div>
+            <br />
+            <div class="row" style="margin-bottom:10px">
+
+                <div class="col-md-4">
+                    <fieldset class="border p-2">
+                        <legend class="w-auto">Order By</legend>
+                        <label class="checkbox">
+                            <input type="checkbox" id="idChkboxSalesAch" class="radio" value="1" name="fooby">   Sales Ach(%)
+                        </label>
+
+                        <label class="checkbox">
+                            <input type="checkbox" id="idChkboxCollectionAch" class="radio" value="2" name="fooby"> Collection Ach(%)
+                        </label>
+                    </fieldset>
+                </div>
+                <div class="col-md-3" style="margin-top:50px">
+                    <div>
+                        <label class="checkbox"><input type="checkbox" id="NationalChkbox" class="checkboxTypeGiftSearch" value="1"> National Performance</label>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <fieldset class="border p-2">
+                        <legend class="w-auto">Period Selection</legend>
+                        <div class="row" style="margin-left:4px">
+                            <label class="control-label col-md-3">From: </label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <input type="date" id="fromDate">
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row" style="margin-left:4px">
+                            <label class="control-label col-md-3">To: </label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <input type="date" id="toDate">
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <br />
+            <div class="row" style="  float:right;">
+                <div>
+                    <button title="Commission Cal." style="margin: 2px; text-transform: capitalize;" class="btn btn-success" onclick="Print();">
+                        <i class="fa fa-floppy-o"></i> Preview
+                    </button>
+
+                    <button title="Commission Cal." style="margin: 2px; text-transform: capitalize;" class="btn btn-danger" onclick="App();">
+                        <i class="fa fa-times"></i> cancel
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script>
+
+
+        var radioStatus = 0;
+        var radioUser = 0;
+        var selectBranch = "";
+        var branchName = "";
+        var fdate;
+        var today;
+        var intSalesCollAch = 0;
+
+
+        $(document).ready(function () {
+            BranchNamechangeFunc();
+            var idddbranchName = $("#idBranchName");
+
+            var date = new Date();
+
+            var day = date.getDate();
+
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+
+            if (month < 10) month = "0" + month;
+            if (day < 10) day = "0" + day;
+            fdate = year + "-" + month + "-" + "01";
+            today = year + "-" + month + "-" + day;
+            console.log('kib', day)
+            document.getElementById('fromDate').value = fdate;
+            document.getElementById('toDate').value = today;
+
+            if ("Area" == "Admin") {
+
+
+                var dividBranch = document.getElementById("dividBranchs");
+                dividBranch.style.display = "none";
+
+                var dividLedgerStatus = document.getElementById("dividLedgerStatuss");
+                dividLedgerStatus.style.display = "none";
+
+                var dividAM = document.getElementById("dividAMs");
+                dividAM.style.display = "none";
+                var dividDSM = document.getElementById("dividDSMs");
+                dividDSM.style.display = "none";
+                var dividZONE = document.getElementById("dividZONEs");
+                dividZONE.style.display = "none";
+            }
+            if ("Division" == "Admin") {
+
+
+                var dividBranch = document.getElementById("dividBranchs");
+                dividBranch.style.display = "none";
+
+                var dividLedgerStatus = document.getElementById("dividLedgerStatuss");
+                dividLedgerStatus.style.display = "none";
+
+                var dividDSM = document.getElementById("dividDSMs");
+                dividDSM.style.display = "none";
+                var dividZONE = document.getElementById("dividZONEs");
+                dividZONE.style.display = "none";
+
+            }
+        });
+
+
+
+
+        function BranchNamechangeFunc() {
+
+            var idddbranchName = $("#idBranchNamee");
+
+            //idddbranchName.html('');
+            $.ajax({
+                url: '/SalesReport/mGetBranchName',
+                datatype: "json",
+                success: function (data) {
+
+                    $.each(data, function (id, option) {
+                        console.log(option.Value)
+
+                        idddbranchName.append($('<option value="' + option.Key + '">' + option.Value + '</option>'));
+                    });
+
+                }
+            })
+        }
+
+
+
+        function getcheckData() {
+
+            selectBranch = $("#idBranchNamee").val();
+
+            radioStatus = $("input[name='status']:checked").val();
+
+            radioUser = $("input[name='userType']:checked").val();
+
+            var ListBox = document.getElementById('<%= lstRightS.ClientID %>');
+
+            console.log('Kib', radioStatus + radioUser);
+
+            var ddllstLeft = $("#lstLeftS");
+            var ddllstRight = $("#lstRightS");
+            ddllstLeft.html('');
+            ddllstRight.html('');
+
+            if (radioUser != 5) {
+                $.ajax({
+                    url: '/SalesReport/mGetMPOLedger',
+                    datatype: "json",
+                    data: {
+                        selectBranchID: selectBranch,
+                        radioStatus: radioStatus,
+                        radioUser: radioUser
+                    },
+                    success: function (data) {
+
+                        $.each(data, function (id, option) {
+                            ddllstLeft.append($('<option value="' + option.strGRName + '">' + option.strGRName + '</option>'));
+                        });
+
+                    }
+                });
+            }
+
+        };
+
+
+
+        function mloadBranch() {
+            var ddlidBranchlist = $("#bName");
+            $.ajax({
+                url: '/SalesReport/mGetBranch',
+                datatype: "json",
+
+                success: function (data) {
+                    //console.log(data);
+                    ddlidBranchlist.html('');
+                    $.each(data, function (id, option) {
+                        console.log(option.Value);
+                        ddlidBranchlist.append($('<option value="' + option.Key + '">' + option.Value + '</option>'));
+                    });
+                    //$('#ddlidBranchlist').val(selectdata.Value);
+                    //$('#ddlidBranchlist').trigger('change');
+                }
+            })
+
+        };
+        $(function () {
+            $("#ShiftRight,#ShiftLeft").click(function (event) {
+                var ID = $(event.target).attr("ID");
+                var ChooseFrom = ID == "ShiftRight" ? "#ChooseLeft" : "#ChooseRight";
+                var moveTo = ID == "ShiftRight" ? "#ChooseRight" : "#ChooseLeft";
+                var SelectData = $(ChooseFrom + " :selected").toArray();
+                $(moveTo).append(SelectData);
+                SelectData.remove;
+            });
+        });
+
+
+
+
+        //-----------------------------Filter starts
+        //declare
+        var keys = [];
+        var values = [];
+
+        var options = $('#ChooseLeft option');
+        //load all list key and value
+        $.each(options, function (index, item) {
+            keys.push(item.value);
+            values.push(item.innerHTML);
+        });
+
+        //event on key up
+        $('#txtSearchBy').keyup(function () {
+            var filter = $(this).val();
+            doListBoxFilter('#ChooseLeft', filter, keys, values);
+        });
+
+        //private helper method to search
+        function doListBoxFilter(listBoxSelector, filter, keys, values) {
+            var list = $(listBoxSelector);
+            var selectBase = '<option value="{0}">{1}</option>';
+
+
+            list.empty();
+            for (i = 0; i < values.length; ++i) {
+
+
+                var value = values[i];
+
+
+                if (value == "" || value.toLowerCase().indexOf(filter.toLowerCase()) >= 0) {
+                    var temp = '<option value="' + keys[i] + '">' + value + '</option>';
+                    list.append(temp);
+                }
+            }
+        }
+        //-----------------------------Filter end
+
+
+
+        //-------------- left right
+
+
+        $(function () {
+            $("#leftS").bind("click", function () {
+                var options = $("[id*=lstLeftS] option:selected");
+                console.log(options.length);
+                var lstRightt = $("#lstRightS");
+                for (var i = 0; i < options.length; i++) {
+                    var opt = $(options[i]).clone();
+                    console.log(opt);
+                    $(options[i]).remove();
+                    $("[id*=lstRightS]").append(opt);
+                }
+            });
+
+            $("#rightS").bind("click", function () {
+                var options = $("[id*=lstRightS] option:selected");
+                console.log(options.length);
+                var lstLeft = $("#lstLeftS");
+                for (var i = 0; i < options.length; i++) {
+                    var opt = $(options[i]).clone();
+                    console.log(opt);
+                    $(options[i]).remove();
+                    $("[id*=lstLeftS]").append(opt);
+                }
+            });
+
+
+
+            $("#allleftS").bind("click", function () {
+                var options = $("[id*=lstRightS] option");
+
+                for (var i = 0; i < options.length; i++) {
+                    var opt = $(options[i]).clone();
+                    console.log(opt);
+                    $(options[i]).remove();
+                    $("[id*=lstLeftS]").append(opt);
+                }
+            });
+            $("#allRightS").bind("click", function () {
+                var options = $("[id*=lstLeftS] option");
+
+                for (var i = 0; i < options.length; i++) {
+                    var opt = $(options[i]).clone();
+                    console.log(opt);
+                    $(options[i]).remove();
+                    $("[id*=lstRightS]").append(opt);
+                }
+            });
+
+        });
+
+
+
+        $("input:checkbox").on('click', function () {
+            // in the handler, 'this' refers to the box clicked on
+            var $box = $(this);
+            if ($box.is(":checked")) {
+                // the name of the box is retrieved using the .attr() method
+                // as it is assumed and expected to be immutable
+                var group = "input:checkbox[name='" + $box.attr("name") + "']";
+                // the checked state of the group/box on the other hand will change
+                // and the current value is retrieved using .prop() method
+                $(group).prop("checked", false);
+                $box.prop("checked", true);
+            } else {
+                $box.prop("checked", false);
+            }
+        });
+
+
+
+        function Print() {
+
+
+            branchName = document.getElementById("idBranchNamee").value;
+
+            //selectBranch = $("#idBranchNamee").tex();
+
+            var t = document.getElementById("idBranchNamee");
+            selectBranch = t.options[t.selectedIndex].text;
+
+
+
+            radioStatus = $("input[name='status']:checked").val();
+
+            radioUser = $("input[name='userType']:checked").val();
+
+            var statusSalesCollAch = 0;
+
+
+
+            if (document.getElementById("idChkboxSalesAch").checked == true) {
+                statusSalesCollAch = 1;
+            } else if (document.getElementById("idChkboxCollectionAch").checked == true) {
+                statusSalesCollAch = 2;
+            } else {
+                statusSalesCollAch = 0;
+            }
+
+            var chkboxNational = 0;
+            if (document.getElementById("NationalChkbox").checked == true) {
+                chkboxNational = 1;
+            } else {
+                chkboxNational = 0;
+            }
+
+            //alert(statusSalesCollAch)
+
+
+            var ListBox = document.getElementById("lstRightS");
+
+            var rList = [];
+            var rListstrring = "";
+            var rightList = ListBox.options;
+
+
+            for (var i = 0; i < rightList.length; i++) {
+                rList.push("'" + rightList[i].label + "'");
+            }
+            for (var i = 0; i < rightList.length; i++) {
+                rListstrring = rListstrring + "" + ("'" + rightList[i].label + "'") + ",";
+            }
+
+            console.log('Kibria', rListstrring);
+
+
+            fdate = document.getElementById('fromDate').value;
+            today = document.getElementById('toDate').value;
+
+            console.log('Fdate', fdate);
+            console.log('Tdate', today);
+
+            $.ajax({
+
+                url: '/SalesReport/mgetServerDate',
+                type: "POST",
+                datatype: "json",
+                data: {
+                    strDate1: today,
+                    strDate2: "",
+                },
+                success: function (data) {
+                    strBoole = data;
+                    console.log(1, strBoole);
+
+
+
+                    if (strBoole == 'false') {
+                        swal("Failed!", "You have No Permission to Show Advance Date", "warning");
+                        return;
+                    }
+                    else {
+
+                        $.ajax({
+
+                            url: '/SalesReport/SalesCollectionPerform',
+                            type: "POST",
+                            datatype: "json",
+                            data: {
+                                strBranchName: selectBranch,
+                                vstrLedgerName: rListstrring,
+                                radioStatus: radioStatus,
+                                radioUser: radioUser,
+                                fromdate: fdate,
+                                todate: today,
+                                intStatus: statusSalesCollAch,
+                                NationalchkboxStatus: chkboxNational
+
+                            },
+                            success: function (data) {
+                                console.log('Path', data)
+                                window.open(data);
+
+
+                            }
+                        });
+                    }
+
+                }
+            });
+
+
+
+
+
+        };
+
+
+
+
+    </script>
+
+</body>
+
+
+</html>

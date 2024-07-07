@@ -1,0 +1,812 @@
+﻿
+@{
+    ViewBag.Title = "Salescollectionachievement";
+}
+
+
+
+
+@RenderPage("~/Views/Shared/Sidebar.cshtml")
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        button {
+            background: cornflowerblue;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-family: 'Lato';
+            margin: 5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            outline: none;
+        }
+
+            button:hover {
+                background: orange;
+            }
+
+        .bordercolor {
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+
+        .centerContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item {
+            width: 50em;
+        }
+  
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            margin: auto;
+            text-align: center;
+            font-family: arial;
+        }
+
+
+        .centerContain {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .border {
+            border: 1px solid #dee2e6 !important;
+        }
+
+        .p-2 {
+            padding: 0.5rem !important;
+        }
+
+        legend {
+            display: block;
+            width: auto;
+            margin-bottom: 2px;
+            padding-left: 2px;
+            padding-right: 2px;
+            border: none;
+        }
+
+        button:hover {
+            background: orange;
+        }
+
+        .bordercolor {
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+
+        .centerContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item {
+            width: 50em;
+        }
+
+
+        /**auther: aktarul
+              only for button css.
+            **/
+        .linkbutton:hover {
+            background: #2b8eed;
+            color: white;
+        }
+
+        .pcenter {
+            margin: auto;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+        }
+
+        .linkbutton {
+            border: 1px solid black;
+            height: 35px;
+            border-radius: 5px;
+            text-align: center;
+            background-color: #a8a7b9;
+            color: white;
+            padding-left: 5px;
+            padding-right: 5px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            justify-content: center;
+        }
+   
+
+        .il {
+            color: #dcf588;
+        }
+
+        .ilF {
+            color: #ffffff;
+        }
+
+        .ilF1 {
+            color: #00ff90;
+        }
+
+        .imagecenter {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 25%;
+        }
+    </style>
+
+
+</head>
+<body>
+
+
+    <div class="centerContainer ">
+       
+            <div class="item bordercolor" style="padding: 20px; margin: 100px; background-color: azure">
+                <h3>Sales and Collection Achievement</h3>
+               <br /><br />
+                
+                <div class="col-md-16">
+                    <div class="row">
+                        <div class="col-md-2">
+
+                            <label class="checkbox"><input type="checkbox" id="idDualDate" onclick="dualdate()" class="checkboxTypeGiftSearch" value="1">Dual Date</label>
+                        </div>
+                        <div id="divSaleDate" class="col-md-5" style="display: none;">
+                            <fieldset class="border p-2">
+                                <legend class="w-auto">Sales Period</legend>
+                                <div class="row" style="margin-left:4px">
+                                    <label class="control-label col-md-3">From: </label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <input type="date" id="FDateSCASale">
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row" style="margin-left:4px">
+                                    <label class="control-label col-md-3">To: </label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <input type="date" id="TDateSCASale" name="toDate">
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div id="divCollDate" class="col-md-5">
+                            <fieldset class="border p-2">
+                                <legend class="w-auto">Collection Period</legend>
+                                <div class="row" style="margin-left:4px">
+                                    <label class="control-label col-md-3">From: </label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <input type="date" id="FDateSCACollection">
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row" style="margin-left:4px">
+                                    <label class="control-label col-md-3">To: </label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <input type="date" id="TDateSCACollection" name="toDate">
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <br />
+                <div class="row" style="  float:right;">
+                    <div>
+                        <button title="Commission Cal." style="margin: 2px; text-transform: capitalize;" class="btn btn-success" onclick="Print();">
+                            <i class="fa fa-floppy-o"></i> Preview
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    <script>
+
+        var branchName = "";
+        var strName = "";
+        var strMonthID = "";
+        var intSelection = 1;
+        var intActive = 0;
+        var intSuppress = 0;
+        var radioGroupWiseMpoWiseStatus = 0;
+        var intSalesColl = 0;
+        var intTargetSupp = 0;
+        var intBaseTarget = 0;
+        var intHodaloan = 0;
+        var radioAllIndividual = 0;
+        var radioAllActiveInActive = 0;
+        var selectBranch = "";
+        var fdate;
+        var today;
+        var intDetailsSummary = 0;
+
+        $(document).ready(function () {
+
+
+            BranchNamechangeFunc();
+            divMPO_GROUPShow();
+            diveHideShow();
+            var idddbranchName = $("#idBranchName");
+            $("#cboParticulars").select2({ "width": '100%' });
+            var date = new Date();
+
+            var day = date.getDate();
+
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+
+            if (month < 10) month = "0" + month;
+            if (day < 10) day = "0" + day;
+            fdate = year + "-" + month + "-" + "01";
+            today = year + "-" + month + "-" + day;
+            console.log('kib', day)
+
+            //getcheckData();
+            document.getElementById('FDateSCASale').value = fdate;
+            document.getElementById('TDateSCASale').value = today;
+
+            document.getElementById('FDateSCACollection').value = fdate;
+            document.getElementById('TDateSCACollection').value = today;
+
+            var dividMPO_GROUPT = document.getElementById("DivMPO_GROUPText");
+            dividMPO_GROUPT.style.display = "none";
+            var dividMPO_GROUPT = document.getElementById("divSaleDate");
+            dividMPO_GROUPT.style.display = "none";
+
+
+            if ("MPO" == "MPO") {
+
+                var dividBranch = document.getElementById("dividBranchSCA");
+                dividBranch.style.display = "none";
+
+                var dividBranch = document.getElementById("dividBranch");
+                dividBranch.style.display = "none";
+                //var DivMPO_GROUP = document.getElementById("DivMPO_GROUP");
+                //DivMPO_GROUP.style.display = "none";
+                //var dividLedgerStatusD = document.getElementById("dividLedgerStatusD");
+                //dividLedgerStatusD.style.display = "none";
+                //var dividAM = document.getElementById("dividAMSS");
+                //dividAM.style.display = "none";
+                //var dividDSM = document.getElementById("dividDSMSS");
+                //dividDSM.style.display = "none";
+                //var dividZONE = document.getElementById("dividZONESS");
+                //dividZONE.style.display = "none";
+                //var dividTeam = document.getElementById("dividTeamSS");
+                //dividTeam.style.display = "none";
+            }
+
+            if ("Area" == "MPO") {
+
+                var dividBranchd = document.getElementById("dividBranchSCA");
+                dividBranchd.style.display = "none";
+                //var idLedgerGroup = document.getElementById("dividLedgerGroup");
+                //idLedgerGroup.style.display = "none";
+                //var dividAM = document.getElementById("dividAMSS");
+                //dividAM.style.display = "none";
+                //var dividDSM = document.getElementById("dividDSMSS");
+                //dividDSM.style.display = "none";
+                //var dividZONE = document.getElementById("dividZONESS");
+                //dividZONE.style.display = "none";
+                //var dividTeam = document.getElementById("dividTeamSS");
+                //dividTeam.style.display = "none";
+            }
+            if ("Division" == "MPO") {
+
+                var dividBranch = document.getElementById("dividBranchSCA");
+                dividBranch.style.display = "none";
+
+            }
+
+        });
+        function dualdate() {
+            var dualdatestatus = document.getElementById("idDualDate").checked;
+            if (dualdatestatus == true) {
+
+                var dividMPO_GROUPT = document.getElementById("divSaleDate");
+                dividMPO_GROUPT.style.display = "block";
+            }
+            else {
+                var dividMPO_GROUPT = document.getElementById("divSaleDate");
+                dividMPO_GROUPT.style.display = "none";
+            }
+
+        }
+
+
+
+        function getcheckData() {
+
+            selectBranch = $("#idBranchNameSCA").val();
+            radioGroupWiseMpoWiseStatus = $("input[name='nameGroupMPOwise']:checked").val();
+            optionAllIndividual = $("input[name='optionAllIndividual']:checked").val();
+            if (optionAllIndividual == 1) {
+                var dividMPO_GROUPT = document.getElementById("DivMPO_GROUPText");
+                dividMPO_GROUPT.style.display = "block";
+            }
+            else {
+                var dividMPO_GROUPT = document.getElementById("DivMPO_GROUPText");
+                dividMPO_GROUPT.style.display = "none";
+            }
+
+            selectBranch = $("#idBranchNameSCA").val();
+
+            radioStatus = $("input[name='allActiveInactivestatus']:checked").val();
+
+            radioUser = $("input[name='userType']:checked").val();
+
+            var ListBox = document.getElementById('<%= lstRightM.ClientID %>');
+
+            console.log('Kib', radioStatus + radioUser);
+
+            var ddllstLeft = $("#lstLeftsv");
+            var ddllstRight = $("#lstRightsv");
+            ddllstLeft.html('');
+            ddllstRight.html('');
+
+
+            var ddlUnder = $("#cboParticulars");
+            debugger
+            if (radioGroupWiseMpoWiseStatus == 3) {
+                $.ajax({
+                    url: '/SalesReport/GetGroupList',
+                    datatype: "json",
+                    data: {
+                        selectBranchID: selectBranch,
+                        radioStatus: radioStatus,
+                        radioUser: radioGroupWiseMpoWiseStatus
+                    },
+                    success: function (data) {
+                        ddlUnder.html('');
+                        ddlUnder.append($('<option value=Select>Select</option>'));
+                        $.each(data, function (id, option) {
+                            ddlUnder.append($('<option value="' + option.GroupName + '">' + option.GroupName + '</option>'));
+                        });
+                    }
+                })
+            }
+            else {
+                $.ajax({
+                    url: '/SalesReport/mGetMPOLedger',
+                    datatype: "json",
+                    data: {
+                        selectBranchID: selectBranch,
+                        radioStatus: radioStatus,
+                        radioUser: radioGroupWiseMpoWiseStatus
+                    },
+                    success: function (data) {
+                        ddlUnder.html('');
+                        ddlUnder.append($('<option value=Select>Select</option>'));
+                        $.each(data, function (id, option) {
+                            ddlUnder.append($('<option value="' + option.strGRName + '">' + option.strGRName + '</option>'));
+                        });
+                    }
+                })
+            }
+
+
+        };
+        function divMPO_GROUPShow() {
+
+            //ddllstRight.html('');
+            radioStatus = 2;
+            radioStatus = $("input[name='status']:checked").val();
+
+            if (radioStatus == 2) {
+                $("#DivMPO_GROUP").hide();
+                $("#DivMPO_GROUPText").hide();
+            }
+            else {
+                $("#DivMPO_GROUP").show();
+                $("#DivMPO_GROUPText").show();
+            }
+        }
+        function diveHideShow() {
+            //ddllstLeft.html('');
+            //ddllstRight.html('');
+            radioStatus = 2;
+            radioStatus = $("input[name='status']:checked").val();
+
+            if (radioStatus == 2) {
+                $("#idSearch").hide();
+            }
+            else {
+                $("#idSearch").show();
+            }
+        }
+
+        function documentFunc() {
+
+
+        }
+
+
+        function BranchNamechangeFunc() {
+            var idddbranchName = $("#idBranchNameSCA");
+            $.ajax({
+                url: '/SalesReport/mGetBranchName',
+                datatype: "json",
+                success: function (data) {
+                    $.each(data, function (id, option) {
+                        //console.log(option.strBranch)
+                        idddbranchName.append($('<option value="' + option.Key + '">' + option.Value + '</option>'));
+                    });
+                }
+            })
+        }
+
+
+
+
+
+        function mloadParticulars(drcr) {
+
+
+            var ddlUnder = $("#cboParticulars");
+            $.ajax({
+                url: "/AccVoucher/mFillLedgerPV?vstrPrefix=" + drcr,
+                datatype: "json",
+                data: {},
+                success: function (data) {
+                    ddlUnder.html('');
+                    ddlUnder.append($('<option value=Select>Select</option>'));
+                    $.each(data, function (id, option) {
+                        ddlUnder.append($('<option value="' + option.strLedgerName + '">' + option.strLedgerName + '</option>'));
+                    });
+                    $('#ddlUnder').val(selectdata.strLedgerName);
+
+                }
+            })
+        }
+
+        function mloadBranch() {
+            var ddlidBranchlist = $("#bName");
+            $.ajax({
+                url: '/SalesReport/mGetBranch',
+                datatype: "json",
+
+                success: function (data) {
+                    //console.log(data);
+                    ddlidBranchlist.html('');
+                    $.each(data, function (id, option) {
+                        console.log(option.Value);
+                        ddlidBranchlist.append($('<option value="' + option.Key + '">' + option.Value + '</option>'));
+                    });
+                    //$('#ddlidBranchlist').val(selectdata.Value);
+                    //$('#ddlidBranchlist').trigger('change');
+                }
+            })
+
+        };
+        $(function () {
+            $("#ShiftRight,#ShiftLeft").click(function (event) {
+                var ID = $(event.target).attr("ID");
+                var ChooseFrom = ID == "ShiftRight" ? "#ChooseLeft" : "#ChooseRight";
+                var moveTo = ID == "ShiftRight" ? "#ChooseRight" : "#ChooseLeft";
+                var SelectData = $(ChooseFrom + " :selected").toArray();
+                $(moveTo).append(SelectData);
+                SelectData.remove;
+            });
+        });
+
+
+
+
+        //-----------------------------Filter starts
+        //declare
+        var keys = [];
+        var values = [];
+
+        var options = $('#ChooseLeft option');
+        //load all list key and value
+        $.each(options, function (index, item) {
+            keys.push(item.value);
+            values.push(item.innerHTML);
+        });
+
+        //event on key up
+        $('#txtSearchBy').keyup(function () {
+            var filter = $(this).val();
+            doListBoxFilter('#ChooseLeft', filter, keys, values);
+        });
+
+        //private helper method to search
+        function doListBoxFilter(listBoxSelector, filter, keys, values) {
+            var list = $(listBoxSelector);
+            var selectBase = '<option value="{0}">{1}</option>';
+
+
+            list.empty();
+            for (i = 0; i < values.length; ++i) {
+
+
+                var value = values[i];
+
+
+                if (value == "" || value.toLowerCase().indexOf(filter.toLowerCase()) >= 0) {
+                    var temp = '<option value="' + keys[i] + '">' + value + '</option>';
+                    list.append(temp);
+                }
+            }
+        }
+        $(function () {
+            $("#leftsv").bind("click", function () {
+
+                //alert("SSS");
+
+                var options = $("[id*=lstLeftsv] option:selected");
+                console.log(options.length);
+                var lstRightMt = $("#lstRightsv");
+                for (var i = 0; i < options.length; i++) {
+                    var opt = $(options[i]).clone();
+                    console.log(opt);
+                    $(options[i]).remove();
+                    $("[id*=lstRightsv]").append(opt);
+                }
+            });
+
+            $("#rightsv").bind("click", function () {
+
+
+
+                var options = $("[id*=lstRightsv] option:selected");
+                console.log(options.length);
+                var lstLeftsv = $("#lstLeftsv");
+                for (var i = 0; i < options.length; i++) {
+                    var opt = $(options[i]).clone();
+                    console.log(opt);
+                    $(options[i]).remove();
+                    $("[id*=lstLeftsv]").append(opt);
+                }
+            });
+
+
+
+            $("#allleftsv").bind("click", function () {
+                var options = $("[id*=lstRightsv] option");
+
+                for (var i = 0; i < options.length; i++) {
+                    var opt = $(options[i]).clone();
+                    console.log(opt);
+                    $(options[i]).remove();
+                    $("[id*=lstLeftsv]").append(opt);
+                }
+            });
+            $("#allRightsv").bind("click", function () {
+                var options = $("[id*=lstLeftsv] option");
+
+                for (var i = 0; i < options.length; i++) {
+                    var opt = $(options[i]).clone();
+                    console.log(opt);
+                    $(options[i]).remove();
+                    $("[id*=lstRightsv]").append(opt);
+                }
+            });
+
+        });
+
+        function Print() {
+
+            branchName = document.getElementById("idBranchNameSCA").value;//branchId
+
+            var t = document.getElementById("idBranchNameSCA");
+            selectBranch = t.options[t.selectedIndex].text;//branch Name
+
+            radioStatus = $("input[name='status']:checked").val();
+
+            //var statusSalesCollAch = 0;
+
+            //var chkboxSpecilaMonitort = 0;
+            //var chkboxDetails = 0;
+            //if (document.getElementById("idcheckboxTypeGiftSearch").checked == true) {
+            //    chkboxSpecilaMonitort = 1;
+            //}
+            //if (document.getElementById("idcheckboxDetails").checked == true) {
+            //    chkboxDetails = 1;
+            //}
+            var ListBox = document.getElementById("lstRightSS");
+            var rList = [];
+            var rListstrring = "";
+
+            fdate = document.getElementById('FDateSCASale').value;
+            today = document.getElementById('TDateSCASale').value;
+
+            console.log('Fdate', fdate);
+            console.log('Tdate', today);
+
+
+
+
+            //
+            //    if (($('#idBranchNameSCA').val() == "---Select---") || ($('#idBranchNameSCA').val() == "")) {
+            //        swal('Required!!!', 'Please Select Branch', 'warning')
+            //        return;
+            //    }
+
+
+            debugger
+
+
+            if (document.getElementById("chkSalesCollection").checked == true) {
+                intSalesColl = 1;
+            }
+
+            if (document.getElementById("idLedgerwise").checked == true) {
+                intSuppress = 1;
+            }
+            else {
+                intSuppress = 0;
+            }
+
+            if (document.getElementById("idIndividual").checked == true) {
+                if (($('#cboParticulars').val() == "---Select---") || ($('#cboParticulars').val() == "")) {
+                    swal('Required!!!', 'Please Select Leger Group.', 'warning')
+                    return;
+                }
+                if (document.getElementById("idLedgerwise").checked == true) {
+                    intSelection = 2;
+
+                }
+                else {
+                    intSelection = 1;
+                }
+
+                strName = $('#cboParticulars').val();
+
+            }
+            else {
+                strName = "";
+            }
+
+            if (document.getElementById("idhondaLoan").checked == true) {
+                intHodaloan = 1;
+            }
+
+            else {
+                intHodaloan = 0;
+            }
+
+            if (document.getElementById("rbtnAll").checked == true) {
+                intActive = 2;
+            }
+            else if (document.getElementById("rbtnActive").checked == true) {
+                intActive = 0;
+            }
+            else {
+                intActive = 3;
+            }
+            debugger
+            var intGroupSelection = 0;
+            var tdd = document.getElementById("cboPrimary");
+            var strPrimary = tdd.options[tdd.selectedIndex].text;
+
+            if (strPrimary != "---Select---") {
+                intSelection = 0;
+
+
+
+                if ($('#cboPrimary').val() == "MPO") {
+                    intGroupSelection = 1;
+                    intSuppress = 1;
+                    intSelection = 1;
+                }
+                if (strPrimary == "ZONE") {
+                    intGroupSelection = 2;
+                }
+                if (strPrimary == "DIVISION") {
+                    intGroupSelection = 3;
+                }
+                if (strPrimary == "AREA") {
+                    intGroupSelection = 4;
+                }
+                if (strPrimary == "ALL ZONE") {
+                    intGroupSelection = 5;
+                }
+            }
+
+            if (document.getElementById("chkSalesCollection").checked == true) {
+                intSalesColl = 1;
+
+            }
+            if (document.getElementById("chkTargetSuppress").checked == true) {
+                intTargetSupp = 1;
+            }
+
+            optionAllIndividual = $("input[name='optionAllIndividual']:checked").val();
+
+            fdatesales = document.getElementById('FDateSCASale').value;
+            tdatesales = document.getElementById('TDateSCASale').value;
+            fdatecoll = document.getElementById('FDateSCACollection').value;
+            tdatecoll = document.getElementById('TDateSCACollection').value;
+            var dualdatestatusche = false;
+            dualdatestatusche = document.getElementById("idDualDate").checked;
+
+            $.ajax({
+
+                url: '/SalesReport/mgetServerDate',
+                type: "POST",
+                datatype: "json",
+                data: {
+                    strDate1: tdatesales,
+                    strDate2: tdatecoll,
+                },
+                success: function (data) {
+                    strBoole = data;
+                    console.log(1, strBoole);
+
+                    if (strBoole == 'false') {
+                        swal("Failed!", "You have No Permission to Show Advance Date", "warning");
+                        return;
+                    }
+                    else {
+                        $.ajax({
+
+                            url: '/SalesReport/ReportSalesCollectionAchievement',
+                            type: "POST",
+                            datatype: "json",
+                            data: {
+                                strFdateSales: fdatesales,
+                                strTdateSales: tdatesales,
+                                strFdateColl: fdatecoll,
+                                strTdateColl: tdatecoll,
+                                strBranchName: selectBranch,
+                                strName: strName,
+                                intSelection: intSelection,
+                                intActive: intActive,
+                                intSuppress: intSuppress,
+                                intGroupSelection: intGroupSelection,
+                                intSalesColl: intSalesColl,
+                                intTargetSupp: intTargetSupp,
+                                intBaseTarget: 0,
+                                intHodaloan: intHodaloan,
+                                booldualdatestatus: dualdatestatusche,
+                                intAllIndividual: optionAllIndividual
+                            },
+                            success: function (data) {
+                                console.log('Path', data)
+                                window.open(data);
+                            }
+                        });
+
+                    }
+
+                }
+            });
+
+
+
+
+        };
+
+
+
+    </script>
+    
+</body>
+
+
+</html>

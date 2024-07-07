@@ -1,0 +1,718 @@
+﻿
+@{
+    ViewBag.Title = "Divisiontouchuntouch";
+}
+
+
+@RenderPage("~/Views/Shared/Sidebar.cshtml")
+
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        button {
+            background: cornflowerblue;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-family: 'Lato';
+            margin: 5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            outline: none;
+        }
+
+            button:hover {
+                background: orange;
+            }
+
+        .bordercolor {
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+
+        .centerContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item {
+            width: 50em;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            margin: auto;
+            text-align: center;
+            font-family: arial;
+        }
+
+
+        .centerContain {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .border {
+            border: 1px solid #dee2e6 !important;
+        }
+
+        .p-2 {
+            padding: 0.5rem !important;
+        }
+
+        legend {
+            display: block;
+            width: auto;
+            margin-bottom: 2px;
+            padding-left: 2px;
+            padding-right: 2px;
+            border: none;
+        }
+
+        button:hover {
+            background: orange;
+        }
+
+        .bordercolor {
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+
+        .centerContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item {
+            width: 60em;
+        }
+
+
+        /**auther: aktarul
+              only for button css.
+            **/
+        .linkbutton:hover {
+            background: #2b8eed;
+            color: white;
+        }
+
+        .pcenter {
+            margin: auto;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+        }
+
+        .linkbutton {
+            border: 1px solid black;
+            height: 35px;
+            border-radius: 5px;
+            text-align: center;
+            background-color: #a8a7b9;
+            color: white;
+            padding-left: 5px;
+            padding-right: 5px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            justify-content: center;
+        }
+
+        /*.fa-file-invoice-dollar {
+            color: blue;
+        }*/
+
+        .il {
+            color: #dcf588;
+        }
+
+        .ilF {
+            color: #ffffff;
+        }
+
+        .ilF1 {
+            color: #00ff90;
+        }
+
+        .imagecenter {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 25%;
+        }
+    </style>
+
+</head>
+<body>
+
+
+    <div class="centerContainer ">
+        <div class="item bordercolor" style="padding: 20px; margin:100px; background-color:azure">
+
+            <h4> Division Touch & Untouch</h4><br />
+
+          
+            <br>
+            <div id="dividLedgerStatus" class="row bordercolor" style="display: none;">
+                <div class="col-lg-2">
+                    <div class="row">
+
+                        <label style="font-size: 15px;"><input type="radio" name="status" value="3" style="height: 12px; width: 25px; margin-top: 5px" checked="" onchange="getcheckData()">All</label>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="row">
+
+                        <label style="font-size: 15px;"><input type="radio" name="status" value="0" style="height: 12px; width: 25px; margin-top: 5px" onchange="getcheckData()">Active</label>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="row">
+
+                        <label style="font-size: 15px;"><input type="radio" name="status" value="1" style="height: 12px; width: 25px; margin-top: 5px" onchange="getcheckData()">InActive</label>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <br>
+            <div class="row bordercolor">
+                <div id="dividall" class="col-lg-2">
+                    <div class="row">
+                        <label style="font-size: 15px;"><input type="radio" name="userType" value="5" style="height: 12px; width: 25px; margin-top: 5px" checked="" onchange="getcheckData()">All</label>
+                    </div>
+                </div>
+                <div id="dividMpo" class="col-lg-2">
+                    <div class="row toggle-vis">
+                        <label style="font-size: 15px;"><input type="radio" name="userType" style="height: 12px; width: 25px; margin-top: 5px" value="4" onchange="getcheckData()">Mpo</label>
+                    </div>
+                </div>
+                <div id="dividAM" class="col-lg-2">
+                    <div class="row">
+                        <label style="font-size: 15px;"><input type="radio" name="userType" value="3" style="height: 12px; width: 25px; margin-top: 5px" onchange="getcheckData()">AM/FM</label>
+                    </div>
+                </div>
+
+                <div id="dividDSM" class="col-lg-2" style="display: none;">
+                    <div class="row">
+
+                        <label style="font-size: 15px;"><input type="radio" name="userType" value="2" style="height: 12px; width: 25px; margin-top: 5px" onchange="getcheckData()">DSM/RSM</label>
+                    </div>
+                </div>
+                <div id="dividZONE" class="col-lg-2" style="display: none;">
+                    <div class="row">
+                        <label style="font-size: 15px;"><input type="radio" name="userType" value="1" style="height: 12px; width: 25px; margin-top: 5px" onchange="getcheckData()">ZONE</label>
+                    </div>
+                </div>
+                <div id="dividTeam" class="col-lg-2" style="display: none;">
+                    <div class="row">
+
+                        <label style="font-size: 15px;"><input type="radio" name="userType" value="6" style="height: 12px; width: 25px; margin-top: 5px" onchange="getcheckData()">Team</label>
+                    </div>
+                </div>
+
+            </div>
+            <br />
+
+            <div class="row bordercolor" style="padding-top: 5px; padding-bottom: 5px">
+                <div class="col-md-5">
+                    <div class="input-group">
+
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                    </div>
+                    <select id="lstLeft" class="form-control" multiple="multiple" style="height:220px;"></select>
+
+
+                </div>
+                <div class="col-md-1" style="padding-top: 110px">
+                    <input type="button" style="width:40px" id="left" value=" > ">
+                    <br>
+                    <input type="button" id="allRight" style="width:40px" value=">>">
+                    <br>
+                    <input type="button" id="right" style="width:40px" value=" < ">
+                    <br>
+                    <input type="button" id="allleft" style="width:40px" value="<<">
+                </div>
+                <div class="col-md-5" style="margin-top: 38px">
+                    <select id="lstRight" class="form-control" multiple="multiple" style="height:220px;"></select>
+                </div>
+            </div>
+            <br />
+            <div class="row" style="margin-bottom:10px">
+               
+
+                <div class="col-md-6">
+                    <fieldset class="border p-2">
+                        <legend class="w-auto">Period Selection</legend>
+                        <div class="row" style="margin-left:4px">
+                            <label class="control-label col-md-3">From: </label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+
+                                    <input type="date" id="fromDateM">
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row" style="margin-left:4px">
+                            <label class="control-label col-md-3">To: </label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <input type="date" id="toDateM" name="toDate">
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="row" style="  float:right;">
+                <div>
+                    <button title="Commission Cal." style="margin: 2px; text-transform: capitalize;" class="btn btn-success" onclick="Print();">
+                        <i class="fa fa-floppy-o"></i> Preview
+                    </button>
+
+                   
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+
+
+        var radioStatus = 0;
+        var radioUser = 0;
+        var selectBranch = "";
+        var branchName = "";
+        var fdate;
+        var today;
+
+
+        $(document).ready(function () {
+            BranchNamechangeFunc();
+            var idddbranchName = $("#idBranchName");
+
+            var date = new Date();
+
+            var day = date.getDate();
+
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+
+            if (month < 10) month = "0" + month;
+            if (day < 10) day = "0" + day;
+            fdate = year + "-" + month + "-" + "01";
+            today = year + "-" + month + "-" + day;
+            console.log('kib', day)
+
+            if ("Area" == "Division") {
+                var dividBranch = document.getElementById("dividBranch");
+                dividBranch.style.display = "none";
+                var dividLedgerStatus = document.getElementById("dividLedgerStatus");
+                dividLedgerStatus.style.display = "none";
+                var dividAM = document.getElementById("dividAM");
+                dividAM.style.display = "none";
+                var dividDSM = document.getElementById("dividDSM");
+                dividDSM.style.display = "none";
+                var dividZONE = document.getElementById("dividZONE");
+                dividZONE.style.display = "none";
+                var dividTeam = document.getElementById("dividTeam");
+                dividTeam.style.display = "none";
+            }
+            if ("Division" == "Division") {
+                var dividBranch = document.getElementById("dividBranch");
+                dividBranch.style.display = "none";
+                var dividLedgerStatus = document.getElementById("dividLedgerStatus");
+                dividLedgerStatus.style.display = "none";
+                var dividDSM = document.getElementById("dividDSM");
+                dividDSM.style.display = "none";
+                var dividZONE = document.getElementById("dividZONE");
+                dividZONE.style.display = "none";
+                var dividTeam = document.getElementById("dividTeam");
+                dividTeam.style.display = "none";
+            }
+            document.getElementById('fromDateM').value = fdate;
+            document.getElementById('toDateM').value = today;
+        });
+
+        function GiftSearch() {
+            debugger
+            if (document.getElementById("idcheckboxTypeGiftSearch").checked == true) {
+
+                document.getElementById("idcheckboxTypeGiftSearch").checked = true;
+                document.getElementById("idcheckboxPartyCoverage").checked = false;
+                document.getElementById("idcheckboxDetails").checked = false;
+            }
+            else {
+                document.getElementById("idcheckboxTypeGiftSearch").checked = false;
+                document.getElementById("idcheckboxPartyCoverage").checked = false;
+                document.getElementById("idcheckboxDetails").checked = false;
+            }
+        }
+        function PartyCoverage() {
+            if (document.getElementById("idcheckboxPartyCoverage").checked == true) {
+
+                document.getElementById("idcheckboxTypeGiftSearch").checked = false;
+                document.getElementById("idcheckboxPartyCoverage").checked = true;
+                document.getElementById("idcheckboxDetails").checked = false;
+            }
+            else {
+                document.getElementById("idcheckboxTypeGiftSearch").checked = false;
+                document.getElementById("idcheckboxPartyCoverage").checked = false;
+                document.getElementById("idcheckboxDetails").checked = false;
+            }
+        }
+
+        function Details() {
+
+            if (document.getElementById("idcheckboxDetails").checked == true) {
+                document.getElementById("idcheckboxTypeGiftSearch").checked = false;
+                document.getElementById("idcheckboxPartyCoverage").checked = false;
+                document.getElementById("idcheckboxDetails").checked = true;
+            }
+            else {
+                document.getElementById("idcheckboxTypeGiftSearch").checked = false;
+                document.getElementById("idcheckboxPartyCoverage").checked = false;
+                document.getElementById("idcheckboxDetails").checked = false;
+            }
+        }
+
+
+
+
+
+        function BranchNamechangeFunc() {
+
+            //var idddbranchName = document.getElementById("idBranchName").value;
+            var idddbranchName = $("#idBranchName");
+
+            //idddbranchName.html('');
+            $.ajax({
+                url: '/SalesReport/mGetBranchName',
+                datatype: "json",
+                success: function (data) {
+                    //idddbranchName.append($('<option value=--Select One-->--Select One--</option>'));
+                    $.each(data, function (id, option) {
+                        idddbranchName.append($('<option value="' + option.Key + '">' + option.Value + '</option>'));
+                    });
+
+                }
+            })
+        }
+
+
+
+        function getcheckData() {
+
+            selectBranch = $("#idBranchName").val();
+
+            radioStatus = $("input[name='status']:checked").val();
+
+            radioUser = $("input[name='userType']:checked").val();
+
+            var ListBox = document.getElementById('<%= lstRight.ClientID %>');
+
+            console.log('Kib', radioStatus + radioUser);
+
+            var ddllstLeft = $("#lstLeft");
+            var ddllstRight = $("#lstRight");
+            ddllstLeft.html('');
+            ddllstRight.html('');
+
+            if (radioUser != 5) {
+                $.ajax({
+                    url: '/SalesReport/mGetMPOLedger',
+                    datatype: "json",
+                    data: {
+                        selectBranchID: selectBranch,
+                        radioStatus: radioStatus,
+                        radioUser: radioUser
+                    },
+                    success: function (data) {
+
+                        $.each(data, function (id, option) {
+                            ddllstLeft.append($('<option value="' + option.strGRName + '">' + option.strGRName + '</option>'));
+                        });
+
+                    }
+                });
+            }
+            else {
+
+            }
+
+        };
+
+
+
+        function mloadBranch() {
+            var ddlidBranchlist = $("#bName");
+            $.ajax({
+                url: '/SalesReport/mGetBranch',
+                datatype: "json",
+
+                success: function (data) {
+                    //console.log(data);
+                    ddlidBranchlist.html('');
+                    $.each(data, function (id, option) {
+                        console.log(option.Value);
+                        ddlidBranchlist.append($('<option value="' + option.Key + '">' + option.Value + '</option>'));
+                    });
+                    //$('#ddlidBranchlist').val(selectdata.Value);
+                    //$('#ddlidBranchlist').trigger('change');
+                }
+            })
+
+        };
+        $(function () {
+            $("#ShiftRight,#ShiftLeft").click(function (event) {
+                var ID = $(event.target).attr("ID");
+                var ChooseFrom = ID == "ShiftRight" ? "#ChooseLeft" : "#ChooseRight";
+                var moveTo = ID == "ShiftRight" ? "#ChooseRight" : "#ChooseLeft";
+                var SelectData = $(ChooseFrom + " :selected").toArray();
+                $(moveTo).append(SelectData);
+                SelectData.remove;
+            });
+        });
+
+
+
+
+        //-----------------------------Filter starts
+        //declare
+        var keys = [];
+        var values = [];
+
+        var options = $('#ChooseLeft option');
+        //load all list key and value
+        $.each(options, function (index, item) {
+            keys.push(item.value);
+            values.push(item.innerHTML);
+        });
+
+        //event on key up
+        $('#txtSearchBy').keyup(function () {
+            var filter = $(this).val();
+            doListBoxFilter('#ChooseLeft', filter, keys, values);
+        });
+
+        //private helper method to search
+        function doListBoxFilter(listBoxSelector, filter, keys, values) {
+            var list = $(listBoxSelector);
+            var selectBase = '<option value="{0}">{1}</option>';
+
+
+            list.empty();
+            for (i = 0; i < values.length; ++i) {
+
+
+                var value = values[i];
+
+
+                if (value == "" || value.toLowerCase().indexOf(filter.toLowerCase()) >= 0) {
+                    var temp = '<option value="' + keys[i] + '">' + value + '</option>';
+                    list.append(temp);
+                }
+            }
+        }
+        //-----------------------------Filter end
+
+
+
+        //-------------- left right
+
+
+        $(function () {
+            $("#left").bind("click", function () {
+
+                //alert("SSS");
+
+                var options = $("[id*=lstLeft] option:selected");
+                console.log(options.length);
+                var lstRightt = $("#lstRight");
+                for (var i = 0; i < options.length; i++) {
+                    var opt = $(options[i]).clone();
+                    console.log(opt);
+                    $(options[i]).remove();
+                    $("[id*=lstRight]").append(opt);
+                }
+            });
+
+            $("#right").bind("click", function () {
+
+
+
+                var options = $("[id*=lstRight] option:selected");
+                console.log(options.length);
+                var lstLeft = $("#lstLeft");
+                for (var i = 0; i < options.length; i++) {
+                    var opt = $(options[i]).clone();
+                    console.log(opt);
+                    $(options[i]).remove();
+                    $("[id*=lstLeft]").append(opt);
+                }
+            });
+
+
+
+            $("#allleft").bind("click", function () {
+                var options = $("[id*=lstRight] option");
+
+                for (var i = 0; i < options.length; i++) {
+                    var opt = $(options[i]).clone();
+                    console.log(opt);
+                    $(options[i]).remove();
+                    $("[id*=lstLeft]").append(opt);
+                }
+            });
+            $("#allRight").bind("click", function () {
+                var options = $("[id*=lstLeft] option");
+
+                for (var i = 0; i < options.length; i++) {
+                    var opt = $(options[i]).clone();
+                    console.log(opt);
+                    $(options[i]).remove();
+                    $("[id*=lstRight]").append(opt);
+                }
+            });
+
+        });
+
+
+
+
+
+
+
+        function Print() {
+
+
+            branchName = document.getElementById("idBranchName").value;
+
+            //selectBranch = $("#idBranchNamee").tex();
+
+            var t = document.getElementById("idBranchName");
+            selectBranch = t.options[t.selectedIndex].text;
+
+            console.log("Kibria test ip");
+
+            radioStatus = $("input[name='status']:checked").val();
+
+            radioUser = $("input[name='userType']:checked").val();
+
+            var statusSalesCollAch = 0;
+
+
+
+
+            var chkboxSpecilaMonitort = 0;
+            var chkboxDetails = 0;
+            if (document.getElementById("idcheckboxTypeGiftSearch").checked == true) {
+                chkboxSpecilaMonitort = 1;
+            }
+            if (document.getElementById("idcheckboxDetails").checked == true) {
+                chkboxDetails = 1;
+            }
+
+            var ListBox = document.getElementById("lstRight");
+
+            var rList = [];
+            var rListstrring = "";
+            var rightList = ListBox.options;
+
+
+            for (var i = 0; i < rightList.length; i++) {
+                rList.push("'" + rightList[i].label + "'");
+            }
+            for (var i = 0; i < rightList.length; i++) {
+                rListstrring = rListstrring + "" + ("'" + rightList[i].label + "'") + ",";
+            }
+
+            console.log('Kibria', rListstrring);
+
+
+            fdate = document.getElementById('fromDateM').value;
+            today = document.getElementById('toDateM').value;
+
+            console.log('Fdate', fdate);
+            console.log('Tdate', today);
+            debugger
+            var boolPartyCoverage = document.getElementById("idcheckboxPartyCoverage").checked;
+
+
+            $.ajax({
+
+                url: '/SalesReport/mgetServerDate',
+                type: "POST",
+                datatype: "json",
+                data: {
+                    strDate1: today,
+                    strDate2: "",
+                },
+                success: function (data) {
+                    strBoole = data;
+                    console.log(1, strBoole);
+
+
+
+                    if (strBoole == 'false') {
+                        swal("Failed!", "You have No Permission to Show Advance Date", "warning");
+                        return;
+                    }
+                    else {
+                        $.ajax({
+
+                            url: '/SalesReport/MarketingMonitor',
+                            type: "POST",
+                            datatype: "json",
+                            data: {
+                                strBranchName: selectBranch,
+                                vstrLedgerName: rListstrring,
+                                radioStatus: radioStatus,
+                                radioUser: radioUser,
+                                fromdate: fdate,
+                                todate: today,
+                                intStatus: statusSalesCollAch,
+                                chkboxSpecilaMonitort: chkboxSpecilaMonitort,
+                                intValueSuppress: chkboxDetails,
+                                boolchkboxPartyCoverage: boolPartyCoverage
+
+                            },
+                            success: function (data) {
+                                console.log('Path', data)
+                                window.open(data);
+                            }
+                        });
+
+                    }
+
+                }
+            });
+
+
+
+
+
+        };
+
+
+
+
+
+    </script>
+
+</body>
+
+
+</html>

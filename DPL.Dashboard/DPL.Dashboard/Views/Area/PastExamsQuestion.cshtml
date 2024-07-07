@@ -1,0 +1,473 @@
+﻿@{
+    ViewBag.Title = "PastExamsQuestion";
+}
+
+
+@RenderPage("~/Views/Shared/SidebarAh.cshtml")
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Exam System</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.7.0/dist/css/bootstrap.min.css'>
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Animate CSS -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+
+
+    <style>
+        body {
+            font-family: 'Varela Round', sans-serif;
+            font-size: 13px;
+            max-width: 100%;
+        }
+
+        .table-responsive {
+            margin: 100px 0;
+        }
+
+        .table-wrapper {
+            min-width: 1550px;
+            background: #fff;
+            padding: 20px 25px;
+            margin-left: -40px;
+            border-radius: 25px;
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+            margin-top: 80px;
+        }
+
+        .table-title {
+            padding-bottom: 15px;
+            padding: 16px 30px;
+            margin: -20px -25px 10px;
+            border-radius: 3px 3px 0 0;
+        }
+
+            .table-title h2 {
+                margin: 5px 0 0;
+                font-size: 24px;
+            }
+
+            .table-title .btn-group {
+                float: right;
+            }
+
+            .table-title .btn {
+                color: #fff;
+                float: right;
+                font-size: 13px;
+                border: none;
+                min-width: 50px;
+                border-radius: 2px;
+                border: none;
+                outline: none !important;
+                margin-left: 10px;
+            }
+
+                .table-title .btn i {
+                    float: left;
+                    font-size: 21px;
+                    margin-right: 5px;
+                }
+
+                .table-title .btn span {
+                    float: left;
+                    margin-top: 2px;
+                }
+
+        table.table tr th,
+        table.table tr td {
+            border-color: #e9e9e9;
+            padding: 12px 15px;
+            vertical-align: middle;
+            border: none;
+        }
+
+            table.table tr th:first-child {
+                width: 60px;
+            }
+
+            table.table tr th:last-child {
+                width: 100px;
+            }
+
+        table.table-striped tbody tr:nth-of-type(odd) {
+            background-color: #fcfcfc;
+        }
+
+        table.table-striped.table-hover tbody tr:hover {
+            background: #f5f5f5;
+        }
+
+        table.table th i {
+            font-size: 13px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        table.table td:last-child i {
+            opacity: 0.9;
+            font-size: 22px;
+            margin: 0 5px;
+        }
+
+        table.table td a {
+            font-weight: bold;
+            color: #566787;
+            display: inline-block;
+            text-decoration: none;
+            outline: none !important;
+        }
+
+            table.table td a:hover {
+                color: #2196F3;
+            }
+
+            table.table td a.edit {
+                color: #FFC107;
+            }
+
+            table.table td a.delete {
+                color: #F44336;
+            }
+
+        table.table td i {
+            font-size: 19px;
+        }
+
+        table.table .avatar {
+            border-radius: 50%;
+            vertical-align: middle;
+            margin-right: 10px;
+            display: inline-block;
+        }
+
+        .pagination {
+            float: right;
+            margin: 0 0 5px;
+        }
+
+            .pagination li a {
+                border: none;
+                font-size: 13px;
+                min-width: 30px;
+                min-height: 30px;
+                color: #999;
+                margin: 0 2px;
+                line-height: 30px;
+                border-radius: 2px !important;
+                text-align: center;
+                padding: 0 6px;
+            }
+
+                .pagination li a:hover {
+                    color: #666;
+                }
+
+            .pagination li.active a,
+            .pagination li.active a.page-link {
+                background: #03A9F4;
+            }
+
+                .pagination li.active a:hover {
+                    background: #0397d6;
+                }
+
+            .pagination li.disabled i {
+                color: #ccc;
+            }
+
+            .pagination li i {
+                font-size: 16px;
+                padding-top: 6px;
+            }
+
+        .hint-text {
+            float: left;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+
+        .nav-tabs .nav-item .nav-link.active {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .nav-tabs .nav-item .nav-link {
+            background-color: #f8f9fa;
+            color: #212529;
+            border-color: transparent;
+        }
+
+
+        .nav-tabs .nav-item {
+            margin-right: 10px;
+        }
+
+            .nav-tabs .nav-item .nav-link {
+                text-decoration: none;
+            }
+
+
+        .btn-success {
+            color: white;
+            background-color: green;
+            border: none;
+            padding: 8px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 65px;
+        }
+
+            .btn-success:hover {
+                background-color: darkgreen;
+            }
+
+            .btn-success i {
+                vertical-align: middle;
+                margin-right: 5px;
+            }
+
+        .nav-tabs {
+            border-bottom: none;
+        }
+    </style>
+
+
+
+</head>
+
+<body>
+
+
+    <div class="container">
+        <div class="table-responsive">
+            <div class="table-wrapper">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item" style="float: right;">
+                        <button class="btn btn-success" onclick="location.href = '/Dashboard/Examlist';">
+                            Back Previous
+                        </button>
+
+                    </li>
+                </ul>
+                    <table class="table">
+
+                        <tbody class="tbody-past"></tbody>
+                    </table>
+                    <br>
+                    <div class="clearfix" style="float:right;">
+                        <a href="#" class="btn btn-primary btnPreviousPast">Previous</a>
+                        <a href="#" class="btn btn-primary btnNextPast">Next</a>
+                    </div>
+                    <br />
+                    <br />
+                    <br />
+
+</div>
+        </div>
+    </div>
+
+
+
+    <script>
+        $(document).ready(function (upcoming) {
+
+            var urlParams = new URLSearchParams(window.location.search);
+            var examId = urlParams.get('strexamId');
+
+            loadData(examId);
+            loadData('upcoming');
+            loadData('past');
+        });
+
+        var pageSize = 25;
+        var currentPageUpcoming = 1;
+        var currentPagePast = 1;
+        var totalQuestions = 0;
+
+        function loadData(tab) {
+            var currentPage = tab === 'upcoming' ? currentPageUpcoming : currentPagePast;
+            var startIndex = (currentPage - 1) * pageSize;
+            var endIndex = startIndex + pageSize;
+
+            var apiUrl = '/Exam/mGetExamList';
+
+            $.ajax({
+                url: apiUrl,
+                type: 'GET',
+                success: function (response) {
+
+                    console.log(response)
+
+                    var data = tab === 'upcoming' ? response.UpcomingExams : response.PastExams;
+
+                    data.sort(function (a, b) {
+                        return parseInt(b.strexamId) - parseInt(a.strexamId);
+                    });
+
+                    totalQuestions = calculateTotalQuestions(data);
+                    renderData(data, tab, startIndex, endIndex);
+                },
+                error: function (xhr, status, error) {
+                    console.log('Error:', error);
+                }
+            });
+        }
+
+        function calculateTotalQuestions(data) {
+            var total = 0;
+            for (var i = 0; i < data.length; i++) {
+                var options = data[i].stroptions.split(',');
+                total += options.length;
+            }
+            return total;
+        }
+
+        function renderData(data, tab, startIndex, endIndex) {
+            var currentPage = tab === 'upcoming' ? currentPageUpcoming : currentPagePast;
+
+            var groupedData = {};
+            data.forEach(function (item) {
+                if (!groupedData[item.strexamId]) {
+                    groupedData[item.strexamId] = [];
+                }
+                groupedData[item.strexamId].push(item);
+            });
+
+            var paginatedData = Object.entries(groupedData).slice(startIndex / pageSize, endIndex / pageSize);
+
+            var html = '';
+            paginatedData.forEach(function ([examId, exams]) {
+                exams.forEach(function (item, index) {
+                    if (index === 0) {
+                        html += '<tr>';
+                        html += '<td colspan="4"><h1 style="font-weight:bold;">' + item.strExamTitle + '</h1></td>';
+                        html += '</tr>';
+                        html += '<tr>';
+                        html += '<td><p style="font-size:16px; font-weight:bold;">' + item.strExamNotice + '</p></td>';
+                        html += '</tr>';
+                        html += '<tr>';
+                        var titleCount = 0;
+
+                        // Counting questions for the current strexamId
+                        data.forEach(function (question) {
+                            if (question.strexamId === item.strexamId) {
+                                titleCount++;
+                            }
+                        });
+                        html += '<td style="font-weight:bold;"><i class="fa fa-question-circle" aria-hidden="true"></i> ' + titleCount + ' Questions</td>';
+                        html += '<td style="font-weight:bold;"><i class="fa fa-clock-o" aria-hidden="true"></i> ' + item.strtimeLimit + ' min</td>';
+                        html += '</tr>';
+                        html += '<tr>';
+                        html += '<td style="font-weight:bold;"><i class="fa fa-star" aria-hidden="true"></i> ' + item.strtotalMarks + ' Marks (Pass Marks ' + item.strpassmarks + ')</td>';
+                        html += '<td style="font-weight:bold;"><i class="fa fa-user-o" aria-hidden="true"></i> ' + item.strROLE + '</td>';
+                        html += '</tr>';
+                        html += '<tr>';
+                        html += '<td style="font-weight:bold;"><div class="h-0 d-inline-block" style="width: 250px;">' + item.strNATIONAL_HEAD + ' National Head <br> Deeplaid Laboratories Ltd </div></td>';
+                        html += '<td style="font-weight:bold;">Schedule: <br><i class="fa fa-calendar" aria-hidden="true"></i> ' + item.strexamDate + ', ' + item.strstarttime + ' to ' + item.strendtime + '</td>';
+                        html += '<td><br></td>';
+                        html += '</tr>';
+                        html += '<tr>';
+                        html += '<td style="font-size:16px; font-weight:bold;">Question</td>';
+                        html += '</tr>';
+                    }
+
+                    html += '<tr>';
+                    html += '<td style="font-weight:bold;">' + (index + 1) + '. ' + item.strtitle + '</td>';
+
+
+                    function toRoman(num) {
+                        var romans = ['i', 'ii', 'iii', 'iv'];
+                        return romans[num - 1] || num;
+                    }
+
+                    var options = item.stroptions.split(',');
+
+                    html += '<td>';
+                    html += '<ul>';
+                    for (var j = 0; j < options.length; j++) {
+                        html += toRoman(j + 1) + '. ' + options[j];
+                        if (j !== options.length - 1) {
+                            html += '<br>';
+                        }
+                    }
+                    html += '</ul>';
+                    html += '</td>';
+
+                    html += '<td>Answer: ' + item.stranswer + '</td>';
+                    html += '<td>Marks: ' + item.strmarks + '</td>';
+                    html += '</tr>';
+                });
+            });
+
+            if (tab === 'upcoming') {
+                $('.tbody-upcoming').html(html);
+                updatePaginationControls(currentPage, Object.keys(groupedData).length, tab);
+            } else if (tab === 'past') {
+                $('.tbody-past').html(html);
+                updatePaginationControls(currentPage, Object.keys(groupedData).length, tab);
+            }
+        }
+
+        function updatePaginationControls(currentPage, totalItems, tab) {
+            var totalPages = Math.ceil(totalItems / pageSize);
+            if (tab === 'upcoming') {
+                $('.btnPreviousUpcoming').prop('disabled', currentPage === 1);
+                $('.btnNextUpcoming').prop('disabled', currentPage === totalPages);
+            } else if (tab === 'past') {
+                $('.btnPreviousPast').prop('disabled', currentPage === 1);
+                $('.btnNextPast').prop('disabled', currentPage === totalPages);
+            }
+        }
+
+        $('.btnPreviousUpcoming').click(function () {
+            if (currentPageUpcoming > 1) {
+                currentPageUpcoming--;
+                loadData('upcoming');
+            }
+        });
+
+        $('.btnNextUpcoming').click(function () {
+            currentPageUpcoming++;
+            loadData('upcoming');
+        });
+
+        $('.btnPreviousPast').click(function () {
+            if (currentPagePast > 1) {
+                currentPagePast--;
+                loadData('past');
+            }
+        });
+
+        $('.btnNextPast').click(function () {
+            currentPagePast++;
+            loadData('past');
+        });
+
+
+
+
+
+    </script>
+
+
+</body>
+</html>
+

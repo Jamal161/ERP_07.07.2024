@@ -1,0 +1,262 @@
+ //$(document).ready(function () {
+                //    loadData();
+                //});
+
+                //function loadData() {
+                //    var request1 = $.ajax({
+                //        url: "/Attendence/mGetPercent",
+                //        type: "GET",
+                //        contentType: 'application/json;charset=utf-8',
+                //        dataType: "json"
+                //    });
+
+                //    var request2 = $.ajax({
+                //        url: "/Attendence/mGetTeamList",
+                //        type: "GET",
+                //        contentType: 'application/json;charset=utf-8',
+                //        dataType: "json"
+                //    });
+
+                //    $.when(request1, request2).done(function (response1, response2) {
+                //        var percentData = response1[0];
+                //        var teamListData = response2[0];
+
+                //        displayData(percentData, teamListData);
+                //    }).fail(function (xhr, status, error) {
+                //        console.error("AJAX Error:", error);
+                //        $('.tbody').html('<tr><td colspan="6">Error loading data. Please try again later.</td></tr>');
+                //    });
+                //}
+
+                //function displayData(percentData, teamListData) {
+                //    var html = '';
+
+                //    $.each(teamListData, function (key, team) {
+                //        html += '<tr>';
+                //        html += '<td>' + team.strTEAM_NAME + '</td>';
+                //        html += '<td>' + team.strTOTALMPO + '</td>';
+                //        var percentItem = percentData[key];
+                //        if (percentItem) {
+                //            html += '<td>' + percentItem.intPresent + '</td>';
+                //            html += '<td>' + percentItem.intLeave + '</td>';
+                //            html += '<td>' + percentItem.intAbsent + '</td>';
+                //            html += '<td>' + percentItem.dblPercentage + '%</td>';
+                //        } else {
+
+                //            html += '<td colspan="4"></td>';
+                //        }
+                //        html += '</tr>';
+                //    });
+
+                //    $('.tbody').html(html);
+                //}
+
+
+
+                //var request3 = $.ajax({
+                //    url: "/Attendence/mGetZoneList",
+                //    type: "GET",
+                //    contentType: 'application/json;charset=utf-8',
+                //    dataType: "json"
+                //});
+
+                //strZONE
+                //strTEAM_NAME
+
+
+                //$(document).ready(function () {
+                //    loadData();
+                //});
+
+                //function loadData() {
+                //    var request1 = $.ajax({
+                //        url: "/Attendence/mGetPercent",
+                //        type: "GET",
+                //        contentType: 'application/json;charset=utf-8',
+                //        dataType: "json"
+                //    });
+
+                //    var request2 = $.ajax({
+                //        url: "/Attendence/mGetTeamList",
+                //        type: "GET",
+                //        contentType: 'application/json;charset=utf-8',
+                //        dataType: "json"
+                //    });
+
+                //    var request3 = $.ajax({
+                //        url: "/Attendence/mGetZoneList",
+                //        type: "GET",
+                //        contentType: 'application/json;charset=utf-8',
+                //        dataType: "json"
+                //    });
+
+                //    $.when(request1, request2, request3).done(function (response1, response2, response3) {
+                //        var percentData = response1[0];
+                //        var teamListData = response2[0];
+                //        var zoneListData = response3[0];
+
+                //        displayData(percentData, teamListData, zoneListData);
+
+                //        $('.tbody').on('click', 'td.team-name', function () {
+                //            var teamName = $(this).text();
+                //            var zone = zoneListDatas(zoneListData, teamName);
+                //            if (zone) {
+                //                var zones = getZonesForTeam(zoneListData, teamName);
+                //                if (zones.length > 0) {
+                //                    var zoneListHtml = '<ul>';
+                //                    zones.forEach(function (zone) {
+                //                        zoneListHtml += '<li>' + zone + '</li>';
+                //                    });
+                //                    zoneListHtml += '</ul>';
+                //                    alert("Zones for " + teamName + ": " + zoneListHtml);
+                //                } else {
+                //                    alert("No zones found for " + teamName);
+                //                }
+                //            } else {
+                //                alert("Zone not found for " + teamName);
+                //            }
+                //        });
+                //    }).fail(function (xhr, status, error) {
+                //        console.error("AJAX Error:", error);
+                //        $('.tbody').html('<tr><td colspan="6">Error loading data. Please try again later.</td></tr>');
+                //    });
+                //}
+
+                //function displayData(percentData, teamListData, zoneListData) {
+                //    var html = '';
+
+                //    $.each(teamListData, function (key, team) {
+                //        html += '<tr>';
+                //        html += '<td class="team-name">' + team.strTEAM_NAME + '</td>';
+                //        html += '<td>' + team.strTOTALMPO + '</td>';
+                //        var percentItem = percentData[key];
+                //        if (percentItem) {
+                //            html += '<td>' + percentItem.intPresent + '</td>';
+                //            html += '<td>' + percentItem.intLeave + '</td>';
+                //            html += '<td>' + percentItem.intAbsent + '</td>';
+                //            html += '<td>' + percentItem.dblPercentage + '%</td>';
+                //        } else {
+                //            html += '<td colspan="4"></td>';
+                //        }
+                //        html += '</tr>';
+                //    });
+
+                //    $('.tbody').html(html);
+                //}
+
+                //function zoneListDatas(zoneListData, teamName) {
+                //    for (var i = 0; i < zoneListData.length; i++) {
+                //        if (zoneListData[i].strTEAM_NAME === teamName) {
+                //            return zoneListData[i].strZONE;
+                //        }
+                //    }
+                //    return null;
+                //}
+
+                //function getZonesForTeam(zoneListData, teamName) {
+                //    var zones = [];
+                //    for (var i = 0; i < zoneListData.length; i++) {
+                //        if (zoneListData[i].strTEAM_NAME === teamName) {
+                //            zones.push(zoneListData[i].strZONE);
+                //        }
+                //    }
+                //    return zones;
+                //}
+
+
+
+                //$(document).ready(function () {
+                //    loadData();
+                //});
+
+                //function loadData() {
+                //    var request1 = $.ajax({
+                //        url: "/Attendence/mGetPercent",
+                //        type: "GET",
+                //        contentType: 'application/json;charset=utf-8',
+                //        dataType: "json"
+                //    });
+
+                //    var request2 = $.ajax({
+                //        url: "/Attendence/mGetTeamList",
+                //        type: "GET",
+                //        contentType: 'application/json;charset=utf-8',
+                //        dataType: "json"
+                //    });
+
+                //    var request3 = $.ajax({
+                //        url: "/Attendence/mGetZoneList",
+                //        type: "GET",
+                //        contentType: 'application/json;charset=utf-8',
+                //        dataType: "json"
+                //    });
+
+                //    $.when(request1, request2, request3).done(function (response1, response2, response3) {
+                //        var percentData = response1[0];
+                //        var teamListData = response2[0];
+                //        var zoneListData = response3[0];
+
+                //        displayData(percentData, teamListData, zoneListData);
+
+                //        $('.tbody').on('click', 'td.team-name', function () {
+                //            var teamName = $(this).text();
+                //            var zones = getZonesForTeam(zoneListData, teamName);
+                //            if (zones.length > 0) {
+                //                var zoneListHtml = '<ul>';
+                //                zones.forEach(function (zone) {
+                //                    zoneListHtml += '<li>' + zone + '</li>';
+                //                });
+                //                zoneListHtml += '</ul>';
+
+                //                var teamRow = $(this).closest('tr');
+                //                teamRow.find('td').hide();
+                //                teamRow.append('<td colspan="6" class="zone-data">' + zoneListHtml + '</td>');
+                //                teamRow.append('<td><button class="previousButton">Previous</button></td>');
+
+                //                $('.previousButton').on('click', function () {
+                //                    teamRow.find('td').show();
+                //                    teamRow.find('.zone-data').remove();
+                //                    teamRow.find('.previousButton').remove();
+                //                });
+
+                //            } else {
+                //                alert("No zones found for " + teamName);
+                //            }
+                //        });
+                //    }).fail(function (xhr, status, error) {
+                //        console.error("AJAX Error:", error);
+                //        $('.tbody').html('<tr><td colspan="6">Error loading data. Please try again later.</td></tr>');
+                //    });
+                //}
+
+                //function displayData(percentData, teamListData, zoneListData) {
+                //    var html = '';
+
+                //    $.each(teamListData, function (key, team) {
+                //        html += '<tr>';
+                //        html += '<td class="team-name">' + team.strTEAM_NAME + '</td>';
+                //        html += '<td>' + team.strTOTALMPO + '</td>';
+                //        var percentItem = percentData[key];
+                //        if (percentItem) {
+                //            html += '<td>' + percentItem.intPresent + '</td>';
+                //            html += '<td>' + percentItem.intLeave + '</td>';
+                //            html += '<td>' + percentItem.intAbsent + '</td>';
+                //            html += '<td>' + percentItem.dblPercentage + '%</td>';
+                //        } else {
+                //            html += '<td colspan="4"></td>';
+                //        }
+                //        html += '</tr>';
+                //    });
+
+                //    $('.tbody').html(html);
+                //}
+
+                //function getZonesForTeam(zoneListData, teamName) {
+                //    var zones = [];
+                //    for (var i = 0; i < zoneListData.length; i++) {
+                //        if (zoneListData[i].strTEAM_NAME === teamName) {
+                //            zones.push(zoneListData[i].strZONE);
+                //        }
+                //    }
+                //    return zones;
+                //}

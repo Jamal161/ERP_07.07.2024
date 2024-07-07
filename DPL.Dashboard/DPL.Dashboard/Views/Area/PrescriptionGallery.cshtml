@@ -1,0 +1,435 @@
+﻿
+@{
+    ViewBag.Title = "PrescriptionGallery";
+}
+
+@RenderPage("~/Views/Shared/SidebarAh.cshtml")
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deeplaid Image Gallery</title>
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <link href="~/Content/css/custom.max.css" rel="stylesheet">
+
+
+    <style>
+        body {
+            color: #566787;
+            font-size: 13px;
+            background:#fff;
+            max-width: 100%;
+        }
+
+        .gallery-img {
+            cursor: pointer;
+            width: 100%;
+           
+        }
+
+        .modal-content {
+            width: 1250px;
+            height: 1930px;
+            margin-left: -200px;
+        }
+
+        .table-responsive {
+            margin: 10px 0;
+            /*margin-left:250px;*/
+            overflow-x: unset;
+        }
+
+        /*.nav {
+            display: block;
+            padding-left: 0;
+            margin-bottom: 0;
+        }
+
+        .btn {
+            border-radius: 3px;
+            width: 70px;
+            height: 35px;
+            padding: 10px;
+        }*/
+
+
+
+        /*.table-wrapper {
+            min-width: 1450px;
+            padding: 20px 25px;
+            border-radius: 3px;
+           
+        }*/
+
+
+
+        .table-title {
+            padding-bottom: 15px;
+            background: #435d7d;
+            color: #fff;
+            padding: 16px 30px;
+            margin: -20px -25px 10px;
+            border-radius: 3px 3px 0 0;
+        }
+
+            .table-title h2 {
+                margin: 5px 0 0;
+                font-size: 24px;
+            }
+
+            .table-title .btn-group {
+                float: right;
+            }
+
+            .table-title .btn {
+                color: #fff;
+                float: right;
+                font-size: 13px;
+                border: none;
+                min-width: 50px;
+                border-radius: 2px;
+                border: none;
+                outline: none !important;
+                margin-left: 10px;
+            }
+
+                .table-title .btn i {
+                    float: left;
+                    font-size: 21px;
+                    margin-right: 5px;
+                }
+
+                .table-title .btn span {
+                    float: left;
+                    margin-top: 2px;
+                }
+
+        table.table tr th, table.table tr td {
+            border-color: #e9e9e9;
+            padding: 12px 15px;
+            vertical-align: middle;
+        }
+
+            table.table tr th:first-child {
+                width: 60px;
+            }
+
+            table.table tr th:last-child {
+                width: 100px;
+            }
+
+        table.table-striped tbody tr:nth-of-type(odd) {
+            background-color: #fcfcfc;
+        }
+
+        table.table-striped.table-hover tbody tr:hover {
+            background: #f5f5f5;
+        }
+
+        table.table th i {
+            font-size: 13px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        table.table td:last-child i {
+            opacity: 0.9;
+            font-size: 22px;
+            margin: 0 5px;
+        }
+
+        table.table td a {
+            font-weight: bold;
+            color: #566787;
+            display: inline-block;
+            text-decoration: none;
+            outline: none !important;
+        }
+
+            table.table td a:hover {
+                color: #2196F3;
+            }
+
+            table.table td a.edit {
+                color: #FFC107;
+            }
+
+            table.table td a.delete {
+                color: #F44336;
+            }
+
+        table.table td i {
+            font-size: 19px;
+        }
+
+        table.table .avatar {
+            border-radius: 80%;
+            vertical-align: middle;
+            margin-right: 10px;
+            display: inline-block;
+            height: 60px;
+            width: 60px;
+        }
+
+        .pagination {
+            float: right;
+            margin: 0 0 5px;
+        }
+
+            .pagination li a {
+                border: none;
+                font-size: 13px;
+                min-width: 30px;
+                min-height: 30px;
+                color: #999;
+                margin: 0 2px;
+                line-height: 30px;
+                border-radius: 2px !important;
+                text-align: center;
+                padding: 0 6px;
+            }
+
+                .pagination li a:hover {
+                    color: #666;
+                }
+
+            .pagination li.active a, .pagination li.active a.page-link {
+                background: #03A9F4;
+            }
+
+                .pagination li.active a:hover {
+                    background: #0397d6;
+                }
+
+            .pagination li.disabled i {
+                color: #ccc;
+            }
+
+            .pagination li i {
+                font-size: 16px;
+                padding-top: 6px;
+            }
+
+        .card {
+            margin-bottom: 20px;
+            background: #f5f5f5;
+            border-radius: 10px;
+            height: 550px;
+        }
+
+            .card img {
+                max-width: 100%;
+                height: 400px;
+            }
+
+        /*card-body{
+            width:300px;
+         
+            
+        }*/
+        .card-title {
+            margin-left: 30px;
+           
+        }
+
+        .card-text {
+            margin-left: 10px;
+          
+        }
+
+        .modal-dialog {
+            right: auto;
+            left: 0%;
+            width: 600px;
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+
+
+        .card {
+            position: relative;
+            display: -ms-flexbox;
+            display: ruby-text;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1px solid rgba(0, 0, 0, .125);
+            border-radius: .25rem;
+
+        }
+    </style>
+</head>
+<body>
+
+    <script>
+       
+
+    </script>
+        <div class="table-responsive">
+            <div class="table-wrapper">
+
+                <div class="row" id="galleryContainer"></div>
+
+
+                <div class="clearfix" style="float:right">
+
+
+                    <a href="#" class="btn btn-primary btnPrevious" id="paginationButtons"></a>
+
+                </div>
+            </div>
+
+
+    
+    <div class="modal fade" id="imageModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+               
+                <div class="modal-header">
+                    <h4 class="modal-title">Image</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+               
+                <div class="modal-body">
+                    <img src="" class="img-fluid" id="modalImage">
+                </div>
+               
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+ </div>
+
+    <script>
+        $(document).ready(function () {
+            $('.gallery-img').click(function () {
+                var imageSrc = $(this).data('image');
+                $('#modalImage').attr('src', imageSrc);
+            });
+        });
+
+
+
+    </script>
+
+
+    <div class="container">
+        </div>
+
+
+
+        <script>
+
+
+            $(document).ready(function () {
+                loadData('all', 1, 12);
+            });
+
+            function loadData(status, page, pageSize) {
+                $.ajax({
+                    url: "/Prescription/mGetPrescriptionList",
+                    type: "GET",
+                    contentType: 'application/json;charset=utf-8',
+                    dataType: "json",
+                    data: {
+                        page: page,
+                        pageSize: pageSize
+                    },
+                    success: function (result) {
+                        console.log(result);
+                        result.sort(function (a, b) {
+                            return new Date(b.strINSERT_DATE) - new Date(a.strINSERT_DATE);
+                        });
+
+                        var startIndex = (page - 1) * pageSize;
+                        var endIndex = startIndex + pageSize;
+                        var paginatedResult = result.slice(startIndex, endIndex);
+
+                        var html = '';
+                        $.each(paginatedResult, function (key, item) {
+                            if (status === 'all' || item.strSTATUS.toLowerCase() === status) {
+                                var modalId = 'exampleModal' + key;
+                                html += '<div class="col-md-3 mb-3">';
+                                html += '<div class="card">';
+                                html += '<div id="gallery' + key + '" class="gallery" data-toggle="modal" data-target="#' + modalId + '"> <img src= "data:image/png;base64,' + item.strPRESCRIPTION_IMG + ' " class="card-img-top gallery-img"></div><div class=" col-sm-8"></div>';
+                                html += '<div class="card-body">';
+                                html += '<h5 class="card-text"></h5>';
+                                html += '<p class="card-text">Market: ' + item.strMARKET_NAME + ' - (' + item.strTERITORRY_CODE + ')</p>';
+                                html += '<p class="card-text">Captured By:  ' + item.strUSER_NAME + ' - ' + item.strTERITORRY_CODE + '(' + item.strEMP_CARD_NO + ') at ' + item.strINSERT_DATE + '</p>';
+                                html += '<p class="card-text">Remarks: ' + item.strNOTE + '</p>';
+                                html += '</div>';
+                                html += '</div>';
+                                html += '</div>';
+
+                                html += '<div class="modal fade" id="' + modalId + '" tabindex="-1" role="dialog" aria-labelledby="' + modalId + 'Label" aria-hidden="true">  ';
+                                html += '<div class="modal-dialog modal-lg" role="document">';
+                                html += '<div class="modal-content">';
+                                html += '<div class="modal-header">';
+                                html += '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+                                html += '<span aria-hidden="true">&times;</span>';
+                                html += '</button>';
+                                html += '</div>';
+                                html += '<div class="modal-body">';
+                                html += '<img id="modalImage' + key + '" src="data:image/png;base64,' + item.strPRESCRIPTION_IMG + ' " class="card-img-top gallery-img" class="img-fluid" alt="Image"><br><br><br>' + item.strUSER_NAME + ' <br>Code:  ' + item.strEMP_CARD_NO + ' ';
+                                html += '</div>';
+                                html += '</div>';
+                                html += '</div>';
+                                html += '</div>';
+                            }
+                        });
+                        $('#galleryContainer').html(html);
+
+
+                        $('.gallery').click(function () {
+                            var index = $(this).attr('id').replace('gallery', '');
+                            var imageSrc = $(this).find('.gallery-img').attr('src');
+                            $('#modalImage' + index).attr('src', imageSrc);
+                        });
+
+
+                        var prevButton = '<button onclick="loadPrevPage(' + page + ')" class="btn btn-primary mr-2">Previous</button>';
+                        var nextButton = '<button onclick="loadNextPage(' + page + ')" class="btn btn-primary">Next</button>';
+                        $('#paginationButtons').html(prevButton + nextButton);
+                    },
+                    error: function (errormessage) {
+                        alert(errormessage.responseText);
+                    }
+                });
+            }
+
+            function loadPrevPage(currentPage) {
+                if (currentPage > 1) {
+                    var prevPage = currentPage - 1;
+                    loadData('all', prevPage, 12);
+                }
+            }
+
+            function loadNextPage(currentPage) {
+
+                var nextPage = currentPage + 1;
+                loadData('all', nextPage, 12);
+            }
+
+
+        </script>
+
+</body>
+
+            </html>

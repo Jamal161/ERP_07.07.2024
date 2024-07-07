@@ -1,0 +1,259 @@
+﻿@{
+    ViewBag.Title = "Salesstatement";
+}
+
+@RenderPage("~/Views/Shared/SibarUser.cshtml")
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        button {
+            background: cornflowerblue;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-family: 'Lato';
+            margin: 5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            outline: none;
+        }
+
+            button:hover {
+                background: orange;
+            }
+
+        .bordercolor {
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+
+        .centerContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item {
+            width: 50em;
+        }
+  
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            margin: auto;
+            text-align: center;
+            font-family: arial;
+        }
+
+
+        .centerContain {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .border {
+            border: 1px solid #dee2e6 !important;
+        }
+
+        .p-2 {
+            padding: 0.5rem !important;
+        }
+
+        legend {
+            display: block;
+            width: auto;
+            margin-bottom: 2px;
+            padding-left: 2px;
+            padding-right: 2px;
+            border: none;
+        }
+
+        button:hover {
+            background: orange;
+        }
+
+        .bordercolor {
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+
+        .centerContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item {
+            width: 50em;
+        }
+
+
+        /**auther: aktarul
+              only for button css.
+            **/
+        .linkbutton:hover {
+            background: #2b8eed;
+            color: white;
+        }
+
+        .pcenter {
+            margin: auto;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+        }
+
+        .linkbutton {
+            border: 1px solid black;
+            height: 35px;
+            border-radius: 5px;
+            text-align: center;
+            background-color: #a8a7b9;
+            color: white;
+            padding-left: 5px;
+            padding-right: 5px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            justify-content: center;
+        }
+   
+        /*.fa-file-invoice-dollar {
+            color: blue;
+        }*/
+
+        .il {
+            color: #dcf588;
+        }
+
+        .ilF {
+            color: #ffffff;
+        }
+
+        .ilF1 {
+            color: #00ff90;
+        }
+
+        .imagecenter {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 25%;
+        }
+    </style>
+
+
+</head>
+    <body>
+
+        
+        <div class="centerContainer ">
+
+            <div class="item bordercolor" style="padding: 20px; margin: 100px; background-color: azure">
+                <h3>Sales Statement</h3>
+                
+                <br />
+                   
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="row bordercolor">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <label style="font-size: 15px;"><input type="radio" name="DetailsSummary" value="0" style="height: 12px; width: 25px; margin-top: 5px" checked="">Details</label>
+                                    </div>
+                                    <div class="row">
+                                        <label style="font-size: 15px;"><input type="radio" name="DetailsSummary" style="height: 12px; width: 25px; margin-top: 5px" value="1">Summary</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8" >
+                            <div class="row bordercolor" style="margin-left: 2px;">
+
+                                <div class="col-lg-3">
+                                    <div class="row">
+
+
+                                        <label style="font-size: 15px;"><input type="radio" name="Customerstatus" value="" style="height: 12px; width: 25px; margin-top: 5px" checked="">All</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <div class="row">
+
+                                        <label style="font-size: 15px;"><input type="radio" name="Customerstatus" value="'CP (Contract Party)','SP (Special Party)'" style="height: 12px; width: 25px;">CP/SP</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <div class="row">
+
+                                        <label style="font-size: 15px;"><input type="radio" name="Customerstatus" value="'GP (General Party)'" style="height: 12px; width: 25px; margin-top: 5px">GP</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+                <div class="row" style="margin-bottom:10px">
+
+
+
+                    <div class="col-md-6">
+                        <fieldset class="border p-2">
+                            <legend class="w-auto">Period Selection</legend>
+                            <div class="row" style="margin-left:4px">
+                                <label class="control-label col-md-3">From: </label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+
+                                        <input type="date" id="fromDateSS">
+                                    </div>
+                                </div>
+                            </div>
+                           <br />
+                            <div class="row" style="margin-left:4px">
+                                <label class="control-label col-md-3">To: </label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        <input type="date" id="toDateSS" name="toDate">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="row" style="float:right;">
+                    <div>
+                        <button title="Commission Cal." style="margin: 2px; text-transform: capitalize;" class="btn btn-success" onclick="Print();">
+                            <i class="fa fa-floppy-o"></i>Preview
+                        </button>
+                    </div>
+                    <div hidden="">
+                        <button title="Commission Cal." style="margin: 2px; text-transform: capitalize;" class="btn btn-danger" onclick="App();">
+                            <i class="fa fa-times"></i>cancel
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+        
+    </body>
+
+
+</html>
