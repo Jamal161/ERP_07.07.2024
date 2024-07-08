@@ -1463,8 +1463,9 @@ namespace DPL.DASHBOARD.Controllers
             {
                 userRole = UserList[0].strRole.Trim();
                 Session["UserRole"] = userRole;
-                //Session["UserBranchID"] = UserList[0].strbranchID.Trim();
-                //Session["UserBranchID"] = UserList[0].strbranchID.Trim();
+                Session["userID"] = UserList[0].strUserID.Trim();
+                Session["userName"] = UserList[0].strLedgerName.Trim();
+                Session["userCardNo"] = UserList[0].strCardNo.Trim();
             }
 
 

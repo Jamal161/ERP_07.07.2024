@@ -63,8 +63,27 @@ namespace DPL.DASHBOARD.Repesetory
 
         public ActionResult mGetTotal()
         {
-            var allLedger = mGetUserTotal();
-            return Json(allLedger, JsonRequestBehavior.AllowGet);
+            List<AttendentCongfig> allLedger = new List<AttendentCongfig>();
+            string vstrRole = Session["UserRole"].ToString();
+            string vstrUserID = Session["userID"].ToString();
+            string vstrLedgerName = Session["userName"].ToString();
+            string vstrCardNo = Session["userCardNo"].ToString();
+            if (vstrRole.ToUpper() == "AH")
+            {
+                allLedger = mGetUserTotalAH(vstrLedgerName);
+            }
+            else if (vstrRole.ToUpper() == "DH")
+            {
+                allLedger = mGetUserTotalDH(vstrLedgerName);
+            }
+            else
+            {
+                allLedger = mGetUserTotal();
+            }
+            //return Json(allLedger, JsonRequestBehavior.AllowGet);
+            var jsonResult = Json(allLedger, JsonRequestBehavior.AllowGet);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
         }
 
 
@@ -516,29 +535,27 @@ namespace DPL.DASHBOARD.Repesetory
         public List<AttendentCongfig> mGetUserTotal()
         {
             string connectionString = Utility.SQLConnstringComSwitch("0001");
-            string strSQL = @"SELECT TEAM_NAME,ZONE,TYPE,SUM(TOTALMPO)TOTALMPO,SUM(TOTALAREA)TOTALAREA,SUM(TOTALDIV)TOTALDIV,SUM(TOTALZH)TOTALZH,SUM(TOTALHEAD)TOTALHEAD,SUM(PRESENT)PRESENT,SUM(ABSENT)ABSENT,SUM(CL)CL,
-SUM(ML)ML FROM ATTEN_DASHBOARD_DETAILS
-WHERE TYPE='MPO'
- GROUP BY TEAM_NAME,ZONE,TYPE
- UNION ALL
- SELECT TEAM_NAME,ZONE,TYPE,SUM(TOTALMPO)TOTALMPO,SUM(TOTALAREA)TOTALAREA,SUM(TOTALDIV)TOTALDIV,SUM(TOTALZH)TOTALZH,SUM(TOTALHEAD)TOTALHEAD,SUM(PRESENT)PRESENT,SUM(ABSENT)ABSENT,SUM(CL)CL,
-SUM(ML)ML FROM ATTEN_DASHBOARD_DETAILS
-WHERE TYPE='AH'
- GROUP BY TEAM_NAME,ZONE,TYPE
- UNION ALL
- SELECT TEAM_NAME,ZONE,TYPE,SUM(TOTALMPO)TOTALMPO,SUM(TOTALAREA)TOTALAREA,SUM(TOTALDIV)TOTALDIV,SUM(TOTALZH)TOTALZH,SUM(TOTALHEAD)TOTALHEAD,SUM(PRESENT)PRESENT,SUM(ABSENT)ABSENT,SUM(CL)CL,
-SUM(ML)ML FROM ATTEN_DASHBOARD_DETAILS
-WHERE TYPE='DH'
- GROUP BY TEAM_NAME,ZONE,TYPE
- UNION ALL
- SELECT TEAM_NAME,ZONE,TYPE,SUM(TOTALMPO)TOTALMPO,SUM(TOTALAREA)TOTALAREA,SUM(TOTALDIV)TOTALDIV,SUM(TOTALZH)TOTALZH,SUM(TOTALHEAD)TOTALHEAD,SUM(PRESENT)PRESENT,SUM(ABSENT)ABSENT,SUM(CL)CL,
-SUM(ML)ML FROM ATTEN_DASHBOARD_DETAILS
-WHERE TYPE='ZH'
- GROUP BY TEAM_NAME,ZONE,TYPE
-";
+            string strSQL = @"SELECT TEAM_NAME,ZONE,DIV,AREA,TERRITORRY_NAME, MARKET_ROUTE_NMAE,TYPE,SUM(TOTALMPO)TOTALMPO,SUM(TOTALAREA)TOTALAREA,SUM(TOTALDIV)TOTALDIV,SUM(TOTALZH)TOTALZH,SUM(TOTALHEAD)TOTALHEAD,SUM(PRESENT)PRESENT,SUM(ABSENT)ABSENT,SUM(CL)CL,
+            SUM(ML)ML FROM ATTEN_DASHBOARD_DETAILS
+            WHERE TYPE='MPO'
+            GROUP BY TEAM_NAME,ZONE,DIV,AREA,TERRITORRY_NAME, MARKET_ROUTE_NMAE,TYPE
+            UNION ALL
+            SELECT TEAM_NAME,ZONE,DIV,AREA,TERRITORRY_NAME, MARKET_ROUTE_NMAE,TYPE,SUM(TOTALMPO)TOTALMPO,SUM(TOTALAREA)TOTALAREA,SUM(TOTALDIV)TOTALDIV,SUM(TOTALZH)TOTALZH,SUM(TOTALHEAD)TOTALHEAD,SUM(PRESENT)PRESENT,SUM(ABSENT)ABSENT,SUM(CL)CL,
+            SUM(ML)ML FROM ATTEN_DASHBOARD_DETAILS
+            WHERE TYPE='AH'
+            GROUP BY TEAM_NAME,ZONE,DIV,AREA,TERRITORRY_NAME, MARKET_ROUTE_NMAE,TYPE
+            UNION ALL
+            SELECT TEAM_NAME,ZONE,DIV,AREA,TERRITORRY_NAME, MARKET_ROUTE_NMAE,TYPE,SUM(TOTALMPO)TOTALMPO,SUM(TOTALAREA)TOTALAREA,SUM(TOTALDIV)TOTALDIV,SUM(TOTALZH)TOTALZH,SUM(TOTALHEAD)TOTALHEAD,SUM(PRESENT)PRESENT,SUM(ABSENT)ABSENT,SUM(CL)CL,
+            SUM(ML)ML FROM ATTEN_DASHBOARD_DETAILS
+            WHERE TYPE='DH'
+            GROUP BY TEAM_NAME,ZONE,DIV,AREA,TERRITORRY_NAME, MARKET_ROUTE_NMAE,TYPE
+            UNION ALL
+            SELECT TEAM_NAME,ZONE,DIV,AREA,TERRITORRY_NAME, MARKET_ROUTE_NMAE,TYPE,SUM(TOTALMPO)TOTALMPO,SUM(TOTALAREA)TOTALAREA,SUM(TOTALDIV)TOTALDIV,SUM(TOTALZH)TOTALZH,SUM(TOTALHEAD)TOTALHEAD,SUM(PRESENT)PRESENT,SUM(ABSENT)ABSENT,SUM(CL)CL,
+            SUM(ML)ML FROM ATTEN_DASHBOARD_DETAILS
+            WHERE TYPE='ZH'
+            GROUP BY TEAM_NAME,ZONE,DIV,AREA, TERRITORRY_NAME, MARKET_ROUTE_NMAE,TYPE";
 
             List<AttendentCongfig> resultList = new List<AttendentCongfig>();
-
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 using (SqlCommand command = new SqlCommand(strSQL, connection))
@@ -555,12 +572,16 @@ WHERE TYPE='ZH'
                         config.ML = Convert.ToInt32(reader["ML"] == DBNull.Value ? 0 : reader["ML"]);
                         config.TYPE = reader["TYPE"].ToString();
                         config.TEAM_NAME = reader["TEAM_NAME"].ToString();
+                        config.DIV = reader["DIV"].ToString();
+                        config.AREA = reader["AREA"].ToString();
+                        config.MARKET = reader["TERRITORRY_NAME"].ToString();
+                        config.MARKET_ROUTE_NMAE = reader["MARKET_ROUTE_NMAE"].ToString();
                         config.ZONE = reader["ZONE"].ToString();
                         config.TOTALMPO = reader["TOTALMPO"].ToString();
                         config.TOTALAREA = reader["TOTALAREA"].ToString();
                         config.TOTALDIV = reader["TOTALDIV"].ToString();
                         config.TOTALZH = reader["TOTALZH"].ToString();
-                        config.TOTALHEAD = reader["TOTALHEAD"].ToString(); 
+                        config.TOTALHEAD = reader["TOTALHEAD"].ToString();
                         resultList.Add(config);
                     }
 
@@ -571,6 +592,86 @@ WHERE TYPE='ZH'
             return resultList;
         }
 
+        public List<AttendentCongfig> mGetUserTotalAH(string vstrLedgerName)
+        {
+            string connectionString = Utility.SQLConnstringComSwitch("0001");
+            string strSQL = "SELECT MARKET,ROUTE_NMAE,TYPE,SUM(TOTALMPO)TOTALMPO,SUM(TOTALAREA)TOTALAREA,SUM(TOTALDIV)TOTALDIV,SUM(TOTALZH)TOTALZH,SUM(TOTALHEAD)TOTALHEAD,SUM(PRESENT)PRESENT,SUM(ABSENT)ABSENT,SUM(CL)CL,";
+            strSQL = strSQL + "SUM(ML)ML FROM ATTEN_DASHBOARD_DETAILS_AH ";
+            strSQL = strSQL + "WHERE TYPE='AH' AND AREA ='" + vstrLedgerName + "' ";
+            strSQL = strSQL + "GROUP BY MARKET,ROUTE_NMAE,TYPE ";
+            List<AttendentCongfig> resultList = new List<AttendentCongfig>();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(strSQL, connection))
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        AttendentCongfig config = new AttendentCongfig();
+                        config.PRESENT = Convert.ToInt32(reader["PRESENT"] == DBNull.Value ? 0 : reader["PRESENT"]);
+                        config.ABSENT = Convert.ToInt32(reader["ABSENT"] == DBNull.Value ? 0 : reader["ABSENT"]);
+                        config.CL = Convert.ToInt32(reader["CL"] == DBNull.Value ? 0 : reader["CL"]);
+                        config.ML = Convert.ToInt32(reader["ML"] == DBNull.Value ? 0 : reader["ML"]);
+                        config.TYPE = reader["TYPE"].ToString();
+                        config.TEAM_NAME = reader["MARKET"].ToString();
+                        config.ZONE = reader["ROUTE_NMAE"].ToString();
+                        config.TOTALMPO = reader["TOTALMPO"].ToString();
+                        config.TOTALAREA = reader["TOTALAREA"].ToString();
+                        config.TOTALDIV = reader["TOTALDIV"].ToString();
+                        config.TOTALZH = reader["TOTALZH"].ToString();
+                        config.TOTALHEAD = reader["TOTALHEAD"].ToString();
+                        resultList.Add(config);
+                    }
+
+                    reader.Close();
+                }
+            }
+
+            return resultList;
+        }
+
+        public List<AttendentCongfig> mGetUserTotalDH(string vstrLedgerName)
+        {
+            string connectionString = Utility.SQLConnstringComSwitch("0001");
+            string strSQL = "SELECT AREANAME,MARKET, ROUTE_NMAE,TYPE,SUM(TOTALMPO)TOTALMPO,SUM(TOTALAREA)TOTALAREA,SUM(TOTALDIV)TOTALDIV,SUM(TOTALZH)TOTALZH,SUM(TOTALHEAD)TOTALHEAD,SUM(PRESENT)PRESENT,SUM(ABSENT)ABSENT,SUM(CL)CL,";
+            strSQL = strSQL + "SUM(ML)ML FROM ATTEN_DASHBOARD_DETAILS_DH ";
+            strSQL = strSQL + "WHERE TYPE='DH' AND DIVISION ='" + vstrLedgerName + "' ";
+            strSQL = strSQL + "GROUP BY AREANAME,MARKET, ROUTE_NMAE,TYPE ";
+            List<AttendentCongfig> resultList = new List<AttendentCongfig>();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(strSQL, connection))
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        AttendentCongfig config = new AttendentCongfig();
+                        config.PRESENT = Convert.ToInt32(reader["PRESENT"] == DBNull.Value ? 0 : reader["PRESENT"]);
+                        config.ABSENT = Convert.ToInt32(reader["ABSENT"] == DBNull.Value ? 0 : reader["ABSENT"]);
+                        config.CL = Convert.ToInt32(reader["CL"] == DBNull.Value ? 0 : reader["CL"]);
+                        config.ML = Convert.ToInt32(reader["ML"] == DBNull.Value ? 0 : reader["ML"]);
+                        config.TYPE = reader["TYPE"].ToString();
+                        config.TEAM_NAME = reader["AREANAME"].ToString();
+                        config.ZONE = reader["MARKET"].ToString();
+                        config.strROUTE = reader["ROUTE_NMAE"].ToString();
+                        config.TOTALMPO = reader["TOTALMPO"].ToString();
+                        config.TOTALAREA = reader["TOTALAREA"].ToString();
+                        config.TOTALDIV = reader["TOTALDIV"].ToString();
+                        config.TOTALZH = reader["TOTALZH"].ToString();
+                        config.TOTALHEAD = reader["TOTALHEAD"].ToString();
+                        resultList.Add(config);
+                    }
+
+                    reader.Close();
+                }
+            }
+
+            return resultList;
+        }
 
 
 

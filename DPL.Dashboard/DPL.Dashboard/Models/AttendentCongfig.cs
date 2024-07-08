@@ -8,6 +8,7 @@ namespace DPL.DASHBOARD.Models
     public class AttendentCongfig
     {
 
+        public string AREA { get; set; }
         public string strATTEN_SHIFT { get; set; }
 
         public string strATTEN_DATEIN { get; set; }
@@ -98,5 +99,13 @@ namespace DPL.DASHBOARD.Models
         public string TOTALZH { get; set; }
 
         public string TOTALHEAD { get; set; }
+
+        public string DIV { get; set; }
+
+        public string MARKET { get; set; }
+
+        public string strROUTE { get; set; }
+
+        public string MARKET_ROUTE_NMAE { get; set; }
     }
 }

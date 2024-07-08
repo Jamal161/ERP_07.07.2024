@@ -196,6 +196,7 @@
 
                         <div class="col-sm-4" style="background-color: #fff; width: 490px; height: 350px; padding: 10px; margin-bottom: 10px; ">
                             @*<div class="well">*@
+
                             <table class="table  " id="idshifttable">
                                 <h4>Team Wise Attendance</h4>
 
@@ -211,7 +212,7 @@
                                         <th>%</th>
                                     </tr>
                                 </thead>
-                                <tbody class="tbody"> </tbody>
+                                <tbody class="tbody" > </tbody>
                             </table>
                             @*</div>*@
                         </div>
@@ -401,15 +402,41 @@
                 dataType: 'json',
                 success: function (data) {
                     displayData(data);
+
                     $('.tbody').on('click', 'td.team-name', function () {
                         var teamName = $(this).text();
                         var zoneListData = data.filter(zone => zone.TEAM_NAME === teamName);
                         displayZoneData(zoneListData);
-                        $('.tbody').append('<tr><td colspan="6"><button class="previousButton">Previous</button></td></tr>');
 
-                        $('.previousButton').on('click', function () {
-                            displayData(data);
-                            drawAttendanceChart(data, '');
+                        $('.tbody').on('click', 'td.zone-name', function () {
+                            var zoneName = $(this).text();
+                            var divListData = data.filter(div => div.ZONE === zoneName && div.TEAM_NAME === teamName);
+                            displayDivData(divListData);
+
+                            $('.tbody').on('click', 'td.div-name', function () {
+                                var divName = $(this).text();
+                                var areaListData = data.filter(area => area.DIV === divName && area.ZONE === zoneName && area.TEAM_NAME === teamName);
+                                displayAreaData(areaListData);
+
+                                $('.tbody').on('click', 'td.area-name', function () {
+                                    var areaName = $(this).text();
+                                    var marketListData = data.filter(market => market.AREA === areaName && market.DIV === divName && market.ZONE === zoneName && market.TEAM_NAME === teamName);
+                                    displayMarketData(marketListData);
+
+                                    $('.tbody').on('click', 'td.market-name', function () {
+                                        var marketName = $(this).text();
+                                        var marketrouteListData = data.filter(marketroute => marketroute.MARKET === marketName && marketroute.AREA === areaName && marketroute.DIV === divName && marketroute.ZONE === zoneName && marketroute.TEAM_NAME === teamName);
+                                        displayMarketrouteData(marketrouteListData);
+
+                                        $('.tbody').append('<tr><td colspan="6"><button class="previousButton">Previous</button></td></tr>');
+                                        $('.previousButton').on('click', function () {
+                                            displayData(data);
+                                            drawAttendanceChart(data, '');
+                                        });
+                                        drawAttendanceChart(marketrouteListData, marketName);
+                                    });
+                                });
+                            });
                         });
                         drawAttendanceChart(zoneListData, teamName);
                     });
@@ -444,8 +471,8 @@
             for (const [teamName, teamStats] of Object.entries(teamData)) {
                 html += '<tr>';
                 html += '<td class="team-name">' + teamName + '</td>';
-                html += '<td >' + teamStats.TOTALMPO + '</td>';
-                html += '<td >' + teamStats.PRESENT + '</td>';
+                html += '<td>' + teamStats.TOTALMPO + '</td>';
+                html += '<td>' + teamStats.PRESENT + '</td>';
                 html += '<td>' + (teamStats.TOTALMPO - teamStats.PRESENT - teamStats.ABSENT) + '</td>';
                 html += '<td>' + teamStats.ABSENT + '</td>';
                 html += '<td>' + ((teamStats.TOTALMPO > 0) ? ((teamStats.PRESENT / teamStats.TOTALMPO) * 100).toFixed(2) : 0) + '%</td>';
@@ -458,20 +485,102 @@
 
         function displayZoneData(zoneListData) {
             var html = '';
-            var zonList = [];
-            var totalMPO = 0;
+            var zoneList = [];
 
             zoneListData.forEach(function (zone) {
-                totalMPO += parseInt(zone.TOTALMPO);
-                if (!zonList.includes(zone.ZONE)) {
-                    zonList.push(zone.ZONE);
+                if (!zoneList.includes(zone.ZONE)) {
+                    zoneList.push(zone.ZONE);
                     html += '<tr>';
-                    html += '<td>' + zone.ZONE + '</td>';
+                    html += '<td class="zone-name">' + zone.ZONE + '</td>';
                     html += '<td>' + zone.TOTALMPO + '</td>';
                     html += '<td>' + zone.PRESENT + '</td>';
                     html += '<td>' + (zone.TOTALMPO - zone.PRESENT - zone.ABSENT) + '</td>';
                     html += '<td>' + zone.ABSENT + '</td>';
                     html += '<td>' + ((zone.TOTALMPO > 0) ? ((zone.PRESENT / zone.TOTALMPO) * 100).toFixed(2) : 0) + '%</td>';
+                    html += '</tr>';
+                }
+            });
+
+            $('.tbody').html(html);
+        }
+
+        function displayDivData(divListData) {
+            var html = '';
+            var divList = [];
+
+            divListData.forEach(function (div) {
+                if (!divList.includes(div.DIV)) {
+                    divList.push(div.DIV);
+                    html += '<tr>';
+                    html += '<td class="div-name">' + div.DIV + '</td>';
+                    html += '<td>' + div.TOTALMPO + '</td>';
+                    html += '<td>' + div.PRESENT + '</td>';
+                    html += '<td>' + (div.TOTALMPO - div.PRESENT - div.ABSENT) + '</td>';
+                    html += '<td>' + div.ABSENT + '</td>';
+                    html += '<td>' + ((div.TOTALMPO > 0) ? ((div.PRESENT / div.TOTALMPO) * 100).toFixed(2) : 0) + '%</td>';
+                    html += '</tr>';
+                }
+            });
+
+            $('.tbody').html(html);
+        }
+
+        function displayAreaData(areaListData) {
+            var html = '';
+            var areaList = [];
+
+            areaListData.forEach(function (area) {
+                if (!areaList.includes(area.AREA)) {
+                    areaList.push(area.AREA);
+                    html += '<tr>';
+                    html += '<td class="area-name">' + area.AREA + '</td>';
+                    html += '<td>' + area.TOTALMPO + '</td>';
+                    html += '<td>' + area.PRESENT + '</td>';
+                    html += '<td>' + (area.TOTALMPO - area.PRESENT - area.ABSENT) + '</td>';
+                    html += '<td>' + area.ABSENT + '</td>';
+                    html += '<td>' + ((area.TOTALMPO > 0) ? ((area.PRESENT / area.TOTALMPO) * 100).toFixed(2) : 0) + '%</td>';
+                    html += '</tr>';
+                }
+            });
+
+            $('.tbody').html(html);
+        }
+
+        function displayMarketData(marketListData) {
+            var html = '';
+            var marketList = [];
+
+            marketListData.forEach(function (market) {
+                if (!marketList.includes(market.MARKET)) {
+                    marketList.push(market.MARKET);
+                    html += '<tr>';
+                    html += '<td class="market-name">' + market.MARKET + '</td>';
+                    html += '<td>' + market.TOTALMPO + '</td>';
+                    html += '<td>' + market.PRESENT + '</td>';
+                    html += '<td>' + (market.TOTALMPO - market.PRESENT - market.ABSENT) + '</td>';
+                    html += '<td>' + market.ABSENT + '</td>';
+                    html += '<td>' + ((market.TOTALMPO > 0) ? ((market.PRESENT / market.TOTALMPO) * 100).toFixed(2) : 0) + '%</td>';
+                    html += '</tr>';
+                }
+            });
+
+            $('.tbody').html(html);
+        }
+
+        function displayMarketrouteData(marketroutesListData) {
+            var html = '';
+            var marketrouteList = [];
+
+            marketroutesListData.forEach(function (marketroute) {
+                if (!marketrouteList.includes(marketroute.MARKET_ROUTE_NMAE)) {
+                    marketrouteList.push(marketroute.MARKET_ROUTE_NMAE);
+                    html += '<tr>';
+                    html += '<td>' + marketroute.MARKET_ROUTE_NMAE + '</td>';
+                    html += '<td>' + marketroute.TOTALMPO + '</td>';
+                    html += '<td>' + marketroute.PRESENT + '</td>';
+                    html += '<td>' + (marketroute.TOTALMPO - marketroute.PRESENT - marketroute.ABSENT) + '</td>';
+                    html += '<td>' + marketroute.ABSENT + '</td>';
+                    html += '<td>' + ((marketroute.TOTALMPO > 0) ? ((marketroute.PRESENT / marketroute.TOTALMPO) * 100).toFixed(2) : 0) + '%</td>';
                     html += '</tr>';
                 }
             });
@@ -571,16 +680,6 @@
             icon.setAttribute('fill', color);
             return icon;
         }
-
-
-
-
-
-
-
-
-
-
 
 
 

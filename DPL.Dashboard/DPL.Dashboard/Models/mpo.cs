@@ -60,4 +60,3 @@ namespace DPL.DASHBOARD.Models
 
 
 
-console.log(grouped)
