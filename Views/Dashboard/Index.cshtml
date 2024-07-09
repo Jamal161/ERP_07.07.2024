@@ -218,7 +218,7 @@
             };
 
             $.ajax({
-                url: '/Attendence/mGetPercent',
+                url: '/Attendence/mGetKibriadatalist',
                 dataType: "json",
                 type: "GET",
                 success: function (data) {
@@ -231,15 +231,15 @@
                     var leaveValue = 0;
 
                     $.each(data, function (index, item) {
-                        var presentValue = item.intTotal - item.intAbsent - item.intLeave;
+                        var presentValue = item.NOMPO - item.ABSENT - item.LEAVE;
                         arrValues.push(['Present', presentValue]);
                         arrValues.push(['Absent', item.intAbsent]);
                         arrValues.push(['Leave', item.intLeave]);
 
-                        totalValue += presentValue + item.intAbsent + item.intLeave;
-                        presentId += item.intTotal - item.intAbsent - item.intLeave;
-                        absentValue += item.intAbsent;
-                        leaveValue += item.intLeave;
+                        totalValue += presentValue + item.ABSENT + item.LEAVE;
+                        presentId += item.intTotal - item.ABSENT - item.LEAVE;
+                        absentValue += item.ABSENT;
+                        leaveValue += item.LEAVE;
                     });
 
                     var dataTable = google.visualization.arrayToDataTable(arrValues);

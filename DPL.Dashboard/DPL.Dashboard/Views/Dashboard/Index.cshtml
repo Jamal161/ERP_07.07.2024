@@ -21,7 +21,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
 
 
 </head>
@@ -277,347 +281,246 @@
 
     <script>
 
-
-
-
-        $(document).ready(function () {
-            loadData2();
-        });
-
-        function loadData2() {
-            $.ajax({
-                url: "/Attendence/mGetTotal",
-                type: "GET",
-                contentType: 'application/json;charset=utf-8',
-                dataType: "json",
-                success: function (result) {
-                    console.log("Result from server:", result);
-
-                    let html = '';
-                    const groupedData = groupBy(result, 'TYPE');
-
-                    for (const [type, items] of Object.entries(groupedData)) {
-                        if (Array.isArray(items) && type && type.trim() !== '' && items.length > 0) {
-                        const totalMPOCounts = countTotalMPO(items);
-
-                        const totalMPOS = items.reduce((acc, obj) => acc + parseInt(obj.TOTALMPO.trim()), 0);
-                        const totalAH = items.reduce((acc, obj) => acc + parseInt(obj.TOTALAREA.trim()), 0);
-                        const totalDH = items.reduce((acc, obj) => acc + parseInt(obj.TOTALDIV.trim()), 0);
-                        const totalZH = items.reduce((acc, obj) => acc + parseInt(obj.TOTALZH.trim()), 0);
-
-                        const presentCount = items.reduce((acc, obj) => acc + (obj.PRESENT || 0), 0);
-                        const absentCount = items.reduce((acc, obj) => acc + (obj.ABSENT || 0), 0);
-                        //const leaveCount = items.reduce((acc, obj) => acc + (obj.LEAVE || 0), 0);
-                        const leaveCount = totalMPOS - presentCount - absentCount;
-                        const leaveCountah = totalAH - presentCount - absentCount;
-                        const leaveCountdh = totalDH - presentCount - absentCount;
-                        const leaveCountzh = totalZH - presentCount - absentCount;
-
-                        const presentPercentage = totalMPOS > 0 ? ((presentCount / totalMPOS) * 100).toFixed(2) : '0.00';
-                        const presentPercentageAH = totalAH > 0 ? ((presentCount / totalAH) * 100).toFixed(2) : '0.00';
-                        const presentPercentageDH = totalDH > 0 ? ((presentCount / totalDH) * 100).toFixed(2) : '0.00';
-                        const presentPercentageZH = totalZH > 0 ? ((presentCount / totalZH) * 100).toFixed(2) : '0.00';
-
-                        html += `<tr>`;
-                        html += `<td>${type}</td>`;
-                        html += `<td>${formatValue(totalMPOS)} ${formatValue(totalAH)} ${formatValue(totalDH)} ${formatValue(totalZH)}</td>`;
-                        html += `<td>${presentCount}</td>`;
-                        html += `<td>${formatValue(leaveCount)}${formatValue(leaveCountah)}${formatValue(leaveCountdh)}${formatValue(leaveCountzh)}</td>`;
-                        html += `<td>${absentCount}</td>`;
-                        html +=  `<td>${formatValue(presentPercentage)} ${formatValue(presentPercentageAH)} ${formatValue(presentPercentageDH)} ${formatValue(presentPercentageZH)}%</td>`;
-                        html += `</tr>`;
-                    } else {
-                            console.log("Invalid items for type:", type, items);
-                }
-            }
-                    $('.tbody-role').append(html);
-        },
-        error: function (errormessage) {
-            console.error("Error fetching data:", errormessage);
-            alert(errormessage.responseText);
-        }
-        });
-        }
-
-        function groupBy(array, key) {
-            if (!Array.isArray(array)) {
-                console.error("Expected array but got:", array);
-                return {};
-            }
-            return array.reduce((acc, obj) => {
-                const property = obj[key];
-            if (property) {
-                acc[property] = acc[property] || [];
-                acc[property].push(obj);
-            }
-            return acc;
-        }, {});
-        }
-
-        function countTotalMPO(items) {
-            const counts = {};
-            let total = 0;
-
-            items.forEach(item => {
-                const totalMPO = item.TOTALMPO.trim();
-            counts[totalMPO] = (counts[totalMPO] || 0) + 1;
-            total++;
-        });
-
-        return { counts, total };
-        }
-
-        function formatValue(value) {
-            return (value && value > 0) ? value.toLocaleString().trim() : '';
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
 
 
         $(document).ready(function () {
-            google.charts.load('current', { 'packages': ['corechart'] });
-            google.charts.setOnLoadCallback(loadData);
-        });
+            var currentStatus = 'all';
+            var currentPage = 1;
+            var pageSize = 10; 
 
-        function loadData() {
-            $.ajax({
-                url: '/Attendence/mGetTotal',
-                type: 'GET',
-                contentType: 'application/json;charset=utf-8',
-                dataType: 'json',
-                success: function (data) {
-                    displayData(data);
+            loadData(currentStatus, currentPage);
 
-                    $('.tbody').on('click', 'td.team-name', function () {
-                        var teamName = $(this).text();
-                        var zoneListData = data.filter(zone => zone.TEAM_NAME === teamName);
-                        displayZoneData(zoneListData);
+            function loadData(status, page) {
+                $.ajax({
+                    url: "/Attendence/mGetKibriadatalist",
+                    type: "GET",
+                    contentType: 'application/json;charset=utf-8',
+                    dataType: "json",
+                    success: function (result) {
+                        var filteredData = filterDataByStatus(result, status);
+                        var paginatedData = paginateData(filteredData, page, pageSize);
 
-                        $('.tbody').on('click', 'td.zone-name', function () {
-                            var zoneName = $(this).text();
-                            var divListData = data.filter(div => div.ZONE === zoneName && div.TEAM_NAME === teamName);
-                            displayDivData(divListData);
+                        updatePaginationControls(page, filteredData.length);
 
-                            $('.tbody').on('click', 'td.div-name', function () {
-                                var divName = $(this).text();
-                                var areaListData = data.filter(area => area.DIV === divName && area.ZONE === zoneName && area.TEAM_NAME === teamName);
-                                displayAreaData(areaListData);
-
-                                $('.tbody').on('click', 'td.area-name', function () {
-                                    var areaName = $(this).text();
-                                    var marketListData = data.filter(market => market.AREA === areaName && market.DIV === divName && market.ZONE === zoneName && market.TEAM_NAME === teamName);
-                                    displayMarketData(marketListData);
-
-                                    $('.tbody').on('click', 'td.market-name', function () {
-                                        var marketName = $(this).text();
-                                        var marketrouteListData = data.filter(marketroute => marketroute.MARKET === marketName && marketroute.AREA === areaName && marketroute.DIV === divName && marketroute.ZONE === zoneName && marketroute.TEAM_NAME === teamName);
-                                        displayMarketrouteData(marketrouteListData);
-
-                                        $('.tbody').append('<tr><td colspan="6"><button class="previousButton">Previous</button></td></tr>');
-                                        $('.previousButton').on('click', function () {
-                                            displayData(data);
-                                            drawAttendanceChart(data, '');
-                                        });
-                                        drawAttendanceChart(marketrouteListData, marketName);
-                                    });
-                                });
-                            });
+                        var html = '';
+                        $.each(paginatedData, function (key, item) {
+                            html += '<tr>';
+                            html += '<td>' + item.TEAM_NAME + '</td>';
+                            html += '<td>' + item.NOMPO + '</td>';
+                            html += '<td>' + item.Present + '</td>';
+                            html += '<td>' + item.LEAVE + '</td>';
+                            html += '<td>' + item.ABSENT + '</td>';
+                            html += '<td>' +  ((item.Present / item.NOMPO) * 100).toFixed(2) + '%</td>';
+                       
+                            html += '</tr>';
                         });
-                        drawAttendanceChart(zoneListData, teamName);
-                    });
-                },
-                error: function (xhr, status, error) {
-                    console.error("AJAX Error:", error);
-                    $('.tbody').html('<tr><td colspan="6">Error loading data. Please try again later.</td></tr>');
-                }
-            });
-        }
-
-        function displayData(data) {
-            var html = '';
-            var teamList = [];
-            var teamData = {};
-
-            data.forEach(function (item) {
-                if (!teamList.includes(item.TEAM_NAME)) {
-                    teamList.push(item.TEAM_NAME);
-                    teamData[item.TEAM_NAME] = {
-                        TOTALMPO: parseInt(item.TOTALMPO),
-                        PRESENT: parseInt(item.PRESENT),
-                        ABSENT: parseInt(item.ABSENT)
-                    };
-                } else {
-                    teamData[item.TEAM_NAME].TOTALMPO += parseInt(item.TOTALMPO);
-                    teamData[item.TEAM_NAME].PRESENT += parseInt(item.PRESENT);
-                    teamData[item.TEAM_NAME].ABSENT += parseInt(item.ABSENT);
-                }
-            });
-
-            for (const [teamName, teamStats] of Object.entries(teamData)) {
-                html += '<tr>';
-                html += '<td class="team-name">' + teamName + '</td>';
-                html += '<td>' + teamStats.TOTALMPO + '</td>';
-                html += '<td>' + teamStats.PRESENT + '</td>';
-                html += '<td>' + (teamStats.TOTALMPO - teamStats.PRESENT - teamStats.ABSENT) + '</td>';
-                html += '<td>' + teamStats.ABSENT + '</td>';
-                html += '<td>' + ((teamStats.TOTALMPO > 0) ? ((teamStats.PRESENT / teamStats.TOTALMPO) * 100).toFixed(2) : 0) + '%</td>';
-                html += '</tr>';
+                        $('.tbody-role').append(html);
+                    },
+                    error: function (errormessage) {
+                        alert(errormessage.responseText);
+                    }
+                });
             }
 
-        $('.tbody').html(html);
-        drawAttendanceChart(data, '');
-        }
+            function filterDataByStatus(data, status) {
+                if (status === 'Active') {
+                    return data.filter(item => item.strOtStatus === 'Active');
+                } else if (status === 'Inactive') {
+                    return data.filter(item => item.strOtStatus === 'Inactive');
+                } else {
+                    return data;
+                }
+            }
 
-        function displayZoneData(zoneListData) {
-            var html = '';
-            var zoneList = [];
+            function paginateData(data, page, pageSize) {
+                var startIndex = (page - 1) * pageSize;
+                return data.slice(startIndex, startIndex + pageSize);
+            }
 
-            zoneListData.forEach(function (zone) {
-                if (!zoneList.includes(zone.ZONE)) {
-                    zoneList.push(zone.ZONE);
-                    html += '<tr>';
-                    html += '<td class="zone-name">' + zone.ZONE + '</td>';
-                    html += '<td>' + zone.TOTALMPO + '</td>';
-                    html += '<td>' + zone.PRESENT + '</td>';
-                    html += '<td>' + (zone.TOTALMPO - zone.PRESENT - zone.ABSENT) + '</td>';
-                    html += '<td>' + zone.ABSENT + '</td>';
-                    html += '<td>' + ((zone.TOTALMPO > 0) ? ((zone.PRESENT / zone.TOTALMPO) * 100).toFixed(2) : 0) + '%</td>';
-                    html += '</tr>';
+            function updatePaginationControls(currentPage, totalItems) {
+                var totalPages = Math.ceil(totalItems / pageSize);
+                $('#paginationPrevious').prop('disabled', currentPage === 1);
+                $('#paginationNext').prop('disabled', currentPage === totalPages);
+            }
+
+            $('#btnShowAll').on('click', function () {
+                currentStatus = 'all';
+                currentPage = 1;
+                loadData(currentStatus, currentPage);
+            });
+
+            $('#btnShowActive').on('click', function () {
+                currentStatus = 'Active';
+                currentPage = 1;
+                loadData(currentStatus, currentPage);
+            });
+
+            $('#btnShowInactive').on('click', function () {
+                currentStatus = 'Inactive';
+                currentPage = 1;
+                loadData(currentStatus, currentPage);
+            });
+
+            $('#paginationPrevious').on('click', function () {
+                if (currentPage > 1) {
+                    currentPage--;
+                    loadData(currentStatus, currentPage);
                 }
             });
 
-            $('.tbody').html(html);
-        }
-
-        function displayDivData(divListData) {
-            var html = '';
-            var divList = [];
-
-            divListData.forEach(function (div) {
-                if (!divList.includes(div.DIV)) {
-                    divList.push(div.DIV);
-                    html += '<tr>';
-                    html += '<td class="div-name">' + div.DIV + '</td>';
-                    html += '<td>' + div.TOTALMPO + '</td>';
-                    html += '<td>' + div.PRESENT + '</td>';
-                    html += '<td>' + (div.TOTALMPO - div.PRESENT - div.ABSENT) + '</td>';
-                    html += '<td>' + div.ABSENT + '</td>';
-                    html += '<td>' + ((div.TOTALMPO > 0) ? ((div.PRESENT / div.TOTALMPO) * 100).toFixed(2) : 0) + '%</td>';
-                    html += '</tr>';
-                }
+            $('#paginationNext').on('click', function () {
+                currentPage++;
+                loadData(currentStatus, currentPage);
             });
+        });
 
-            $('.tbody').html(html);
-        }
 
-        function displayAreaData(areaListData) {
-            var html = '';
-            var areaList = [];
 
-            areaListData.forEach(function (area) {
-                if (!areaList.includes(area.AREA)) {
-                    areaList.push(area.AREA);
-                    html += '<tr>';
-                    html += '<td class="area-name">' + area.AREA + '</td>';
-                    html += '<td>' + area.TOTALMPO + '</td>';
-                    html += '<td>' + area.PRESENT + '</td>';
-                    html += '<td>' + (area.TOTALMPO - area.PRESENT - area.ABSENT) + '</td>';
-                    html += '<td>' + area.ABSENT + '</td>';
-                    html += '<td>' + ((area.TOTALMPO > 0) ? ((area.PRESENT / area.TOTALMPO) * 100).toFixed(2) : 0) + '%</td>';
-                    html += '</tr>';
-                }
-            });
 
-            $('.tbody').html(html);
-        }
 
-        function displayMarketData(marketListData) {
-            var html = '';
-            var marketList = [];
 
-            marketListData.forEach(function (market) {
-                if (!marketList.includes(market.MARKET)) {
-                    marketList.push(market.MARKET);
-                    html += '<tr>';
-                    html += '<td class="market-name">' + market.MARKET + '</td>';
-                    html += '<td>' + market.TOTALMPO + '</td>';
-                    html += '<td>' + market.PRESENT + '</td>';
-                    html += '<td>' + (market.TOTALMPO - market.PRESENT - market.ABSENT) + '</td>';
-                    html += '<td>' + market.ABSENT + '</td>';
-                    html += '<td>' + ((market.TOTALMPO > 0) ? ((market.PRESENT / market.TOTALMPO) * 100).toFixed(2) : 0) + '%</td>';
-                    html += '</tr>';
-                }
-            });
+        //$(document).ready(function () {
+        //    loadData2();
+        //});
 
-            $('.tbody').html(html);
-        }
+        //function loadData2() {
+        //    $.ajax({
+        //        url: "/Attendence/mGetTotal",
+        //        type: "GET",
+        //        contentType: 'application/json;charset=utf-8',
+        //        dataType: "json",
+        //        success: function (result) {
+        //            console.log("Result from server:", result);
 
-        function displayMarketrouteData(marketroutesListData) {
-            var html = '';
-            var marketrouteList = [];
+        //            let html = '';
+        //            const groupedData = groupBy(result, 'TYPE');
 
-            marketroutesListData.forEach(function (marketroute) {
-                if (!marketrouteList.includes(marketroute.MARKET_ROUTE_NMAE)) {
-                    marketrouteList.push(marketroute.MARKET_ROUTE_NMAE);
-                    html += '<tr>';
-                    html += '<td>' + marketroute.MARKET_ROUTE_NMAE + '</td>';
-                    html += '<td>' + marketroute.TOTALMPO + '</td>';
-                    html += '<td>' + marketroute.PRESENT + '</td>';
-                    html += '<td>' + (marketroute.TOTALMPO - marketroute.PRESENT - marketroute.ABSENT) + '</td>';
-                    html += '<td>' + marketroute.ABSENT + '</td>';
-                    html += '<td>' + ((marketroute.TOTALMPO > 0) ? ((marketroute.PRESENT / marketroute.TOTALMPO) * 100).toFixed(2) : 0) + '%</td>';
-                    html += '</tr>';
-                }
-            });
+        //            for (const [type, items] of Object.entries(groupedData)) {
+        //                if (Array.isArray(items) && type && type.trim() !== '' && items.length > 0) {
+        //                const totalMPOCounts = countTotalMPO(items);
 
-            $('.tbody').html(html);
-        }
+        //                const totalMPOS = items.reduce((acc, obj) => acc + parseInt(obj.TOTALMPO.trim()), 0);
+        //                const totalAH = items.reduce((acc, obj) => acc + parseInt(obj.TOTALAREA.trim()), 0);
+        //                const totalDH = items.reduce((acc, obj) => acc + parseInt(obj.TOTALDIV.trim()), 0);
+        //                const totalZH = items.reduce((acc, obj) => acc + parseInt(obj.TOTALZH.trim()), 0);
 
-        function drawAttendanceChart(data, teamName) {
+        //                const presentCount = items.reduce((acc, obj) => acc + (obj.PRESENT || 0), 0);
+        //                const absentCount = items.reduce((acc, obj) => acc + (obj.ABSENT || 0), 0);
+        //                //const leaveCount = items.reduce((acc, obj) => acc + (obj.LEAVE || 0), 0);
+        //                const leaveCount = totalMPOS - presentCount - absentCount;
+        //                const leaveCountah = totalAH - presentCount - absentCount;
+        //                const leaveCountdh = totalDH - presentCount - absentCount;
+        //                const leaveCountzh = totalZH - presentCount - absentCount;
+
+        //                const presentPercentage = totalMPOS > 0 ? ((presentCount / totalMPOS) * 100).toFixed(2) : '0.00';
+        //                const presentPercentageAH = totalAH > 0 ? ((presentCount / totalAH) * 100).toFixed(2) : '0.00';
+        //                const presentPercentageDH = totalDH > 0 ? ((presentCount / totalDH) * 100).toFixed(2) : '0.00';
+        //                const presentPercentageZH = totalZH > 0 ? ((presentCount / totalZH) * 100).toFixed(2) : '0.00';
+
+        //                html += `<tr>`;
+        //                html += `<td>${type}</td>`;
+        //                html += `<td>${formatValue(totalMPOS)} ${formatValue(totalAH)} ${formatValue(totalDH)} ${formatValue(totalZH)}</td>`;
+        //                html += `<td>${presentCount}</td>`;
+        //                html += `<td>${formatValue(leaveCount)}${formatValue(leaveCountah)}${formatValue(leaveCountdh)}${formatValue(leaveCountzh)}</td>`;
+        //                html += `<td>${absentCount}</td>`;
+        //                html +=  `<td>${formatValue(presentPercentage)} ${formatValue(presentPercentageAH)} ${formatValue(presentPercentageDH)} ${formatValue(presentPercentageZH)}%</td>`;
+        //                html += `</tr>`;
+        //            } else {
+        //                    console.log("Invalid items for type:", type, items);
+        //        }
+        //    }
+        //            $('.tbody-role').append(html);
+        //},
+        //error: function (errormessage) {
+        //    console.error("Error fetching data:", errormessage);
+        //    alert(errormessage.responseText);
+        //}
+        //});
+        //}
+
+        //function groupBy(array, key) {
+        //    if (!Array.isArray(array)) {
+        //        console.error("Expected array but got:", array);
+        //        return {};
+        //    }
+        //    return array.reduce((acc, obj) => {
+        //        const property = obj[key];
+        //    if (property) {
+        //        acc[property] = acc[property] || [];
+        //        acc[property].push(obj);
+        //    }
+        //    return acc;
+        //}, {});
+        //}
+
+        //function countTotalMPO(items) {
+        //    const counts = {};
+        //    let total = 0;
+
+        //    items.forEach(item => {
+        //        const totalMPO = item.TOTALMPO.trim();
+        //    counts[totalMPO] = (counts[totalMPO] || 0) + 1;
+        //    total++;
+        //});
+
+        //return { counts, total };
+        //}
+
+        //function formatValue(value) {
+        //    return (value && value > 0) ? value.toLocaleString().trim() : '';
+        //}
+
+        google.load("visualization", "44", { packages: ["corechart"] });
+
+        google.setOnLoadCallback(drawAttendanceChart);
+
+        function drawAttendanceChart() {
             var options = {
-                pieHole: 0.8,
-                pieSliceTextStyle: { color: 'transparent' },
+                pieHole: 0.850,
                 legend: 'none',
                 title: '',
                 colors: ['#58F3D1', '#FF8E8E', '#383838']
             };
 
-            var presentValue = 0;
-            var absentValue = 0;
-            var leaveValue = 0;
+            $.ajax({
+                url: '/Attendence/mGetPercent',
+                dataType: "json",
+                type: "GET",
+                success: function (data) {
+                    //console.log(data);
 
-            data.forEach(function (item) {
-                presentValue += parseInt(item.PRESENT);
-                absentValue += parseInt(item.ABSENT);
-                leaveValue += parseInt(item.TOTALMPO) - parseInt(item.PRESENT) - parseInt(item.ABSENT);
+                    var arrValues = [['Category', 'Count']];
+                    var totalValue = 0;
+                    var presentId = 0;
+                    var absentValue = 0;
+                    var leaveValue = 0;
+
+                    $.each(data, function (index, item) {
+                        var presentValue = item.intTotal - item.intAbsent - item.intLeave;
+                        arrValues.push(['Present', presentValue]);
+                        arrValues.push(['Absent', item.intAbsent]);
+                        arrValues.push(['Leave', item.intLeave]);
+
+                        totalValue += presentValue + item.intAbsent + item.intLeave;
+                        presentId += item.intTotal - item.intAbsent - item.intLeave;
+                        absentValue += item.intAbsent;
+                        leaveValue += item.intLeave;
+                    });
+
+                    var dataTable = google.visualization.arrayToDataTable(arrValues);
+                    var chart = new google.visualization.PieChart(document.getElementById('b_sale'));
+                    chart.draw(dataTable, options);
+
+                    drawTitleAndTotal(chart, options.title, totalValue, presentId, absentValue, leaveValue);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('There was an Error');
+                }
             });
-
-            var totalValue = presentValue + absentValue + leaveValue;
-            var arrValues = [['Status', 'Count'], ['Present', presentValue], ['Absent', absentValue], ['Leave', leaveValue]];
-
-            var dataTable = google.visualization.arrayToDataTable(arrValues);
-            var chart = new google.visualization.PieChart(document.getElementById('b_sale'));
-            chart.draw(dataTable, options);
-
-            drawTitleAndTotal(chart, teamName, totalValue, presentValue, absentValue, leaveValue);
         }
 
-        function drawTitleAndTotal(chart, teamName, totalValue, presentValue, absentValue, leaveValue) {
+        function drawTitleAndTotal(chart, title, totalValue, presentId, absentValue, leaveValue) {
             var chartContainer = chart.getContainer();
             var svg = chartContainer.getElementsByTagName('svg')[0];
 
@@ -626,22 +529,24 @@
                 svg.removeChild(icon);
             });
 
-            var centerX = chartContainer.clientWidth / 2;
+            var centerX = chartContainer.clientWidth / 2.5;
             var centerY = chartContainer.clientHeight / 2;
 
             var titleText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            titleText.setAttribute('id', 'titleText');
             titleText.setAttribute('x', centerX);
             titleText.setAttribute('y', centerY - 40);
             titleText.setAttribute('text-anchor', 'middle');
             titleText.setAttribute('dominant-baseline', 'middle');
-            titleText.setAttribute('font-size', '12');
+            titleText.setAttribute('font-size', '18');
             titleText.setAttribute('font-weight', 'bold');
-            titleText.textContent = teamName;
+            titleText.setAttribute('fill', 'transparent');
+            titleText.textContent = title;
 
-            createAndAppendTextElement(svg, 'Present: ', centerX, centerY + 120, '#58F3D1', presentValue);
-            createAndAppendTextElement(svg, 'Absent: ', centerX, centerY + 140, '#FF8E8E', absentValue);
-            createAndAppendTextElement(svg, 'Leave: ', centerX, centerY + 160, '#383838', leaveValue);
-            createAndAppendTextElement(svg, 'Total: ' + totalValue, centerX, centerY, '#FFFFFF');
+            createAndAppendTextElement(svg, 'Present: ', centerX - 0, centerY + 120, '#58F3D1', presentId);
+            createAndAppendTextElement(svg, 'Absent: ', centerX - 0, centerY + 140, '#FF8E8E', absentValue);
+            createAndAppendTextElement(svg, 'Leave: ', centerX + 0, centerY + 160, '#383838', leaveValue);
+            createAndAppendTextElement(svg, 'Total: ' + totalValue, centerX + 20, centerY + 0, '#FFFFFF');
 
             svg.appendChild(titleText);
         }
@@ -682,7 +587,617 @@
         }
 
 
+       
 
+
+        $(document).ready(function () {
+            var currentStatus = 'all';
+
+            loadData(currentStatus);
+
+            function loadData(status) {
+                $.ajax({
+                    url: "/Attendence/mGetKibriadatalist",
+                    type: "GET",
+                    contentType: 'application/json;charset=utf-8',
+                    dataType: "json",
+                    success: function (result) {
+                        var html = '';
+                        $.each(result, function (key, item) {
+                            html += '<tr>';
+                            html += '<td><button type="button" class="team-button" data-id="' + item.TEAM_NAME + '">' + item.TEAM_NAME + '</button></td>';
+                            html += '<td>' + item.NOMPO + '</td>';
+                            html += '<td>' + item.Present + '</td>';
+                            html += '<td>' + item.LEAVE + '</td>';
+                            html += '<td>' + item.ABSENT + '</td>';
+                            html += '<td>' + ((item.Present / item.NOMPO) * 100).toFixed(2) + '%</td>';
+                            html += '</tr>';
+                        });
+                        $('.tbody').html(html);
+                    },
+                    error: function (errormessage) {
+                        alert(errormessage.responseText);
+                    }
+                });
+            }
+
+            $(document).on("click", ".team-button", function () {
+                var teamName = $(this).data("id");
+                showZoneDetails(teamName);
+            });
+
+            function showZoneDetails(teamName) {
+                $.ajax({
+                    url: "/Attendence/mGetKibriadatazone",
+                    type: "POST",
+                    contentType: 'application/json;charset=utf-8',
+                    dataType: "json",
+                    data: JSON.stringify({ TEAM_NAME: teamName }),
+                    success: function (result) {
+                        var detailsHtml = '';
+                        $.each(result, function (key, item) {
+                            detailsHtml += '<tr>';
+                            detailsHtml += '<td><button type="button" class="zone-button" data-id-team="' + teamName + '" data-id="' + item.ZONE_NAME + '">' + item.ZONE_NAME + '</button></td>';
+                            detailsHtml += '<td>' + item.NOMPO + '</td>';
+                            detailsHtml += '<td>' + item.Present + '</td>';
+                            detailsHtml += '<td>' + item.LEAVE + '</td>';
+                            detailsHtml += '<td>' + item.ABSENT + '</td>';
+                            detailsHtml += '<td>' + ((item.Present / item.NOMPO) * 100).toFixed(2) + '%</td>';
+                            detailsHtml += '</tr>';
+                        });
+                        detailsHtml += '<tr><td colspan="6"><button class="previousButton">Previous</button></td></tr>';
+                        $('.tbody').html(detailsHtml);
+                    },
+                    error: function (errormessage) {
+                        alert(errormessage.responseText);
+                    }
+                });
+            }
+
+            $(document).on("click", ".previousButton", function () {
+                
+                loadData(currentStatus); 
+            });
+
+
+            $(document).on("click", ".zone-button", function () {
+                var teamName = $(this).data("id-team");
+                var zoneName = $(this).data("id");
+                showDivisionDetails(teamName, zoneName);
+            });
+
+            function showDivisionDetails(teamName, zoneName) {
+                $.ajax({
+                    url: "/Attendence/mGetKibriadatadiv",
+                    type: "POST",
+                    contentType: 'application/json;charset=utf-8',
+                    dataType: "json",
+                    data: JSON.stringify({ TEAM_NAME: teamName, ZONE_NAME: zoneName }),
+                    success: function (result) {
+                        var detailsHtml = '';
+                        $.each(result, function (key, item) {
+                            detailsHtml += '<tr>';
+                            detailsHtml += '<td><button type="button" class="div-button" data-id-team="' + teamName + '" data-id-zone="' + zoneName + '" data-id="' + item.MPO_DIV + '">' + item.MPO_DIV + '</button></td>';
+                            detailsHtml += '<td>' + item.NOMPO + '</td>';
+                            detailsHtml += '<td>' + item.Present + '</td>';
+                            detailsHtml += '<td>' + item.LEAVE + '</td>';
+                            detailsHtml += '<td>' + item.ABSENT + '</td>';
+                            detailsHtml += '<td>' + ((item.Present / item.NOMPO) * 100).toFixed(2) + '%</td>';
+                            detailsHtml += '</tr>';
+                        });
+                        detailsHtml += '<tr><td colspan="6"><button class="previousButton">Previous</button></td></tr>';
+                        $('.tbody').html(detailsHtml);
+                    },
+                    error: function (errormessage) {
+                        alert(errormessage.responseText);
+                    }
+                });
+            }
+
+
+            $(document).on("click", ".previousButton", function () {
+                
+                showDivisionDetails();
+            });
+
+
+            $(document).on("click", ".div-button", function () {
+                var teamName = $(this).data("id-team");
+                var zoneName = $(this).data("id-zone");
+                var divName = $(this).data("id");
+                showAreaDetails(teamName, zoneName, divName);
+            });
+
+            function showAreaDetails(teamName, zoneName, divName) {
+                $.ajax({
+                    url: "/Attendence/mGetKibriadataarea",
+                    type: "POST",
+                    contentType: 'application/json;charset=utf-8',
+                    dataType: "json",
+                    data: JSON.stringify({ TEAM_NAME: teamName, ZONE_NAME: zoneName, MPO_DIV: divName }),
+                    success: function (result) {
+                        var detailsHtml = '';
+                        $.each(result, function (key, item) {
+                            detailsHtml += '<tr>';
+                            detailsHtml += '<td><button type="button" class="area-button" data-id-team="' + teamName + '" data-id-zone="' + zoneName + '" data-id-div="' + divName + '" data-id="' + item.MPO_AREA + '">' + item.MPO_AREA + '</button></td>';
+                            detailsHtml += '<td>' + item.NOMPO + '</td>';
+                            detailsHtml += '<td>' + item.Present + '</td>';
+                            detailsHtml += '<td>' + item.LEAVE + '</td>';
+                            detailsHtml += '<td>' + item.ABSENT + '</td>';
+                            detailsHtml += '<td>' + ((item.Present / item.NOMPO) * 100).toFixed(2) + '%</td>';
+                            detailsHtml += '</tr>';
+                        });
+                        detailsHtml += '<tr><td colspan="6"><button class="previousButton">Previous</button></td></tr>';
+                        $('.tbody').html(detailsHtml);
+                    },
+                    error: function (errormessage) {
+                        alert(errormessage.responseText);
+                    }
+                });
+            }
+
+            $(document).on("click", ".previousButton", function () {
+                
+                showAreaDetails();
+            });
+
+
+            $(document).on("click", ".area-button", function () {
+                var teamName = $(this).data("id-team");
+                var zoneName = $(this).data("id-zone");
+                var divName = $(this).data("id-div");
+                var areaName = $(this).data("id");
+                showTerritoryDetails(teamName, zoneName, divName, areaName);
+            });
+
+            function showTerritoryDetails(teamName, zoneName, divName, areaName) {
+                $.ajax({
+                    url: "/Attendence/mGetKibriadatamarket",
+                    type: "POST",
+                    contentType: 'application/json;charset=utf-8',
+                    dataType: "json",
+                    data: JSON.stringify({ TEAM_NAME: teamName, ZONE_NAME: zoneName, MPO_DIV: divName, MPO_AREA: areaName }),
+                    success: function (result) {
+                        var detailsHtml = '';
+                        $.each(result, function (key, item) {
+                            detailsHtml += '<tr>';
+                            detailsHtml += '<td><button type="button" class="territory-button" data-id-team="' + teamName + '" data-id-zone="' + zoneName + '" data-id-div="' + divName + '" data-id-area="' + areaName + '" data-id="' + item.TERRITORRY_NAME + '">' + item.TERRITORRY_NAME + '</button></td>';
+                            detailsHtml += '<td>' + item.NOMPO + '</td>';
+                            detailsHtml += '<td>' + item.Present + '</td>';
+                            detailsHtml += '<td>' + item.LEAVE + '</td>';
+                            detailsHtml += '<td>' + item.ABSENT + '</td>';
+                            detailsHtml += '<td>' + ((item.Present / item.NOMPO) * 100).toFixed(2) + '%</td>';
+                            detailsHtml += '</tr>';
+                        });
+                        detailsHtml += '<tr><td colspan="6"><button class="previousButton">Previous</button></td></tr>';
+                        $('.tbody').html(detailsHtml);
+                    },
+                    error: function (errormessage) {
+                        alert(errormessage.responseText);
+                    }
+                });
+            }
+        
+            $(document).on("click", ".previousButton", function () {
+                
+                showTerritoryDetails();
+            });
+
+
+
+        $(document).on("click", ".territory-button", function () {
+            var teamName = $(this).data("id-team");
+            var zoneName = $(this).data("id-zone");
+            var divName = $(this).data("id-div");
+            var areaName = $(this).data("id-area");
+            var markerName = $(this).data("id");
+            showRouteDetails(teamName, zoneName, divName, areaName, markerName);
+        });
+
+        function showRouteDetails(teamName, zoneName, divName, areaName, markerName) {
+            $.ajax({
+                url: "/Attendence/mGetKibriadataroute",
+                type: "POST",
+                contentType: 'application/json;charset=utf-8',
+                dataType: "json",
+                data: JSON.stringify({ TEAM_NAME: teamName, ZONE_NAME: zoneName, MPO_DIV: divName, MPO_AREA: areaName, TERRITORRY_NAME: markerName }),
+                success: function (result) {
+                    var detailsHtml = '';
+                    $.each(result, function (key, item) {
+                        detailsHtml += '<tr>';
+                        detailsHtml += '<td>' + item.TERRITORRY_NAME + '</td>';
+                        detailsHtml += '<td>' + item.NOMPO + '</td>';
+                        detailsHtml += '<td>' + item.Present + '</td>';
+                        detailsHtml += '<td>' + item.LEAVE + '</td>';
+                        detailsHtml += '<td>' + item.ABSENT + '</td>';
+                        detailsHtml += '<td>' + ((item.Present / item.NOMPO) * 100).toFixed(2) + '%</td>';
+                        detailsHtml += '</tr>';
+                    });
+                    detailsHtml += '<tr><td colspan="6"><button class="previousButton">Previous</button></td></tr>';
+                    $('.tbody').html(detailsHtml);
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        }
+        });
+
+        $(document).on("click", ".previousButton", function () {
+                
+            showRouteDetails();
+        });
+
+
+
+        //$(document).ready(function () {
+        //    google.charts.load('current', { 'packages': ['corechart'] });
+        //    google.charts.setOnLoadCallback(loadData);
+        //});
+
+        //function loadData() {
+        //    $.ajax({
+        //        url: '/Attendence/mGetTotal',
+        //        type: 'GET',
+        //        contentType: 'application/json;charset=utf-8',
+        //        dataType: 'json',
+        //        success: function (data) {
+        //            displayData(data);
+
+        //            $('.tbody').on('click', 'td.team-name', function () {
+        //                var teamName = $(this).text();
+        //                var zoneListData = data.filter(zone => zone.TEAM_NAME === teamName);
+        //                displayZoneData(zoneListData);
+
+        //                $('.tbody').on('click', 'td.zone-name', function () {
+        //                    var zoneName = $(this).text();
+        //                    var divListData = data.filter(div => div.ZONE === zoneName && div.TEAM_NAME === teamName);
+        //                    displayDivData(divListData);
+
+        //                    $('.tbody').on('click', 'td.div-name', function () {
+        //                        var divName = $(this).text();
+        //                        var areaListData = data.filter(area => area.DIV === divName && area.ZONE === zoneName && area.TEAM_NAME === teamName);
+        //                        displayAreaData(areaListData);
+
+        //                        $('.tbody').on('click', 'td.area-name', function () {
+        //                            var areaName = $(this).text();
+        //                            var marketListData = data.filter(market => market.AREA === areaName && market.DIV === divName && market.ZONE === zoneName && market.TEAM_NAME === teamName);
+        //                            displayMarketData(marketListData);
+
+        //                            $('.tbody').on('click', 'td.market-name', function () {
+        //                                var marketName = $(this).text();
+        //                                var marketrouteListData = data.filter(marketroute => marketroute.MARKET === marketName && marketroute.AREA === areaName && marketroute.DIV === divName && marketroute.ZONE === zoneName && marketroute.TEAM_NAME === teamName);
+        //                                displayMarketrouteData(marketrouteListData);
+
+        //                                $('.tbody').append('<tr><td colspan="6"><button class="previousButton">Previous</button></td></tr>');
+        //                                $('.previousButton').on('click', function () {
+        //                                    displayData(data);
+        //                                    drawAttendanceChart(data, '');
+        //                                });
+        //                                drawAttendanceChart(marketrouteListData, marketName);
+        //                            });
+        //                        });
+        //                    });
+        //                });
+        //                drawAttendanceChart(zoneListData, teamName);
+        //            });
+        //        },
+        //        error: function (xhr, status, error) {
+        //            console.error("AJAX Error:", error);
+        //            $('.tbody').html('<tr><td colspan="6">Error loading data. Please try again later.</td></tr>');
+        //        }
+        //    });
+        //}
+
+        //function displayData(data) {
+        //    var html = '';
+        //    var teamList = [];
+        //    var teamData = {};
+
+        //    data.forEach(function (item) {
+        //        if (!teamList.includes(item.TEAM_NAME)) {
+        //            teamList.push(item.TEAM_NAME);
+        //            teamData[item.TEAM_NAME] = {
+        //                TOTALMPO: parseInt(item.TOTALMPO),
+        //                PRESENT: parseInt(item.PRESENT),
+        //                ABSENT: parseInt(item.ABSENT)
+        //            };
+        //        } else {
+        //            teamData[item.TEAM_NAME].TOTALMPO += parseInt(item.TOTALMPO);
+        //            teamData[item.TEAM_NAME].PRESENT += parseInt(item.PRESENT);
+        //            teamData[item.TEAM_NAME].ABSENT += parseInt(item.ABSENT);
+        //        }
+        //    });
+
+        //    for (const [teamName, teamStats] of Object.entries(teamData)) {
+        //        html += '<tr>';
+        //        html += '<td class="team-name">' + teamName + '</td>';
+        //        html += '<td>' + teamStats.TOTALMPO + '</td>';
+        //        html += '<td>' + teamStats.PRESENT + '</td>';
+        //        html += '<td>' + (teamStats.TOTALMPO - teamStats.PRESENT - teamStats.ABSENT) + '</td>';
+        //        html += '<td>' + teamStats.ABSENT + '</td>';
+        //        html += '<td>' + ((teamStats.TOTALMPO > 0) ? ((teamStats.PRESENT / teamStats.TOTALMPO) * 100).toFixed(2) : 0) + '%</td>';
+        //        html += '</tr>';
+        //    }
+
+        //$('.tbody').html(html);
+        //drawAttendanceChart(data, '');
+        //}
+
+        //function displayZoneData(zoneListData) {
+        //    var html = '';
+        //    var zoneList = [];
+
+        //    zoneListData.forEach(function (zone) {
+        //        if (!zoneList.includes(zone.ZONE)) {
+        //            zoneList.push(zone.ZONE);
+        //            html += '<tr>';
+        //            html += '<td class="zone-name">' + zone.ZONE + '</td>';
+        //            html += '<td>' + zone.TOTALMPO + '</td>';
+        //            html += '<td>' + zone.PRESENT + '</td>';
+        //            html += '<td>' + (zone.TOTALMPO - zone.PRESENT - zone.ABSENT) + '</td>';
+        //            html += '<td>' + zone.ABSENT + '</td>';
+        //            html += '<td>' + ((zone.TOTALMPO > 0) ? ((zone.PRESENT / zone.TOTALMPO) * 100).toFixed(2) : 0) + '%</td>';
+        //            html += '</tr>';
+        //        }
+        //    });
+
+        //    $('.tbody').html(html);
+        //}
+
+        //function displayDivData(divListData) {
+        //    var html = '';
+        //    var divList = [];
+
+        //    divListData.forEach(function (div) {
+        //        if (!divList.includes(div.DIV)) {
+        //            divList.push(div.DIV);
+        //            html += '<tr>';
+        //            html += '<td class="div-name">' + div.DIV + '</td>';
+        //            html += '<td>' + div.TOTALMPO + '</td>';
+        //            html += '<td>' + div.PRESENT + '</td>';
+        //            html += '<td>' + (div.TOTALMPO - div.PRESENT - div.ABSENT) + '</td>';
+        //            html += '<td>' + div.ABSENT + '</td>';
+        //            html += '<td>' + ((div.TOTALMPO > 0) ? ((div.PRESENT / div.TOTALMPO) * 100).toFixed(2) : 0) + '%</td>';
+        //            html += '</tr>';
+        //        }
+        //    });
+
+        //    $('.tbody').html(html);
+        //}
+
+        //function displayAreaData(areaListData) {
+        //    var html = '';
+        //    var areaList = [];
+
+        //    areaListData.forEach(function (area) {
+        //        if (!areaList.includes(area.AREA)) {
+        //            areaList.push(area.AREA);
+        //            html += '<tr>';
+        //            html += '<td class="area-name">' + area.AREA + '</td>';
+        //            html += '<td>' + area.TOTALMPO + '</td>';
+        //            html += '<td>' + area.PRESENT + '</td>';
+        //            html += '<td>' + (area.TOTALMPO - area.PRESENT - area.ABSENT) + '</td>';
+        //            html += '<td>' + area.ABSENT + '</td>';
+        //            html += '<td>' + ((area.TOTALMPO > 0) ? ((area.PRESENT / area.TOTALMPO) * 100).toFixed(2) : 0) + '%</td>';
+        //            html += '</tr>';
+        //        }
+        //    });
+
+        //    $('.tbody').html(html);
+        //}
+
+        //function displayMarketData(marketListData) {
+        //    var html = '';
+        //    var marketList = [];
+
+        //    marketListData.forEach(function (market) {
+        //        if (!marketList.includes(market.MARKET)) {
+        //            marketList.push(market.MARKET);
+        //            html += '<tr>';
+        //            html += '<td class="market-name">' + market.MARKET + '</td>';
+        //            html += '<td>' + market.TOTALMPO + '</td>';
+        //            html += '<td>' + market.PRESENT + '</td>';
+        //            html += '<td>' + (market.TOTALMPO - market.PRESENT - market.ABSENT) + '</td>';
+        //            html += '<td>' + market.ABSENT + '</td>';
+        //            html += '<td>' + ((market.TOTALMPO > 0) ? ((market.PRESENT / market.TOTALMPO) * 100).toFixed(2) : 0) + '%</td>';
+        //            html += '</tr>';
+        //        }
+        //    });
+
+        //    $('.tbody').html(html);
+        //}
+
+        //function displayMarketrouteData(marketroutesListData) {
+        //    var html = '';
+        //    var marketrouteList = [];
+
+        //    marketroutesListData.forEach(function (marketroute) {
+        //        if (!marketrouteList.includes(marketroute.MARKET_ROUTE_NMAE)) {
+        //            marketrouteList.push(marketroute.MARKET_ROUTE_NMAE);
+        //            html += '<tr>';
+        //            html += '<td>' + marketroute.MARKET_ROUTE_NMAE + '</td>';
+        //            html += '<td>' + marketroute.TOTALMPO + '</td>';
+        //            html += '<td>' + marketroute.PRESENT + '</td>';
+        //            html += '<td>' + (marketroute.TOTALMPO - marketroute.PRESENT - marketroute.ABSENT) + '</td>';
+        //            html += '<td>' + marketroute.ABSENT + '</td>';
+        //            html += '<td>' + ((marketroute.TOTALMPO > 0) ? ((marketroute.PRESENT / marketroute.TOTALMPO) * 100).toFixed(2) : 0) + '%</td>';
+        //            html += '</tr>';
+        //        }
+        //    });
+
+        //    $('.tbody').html(html);
+        //}
+
+        //function drawAttendanceChart(data, teamName) {
+        //    var options = {
+        //        pieHole: 0.8,
+        //        pieSliceTextStyle: { color: 'transparent' },
+        //        legend: 'none',
+        //        title: '',
+        //        colors: ['#58F3D1', '#FF8E8E', '#383838']
+        //    };
+
+        //    var presentValue = 0;
+        //    var absentValue = 0;
+        //    var leaveValue = 0;
+
+        //    data.forEach(function (item) {
+        //        presentValue += parseInt(item.PRESENT);
+        //        absentValue += parseInt(item.ABSENT);
+        //        leaveValue += parseInt(item.TOTALMPO) - parseInt(item.PRESENT) - parseInt(item.ABSENT);
+        //    });
+
+        //    var totalValue = presentValue + absentValue + leaveValue;
+        //    var arrValues = [['Status', 'Count'], ['Present', presentValue], ['Absent', absentValue], ['Leave', leaveValue]];
+
+        //    var dataTable = google.visualization.arrayToDataTable(arrValues);
+        //    var chart = new google.visualization.PieChart(document.getElementById('b_sale'));
+        //    chart.draw(dataTable, options);
+
+        //    drawTitleAndTotal(chart, teamName, totalValue, presentValue, absentValue, leaveValue);
+        //}
+
+        //function drawTitleAndTotal(chart, teamName, totalValue, presentValue, absentValue, leaveValue) {
+        //    var chartContainer = chart.getContainer();
+        //    var svg = chartContainer.getElementsByTagName('svg')[0];
+
+        //    var existingIcons = svg.querySelectorAll('.icon');
+        //    existingIcons.forEach(function (icon) {
+        //        svg.removeChild(icon);
+        //    });
+
+        //    var centerX = chartContainer.clientWidth / 2;
+        //    var centerY = chartContainer.clientHeight / 2;
+
+        //    var titleText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        //    titleText.setAttribute('x', centerX);
+        //    titleText.setAttribute('y', centerY - 40);
+        //    titleText.setAttribute('text-anchor', 'middle');
+        //    titleText.setAttribute('dominant-baseline', 'middle');
+        //    titleText.setAttribute('font-size', '12');
+        //    titleText.setAttribute('font-weight', 'bold');
+        //    titleText.textContent = teamName;
+
+        //    createAndAppendTextElement(svg, 'Present: ', centerX, centerY + 120, '#58F3D1', presentValue);
+        //    createAndAppendTextElement(svg, 'Absent: ', centerX, centerY + 140, '#FF8E8E', absentValue);
+        //    createAndAppendTextElement(svg, 'Leave: ', centerX, centerY + 160, '#383838', leaveValue);
+        //    createAndAppendTextElement(svg, 'Total: ' + totalValue, centerX, centerY, '#FFFFFF');
+
+        //    svg.appendChild(titleText);
+        //}
+
+        //function createAndAppendTextElement(svg, label, x, y, color, value) {
+        //    var textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        //    textElement.setAttribute('x', x);
+        //    textElement.setAttribute('y', y);
+        //    textElement.setAttribute('text-anchor', 'middle');
+        //    textElement.setAttribute('dominant-baseline', 'middle');
+        //    textElement.setAttribute('font-size', '12');
+        //    textElement.setAttribute('font-weight', 'bold');
+        //    textElement.textContent = label;
+
+        //    var icon = createIcon(color, x - 45, y - 5);
+        //    svg.appendChild(icon);
+        //    svg.appendChild(textElement);
+
+        //    var valueText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        //    valueText.setAttribute('x', x + 30);
+        //    valueText.setAttribute('y', y);
+        //    valueText.setAttribute('text-anchor', 'start');
+        //    valueText.setAttribute('dominant-baseline', 'start');
+        //    valueText.setAttribute('font-size', '12');
+        //    valueText.textContent = value;
+        //    svg.appendChild(valueText);
+        //}
+
+        //function createIcon(color, x, y) {
+        //    var icon = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        //    icon.setAttribute('class', 'icon');
+        //    icon.setAttribute('width', '10');
+        //    icon.setAttribute('height', '10');
+        //    icon.setAttribute('x', x);
+        //    icon.setAttribute('y', y);
+        //    icon.setAttribute('fill', color);
+        //    return icon;
+        //}
+
+
+
+
+
+
+
+        //$(document).ready(function () {
+        //    loadData1();
+        //});
+
+        //function loadData1() {
+        //    $.ajax({
+        //        url: "/Attendence/mGetTotal",
+        //        type: "GET",
+        //        contentType: 'application/json;charset=utf-8',
+        //        dataType: "json",
+        //        success: function (result) {
+        //            var teams = groupBy(result, 'TEAM_NAME');
+
+        //            var html = '';
+        //            var count = 0;
+        //            $.each(teams, function (teamName, items) {
+
+
+        //                if (teamName !== null && teamName.trim() !== '') {
+
+        //                    if (count % 4 === 0) {
+        //                        html += '<div class="row">';
+        //                    }
+        //                    html += '<div class="col-sm-3">';
+        //                    html += '<div class="card-product" style="  border-radius: 5px; margin-left:10px; margin-bottom: 10px;width:300px;">';
+        //                    html += '<div class="card-header" style="background-color: #fff; padding-top: 15px; padding-left: 10px;  font-size: 20px; font-weight: bold; ">' + teamName + '</div>';
+        //                    html += '<div class="card-header" style="background-color: #fff; padding-left: 28px; font-size: 14px;  border-bottom: 1px solid #ddd;"><strong>Role:</strong>  <strong style="margin-left: 160px">Default:</strong></div>';
+
+        //                    html += '<div class="card-body" style="padding: 20px; background-color:#fff">';
+
+        //                    var role = groupBy(items, 'TYPE');
+
+        //                    $.each(role, function (roles, item) {
+
+        //                        if (roles !== null && roles.trim() !== '' && item.length > 0) {
+        //                            var presentCount = item.reduce(function (acc, obj) {
+        //                                return acc + obj.PRESENT;
+        //                            }, 0);
+
+        //                            html += '<div class="card-section" style="margin-bottom: 15px;">';
+        //                            html += '<p style="margin-left:10px;"> <span>' + roles + '</span> <span style="padding-right: 30px; float: right; ">' + presentCount + '</span></p>';
+        //                            html += '</div>';
+        //                        }
+        //                    });
+        //                    html += '</div>';
+        //                    html += '</div>';
+        //                    html += '</div>';
+        //                    count++;
+        //                    if (count % 4 === 0 || count === teams.length) {
+        //                        html += '</div>';
+        //                    }
+        //                }
+        //            });
+        //            $('.card-container').append(html);
+
+        //        },
+        //        error: function (errormessage) {
+        //            alert(errormessage.responseText);
+        //        }
+        //    });
+        //}
+
+        //function groupBy(array, key) {
+        //    return array.reduce(function (acc, obj) {
+        //        var property = obj[key];
+        //        acc[property] = acc[property] || [];
+        //        acc[property].push(obj);
+        //        return acc;
+        //    }, {});
+        //}
 
 
 
@@ -693,7 +1208,7 @@
 
         function loadData1() {
             $.ajax({
-                url: "/Attendence/mGetTotal",
+                url: "/Attendence/mGetKibriadatalist",
                 type: "GET",
                 contentType: 'application/json;charset=utf-8',
                 dataType: "json",
@@ -723,7 +1238,7 @@
 
                                 if (roles !== null && roles.trim() !== '' && item.length > 0) {
                                     var presentCount = item.reduce(function (acc, obj) {
-                                        return acc + obj.PRESENT;
+                                        return acc + obj.Present;
                                     }, 0);
 
                                     html += '<div class="card-section" style="margin-bottom: 15px;">';
@@ -767,6 +1282,7 @@
 
 
 
+
         $(document).ready(function () {
             barChart1();
 
@@ -779,7 +1295,7 @@
 
         function barChart1() {
             $.ajax({
-                url: "/Attendence/mGetTotal",
+                url: "/Attendence/mGetKibriadatalist",
                 type: "GET",
                 contentType: 'application/json;charset=utf-8',
                 dataType: "json",
@@ -795,11 +1311,11 @@
                             if (!teamData[teamName]) {
                                 teamData[teamName] = {
                                     TEAM_NAME: teamName,
-                                    PRESENT: parseInt(item.PRESENT),
+                                    PRESENT: parseInt(item.Present),
                                     ABSENT: parseInt(item.ABSENT)
                                 };
                             } else {
-                                teamData[teamName].PRESENT += parseInt(item.PRESENT);
+                                teamData[teamName].Present += parseInt(item.Present);
                                 teamData[teamName].ABSENT += parseInt(item.ABSENT);
                             }
                         }
@@ -850,7 +1366,7 @@
 
         function barChart2() {
             $.ajax({
-                url: "/Attendence/mGetTotal",
+                url: "/Attendence/mGetKibriadatalist",
                 type: "GET",
                 contentType: 'application/json;charset=utf-8',
                 dataType: "json",
@@ -866,11 +1382,11 @@
                             if (!teamData[teamName]) {
                                 teamData[teamName] = {
                                     TEAM_NAME: teamName,
-                                    PRESENT: parseInt(item.PRESENT),
+                                    PRESENT: parseInt(item.Present),
                                     ABSENT: parseInt(item.ABSENT)
                                 };
                             } else {
-                                teamData[teamName].PRESENT += parseInt(item.PRESENT);
+                                teamData[teamName].Present += parseInt(item.Present);
                                 teamData[teamName].ABSENT += parseInt(item.ABSENT);
                             }
                         }
@@ -900,7 +1416,6 @@
                 }
             });
         }
-
 
 
     </script>

@@ -61,31 +61,79 @@ namespace DPL.DASHBOARD.Repesetory
         }
 
 
-        public ActionResult mGetTotal()
+
+
+        public ActionResult mGetKibriadatazone()
         {
-            List<AttendentCongfig> allLedger = new List<AttendentCongfig>();
-            string vstrRole = Session["UserRole"].ToString();
-            string vstrUserID = Session["userID"].ToString();
-            string vstrLedgerName = Session["userName"].ToString();
-            string vstrCardNo = Session["userCardNo"].ToString();
-            if (vstrRole.ToUpper() == "AH")
-            {
-                allLedger = mGetUserTotalAH(vstrLedgerName);
-            }
-            else if (vstrRole.ToUpper() == "DH")
-            {
-                allLedger = mGetUserTotalDH(vstrLedgerName);
-            }
-            else
-            {
-                allLedger = mGetUserTotal();
-            }
-            //return Json(allLedger, JsonRequestBehavior.AllowGet);
-            var jsonResult = Json(allLedger, JsonRequestBehavior.AllowGet);
-            jsonResult.MaxJsonLength = int.MaxValue;
-            return jsonResult;
+
+            var allLedger = "" ;
+            return Json(allLedger, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult mGetKibriadatadiv()
+        {
+
+            var allLedger = "";
+            return Json(allLedger, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult mGetKibriadataarea()
+        {
+
+            var allLedger = "";
+            return Json(allLedger, JsonRequestBehavior.AllowGet);
+        }
+       
+           public ActionResult  mGetKibriadatamarket()
+        {
+
+            var allLedger = "";
+            return Json(allLedger, JsonRequestBehavior.AllowGet);
+        }
+
+
+           public ActionResult mGetKibriadataroute()
+        {
+
+            var allLedger = "";
+            return Json(allLedger, JsonRequestBehavior.AllowGet);
+        }
+
+     
+
+        //public ActionResult mGetTotal()
+        //{
+        //    List<AttendentCongfig> allLedger = new List<AttendentCongfig>();
+        //    string vstrRole = Session["UserRole"].ToString();
+        //    string vstrUserID = Session["userID"].ToString();
+        //    string vstrLedgerName = Session["userName"].ToString();
+        //    string vstrCardNo = Session["userCardNo"].ToString();
+        //    if (vstrRole.ToUpper() == "AH")
+        //    {
+        //        allLedger = mGetUserTotalAH(vstrLedgerName);
+        //    }
+        //    else if (vstrRole.ToUpper() == "DH")
+        //    {
+        //        allLedger = mGetUserTotalDH(vstrLedgerName);
+        //    }
+        //    else
+        //    {
+        //        allLedger = mGetUserTotal();
+        //    }
+        //    //return Json(allLedger, JsonRequestBehavior.AllowGet);
+        //    var jsonResult = Json(allLedger, JsonRequestBehavior.AllowGet);
+        //    jsonResult.MaxJsonLength = int.MaxValue;
+        //    return jsonResult;
+        //}
+
+
+
+        public ActionResult mGetKibriadatalist(kibria obj)
+        {
+
+            var allLedger = mGetKibriadata(obj);
+            return Json(allLedger, JsonRequestBehavior.AllowGet);
+        }
 
 
         public ActionResult mGetPercent(AttendentCongfig obj)
@@ -519,6 +567,548 @@ namespace DPL.DASHBOARD.Repesetory
 
 
 
+
+
+
+
+
+
+
+        public List<kibria> mGetKibriadata(kibria obj)
+        {
+            string strSQL = null;
+            string connectionString = Utility.SQLConnstringComSwitch("0001");
+
+            using (SqlConnection gcnMain = new SqlConnection(connectionString))
+            {
+                if (gcnMain.State == ConnectionState.Open)
+                {
+                    gcnMain.Close();
+                }
+                gcnMain.Open();
+                SqlDataReader dr;
+
+
+                DateTime datenow = DateTime.Now;
+
+                List<kibria> oooChequePrint = new List<kibria>();
+
+                strSQL = @"SELECT        tb1.TEAM_NAME, tb1.NOMPO, ISNULL(tb2.Present, 0) AS Present, ISNULL(tb3.LEAVE, 0) AS LEAVE, tb1.NOMPO - (ISNULL(tb2.Present, 0) + ISNULL(tb3.LEAVE, 0)) AS ABSENT
+                FROM            (SELECT        T.TEAM_NAME, 0 AS NOMPO, 0 AS Present, COUNT(DISTINCT L.EMP_CARD_NO) AS LEAVE, 0 AS ABSENT
+                FROM            HRS_EMP_LEAVE_DETAILS AS L LEFT OUTER JOIN
+                SMART0005.dbo.ACC_LEDGER_Z_D_A AS V ON L.EMP_CARD_NO = V.MPO_CARD_NO INNER JOIN
+                SMART0005.dbo.TEAM_CONFIG AS T ON V.ZONE = T.ZONE_NAME
+                WHERE        (L.LEAVE_DATE = " + Utility.cvtSQLDateString(DateTime.Now.ToString("dd-MM-yyyy"))
+                +") GROUP BY T.TEAM_NAME) AS tb3 INNER JOIN(SELECT T.TEAM_NAME, 0 AS NOMPO, COUNT(DISTINCT V.MPO_CARD_NO) AS Present, 0 AS LEAVE, 0 AS ABSENT FROM HRS_TRANS_WORK_ATTENDANCE AS A INNER JOIN SMART0005.dbo.ACC_LEDGER_Z_D_A AS V ON A.EMP_CARD_NO = V.MPO_CARD_NO INNER JOIN SMART0005.dbo.TEAM_CONFIG AS T ON V.ZONE = T.ZONE_NAME  WHERE        A.ATTEN_DATEIN = " + Utility.cvtSQLDateString(DateTime.Now.ToString("dd-MM-yyyy")) 
+                + "  GROUP BY T.TEAM_NAME) AS tb2 ON tb3.TEAM_NAME = tb2.TEAM_NAME RIGHT OUTER JOIN   (SELECT        T.TEAM_NAME, COUNT(DISTINCT V.MPO_CARD_NO) AS NOMPO, 0 AS Present, 0 AS LEAVE, 0 AS ABSENT  FROM            SMART0005.dbo.ACC_LEDGER_Z_D_A AS V LEFT OUTER JOIN     SMART0005.dbo.TEAM_CONFIG AS T ON V.ZONE = T.ZONE_NAME LEFT OUTER JOIN  HRS_TRANS_WORK_ATTENDANCE AS A ON V.MPO_CARD_NO = A.EMP_CARD_NO  WHERE        (V.LEDGER_STATUS = 0) AND (V.ZONE NOT IN ('ZH-Corporate Sales', 'X-MPO Accounts-Zone')) AND (V.TERRITORRY_NAME NOT IN ('Sample', 'Sales')) AND (V.BRANCH_ID IN ('0001', '0003')) AND   (V.LEDGER_STATUS = 0) GROUP BY T.TEAM_NAME) AS tb1 ON tb2.TEAM_NAME = tb1.TEAM_NAME;";
+               
+               
+
+
+                SqlCommand cmd = new SqlCommand(strSQL, gcnMain);
+                dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+
+
+
+                    kibria oLedg = new kibria();
+                    oLedg.TEAM_NAME = dr["TEAM_NAME"].ToString();
+
+                    oLedg.NOMPO = dr["NOMPO"].ToString();
+
+                    oLedg.Present = dr["Present"].ToString();
+
+                    oLedg.LEAVE = dr["LEAVE"].ToString();
+
+                    oLedg.ABSENT = dr["ABSENT"].ToString();
+
+               
+                    
+
+
+                    oooChequePrint.Add(oLedg);
+                }
+
+                if (!dr.HasRows)
+                {
+                    kibria oLedg = new kibria();
+
+
+                    oLedg.TEAM_NAME = "";
+                    oLedg.NOMPO = "";
+
+                    oLedg.Present = "";
+                    oLedg.LEAVE = "";
+
+                    oLedg.ABSENT = "";
+
+
+                    oooChequePrint.Add(oLedg);
+                }
+                dr.Close();
+                gcnMain.Close();
+                cmd.Dispose();
+                return oooChequePrint;
+            }
+
+        }
+
+
+
+
+          [HttpPost]
+        public ActionResult mGetKibriadatazone(kibria obj)
+        {
+            string strSQL = null;
+            string connectionString = Utility.SQLConnstringComSwitch("0001");
+
+            using (SqlConnection gcnMain = new SqlConnection(connectionString))
+            {
+                if (gcnMain.State == ConnectionState.Open)
+                {
+                    gcnMain.Close();
+                }
+                gcnMain.Open();
+                SqlDataReader dr;
+
+
+                DateTime datenow = DateTime.Now;
+
+                List<kibria> oooChequePrint = new List<kibria>();
+
+                strSQL = @"
+                SELECT        tb1.ZONE_NAME , tb1.NOMPO, ISNULL(tb2.Present, 0) AS Present, ISNULL(tb3.LEAVE, 0) AS LEAVE, tb1.NOMPO - (ISNULL(tb2.Present, 0) + ISNULL(tb3.LEAVE, 0)) AS ABSENT
+                FROM            (SELECT        T.ZONE_NAME, 0 AS NOMPO, 0 AS Present, COUNT(DISTINCT L.EMP_CARD_NO) AS LEAVE, 0 AS ABSENT
+                FROM            HRS_EMP_LEAVE_DETAILS AS L LEFT OUTER JOIN
+                SMART0005.dbo.ACC_LEDGER_Z_D_A AS V ON L.EMP_CARD_NO = V.MPO_CARD_NO INNER JOIN
+                SMART0005.dbo.TEAM_CONFIG AS T ON V.ZONE = T.ZONE_NAME
+                WHERE         (L.LEAVE_DATE = " + Utility.cvtSQLDateString(DateTime.Now.ToString("dd-MM-yyyy"))
+                +") AND T.TEAM_NAME ='" + obj.TEAM_NAME + "' GROUP BY T.ZONE_NAME) AS tb3 INNER JOIN (SELECT T.ZONE_NAME , 0 AS NOMPO, COUNT(DISTINCT V.MPO_CARD_NO) AS Present, 0 AS LEAVE, 0 AS ABSENT FROM HRS_TRANS_WORK_ATTENDANCE AS A INNER JOIN SMART0005.dbo.ACC_LEDGER_Z_D_A AS V ON A.EMP_CARD_NO = V.MPO_CARD_NO INNER JOIN SMART0005.dbo.TEAM_CONFIG AS T ON V.ZONE = T.ZONE_NAME WHERE A.ATTEN_DATEIN = " + Utility.cvtSQLDateString(DateTime.Now.ToString("dd-MM-yyyy")) 
+                + " AND T.TEAM_NAME = '" + obj.TEAM_NAME + "' GROUP BY T.ZONE_NAME) AS tb2 ON tb3.ZONE_NAME = tb2.ZONE_NAME RIGHT OUTER JOIN  (SELECT T.ZONE_NAME , COUNT(DISTINCT V.MPO_CARD_NO) AS NOMPO, 0 AS Present, 0 AS LEAVE, 0 AS ABSENT FROM  SMART0005.dbo.ACC_LEDGER_Z_D_A AS V LEFT OUTER JOIN SMART0005.dbo.TEAM_CONFIG AS T ON V.ZONE = T.ZONE_NAME LEFT OUTER JOIN HRS_TRANS_WORK_ATTENDANCE AS A ON V.MPO_CARD_NO = A.EMP_CARD_NO WHERE (V.LEDGER_STATUS = 0) AND (V.ZONE NOT IN ('ZH-Corporate Sales', 'X-MPO Accounts-Zone')) AND (V.TERRITORRY_NAME NOT IN ('Sample', 'Sales')) AND (V.BRANCH_ID IN ('0001', '0003')) AND  (V.LEDGER_STATUS = 0) AND T.TEAM_NAME ='" + obj.TEAM_NAME + "' GROUP BY T.ZONE_NAME) AS tb1 ON tb2.ZONE_NAME = tb1.ZONE_NAME";
+
+
+
+
+                SqlCommand cmd = new SqlCommand(strSQL, gcnMain);
+                dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+
+
+
+                    kibria oLedg = new kibria();
+                    oLedg.ZONE_NAME = dr["ZONE_NAME"].ToString();
+
+                    oLedg.NOMPO = dr["NOMPO"].ToString();
+
+                    oLedg.Present = dr["Present"].ToString();
+
+                    oLedg.LEAVE = dr["LEAVE"].ToString();
+
+                    oLedg.ABSENT = dr["ABSENT"].ToString();
+
+
+
+
+
+                    oooChequePrint.Add(oLedg);
+                }
+
+                if (!dr.HasRows)
+                {
+                    kibria oLedg = new kibria();
+
+
+                    oLedg.ZONE_NAME = "";
+                    oLedg.NOMPO = "";
+
+                    oLedg.Present = "";
+                    oLedg.LEAVE = "";
+
+                    oLedg.ABSENT = "";
+
+
+                    oooChequePrint.Add(oLedg);
+                }
+                dr.Close();
+                gcnMain.Close();
+                cmd.Dispose();
+                return Json(oooChequePrint); ;
+            }
+
+        }
+
+
+
+
+        //---------diV
+
+
+          [HttpPost]
+          public ActionResult mGetKibriadatadiv(kibria obj)
+          {
+              string strSQL = null;
+              string connectionString = Utility.SQLConnstringComSwitch("0001");
+
+              using (SqlConnection gcnMain = new SqlConnection(connectionString))
+              {
+                  if (gcnMain.State == ConnectionState.Open)
+                  {
+                      gcnMain.Close();
+                  }
+                  gcnMain.Open();
+                  SqlDataReader dr;
+
+
+                  DateTime datenow = DateTime.Now;
+
+                  List<kibria> oooChequePrint = new List<kibria>();
+
+                  strSQL = @"
+          SELECT        tb1.MPO_DIV , tb1.NOMPO, ISNULL(tb2.Present, 0) AS Present, ISNULL(tb3.LEAVE, 0) AS LEAVE, tb1.NOMPO - (ISNULL(tb2.Present, 0) + ISNULL(tb3.LEAVE, 0)) AS ABSENT
+FROM            (SELECT      T.ZONE_NAME ,  V.MPO_DIV , 0 AS NOMPO, 0 AS Present, COUNT(DISTINCT L.EMP_CARD_NO) AS LEAVE, 0 AS ABSENT
+FROM            HRS_EMP_LEAVE_DETAILS AS L LEFT OUTER JOIN
+SMART0005.dbo.ACC_LEDGER_Z_D_A AS V ON L.EMP_CARD_NO = V.MPO_CARD_NO INNER JOIN
+SMART0005.dbo.TEAM_CONFIG AS T ON V.ZONE = T.ZONE_NAME
+WHERE        (L.LEAVE_DATE = " + Utility.cvtSQLDateString(DateTime.Now.ToString("dd-MM-yyyy"))
+                  + ") AND T.TEAM_NAME ='" + obj.TEAM_NAME + "' AND T.ZONE_NAME  ='" + obj.ZONE_NAME + "' GROUP BY  T.ZONE_NAME ,V.MPO_DIV) AS tb3 INNER JOIN (SELECT T.ZONE_NAME , V.MPO_DIV , 0 AS NOMPO, COUNT(DISTINCT V.MPO_CARD_NO) AS Present, 0 AS LEAVE, 0 AS ABSENT FROM  HRS_TRANS_WORK_ATTENDANCE AS A INNER JOIN SMART0005.dbo.ACC_LEDGER_Z_D_A AS V ON A.EMP_CARD_NO = V.MPO_CARD_NO INNER JOIN SMART0005.dbo.TEAM_CONFIG AS T ON V.ZONE = T.ZONE_NAME WHERE        (A.ATTEN_DATEIN = " + Utility.cvtSQLDateString(DateTime.Now.ToString("dd-MM-yyyy"))
+                  + ") AND T.TEAM_NAME ='" + obj.TEAM_NAME + "' AND T.ZONE_NAME  ='" + obj.ZONE_NAME + "'GROUP BY  T.ZONE_NAME ,V.MPO_DIV) AS tb2 ON tb3.ZONE_NAME = tb2.ZONE_NAME RIGHT OUTER JOIN (SELECT      T.ZONE_NAME ,  V.MPO_DIV , COUNT(DISTINCT V.MPO_CARD_NO) AS NOMPO, 0 AS Present, 0 AS LEAVE, 0 AS ABSENT FROM SMART0005.dbo.ACC_LEDGER_Z_D_A AS V LEFT OUTER JOIN SMART0005.dbo.TEAM_CONFIG AS T ON V.ZONE = T.ZONE_NAME LEFT OUTER JOIN HRS_TRANS_WORK_ATTENDANCE AS A ON V.MPO_CARD_NO = A.EMP_CARD_NO WHERE        (V.LEDGER_STATUS = 0) AND (V.ZONE NOT IN ('ZH-Corporate Sales', 'X-MPO Accounts-Zone')) AND (V.TERRITORRY_NAME NOT IN ('Sample', 'Sales')) AND (V.BRANCH_ID IN ('0001', '0003')) AND  (V.LEDGER_STATUS = 0) AND T.TEAM_NAME ='CHALLENGER'  AND T.ZONE_NAME  ='NORTH ZONE' GROUP BY  T.ZONE_NAME ,V.MPO_DIV) AS tb1 ON tb2.ZONE_NAME = tb1.ZONE_NAME";
+
+
+
+
+
+
+
+
+
+
+                  SqlCommand cmd = new SqlCommand(strSQL, gcnMain);
+                  dr = cmd.ExecuteReader();
+                  while (dr.Read())
+                  {
+
+
+
+                      kibria oLedg = new kibria();
+                      oLedg.MPO_DIV = dr["MPO_DIV"].ToString();
+
+                      oLedg.NOMPO = dr["NOMPO"].ToString();
+
+                      oLedg.Present = dr["Present"].ToString();
+
+                      oLedg.LEAVE = dr["LEAVE"].ToString();
+
+                      oLedg.ABSENT = dr["ABSENT"].ToString();
+
+
+
+
+
+                      oooChequePrint.Add(oLedg);
+                  }
+
+                  if (!dr.HasRows)
+                  {
+                      kibria oLedg = new kibria();
+
+
+                      oLedg.ZONE_NAME = "";
+                      oLedg.NOMPO = "";
+
+                      oLedg.Present = "";
+                      oLedg.LEAVE = "";
+
+                      oLedg.ABSENT = "";
+
+
+                      oooChequePrint.Add(oLedg);
+                  }
+                  dr.Close();
+                  gcnMain.Close();
+                  cmd.Dispose();
+                  return Json(oooChequePrint); ;
+              }
+
+          }
+
+
+
+
+          //---------aREA
+
+
+          [HttpPost]
+          public ActionResult mGetKibriadataarea(kibria obj)
+          {
+              string strSQL = null;
+              string connectionString = Utility.SQLConnstringComSwitch("0001");
+
+              using (SqlConnection gcnMain = new SqlConnection(connectionString))
+              {
+                  if (gcnMain.State == ConnectionState.Open)
+                  {
+                      gcnMain.Close();
+                  }
+                  gcnMain.Open();
+                  SqlDataReader dr;
+
+
+                  DateTime datenow = DateTime.Now;
+
+                  List<kibria> oooChequePrint = new List<kibria>();
+
+                  strSQL = @"
+
+
+SELECT        tb1.MPO_AREA , tb1.NOMPO, ISNULL(tb2.Present, 0) AS Present, ISNULL(tb3.LEAVE, 0) AS LEAVE, tb1.NOMPO - (ISNULL(tb2.Present, 0) + ISNULL(tb3.LEAVE, 0)) AS ABSENT
+	FROM            (SELECT      T.ZONE_NAME , (CASE WHEN  V.MPO_AREA IS NULL THEN V.MPO_DIV ELSE V.MPO_AREA END )MPO_AREA , 0 AS NOMPO, 0 AS Present, COUNT(DISTINCT L.EMP_CARD_NO) AS LEAVE, 0 AS ABSENT
+	FROM            HRS_EMP_LEAVE_DETAILS AS L LEFT OUTER JOIN
+	SMART0005.dbo.ACC_LEDGER_Z_D_A AS V ON L.EMP_CARD_NO = V.MPO_CARD_NO INNER JOIN
+	SMART0005.dbo.TEAM_CONFIG AS T ON V.ZONE = T.ZONE_NAME
+	WHERE       (L.LEAVE_DATE = " + Utility.cvtSQLDateString(DateTime.Now.ToString("dd-MM-yyyy"))
+                  + ")AND T.TEAM_NAME ='" + obj.TEAM_NAME + "' AND T.ZONE_NAME  ='" + obj.ZONE_NAME + "' AND V.MPO_DIV ='" + obj.MPO_DIV + "'GROUP BY  T.ZONE_NAME ,V.MPO_AREA,V.MPO_DIV) AS tb3 INNER JOIN(SELECT       T.ZONE_NAME , (CASE WHEN  V.MPO_AREA IS NULL THEN V.MPO_DIV ELSE V.MPO_AREA  END )MPO_AREA , 0 AS NOMPO, COUNT(DISTINCT V.MPO_CARD_NO) AS Present, 0 AS LEAVE, 0 AS ABSENT FROM            HRS_TRANS_WORK_ATTENDANCE AS A INNER JOIN SMART0005.dbo.ACC_LEDGER_Z_D_A AS V ON A.EMP_CARD_NO = V.MPO_CARD_NO INNER JOIN SMART0005.dbo.TEAM_CONFIG AS T ON V.ZONE = T.ZONE_NAME WHERE (A.ATTEN_DATEIN = " + Utility.cvtSQLDateString(DateTime.Now.ToString("dd-MM-yyyy"))
+                  + ")AND T.TEAM_NAME ='" + obj.TEAM_NAME + "'  AND T.ZONE_NAME  ='" + obj.ZONE_NAME + "' AND V.MPO_DIV ='" + obj.MPO_DIV + "'	GROUP BY  T.ZONE_NAME ,V.MPO_AREA,V.MPO_DIV) AS tb2 ON tb3.ZONE_NAME = tb2.ZONE_NAME RIGHT OUTER JOIN (SELECT      T.ZONE_NAME ,  (CASE WHEN  V.MPO_AREA IS NULL THEN V.MPO_DIV ELSE V.MPO_AREA END )MPO_AREA , COUNT(DISTINCT V.MPO_CARD_NO) AS NOMPO, 0 AS Present, 0 AS LEAVE, 0 AS ABSENT FROM            SMART0005.dbo.ACC_LEDGER_Z_D_A AS V LEFT OUTER JOIN SMART0005.dbo.TEAM_CONFIG AS T ON V.ZONE = T.ZONE_NAME LEFT OUTER JOIN HRS_TRANS_WORK_ATTENDANCE AS A ON V.MPO_CARD_NO = A.EMP_CARD_NO WHERE        (V.LEDGER_STATUS = 0) AND (V.ZONE NOT IN ('ZH-Corporate Sales', 'X-MPO Accounts-Zone')) AND (V.TERRITORRY_NAME NOT IN ('Sample', 'Sales')) AND (V.BRANCH_ID IN ('0001', '0003')) AND  (V.LEDGER_STATUS = 0) AND T.TEAM_NAME ='" + obj.TEAM_NAME + "' AND T.ZONE_NAME  ='" + obj.ZONE_NAME + "' AND V.MPO_DIV ='" + obj.MPO_DIV + "' GROUP BY  T.ZONE_NAME ,V.MPO_AREA,V.MPO_DIV) AS tb1 ON tb2.ZONE_NAME = tb1.ZONE_NAME ";
+
+
+
+                  SqlCommand cmd = new SqlCommand(strSQL, gcnMain);
+                  dr = cmd.ExecuteReader();
+                  while (dr.Read())
+                  {
+
+
+
+                      kibria oLedg = new kibria();
+                      oLedg.MPO_AREA = dr["MPO_AREA"].ToString();
+
+                      oLedg.NOMPO = dr["NOMPO"].ToString();
+
+                      oLedg.Present = dr["Present"].ToString();
+
+                      oLedg.LEAVE = dr["LEAVE"].ToString();
+
+                      oLedg.ABSENT = dr["ABSENT"].ToString();
+
+
+
+
+
+                      oooChequePrint.Add(oLedg);
+                  }
+
+                  if (!dr.HasRows)
+                  {
+                      kibria oLedg = new kibria();
+
+
+                      oLedg.MPO_AREA = "";
+                      oLedg.NOMPO = "";
+
+                      oLedg.Present = "";
+                      oLedg.LEAVE = "";
+
+                      oLedg.ABSENT = "";
+
+
+                      oooChequePrint.Add(oLedg);
+                  }
+                  dr.Close();
+                  gcnMain.Close();
+                  cmd.Dispose();
+                  return Json(oooChequePrint); ;
+              }
+
+          }
+
+
+
+
+
+
+          //---------market
+
+
+          [HttpPost]
+          public ActionResult mGetKibriadatamarket(kibria obj)
+          {
+              string strSQL = null;
+              string connectionString = Utility.SQLConnstringComSwitch("0001");
+
+              using (SqlConnection gcnMain = new SqlConnection(connectionString))
+              {
+                  if (gcnMain.State == ConnectionState.Open)
+                  {
+                      gcnMain.Close();
+                  }
+                  gcnMain.Open();
+                  SqlDataReader dr;
+
+
+                  DateTime datenow = DateTime.Now;
+
+                  List<kibria> oooChequePrint = new List<kibria>();
+
+                  strSQL = @"SELECT        tb1.TERRITORRY_NAME  , tb1.NOMPO, ISNULL(tb2.Present, 0) AS Present, ISNULL(tb3.LEAVE, 0) AS LEAVE, tb1.NOMPO - (ISNULL(tb2.Present, 0) + ISNULL(tb3.LEAVE, 0)) AS ABSENT
+FROM            (SELECT      T.ZONE_NAME , V.TERRITORRY_NAME  , 0 AS NOMPO, 0 AS Present, COUNT(DISTINCT L.EMP_CARD_NO) AS LEAVE, 0 AS ABSENT
+FROM            HRS_EMP_LEAVE_DETAILS AS L LEFT OUTER JOIN
+SMART0005.dbo.ACC_LEDGER_Z_D_A AS V ON L.EMP_CARD_NO = V.MPO_CARD_NO INNER JOIN
+SMART0005.dbo.TEAM_CONFIG AS T ON V.ZONE = T.ZONE_NAME
+WHERE        (L.LEAVE_DATE = " + Utility.cvtSQLDateString(DateTime.Now.ToString("dd-MM-yyyy")) 
+             + ")AND T.TEAM_NAME ='CHALLENGER' AND T.ZONE_NAME  ='NORTH ZONE' AND V.MPO_DIV ='Bogura' AND V.MPO_AREA  ='Bogura' GROUP BY  T.ZONE_NAME , V.TERRITORRY_NAME) AS tb3 INNER JOIN (SELECT       T.ZONE_NAME ,  V.TERRITORRY_NAME , 0 AS NOMPO, COUNT(DISTINCT V.MPO_CARD_NO) AS Present, 0 AS LEAVE, 0 AS ABSENT FROM  HRS_TRANS_WORK_ATTENDANCE AS A INNER JOIN SMART0005.dbo.ACC_LEDGER_Z_D_A AS V ON A.EMP_CARD_NO = V.MPO_CARD_NO INNER JOIN SMART0005.dbo.TEAM_CONFIG AS T ON V.ZONE = T.ZONE_NAME WHERE       (A.ATTEN_DATEIN = " + Utility.cvtSQLDateString(DateTime.Now.ToString("dd-MM-yyyy"))  + ") AND T.TEAM_NAME ='" + obj.TEAM_NAME + "' AND T.ZONE_NAME  ='" + obj.ZONE_NAME + "' AND V.MPO_DIV ='" + obj.MPO_DIV + 
+             "' AND V.MPO_AREA  ='" + obj.MPO_AREA + "' GROUP BY  T.ZONE_NAME , V.TERRITORRY_NAME) AS tb2 ON tb3.ZONE_NAME = tb2.ZONE_NAME RIGHT OUTER JOIN (SELECT T.ZONE_NAME ,   V.TERRITORRY_NAME , COUNT(DISTINCT V.MPO_CARD_NO) AS NOMPO, 0 AS Present, 0 AS LEAVE, 0 AS ABSENT FROM   SMART0005.dbo.ACC_LEDGER_Z_D_A AS V LEFT OUTER JOIN SMART0005.dbo.TEAM_CONFIG AS T ON V.ZONE = T.ZONE_NAME LEFT OUTER JOIN HRS_TRANS_WORK_ATTENDANCE AS A ON V.MPO_CARD_NO = A.EMP_CARD_NO WHERE        (V.LEDGER_STATUS = 0) AND (V.ZONE NOT IN ('ZH-Corporate Sales', 'X-MPO Accounts-Zone')) AND (V.TERRITORRY_NAME NOT IN ('Sample', 'Sales')) AND (V.BRANCH_ID IN ('0001', '0003')) AND  (V.LEDGER_STATUS = 0) AND T.TEAM_NAME ='" + obj.TEAM_NAME + "' AND T.ZONE_NAME  ='" + obj.ZONE_NAME + "' AND V.MPO_DIV ='" + obj.MPO_DIV + "' AND V.MPO_AREA  ='" + obj.MPO_AREA + "' GROUP BY  T.ZONE_NAME , V.TERRITORRY_NAME) AS tb1 ON tb2.ZONE_NAME = tb1.ZONE_NAME";
+
+
+                  SqlCommand cmd = new SqlCommand(strSQL, gcnMain);
+                  dr = cmd.ExecuteReader();
+                  while (dr.Read())
+                  {
+
+
+
+                      kibria oLedg = new kibria();
+                      oLedg.TERRITORRY_NAME = dr["TERRITORRY_NAME"].ToString();
+
+                      oLedg.NOMPO = dr["NOMPO"].ToString();
+
+                      oLedg.Present = dr["Present"].ToString();
+
+                      oLedg.LEAVE = dr["LEAVE"].ToString();
+
+                      oLedg.ABSENT = dr["ABSENT"].ToString();
+
+
+
+
+
+                      oooChequePrint.Add(oLedg);
+                  }
+
+                  if (!dr.HasRows)
+                  {
+                      kibria oLedg = new kibria();
+
+
+                      oLedg.TERRITORRY_NAME = "";
+                      oLedg.NOMPO = "";
+
+                      oLedg.Present = "";
+                      oLedg.LEAVE = "";
+
+                      oLedg.ABSENT = "";
+
+
+                      oooChequePrint.Add(oLedg);
+                  }
+                  dr.Close();
+                  gcnMain.Close();
+                  cmd.Dispose();
+                  return Json(oooChequePrint); ;
+              }
+
+          }
+
+
+
+
+
+
+          //---------route
+
+
+          [HttpPost]
+          public ActionResult mGetKibriadataroute(kibria obj)
+          {
+              string strSQL = null;
+              string connectionString = Utility.SQLConnstringComSwitch("0001");
+
+              using (SqlConnection gcnMain = new SqlConnection(connectionString))
+              {
+                  if (gcnMain.State == ConnectionState.Open)
+                  {
+                      gcnMain.Close();
+                  }
+                  gcnMain.Open();
+                  SqlDataReader dr;
+
+
+                  DateTime datenow = DateTime.Now;
+
+                  List<kibria> oooChequePrint = new List<kibria>();
+
+                  strSQL = @"SELECT    tb1.TERRITORRY_NAME  , tb1.NOMPO, ISNULL(tb2.Present, 0) AS Present, ISNULL(tb3.LEAVE, 0) AS LEAVE, tb1.NOMPO - (ISNULL(tb2.Present, 0) + ISNULL(tb3.LEAVE, 0)) AS ABSENT
+FROM   (SELECT      V.ZONE  , V.TERRITORRY_NAME  , 0 AS NOMPO, 0 AS Present, COUNT(DISTINCT L.EMP_CARD_NO) AS LEAVE, 0 AS ABSENT
+FROM HRS_EMP_LEAVE_DETAILS AS L LEFT OUTER JOIN
+SMART0005.dbo.ACC_LEDGER_Z_D_A AS V ON L.EMP_CARD_NO = V.MPO_CARD_NO INNER JOIN
+SMART0005.dbo.TEAM_CONFIG AS T ON V.ZONE = T.ZONE_NAME RIGHT OUTER JOIN
+SMART0005.dbo.MARKET_ROUTE AS R ON V.TERITORRY_CODE = R.TERITORRY_CODE
+WHERE       (L.LEAVE_DATE = " + Utility.cvtSQLDateString(DateTime.Now.ToString("dd-MM-yyyy"))
+ + ")AND T.TEAM_NAME ='" + obj.TEAM_NAME + "' AND T.ZONE_NAME  ='" + obj.ZONE_NAME + "' AND V.MPO_DIV ='" + obj.MPO_DIV + "' AND V.MPO_AREA  ='" + obj.MPO_AREA + "' and v.TERRITORRY_NAME ='" + obj.TERRITORRY_NAME + 
+ "'GROUP BY  V.ZONE , V.TERRITORRY_NAME) AS tb3 INNER JOIN (SELECT T.ZONE_NAME ,  V.TERRITORRY_NAME , 0 AS NOMPO, COUNT(DISTINCT V.MPO_CARD_NO) AS Present, 0 AS LEAVE, 0 AS ABSENT FROM HRS_TRANS_WORK_ATTENDANCE AS A INNER JOIN SMART0005.dbo.ACC_LEDGER_Z_D_A AS V ON A.EMP_CARD_NO = V.MPO_CARD_NO INNER JOIN SMART0005.dbo.TEAM_CONFIG AS T ON V.ZONE = T.ZONE_NAME RIGHT OUTER JOIN SMART0005.dbo.MARKET_ROUTE AS R ON V.TERITORRY_CODE = R.TERITORRY_CODE AND (A.ATTEN_DATEIN = " + Utility.cvtSQLDateString(DateTime.Now.ToString("dd-MM-yyyy")) 
+     + ")AND T.TEAM_NAME ='" + obj.TEAM_NAME + "' AND T.ZONE_NAME  ='" + obj.ZONE_NAME + "' AND V.MPO_DIV ='" + obj.MPO_DIV + "' AND V.MPO_AREA  ='" + obj.MPO_AREA + "' and v.TERRITORRY_NAME ='" + obj.TERRITORRY_NAME + "' GROUP BY  T.ZONE_NAME , V.TERRITORRY_NAME) AS tb2 ON tb3.ZONE = tb2.ZONE_NAME RIGHT OUTER JOIN (SELECT  T.ZONE_NAME ,   V.TERRITORRY_NAME , COUNT(DISTINCT V.MPO_CARD_NO) AS NOMPO, 0 AS Present, 0 AS LEAVE, 0 AS ABSENT FROM   SMART0005.dbo.ACC_LEDGER_Z_D_A AS V LEFT OUTER JOIN SMART0005.dbo.TEAM_CONFIG AS T ON V.ZONE = T.ZONE_NAME LEFT OUTER JOIN HRS_TRANS_WORK_ATTENDANCE AS A ON V.MPO_CARD_NO = A.EMP_CARD_NO RIGHT OUTER JOIN SMART0005.dbo.MARKET_ROUTE AS R ON V.TERITORRY_CODE = R.TERITORRY_CODE WHERE (V.LEDGER_STATUS = 0) AND (V.ZONE NOT IN ('ZH-Corporate Sales', 'X-MPO Accounts-Zone')) AND (V.TERRITORRY_NAME NOT IN ('Sample', 'Sales')) AND (V.BRANCH_ID IN ('0001', '0003')) AND  (V.LEDGER_STATUS = 0) AND T.TEAM_NAME ='" + obj.TEAM_NAME + "' AND T.ZONE_NAME  ='" + obj.ZONE_NAME + "' AND V.MPO_DIV ='" + obj.MPO_DIV + "' AND V.MPO_AREA  ='" + obj.MPO_AREA + "' and v.TERRITORRY_NAME ='" + obj.TERRITORRY_NAME + "' GROUP BY  T.ZONE_NAME , V.TERRITORRY_NAME) AS tb1 ON tb2.ZONE_NAME = tb1.ZONE_NAME";
+
+
+
+
+
+
+
+
+                  SqlCommand cmd = new SqlCommand(strSQL, gcnMain);
+                  dr = cmd.ExecuteReader();
+                  while (dr.Read())
+                  {
+
+
+
+                      kibria oLedg = new kibria();
+                      oLedg.TERRITORRY_NAME = dr["TERRITORRY_NAME"].ToString();
+
+                      oLedg.NOMPO = dr["NOMPO"].ToString();
+
+                      oLedg.Present = dr["Present"].ToString();
+
+                      oLedg.LEAVE = dr["LEAVE"].ToString();
+
+                      oLedg.ABSENT = dr["ABSENT"].ToString();
+
+
+
+
+
+                      oooChequePrint.Add(oLedg);
+                  }
+
+                  if (!dr.HasRows)
+                  {
+                      kibria oLedg = new kibria();
+
+
+                      oLedg.TERRITORRY_NAME = "";
+                      oLedg.NOMPO = "";
+
+                      oLedg.Present = "";
+                      oLedg.LEAVE = "";
+
+                      oLedg.ABSENT = "";
+
+
+                      oooChequePrint.Add(oLedg);
+                  }
+                  dr.Close();
+                  gcnMain.Close();
+                  cmd.Dispose();
+                  return Json(oooChequePrint); ;
+              }
+
+          }
+
+
+
+
+
+
         //SELECT COUNT(*) AS Countt, COUNT(EMP_CARD_NO) AS EMP_CARD_NO, COUNT(USER_NAME) AS USER_NAME, ROLE, NULL AS TEAM_NAME, NULL AS TEAM_CODE
         //    FROM HRS_TRANS_WORK_ATTENDANCE_NEW 
         //    GROUP BY ROLE 
@@ -532,146 +1122,146 @@ namespace DPL.DASHBOARD.Repesetory
 
 
 
-        public List<AttendentCongfig> mGetUserTotal()
-        {
-            string connectionString = Utility.SQLConnstringComSwitch("0001");
-            string strSQL = @"SELECT TEAM_NAME,ZONE,DIV,AREA,TERRITORRY_NAME, MARKET_ROUTE_NMAE,TYPE,SUM(TOTALMPO)TOTALMPO,SUM(TOTALAREA)TOTALAREA,SUM(TOTALDIV)TOTALDIV,SUM(TOTALZH)TOTALZH,SUM(TOTALHEAD)TOTALHEAD,SUM(PRESENT)PRESENT,SUM(ABSENT)ABSENT,SUM(CL)CL,
-            SUM(ML)ML FROM ATTEN_DASHBOARD_DETAILS
-            WHERE TYPE='MPO'
-            GROUP BY TEAM_NAME,ZONE,DIV,AREA,TERRITORRY_NAME, MARKET_ROUTE_NMAE,TYPE
-            UNION ALL
-            SELECT TEAM_NAME,ZONE,DIV,AREA,TERRITORRY_NAME, MARKET_ROUTE_NMAE,TYPE,SUM(TOTALMPO)TOTALMPO,SUM(TOTALAREA)TOTALAREA,SUM(TOTALDIV)TOTALDIV,SUM(TOTALZH)TOTALZH,SUM(TOTALHEAD)TOTALHEAD,SUM(PRESENT)PRESENT,SUM(ABSENT)ABSENT,SUM(CL)CL,
-            SUM(ML)ML FROM ATTEN_DASHBOARD_DETAILS
-            WHERE TYPE='AH'
-            GROUP BY TEAM_NAME,ZONE,DIV,AREA,TERRITORRY_NAME, MARKET_ROUTE_NMAE,TYPE
-            UNION ALL
-            SELECT TEAM_NAME,ZONE,DIV,AREA,TERRITORRY_NAME, MARKET_ROUTE_NMAE,TYPE,SUM(TOTALMPO)TOTALMPO,SUM(TOTALAREA)TOTALAREA,SUM(TOTALDIV)TOTALDIV,SUM(TOTALZH)TOTALZH,SUM(TOTALHEAD)TOTALHEAD,SUM(PRESENT)PRESENT,SUM(ABSENT)ABSENT,SUM(CL)CL,
-            SUM(ML)ML FROM ATTEN_DASHBOARD_DETAILS
-            WHERE TYPE='DH'
-            GROUP BY TEAM_NAME,ZONE,DIV,AREA,TERRITORRY_NAME, MARKET_ROUTE_NMAE,TYPE
-            UNION ALL
-            SELECT TEAM_NAME,ZONE,DIV,AREA,TERRITORRY_NAME, MARKET_ROUTE_NMAE,TYPE,SUM(TOTALMPO)TOTALMPO,SUM(TOTALAREA)TOTALAREA,SUM(TOTALDIV)TOTALDIV,SUM(TOTALZH)TOTALZH,SUM(TOTALHEAD)TOTALHEAD,SUM(PRESENT)PRESENT,SUM(ABSENT)ABSENT,SUM(CL)CL,
-            SUM(ML)ML FROM ATTEN_DASHBOARD_DETAILS
-            WHERE TYPE='ZH'
-            GROUP BY TEAM_NAME,ZONE,DIV,AREA, TERRITORRY_NAME, MARKET_ROUTE_NMAE,TYPE";
+//        public List<AttendentCongfig> mGetUserTotal()
+//        {
+//            string connectionString = Utility.SQLConnstringComSwitch("0001");
+//            string strSQL = @"SELECT TEAM_NAME,ZONE,DIV,AREA,TERRITORRY_NAME, MARKET_ROUTE_NMAE,TYPE,SUM(TOTALMPO)TOTALMPO,SUM(TOTALAREA)TOTALAREA,SUM(TOTALDIV)TOTALDIV,SUM(TOTALZH)TOTALZH,SUM(TOTALHEAD)TOTALHEAD,SUM(PRESENT)PRESENT,SUM(ABSENT)ABSENT,SUM(CL)CL,
+//            SUM(ML)ML FROM ATTEN_DASHBOARD_DETAILS
+//            WHERE TYPE='MPO'
+//            GROUP BY TEAM_NAME,ZONE,DIV,AREA,TERRITORRY_NAME, MARKET_ROUTE_NMAE,TYPE
+//            UNION ALL
+//            SELECT TEAM_NAME,ZONE,DIV,AREA,TERRITORRY_NAME, MARKET_ROUTE_NMAE,TYPE,SUM(TOTALMPO)TOTALMPO,SUM(TOTALAREA)TOTALAREA,SUM(TOTALDIV)TOTALDIV,SUM(TOTALZH)TOTALZH,SUM(TOTALHEAD)TOTALHEAD,SUM(PRESENT)PRESENT,SUM(ABSENT)ABSENT,SUM(CL)CL,
+//            SUM(ML)ML FROM ATTEN_DASHBOARD_DETAILS
+//            WHERE TYPE='AH'
+//            GROUP BY TEAM_NAME,ZONE,DIV,AREA,TERRITORRY_NAME, MARKET_ROUTE_NMAE,TYPE
+//            UNION ALL
+//            SELECT TEAM_NAME,ZONE,DIV,AREA,TERRITORRY_NAME, MARKET_ROUTE_NMAE,TYPE,SUM(TOTALMPO)TOTALMPO,SUM(TOTALAREA)TOTALAREA,SUM(TOTALDIV)TOTALDIV,SUM(TOTALZH)TOTALZH,SUM(TOTALHEAD)TOTALHEAD,SUM(PRESENT)PRESENT,SUM(ABSENT)ABSENT,SUM(CL)CL,
+//            SUM(ML)ML FROM ATTEN_DASHBOARD_DETAILS
+//            WHERE TYPE='DH'
+//            GROUP BY TEAM_NAME,ZONE,DIV,AREA,TERRITORRY_NAME, MARKET_ROUTE_NMAE,TYPE
+//            UNION ALL
+//            SELECT TEAM_NAME,ZONE,DIV,AREA,TERRITORRY_NAME, MARKET_ROUTE_NMAE,TYPE,SUM(TOTALMPO)TOTALMPO,SUM(TOTALAREA)TOTALAREA,SUM(TOTALDIV)TOTALDIV,SUM(TOTALZH)TOTALZH,SUM(TOTALHEAD)TOTALHEAD,SUM(PRESENT)PRESENT,SUM(ABSENT)ABSENT,SUM(CL)CL,
+//            SUM(ML)ML FROM ATTEN_DASHBOARD_DETAILS
+//            WHERE TYPE='ZH'
+//            GROUP BY TEAM_NAME,ZONE,DIV,AREA, TERRITORRY_NAME, MARKET_ROUTE_NMAE,TYPE";
 
-            List<AttendentCongfig> resultList = new List<AttendentCongfig>();
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                using (SqlCommand command = new SqlCommand(strSQL, connection))
-                {
-                    connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
+//            List<AttendentCongfig> resultList = new List<AttendentCongfig>();
+//            using (SqlConnection connection = new SqlConnection(connectionString))
+//            {
+//                using (SqlCommand command = new SqlCommand(strSQL, connection))
+//                {
+//                    connection.Open();
+//                    SqlDataReader reader = command.ExecuteReader();
 
-                    while (reader.Read())
-                    {
-                        AttendentCongfig config = new AttendentCongfig();
-                        config.PRESENT = Convert.ToInt32(reader["PRESENT"] == DBNull.Value ? 0 : reader["PRESENT"]);
-                        config.ABSENT = Convert.ToInt32(reader["ABSENT"] == DBNull.Value ? 0 : reader["ABSENT"]);
-                        config.CL = Convert.ToInt32(reader["CL"] == DBNull.Value ? 0 : reader["CL"]);
-                        config.ML = Convert.ToInt32(reader["ML"] == DBNull.Value ? 0 : reader["ML"]);
-                        config.TYPE = reader["TYPE"].ToString();
-                        config.TEAM_NAME = reader["TEAM_NAME"].ToString();
-                        config.DIV = reader["DIV"].ToString();
-                        config.AREA = reader["AREA"].ToString();
-                        config.MARKET = reader["TERRITORRY_NAME"].ToString();
-                        config.MARKET_ROUTE_NMAE = reader["MARKET_ROUTE_NMAE"].ToString();
-                        config.ZONE = reader["ZONE"].ToString();
-                        config.TOTALMPO = reader["TOTALMPO"].ToString();
-                        config.TOTALAREA = reader["TOTALAREA"].ToString();
-                        config.TOTALDIV = reader["TOTALDIV"].ToString();
-                        config.TOTALZH = reader["TOTALZH"].ToString();
-                        config.TOTALHEAD = reader["TOTALHEAD"].ToString();
-                        resultList.Add(config);
-                    }
+//                    while (reader.Read())
+//                    {
+//                        AttendentCongfig config = new AttendentCongfig();
+//                        config.PRESENT = Convert.ToInt32(reader["PRESENT"] == DBNull.Value ? 0 : reader["PRESENT"]);
+//                        config.ABSENT = Convert.ToInt32(reader["ABSENT"] == DBNull.Value ? 0 : reader["ABSENT"]);
+//                        config.CL = Convert.ToInt32(reader["CL"] == DBNull.Value ? 0 : reader["CL"]);
+//                        config.ML = Convert.ToInt32(reader["ML"] == DBNull.Value ? 0 : reader["ML"]);
+//                        config.TYPE = reader["TYPE"].ToString();
+//                        config.TEAM_NAME = reader["TEAM_NAME"].ToString();
+//                        config.DIV = reader["DIV"].ToString();
+//                        config.AREA = reader["AREA"].ToString();
+//                        config.MARKET = reader["TERRITORRY_NAME"].ToString();
+//                        config.MARKET_ROUTE_NMAE = reader["MARKET_ROUTE_NMAE"].ToString();
+//                        config.ZONE = reader["ZONE"].ToString();
+//                        config.TOTALMPO = reader["TOTALMPO"].ToString();
+//                        config.TOTALAREA = reader["TOTALAREA"].ToString();
+//                        config.TOTALDIV = reader["TOTALDIV"].ToString();
+//                        config.TOTALZH = reader["TOTALZH"].ToString();
+//                        config.TOTALHEAD = reader["TOTALHEAD"].ToString();
+//                        resultList.Add(config);
+//                    }
 
-                    reader.Close();
-                }
-            }
+//                    reader.Close();
+//                }
+//            }
 
-            return resultList;
-        }
+//            return resultList;
+//        }
 
-        public List<AttendentCongfig> mGetUserTotalAH(string vstrLedgerName)
-        {
-            string connectionString = Utility.SQLConnstringComSwitch("0001");
-            string strSQL = "SELECT MARKET,ROUTE_NMAE,TYPE,SUM(TOTALMPO)TOTALMPO,SUM(TOTALAREA)TOTALAREA,SUM(TOTALDIV)TOTALDIV,SUM(TOTALZH)TOTALZH,SUM(TOTALHEAD)TOTALHEAD,SUM(PRESENT)PRESENT,SUM(ABSENT)ABSENT,SUM(CL)CL,";
-            strSQL = strSQL + "SUM(ML)ML FROM ATTEN_DASHBOARD_DETAILS_AH ";
-            strSQL = strSQL + "WHERE TYPE='AH' AND AREA ='" + vstrLedgerName + "' ";
-            strSQL = strSQL + "GROUP BY MARKET,ROUTE_NMAE,TYPE ";
-            List<AttendentCongfig> resultList = new List<AttendentCongfig>();
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                using (SqlCommand command = new SqlCommand(strSQL, connection))
-                {
-                    connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
+//        public List<AttendentCongfig> mGetUserTotalAH(string vstrLedgerName)
+//        {
+//            string connectionString = Utility.SQLConnstringComSwitch("0001");
+//            string strSQL = "SELECT MARKET,ROUTE_NMAE,TYPE,SUM(TOTALMPO)TOTALMPO,SUM(TOTALAREA)TOTALAREA,SUM(TOTALDIV)TOTALDIV,SUM(TOTALZH)TOTALZH,SUM(TOTALHEAD)TOTALHEAD,SUM(PRESENT)PRESENT,SUM(ABSENT)ABSENT,SUM(CL)CL,";
+//            strSQL = strSQL + "SUM(ML)ML FROM ATTEN_DASHBOARD_DETAILS_AH ";
+//            strSQL = strSQL + "WHERE TYPE='AH' AND AREA ='" + vstrLedgerName + "' ";
+//            strSQL = strSQL + "GROUP BY MARKET,ROUTE_NMAE,TYPE ";
+//            List<AttendentCongfig> resultList = new List<AttendentCongfig>();
+//            using (SqlConnection connection = new SqlConnection(connectionString))
+//            {
+//                using (SqlCommand command = new SqlCommand(strSQL, connection))
+//                {
+//                    connection.Open();
+//                    SqlDataReader reader = command.ExecuteReader();
 
-                    while (reader.Read())
-                    {
-                        AttendentCongfig config = new AttendentCongfig();
-                        config.PRESENT = Convert.ToInt32(reader["PRESENT"] == DBNull.Value ? 0 : reader["PRESENT"]);
-                        config.ABSENT = Convert.ToInt32(reader["ABSENT"] == DBNull.Value ? 0 : reader["ABSENT"]);
-                        config.CL = Convert.ToInt32(reader["CL"] == DBNull.Value ? 0 : reader["CL"]);
-                        config.ML = Convert.ToInt32(reader["ML"] == DBNull.Value ? 0 : reader["ML"]);
-                        config.TYPE = reader["TYPE"].ToString();
-                        config.TEAM_NAME = reader["MARKET"].ToString();
-                        config.ZONE = reader["ROUTE_NMAE"].ToString();
-                        config.TOTALMPO = reader["TOTALMPO"].ToString();
-                        config.TOTALAREA = reader["TOTALAREA"].ToString();
-                        config.TOTALDIV = reader["TOTALDIV"].ToString();
-                        config.TOTALZH = reader["TOTALZH"].ToString();
-                        config.TOTALHEAD = reader["TOTALHEAD"].ToString();
-                        resultList.Add(config);
-                    }
+//                    while (reader.Read())
+//                    {
+//                        AttendentCongfig config = new AttendentCongfig();
+//                        config.PRESENT = Convert.ToInt32(reader["PRESENT"] == DBNull.Value ? 0 : reader["PRESENT"]);
+//                        config.ABSENT = Convert.ToInt32(reader["ABSENT"] == DBNull.Value ? 0 : reader["ABSENT"]);
+//                        config.CL = Convert.ToInt32(reader["CL"] == DBNull.Value ? 0 : reader["CL"]);
+//                        config.ML = Convert.ToInt32(reader["ML"] == DBNull.Value ? 0 : reader["ML"]);
+//                        config.TYPE = reader["TYPE"].ToString();
+//                        config.TEAM_NAME = reader["MARKET"].ToString();
+//                        config.ZONE = reader["ROUTE_NMAE"].ToString();
+//                        config.TOTALMPO = reader["TOTALMPO"].ToString();
+//                        config.TOTALAREA = reader["TOTALAREA"].ToString();
+//                        config.TOTALDIV = reader["TOTALDIV"].ToString();
+//                        config.TOTALZH = reader["TOTALZH"].ToString();
+//                        config.TOTALHEAD = reader["TOTALHEAD"].ToString();
+//                        resultList.Add(config);
+//                    }
 
-                    reader.Close();
-                }
-            }
+//                    reader.Close();
+//                }
+//            }
 
-            return resultList;
-        }
+//            return resultList;
+//        }
 
-        public List<AttendentCongfig> mGetUserTotalDH(string vstrLedgerName)
-        {
-            string connectionString = Utility.SQLConnstringComSwitch("0001");
-            string strSQL = "SELECT AREANAME,MARKET, ROUTE_NMAE,TYPE,SUM(TOTALMPO)TOTALMPO,SUM(TOTALAREA)TOTALAREA,SUM(TOTALDIV)TOTALDIV,SUM(TOTALZH)TOTALZH,SUM(TOTALHEAD)TOTALHEAD,SUM(PRESENT)PRESENT,SUM(ABSENT)ABSENT,SUM(CL)CL,";
-            strSQL = strSQL + "SUM(ML)ML FROM ATTEN_DASHBOARD_DETAILS_DH ";
-            strSQL = strSQL + "WHERE TYPE='DH' AND DIVISION ='" + vstrLedgerName + "' ";
-            strSQL = strSQL + "GROUP BY AREANAME,MARKET, ROUTE_NMAE,TYPE ";
-            List<AttendentCongfig> resultList = new List<AttendentCongfig>();
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                using (SqlCommand command = new SqlCommand(strSQL, connection))
-                {
-                    connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
+//        public List<AttendentCongfig> mGetUserTotalDH(string vstrLedgerName)
+//        {
+//            string connectionString = Utility.SQLConnstringComSwitch("0001");
+//            string strSQL = "SELECT AREANAME,MARKET, ROUTE_NMAE,TYPE,SUM(TOTALMPO)TOTALMPO,SUM(TOTALAREA)TOTALAREA,SUM(TOTALDIV)TOTALDIV,SUM(TOTALZH)TOTALZH,SUM(TOTALHEAD)TOTALHEAD,SUM(PRESENT)PRESENT,SUM(ABSENT)ABSENT,SUM(CL)CL,";
+//            strSQL = strSQL + "SUM(ML)ML FROM ATTEN_DASHBOARD_DETAILS_DH ";
+//            strSQL = strSQL + "WHERE TYPE='DH' AND DIVISION ='" + vstrLedgerName + "' ";
+//            strSQL = strSQL + "GROUP BY AREANAME,MARKET, ROUTE_NMAE,TYPE ";
+//            List<AttendentCongfig> resultList = new List<AttendentCongfig>();
+//            using (SqlConnection connection = new SqlConnection(connectionString))
+//            {
+//                using (SqlCommand command = new SqlCommand(strSQL, connection))
+//                {
+//                    connection.Open();
+//                    SqlDataReader reader = command.ExecuteReader();
 
-                    while (reader.Read())
-                    {
-                        AttendentCongfig config = new AttendentCongfig();
-                        config.PRESENT = Convert.ToInt32(reader["PRESENT"] == DBNull.Value ? 0 : reader["PRESENT"]);
-                        config.ABSENT = Convert.ToInt32(reader["ABSENT"] == DBNull.Value ? 0 : reader["ABSENT"]);
-                        config.CL = Convert.ToInt32(reader["CL"] == DBNull.Value ? 0 : reader["CL"]);
-                        config.ML = Convert.ToInt32(reader["ML"] == DBNull.Value ? 0 : reader["ML"]);
-                        config.TYPE = reader["TYPE"].ToString();
-                        config.TEAM_NAME = reader["AREANAME"].ToString();
-                        config.ZONE = reader["MARKET"].ToString();
-                        config.strROUTE = reader["ROUTE_NMAE"].ToString();
-                        config.TOTALMPO = reader["TOTALMPO"].ToString();
-                        config.TOTALAREA = reader["TOTALAREA"].ToString();
-                        config.TOTALDIV = reader["TOTALDIV"].ToString();
-                        config.TOTALZH = reader["TOTALZH"].ToString();
-                        config.TOTALHEAD = reader["TOTALHEAD"].ToString();
-                        resultList.Add(config);
-                    }
+//                    while (reader.Read())
+//                    {
+//                        AttendentCongfig config = new AttendentCongfig();
+//                        config.PRESENT = Convert.ToInt32(reader["PRESENT"] == DBNull.Value ? 0 : reader["PRESENT"]);
+//                        config.ABSENT = Convert.ToInt32(reader["ABSENT"] == DBNull.Value ? 0 : reader["ABSENT"]);
+//                        config.CL = Convert.ToInt32(reader["CL"] == DBNull.Value ? 0 : reader["CL"]);
+//                        config.ML = Convert.ToInt32(reader["ML"] == DBNull.Value ? 0 : reader["ML"]);
+//                        config.TYPE = reader["TYPE"].ToString();
+//                        config.TEAM_NAME = reader["AREANAME"].ToString();
+//                        config.ZONE = reader["MARKET"].ToString();
+//                        config.strROUTE = reader["ROUTE_NMAE"].ToString();
+//                        config.TOTALMPO = reader["TOTALMPO"].ToString();
+//                        config.TOTALAREA = reader["TOTALAREA"].ToString();
+//                        config.TOTALDIV = reader["TOTALDIV"].ToString();
+//                        config.TOTALZH = reader["TOTALZH"].ToString();
+//                        config.TOTALHEAD = reader["TOTALHEAD"].ToString();
+//                        resultList.Add(config);
+//                    }
 
-                    reader.Close();
-                }
-            }
+//                    reader.Close();
+//                }
+//            }
 
-            return resultList;
-        }
+//            return resultList;
+//        }
 
 
 

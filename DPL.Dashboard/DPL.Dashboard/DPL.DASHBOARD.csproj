@@ -150,6 +150,7 @@
     <Compile Include="Models\ExamResult.cs" />
     <Compile Include="Models\ExpenseClaim.cs" />
     <Compile Include="Models\ExpenseType.cs" />
+    <Compile Include="Models\kibria.cs" />
     <Compile Include="Models\LeaveConfig.cs" />
     <Compile Include="Models\MileageClaim.cs" />
     <Compile Include="Models\MonthlyAllowance.cs" />
