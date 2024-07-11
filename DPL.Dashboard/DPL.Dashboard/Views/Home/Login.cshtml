@@ -343,13 +343,13 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-        //document.getElementById('togglePassword').addEventListener('click', function (e) {
-        //    const passwordField = document.getElementById('password');
-        //    const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-        //    passwordField.setAttribute('type', type);
-        //    this.classList.toggle('fa-eye');
-        //    this.classList.toggle('fa-eye-slash');
-        //});
+        document.getElementById('togglePassword').addEventListener('click', function (e) {
+            const passwordField = document.getElementById('password');
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
 
         //document.getElementById('loginForm').addEventListener('submit', function (e) {
         //    e.preventDefault(); 

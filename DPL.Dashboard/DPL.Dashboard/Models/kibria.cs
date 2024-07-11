@@ -26,5 +26,9 @@ namespace DPL.DASHBOARD.Models
         public string MPO_AREA { get; set; }
 
         public string TERRITORRY_NAME { get; set; }
+
+        public string Role { get; set; }
+
+        public string Position { get; set; }
     }
 }
