@@ -126,7 +126,25 @@ namespace DPL.DASHBOARD.Repesetory
 
         }
 
+
+        public ActionResult mGetKibriadataGroupdivwises(kibria obj)
+        {
+
+            var allLedger = mGetKibriadataGroupdivwise(obj);
+            return Json(allLedger, JsonRequestBehavior.AllowGet);
+
+        }
+
+
+        public ActionResult mGetKibriadataGroupareawises(kibria obj)
+        {
+
+            var allLedger = mGetKibriadataGroupareawise(obj);
+            return Json(allLedger, JsonRequestBehavior.AllowGet);
+
+        }
        
+
        
         //public ActionResult mGetTotal()
         //{
@@ -1379,7 +1397,7 @@ WHERE       (L.LEAVE_DATE = " + Utility.cvtSQLDateString(DateTime.Now.ToString("
 
 
 
-        //GroupDiv
+        //GroupZone
 
 
 
@@ -1473,6 +1491,204 @@ WHERE       (L.LEAVE_DATE = " + Utility.cvtSQLDateString(DateTime.Now.ToString("
             }
 
         }
+
+
+
+
+
+
+
+        //GroupDiv
+
+
+
+        public List<kibria> mGetKibriadataGroupdivwise(kibria obj)
+        {
+            string strSQL = null;
+            string connectionString = Utility.SQLConnstringComSwitch("0001");
+
+            using (SqlConnection gcnMain = new SqlConnection(connectionString))
+            {
+                if (gcnMain.State == ConnectionState.Open)
+                {
+                    gcnMain.Close();
+                }
+                gcnMain.Open();
+                SqlDataReader dr;
+
+
+                DateTime datenow = DateTime.Now;
+
+                List<kibria> oooChequePrint = new List<kibria>();
+
+                strSQL = @"
+
+SELECT        TB1.DIVISION, TB1.Role, TB1.NOMPO, ISNULL(TB2.Present, 0) AS Present, ISNULL(tb3.LEAVE, 0) AS LEAVE, ISNULL(TB1.NOMPO - (ISNULL(TB2.Present, 0) + ISNULL(tb3.LEAVE, 0)),0) AS ABSENT
+FROM            (SELECT        T.MPO_DIV as DIVISION, 'MPO' AS Role, COUNT(DISTINCT V.MPO_CARD_NO) AS NOMPO, 0 AS Present, 0 AS LEAVE, 0 AS ABSENT
+                          FROM            SMART0005.dbo.ACC_LEDGER_Z_D_A AS V INNER JOIN
+                                                    SMART0005.dbo.ACC_LEDGERGROUP AS T ON V.DIVISION = T.GR_NAME
+                          WHERE        (V.LEDGER_STATUS = 0) AND (V.BRANCH_ID IN ('0001')) AND (V.TERRITORRY_NAME NOT IN ('Sample', 'Sales')) AND (V.DIVISION  NOT IN ('ZH-Corporate Sales', 'X-MPO Accounts-AREA')) AND 
+                          (V.ZONE= '" + obj.ZONE_NAME + "') GROUP BY T.MPO_DIV UNION ALL SELECT       T.MPO_DIV , 'AH' AS Role, COUNT(DISTINCT V.AREA ) AS NOMPO, 0 AS Present, 0 AS LEAVE, 0 AS ABSENT  FROM            SMART0005.dbo.ACC_LEDGER_Z_D_A AS V INNER JOIN SMART0005.dbo.ACC_LEDGERGROUP AS T ON V.DIVISION  = T.GR_NAME  WHERE        (V.LEDGER_STATUS = 0) AND (V.BRANCH_ID IN ('0001')) AND (V.TERRITORRY_NAME NOT IN ('Sample', 'Sales')) AND (V.DIVISION  NOT IN ('ZH-Corporate Sales', 'X-MPO Accounts-AREA')) AND  (V.ZONE= '" + obj.ZONE_NAME + "')GROUP BY T.MPO_DIV UNION ALL SELECT        T.MPO_DIV , 'DH' AS Role, COUNT(DISTINCT V.DIVISION) AS NOMPO, 0 AS Present, 0 AS LEAVE, 0 AS ABSENT FROM            SMART0005.dbo.ACC_LEDGER_Z_D_A AS V INNER JOIN SMART0005.dbo.ACC_LEDGERGROUP AS T ON V.DIVISION  = T.GR_NAME WHERE        (V.LEDGER_STATUS = 0) AND (V.BRANCH_ID IN ('0001')) AND (V.TERRITORRY_NAME NOT IN ('Sample', 'Sales')) AND (V.DIVISION  NOT IN ('ZH-Corporate Sales', 'X-MPO Accounts-AREA')) AND  (V.ZONE= '" + obj.ZONE_NAME + "') GROUP BY T.MPO_DIV  UNION ALL SELECT        T.MPO_DIV , 'ZH' AS Role, COUNT(DISTINCT V.ZONE ) AS NOMPO, 0 AS Present, 0 AS LEAVE, 0 AS ABSENT FROM SMART0005.dbo.ACC_LEDGER_Z_D_A AS V INNER JOIN SMART0005.dbo.ACC_LEDGERGROUP AS T ON V.DIVISION  = T.GR_NAME  WHERE        (V.LEDGER_STATUS = 0) AND (V.BRANCH_ID IN ('0001')) AND (V.TERRITORRY_NAME NOT IN ('Sample', 'Sales')) AND (V.DIVISION  NOT IN ('ZH-Corporate Sales', 'X-MPO Accounts-AREA')) AND  (V.ZONE= '" + obj.ZONE_NAME + "') GROUP BY T.MPO_DIV ) AS TB1 LEFT OUTER JOIN (SELECT       T.MPO_DIV as DIVISION , 'MPO' AS Role, 0 AS NOMPO, COUNT(DISTINCT V.MPO_CARD_NO) AS Present, 0 AS LEAVE, 0 AS ABSENT  FROM            HRS_TRANS_WORK_ATTENDANCE AS A INNER JOIN SMART0005.dbo.ACC_LEDGER_Z_D_A AS V ON A.EMP_CARD_NO = V.MPO_CARD_NO INNER JOIN SMART0005.dbo.ACC_LEDGERGROUP AS T ON V.DIVISION  = T.GR_NAME WHERE        ( A.ATTEN_DATEIN = " + Utility.cvtSQLDateString(DateTime.Now.ToString("dd-MM-yyyy")) + 
+                               ") AND (V.ZONE= '" + obj.ZONE_NAME + "') GROUP BY T.MPO_DIV   UNION ALL SELECT       T.MPO_DIV as DIVISION , 'AH' AS Role, 0 AS NOMPO, COUNT(DISTINCT V.AREA ) AS Present, 0 AS LEAVE, 0 AS ABSENT FROM            HRS_TRANS_WORK_ATTENDANCE AS A INNER JOIN SMART0005.dbo.ACC_LEDGER_Z_D_A AS V ON A.EMP_CARD_NO = V.MPO_CARD_NO INNER JOIN SMART0005.dbo.ACC_LEDGERGROUP AS T ON V.DIVISION  = T.GR_NAME  WHERE        ( A.ATTEN_DATEIN = " + Utility.cvtSQLDateString(DateTime.Now.ToString("dd-MM-yyyy")) + 
+                               ") AND (V.ZONE= '" + obj.ZONE_NAME + "') GROUP BY T.MPO_DIV UNION ALL SELECT      T.MPO_DIV as DIVISION, 'DH' AS Role, 0 AS NOMPO, COUNT(DISTINCT V.DIVISION) AS Present, 0 AS LEAVE, 0 AS ABSENT FROM  HRS_TRANS_WORK_ATTENDANCE AS A INNER JOIN SMART0005.dbo.ACC_LEDGER_Z_D_A AS V ON A.EMP_CARD_NO = V.MPO_CARD_NO INNER JOIN SMART0005.dbo.ACC_LEDGERGROUP AS T ON V.DIVISION  = T.GR_NAME  WHERE       ( A.ATTEN_DATEIN = " + Utility.cvtSQLDateString(DateTime.Now.ToString("dd-MM-yyyy")) + 
+                               ") AND (V.ZONE= '" + obj.ZONE_NAME + "') GROUP BY T.MPO_DIV   UNION ALL SELECT      T.MPO_DIV as DIVISION, 'ZH' AS Role, 0 AS NOMPO, COUNT(DISTINCT V.ZONE ) AS Present, 0 AS LEAVE, 0 AS ABSENT  FROM            HRS_TRANS_WORK_ATTENDANCE AS A INNER JOIN SMART0005.dbo.ACC_LEDGER_Z_D_A AS V ON A.EMP_CARD_NO = V.MPO_CARD_NO INNER JOIN SMART0005.dbo.ACC_LEDGERGROUP AS T ON V.DIVISION  = T.GR_NAME WHERE       ( A.ATTEN_DATEIN = " + Utility.cvtSQLDateString(DateTime.Now.ToString("dd-MM-yyyy")) + 
+                               ") AND (V.ZONE= '" + obj.ZONE_NAME + "') GROUP BY T.MPO_DIV  ) AS TB2 ON TB1.Role = TB2.Role AND TB1.DIVISION = TB2.DIVISION LEFT OUTER JOIN (SELECT        T.MPO_DIV as DIVISION , 'MPO' AS Role, 0 AS NOMPO, 0 AS Present, COUNT(DISTINCT L.EMP_CARD_NO) AS LEAVE, 0 AS ABSENT FROM            HRS_EMP_LEAVE_DETAILS AS L LEFT OUTER JOIN SMART0005.dbo.ACC_LEDGER_Z_D_A AS V ON L.EMP_CARD_NO = V.MPO_CARD_NO INNER JOIN SMART0005.dbo.ACC_LEDGERGROUP AS T ON V.DIVISION  = T.GR_NAME WHERE        (L.LEAVE_DATE = " + Utility.cvtSQLDateString(DateTime.Now.ToString("dd-MM-yyyy"))  + 
+                               ") AND (V.ZONE= '" + obj.ZONE_NAME + "') GROUP BY T.MPO_DIV  UNION ALL SELECT        T.MPO_DIV as DIVISION, 'AH' AS Role, 0 AS NOMPO, 0 AS Present, COUNT(DISTINCT V.DIVISION ) AS LEAVE, 0 AS ABSENT FROM            HRS_EMP_LEAVE_DETAILS AS L LEFT OUTER JOIN SMART0005.dbo.ACC_LEDGER_Z_D_A AS V ON L.EMP_CARD_NO = V.MPO_CARD_NO INNER JOIN SMART0005.dbo.ACC_LEDGERGROUP AS T ON V.DIVISION  = T.GR_NAME  WHERE        (L.LEAVE_DATE = " + Utility.cvtSQLDateString(DateTime.Now.ToString("dd-MM-yyyy"))  + 
+                               ") AND (V.ZONE= '" + obj.ZONE_NAME + "') GROUP BY T.MPO_DIV UNION ALL SELECT       T.MPO_DIV as DIVISION , 'DH' AS Role, 0 AS NOMPO, 0 AS Present, COUNT(DISTINCT V.DIVISION) AS LEAVE, 0 AS ABSENT FROM            HRS_EMP_LEAVE_DETAILS AS L LEFT OUTER JOIN SMART0005.dbo.ACC_LEDGER_Z_D_A AS V ON L.EMP_CARD_NO = V.MPO_CARD_NO INNER JOIN SMART0005.dbo.ACC_LEDGERGROUP AS T ON V.DIVISION  = T.GR_NAME  WHERE       (L.LEAVE_DATE = " + Utility.cvtSQLDateString(DateTime.Now.ToString("dd-MM-yyyy"))  + 
+                               ") AND (V.ZONE= '" + obj.ZONE_NAME + "') GROUP BY T.MPO_DIV UNION ALL SELECT       T.MPO_DIV as DIVISION , 'ZH' AS Role, 0 AS NOMPO, 0 AS Present, COUNT(DISTINCT V.DIVISION ) AS LEAVE, 0 AS ABSENT  FROM            HRS_EMP_LEAVE_DETAILS AS L LEFT OUTER JOIN SMART0005.dbo.ACC_LEDGER_Z_D_A AS V ON L.EMP_CARD_NO = V.MPO_CARD_NO INNER JOIN SMART0005.dbo.ACC_LEDGERGROUP AS T ON V.DIVISION  = T.GR_NAME  WHERE       (L.LEAVE_DATE = " + Utility.cvtSQLDateString(DateTime.Now.ToString("dd-MM-yyyy"))  +  
+                               ") AND (V.ZONE= '" + obj.ZONE_NAME + "') GROUP BY T.MPO_DIV ) AS tb3 ON TB1.Role = tb3.Role AND TB1.DIVISION = tb3.DIVISION order by  TB1.DIVISION, TB1.Role ;";
+                              
+
+
+
+
+                SqlCommand cmd = new SqlCommand(strSQL, gcnMain);
+                dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+
+
+
+                    kibria oLedg = new kibria();
+
+                    oLedg.DIVISION = dr["DIVISION"].ToString();
+
+
+                    oLedg.Role = dr["Role"].ToString();
+
+                    oLedg.NOMPO = dr["NOMPO"].ToString();
+
+                    oLedg.Present = dr["Present"].ToString();
+
+                    oLedg.LEAVE = dr["LEAVE"].ToString();
+
+                    oLedg.ABSENT = dr["ABSENT"].ToString();
+
+
+
+
+
+                    oooChequePrint.Add(oLedg);
+                }
+
+                if (!dr.HasRows)
+                {
+                    kibria oLedg = new kibria();
+
+                    oLedg.DIVISION = "";
+                    oLedg.Role = "";
+                    oLedg.NOMPO = "";
+
+                    oLedg.Present = "";
+                    oLedg.LEAVE = "";
+
+                    oLedg.ABSENT = "";
+
+
+                    oooChequePrint.Add(oLedg);
+                }
+                dr.Close();
+                gcnMain.Close();
+                cmd.Dispose();
+                return oooChequePrint;
+            }
+
+        }
+
+
+        //AREA
+
+
+
+        public List<kibria> mGetKibriadataGroupareawise(kibria obj)
+        {
+            string strSQL = null;
+            string connectionString = Utility.SQLConnstringComSwitch("0001");
+
+            using (SqlConnection gcnMain = new SqlConnection(connectionString))
+            {
+                if (gcnMain.State == ConnectionState.Open)
+                {
+                    gcnMain.Close();
+                }
+                gcnMain.Open();
+                SqlDataReader dr;
+
+
+                DateTime datenow = DateTime.Now;
+
+                List<kibria> oooChequePrint = new List<kibria>();
+
+                strSQL = @"
+                       
+SELECT    1 as 'position' ,   'MPO' AS Role,   A.MPO_AREA as 'AREA',count( V.MPO_CARD_NO) as Present 
+FROM            SMART0005.dbo.ACC_LEDGER_Z_D_A AS V INNER JOIN
+                         SMART0005.dbo.ACC_LEDGERGROUP AS G ON V.DIVISION = G.GR_NAME INNER JOIN
+                         SMART0005.dbo.ACC_LEDGERGROUP AS A ON V.AREA = A.GR_NAME INNER JOIN
+                         HRS_TRANS_WORK_ATTENDANCE AS P ON V.MPO_CARD_NO = P.EMP_CARD_NO
+WHERE        (P.ATTEN_DATEIN = " + Utility.cvtSQLDateString(DateTime.Now.ToString("dd-MM-yyyy")) + 
+                                 ") AND (G.MPO_DIV = '" + obj.MPO_DIV + "') group by   A.MPO_AREA UNION ALL SELECT        2 AS 'position', 'AH' AS Role, A.MPO_AREA AS 'AREA', count(A.EMP_CARD_NO) as Present FROM            SMART0005.dbo.ACC_LEDGER_Z_D_A AS V INNER JOIN SMART0005.dbo.ACC_LEDGERGROUP AS G ON V.DIVISION = G.GR_NAME INNER JOIN SMART0005.dbo.ACC_LEDGERGROUP AS A ON V.AREA = A.GR_NAME INNER JOIN HRS_TRANS_WORK_ATTENDANCE AS P ON V.MPO_CARD_NO = P.EMP_CARD_NO WHERE        (P.ATTEN_DATEIN >= " + Utility.cvtSQLDateString(DateTime.Now.ToString("dd-MM-yyyy")) + 
+                ") AND (G.MPO_DIV = '" + obj.MPO_DIV + "') GROUP BY A.MPO_AREA  UNION ALL SELECT        3 AS 'position', 'DH' AS Role, A.MPO_DIV AS 'DIVISION', COUNT(A.EMP_CARD_NO) AS Present FROM SMART0005.dbo.ACC_LEDGER_Z_D_A AS V INNER JOIN SMART0005.dbo.ACC_LEDGERGROUP AS G ON V.DIVISION = G.GR_NAME INNER JOIN HRS_TRANS_WORK_ATTENDANCE AS P ON V.MPO_CARD_NO = P.EMP_CARD_NO INNER JOIN SMART0005.dbo.ACC_LEDGERGROUP AS A ON V.DIVISION = A.GR_NAME WHERE  (P.ATTEN_DATEIN >= " + Utility.cvtSQLDateString(DateTime.Now.ToString("dd-MM-yyyy")) + 
+                ") AND (G.MPO_DIV = '" + obj.MPO_DIV + "') GROUP BY A.MPO_DIV;";
+
+
+
+
+
+
+                SqlCommand cmd = new SqlCommand(strSQL, gcnMain);
+                dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+
+
+
+                    kibria oLedg = new kibria();
+
+                    oLedg.AREA = dr["AREA"].ToString();
+
+
+                    oLedg.Role = dr["Role"].ToString();
+
+                    //oLedg.NOMPO = dr["NOMPO"].ToString();
+
+                    oLedg.Present = dr["Present"].ToString();
+
+                    //oLedg.LEAVE = dr["LEAVE"].ToString();
+
+                    //oLedg.ABSENT = dr["ABSENT"].ToString();
+
+
+
+
+
+                    oooChequePrint.Add(oLedg);
+                }
+
+                if (!dr.HasRows)
+                {
+                    kibria oLedg = new kibria();
+
+                    oLedg.AREA = "";
+                    oLedg.Role = "";
+                    //oLedg.NOMPO = "";
+
+                    oLedg.Present = "";
+                    //oLedg.LEAVE = "";
+
+                    //oLedg.ABSENT = "";
+
+
+                    oooChequePrint.Add(oLedg);
+                }
+                dr.Close();
+                gcnMain.Close();
+                cmd.Dispose();
+                return oooChequePrint;
+            }
+
+        }
+
 
 
         //SELECT COUNT(*) AS Countt, COUNT(EMP_CARD_NO) AS EMP_CARD_NO, COUNT(USER_NAME) AS USER_NAME, ROLE, NULL AS TEAM_NAME, NULL AS TEAM_CODE

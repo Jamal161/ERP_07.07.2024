@@ -189,7 +189,6 @@
 
 
 
-
     <div class="container">
 
 
@@ -1006,35 +1005,80 @@
 
 
 
+
+
+
+
+
+
+
+
+
+     
+
         //$(document).ready(function () {
         //    var currentStatus = 'all';
-
         //    loadData(currentStatus);
 
         //    function loadData(status) {
         //        $.ajax({
-        //            url: "/Attendence/mGetKibriadatalist",
+        //            url: "/Attendence/mGetKibriadataGroupwises",
         //            type: "GET",
         //            contentType: 'application/json;charset=utf-8',
         //            dataType: "json",
         //            success: function (result) {
+        //                var teams = groupBy(result, 'TEAM_NAME');
+
         //                var html = '';
-        //                $.each(result, function (key, item) {
-        //                    html += '<tr>';
-        //                    html += '<td><button type="button" class="team-button" data-id="' + item.TEAM_NAME + '">' + item.TEAM_NAME + '</button></td>';
-        //                    html += '<td>' + item.NOMPO + '</td>';
-        //                    html += '<td>' + item.Present + '</td>';
-        //                    html += '<td>' + item.LEAVE + '</td>';
-        //                    html += '<td>' + item.ABSENT + '</td>';
-        //                    html += '<td>' + ((item.Present / item.NOMPO) * 100).toFixed(2) + '%</td>';
-        //                    html += '</tr>';
+        //                var count = 0;
+        //                $.each(teams, function (teamName, items) {
+        //                    if (teamName !== null && teamName.trim() !== '') {
+        //                        if (count % 4 === 0) {
+        //                            html += '<div class="row">';
+        //                        }
+        //                        html += '<div class="col-sm-3">';
+        //                        html += '<div class="card-product" style="border-radius: 5px; margin-left:10px; margin-bottom: 10px;width:300px;">';
+        //                        html += '<div class="card-header team-button" data-id="' + teamName + '" style="background-color: #fff; padding-top: 15px; padding-left: 10px; font-size: 20px; font-weight: bold; cursor: pointer;">' + teamName + '</div>';
+        //                        html += '<div class="card-header" style="background-color: #fff; padding-left: 28px; font-size: 14px; border-bottom: 1px solid #ddd;"><strong>Role:</strong> <strong style="margin-left: 160px">Default:</strong></div>';
+
+        //                        html += '<div class="card-body" style="padding: 20px; background-color:#fff">';
+
+        //                        var role = groupBy(items, 'Role');
+        //                        $.each(role, function (roles, item) {
+        //                            if (roles !== null && roles.trim() !== '' && item.length > 0) {
+        //                                var presentCount = item.reduce(function (acc, obj) {
+        //                                    return acc + obj.Present;
+        //                                }, 0);
+
+        //                                html += '<div class="card-section" style="margin-bottom: 15px;">';
+        //                                html += '<p style="margin-left:10px;"> <span>' + roles + '</span> <span style="padding-right: 30px; float: right;">' + presentCount + '</span></p>';
+        //                                html += '</div>';
+        //                            }
+        //                        });
+        //                        html += '</div>';
+        //                        html += '</div>';
+        //                        html += '</div>';
+        //                        count++;
+        //                        if (count % 4 === 0 || count === Object.keys(teams).length) {
+        //                            html += '</div>';
+        //                        }
+        //                    }
         //                });
-        //                $('.tbody').html(html);
+        //                $('.card-container').html(html);
         //            },
         //            error: function (errormessage) {
         //                alert(errormessage.responseText);
         //            }
         //        });
+        //    }
+
+        //    function groupBy(array, key) {
+        //        return array.reduce(function (acc, obj) {
+        //            var property = obj[key];
+        //            acc[property] = acc[property] || [];
+        //            acc[property].push(obj);
+        //            return acc;
+        //        }, {});
         //    }
 
         //    $(document).on("click", ".team-button", function () {
@@ -1044,37 +1088,56 @@
 
         //    function showZoneDetails(teamName) {
         //        $.ajax({
-        //            url: "/Attendence/mGetKibriadatazone",
+        //            url: "/Attendence/mGetKibriadataGroupzonewises",
         //            type: "POST",
         //            contentType: 'application/json;charset=utf-8',
         //            dataType: "json",
         //            data: JSON.stringify({ TEAM_NAME: teamName }),
         //            success: function (result) {
-        //                var detailsHtml = '';
-        //                $.each(result, function (key, item) {
-        //                    detailsHtml += '<tr>';
-        //                    detailsHtml += '<td><button type="button" class="zone-button" data-id-team="' + teamName + '" data-id="' + item.ZONE_NAME + '">' + item.ZONE_NAME + '</button></td>';
-        //                    detailsHtml += '<td>' + item.NOMPO + '</td>';
-        //                    detailsHtml += '<td>' + item.Present + '</td>';
-        //                    detailsHtml += '<td>' + item.LEAVE + '</td>';
-        //                    detailsHtml += '<td>' + item.ABSENT + '</td>';
-        //                    detailsHtml += '<td>' + ((item.Present / item.NOMPO) * 100).toFixed(2) + '%</td>';
-        //                    detailsHtml += '</tr>';
+        //                var zones = groupBy(result, 'ZONE_NAME');
+
+        //                var html = '';
+        //                var count = 0;
+        //                $.each(zones, function (zoneName, items) {
+        //                    if (zoneName !== null && zoneName.trim() !== '') {
+        //                        if (count % 4 === 0) {
+        //                            html += '<div class="row">';
+        //                        }
+        //                        html += '<div class="col-sm-3">';
+        //                        html += '<div class="card-product" style="border-radius: 5px; margin-left:10px; margin-bottom: 10px;width:300px;">';
+        //                        html += '<div class="card-header zone-button" data-id="' + zoneName + '" data-id-team="' + teamName + '" style="background-color: #fff; padding-top: 15px; padding-left: 10px; font-size: 20px; font-weight: bold; cursor: pointer;">' + zoneName + '</div>';
+        //                        html += '<div class="card-header" style="background-color: #fff; padding-left: 28px; font-size: 14px; border-bottom: 1px solid #ddd;"><strong>Role:</strong> <strong style="margin-left: 160px">Default:</strong></div>';
+
+        //                        html += '<div class="card-body" style="padding: 20px; background-color:#fff">';
+
+        //                        var role = groupBy(items, 'Role');
+        //                        $.each(role, function (roles, item) {
+        //                            if (roles !== null && roles.trim() !== '' && item.length > 0) {
+        //                                var presentCount = item.reduce(function (acc, obj) {
+        //                                    return acc + obj.Present;
+        //                                }, 0);
+
+        //                                html += '<div class="card-section" style="margin-bottom: 15px;">';
+        //                                html += '<p style="margin-left:10px;"> <span>' + roles + '</span> <span style="padding-right: 30px; float: right;">' + presentCount + '</span></p>';
+        //                                html += '</div>';
+        //                            }
+        //                        });
+        //                        html += '</div>';
+        //                        html += '</div>';
+        //                        html += '</div>';
+        //                        count++;
+        //                        if (count % 4 === 0 || count === Object.keys(zones).length) {
+        //                            html += '</div>';
+        //                        }
+        //                    }
         //                });
-        //                //detailsHtml += '<tr><td colspan="6"><button class="previousButton">Previous</button></td></tr>';
-        //                $('.tbody').html(detailsHtml);
+        //                $('.card-container').html(html); 
         //            },
         //            error: function (errormessage) {
         //                alert(errormessage.responseText);
         //            }
         //        });
         //    }
-
-        //    //$(document).on("click", ".previousButton", function () {
-                
-        //    //    loadData(currentStatus); 
-        //    //});
-
 
         //    $(document).on("click", ".zone-button", function () {
         //        var teamName = $(this).data("id-team");
@@ -1084,25 +1147,53 @@
 
         //    function showDivisionDetails(teamName, zoneName) {
         //        $.ajax({
-        //            url: "/Attendence/mGetKibriadatadiv",
+        //            url: "/Attendence/mGetKibriadataGroupdivwises",
         //            type: "POST",
         //            contentType: 'application/json;charset=utf-8',
         //            dataType: "json",
         //            data: JSON.stringify({ TEAM_NAME: teamName, ZONE_NAME: zoneName }),
         //            success: function (result) {
-        //                var detailsHtml = '';
-        //                $.each(result, function (key, item) {
-        //                    detailsHtml += '<tr>';
-        //                    detailsHtml += '<td><button type="button" class="div-button" data-id-team="' + teamName + '" data-id-zone="' + zoneName + '" data-id="' + item.MPO_DIV + '">' + item.MPO_DIV + '</button></td>';
-        //                    detailsHtml += '<td>' + item.NOMPO + '</td>';
-        //                    detailsHtml += '<td>' + item.Present + '</td>';
-        //                    detailsHtml += '<td>' + item.LEAVE + '</td>';
-        //                    detailsHtml += '<td>' + item.ABSENT + '</td>';
-        //                    detailsHtml += '<td>' + ((item.Present / item.NOMPO) * 100).toFixed(2) + '%</td>';
-        //                    detailsHtml += '</tr>';
+
+        //                console.log(result)
+
+        //                var divisions = groupBy(result, 'DIVISION');
+
+        //                var html = '';
+        //                var count = 0;
+        //                $.each(divisions, function (divName, items) {
+        //                    if (divName !== null && divName.trim() !== '') {
+        //                        if (count % 4 === 0) {
+        //                            html += '<div class="row">';
+        //                        }
+        //                        html += '<div class="col-sm-3">';
+        //                        html += '<div class="card-product" style="border-radius: 5px; margin-left:10px; margin-bottom: 10px;width:300px;">';
+        //                        html += '<div class="card-header division-button" data-id="' + divName + '" style="background-color: #fff; padding-top: 15px; padding-left: 10px; font-size: 20px; font-weight: bold; cursor: pointer;">' + divName + '</div>';
+        //                        html += '<div class="card-header" style="background-color: #fff; padding-left: 28px; font-size: 14px; border-bottom: 1px solid #ddd;"><strong>Role:</strong> <strong style="margin-left: 160px">Default:</strong></div>';
+
+        //                        html += '<div class="card-body" style="padding: 20px; background-color:#fff">';
+
+        //                        var role = groupBy(items, 'Role');
+        //                        $.each(role, function (roles, item) {
+        //                            if (roles !== null && roles.trim() !== '' && item.length > 0) {
+        //                                var presentCount = item.reduce(function (acc, obj) {
+        //                                    return acc + obj.Present;
+        //                                }, 0);
+
+        //                                html += '<div class="card-section" style="margin-bottom: 15px;">';
+        //                                html += '<p style="margin-left:10px;"> <span>' + roles + '</span> <span style="padding-right: 30px; float: right;">' + presentCount + '</span></p>';
+        //                                html += '</div>';
+        //                            }
+        //                        });
+        //                        html += '</div>';
+        //                        html += '</div>';
+        //                        html += '</div>';
+        //                        count++;
+        //                        if (count % 4 === 0 || count === Object.keys(divisions).length) {
+        //                            html += '</div>';
+        //                        }
+        //                    }
         //                });
-        //                //detailsHtml += '<tr><td colspan="6"><button class="previousButton">Previous</button></td></tr>';
-        //                $('.tbody').html(detailsHtml);
+        //                $('.card-container').html(html);
         //            },
         //            error: function (errormessage) {
         //                alert(errormessage.responseText);
@@ -1111,40 +1202,64 @@
         //    }
 
 
-        //    //$(document).on("click", ".previousButton", function () {
-                
-        //    //    showDivisionDetails();
-        //    //});
 
 
-        //    $(document).on("click", ".div-button", function () {
+        //    $(document).on("click", ".division-button", function () {
         //        var teamName = $(this).data("id-team");
         //        var zoneName = $(this).data("id-zone");
         //        var divName = $(this).data("id");
         //        showAreaDetails(teamName, zoneName, divName);
         //    });
 
-        //    function showAreaDetails(teamName, zoneName, divName) {
+        //    function  showAreaDetails(teamName, zoneName, divName) {
         //        $.ajax({
-        //            url: "/Attendence/mGetKibriadataarea",
+        //            url: "/Attendence/mGetKibriadataGroupareawises",
         //            type: "POST",
         //            contentType: 'application/json;charset=utf-8',
         //            dataType: "json",
-        //            data: JSON.stringify({ TEAM_NAME: teamName, ZONE_NAME: zoneName, MPO_DIV: divName }),
+        //            data: JSON.stringify({ TEAM_NAME: teamName, ZONE_NAME: zoneName, MPO_DIV: divName   }),
         //            success: function (result) {
-        //                var detailsHtml = '';
-        //                $.each(result, function (key, item) {
-        //                    detailsHtml += '<tr>';
-        //                    detailsHtml += '<td><button type="button" class="area-button" data-id-team="' + teamName + '" data-id-zone="' + zoneName + '" data-id-div="' + divName + '" data-id="' + item.MPO_AREA + '">' + item.MPO_AREA + '</button></td>';
-        //                    detailsHtml += '<td>' + item.NOMPO + '</td>';
-        //                    detailsHtml += '<td>' + item.Present + '</td>';
-        //                    detailsHtml += '<td>' + item.LEAVE + '</td>';
-        //                    detailsHtml += '<td>' + item.ABSENT + '</td>';
-        //                    detailsHtml += '<td>' + ((item.Present / item.NOMPO) * 100).toFixed(2) + '%</td>';
-        //                    detailsHtml += '</tr>';
+
+        //                console.log(result)
+
+        //                var areas = groupBy(result, 'MPO_AREA');
+
+        //                var html = '';
+        //                var count = 0;
+        //                $.each(areas, function (areaName, items) {
+        //                    if (areaName !== null && areaName.trim() !== '') {
+        //                        if (count % 4 === 0) {
+        //                            html += '<div class="row">';
+        //                        }
+        //                        html += '<div class="col-sm-3">';
+        //                        html += '<div class="card-product" style="border-radius: 5px; margin-left:10px; margin-bottom: 10px;width:300px;">';
+        //                        html += '<div class="card-header area-button" data-id="' + areaName + '" style="background-color: #fff; padding-top: 15px; padding-left: 10px; font-size: 20px; font-weight: bold; cursor: pointer;">' + areaName + '</div>';
+        //                        html += '<div class="card-header" style="background-color: #fff; padding-left: 28px; font-size: 14px; border-bottom: 1px solid #ddd;"><strong>Role:</strong> <strong style="margin-left: 160px">Default:</strong></div>';
+
+        //                        html += '<div class="card-body" style="padding: 20px; background-color:#fff">';
+
+        //                        var role = groupBy(items, 'Role');
+        //                        $.each(role, function (roles, item) {
+        //                            if (roles !== null && roles.trim() !== '' && item.length > 0) {
+        //                                var presentCount = item.reduce(function (acc, obj) {
+        //                                    return acc + obj.Present;
+        //                                }, 0);
+
+        //                                html += '<div class="card-section" style="margin-bottom: 15px;">';
+        //                                html += '<p style="margin-left:10px;"> <span>' + roles + '</span> <span style="padding-right: 30px; float: right;">' + presentCount + '</span></p>';
+        //                                html += '</div>';
+        //                            }
+        //                        });
+        //                        html += '</div>';
+        //                        html += '</div>';
+        //                        html += '</div>';
+        //                        count++;
+        //                        if (count % 4 === 0 || count === Object.keys(areas).length) {
+        //                            html += '</div>';
+        //                        }
+        //                    }
         //                });
-        //                //detailsHtml += '<tr><td colspan="6"><button class="previousButton">Previous</button></td></tr>';
-        //                $('.tbody').html(detailsHtml);
+        //                $('.card-container').html(html);
         //            },
         //            error: function (errormessage) {
         //                alert(errormessage.responseText);
@@ -1152,10 +1267,7 @@
         //        });
         //    }
 
-        //    //$(document).on("click", ".previousButton", function () {
-                
-        //    //    showAreaDetails();
-        //    //});
+
 
 
         //    $(document).on("click", ".area-button", function () {
@@ -1166,83 +1278,137 @@
         //        showTerritoryDetails(teamName, zoneName, divName, areaName);
         //    });
 
-        //    function showTerritoryDetails(teamName, zoneName, divName, areaName) {
+        //    function  showTerritoryDetails(teamName, zoneName, divName, areaName) {
         //        $.ajax({
         //            url: "/Attendence/mGetKibriadatamarket",
         //            type: "POST",
         //            contentType: 'application/json;charset=utf-8',
         //            dataType: "json",
-        //            data: JSON.stringify({ TEAM_NAME: teamName, ZONE_NAME: zoneName, MPO_DIV: divName, MPO_AREA: areaName }),
+        //            data: JSON.stringify({ TEAM_NAME: teamName, ZONE_NAME: zoneName , DIVISION: divName , MPO_AREA : areaName }),
         //            success: function (result) {
-        //                var detailsHtml = '';
-        //                $.each(result, function (key, item) {
-        //                    detailsHtml += '<tr>';
-        //                    detailsHtml += '<td><button type="button" class="territory-button" data-id-team="' + teamName + '" data-id-zone="' + zoneName + '" data-id-div="' + divName + '" data-id-area="' + areaName + '" data-id="' + item.TERRITORRY_NAME + '">' + item.TERRITORRY_NAME + '</button></td>';
-        //                    detailsHtml += '<td>' + item.NOMPO + '</td>';
-        //                    detailsHtml += '<td>' + item.Present + '</td>';
-        //                    detailsHtml += '<td>' + item.LEAVE + '</td>';
-        //                    detailsHtml += '<td>' + item.ABSENT + '</td>';
-        //                    detailsHtml += '<td>' + ((item.Present / item.NOMPO) * 100).toFixed(2) + '%</td>';
-        //                    detailsHtml += '</tr>';
+
+        //                console.log(result)
+
+        //                var markets = groupBy(result, 'TERRITORRY_NAME');
+
+        //                var html = '';
+        //                var count = 0;
+        //                $.each(markets, function (marketName, items) {
+        //                    if (marketName !== null && marketName.trim() !== '') {
+        //                        if (count % 4 === 0) {
+        //                            html += '<div class="row">';
+        //                        }
+        //                        html += '<div class="col-sm-3">';
+        //                        html += '<div class="card-product" style="border-radius: 5px; margin-left:10px; margin-bottom: 10px;width:300px;">';
+        //                        html += '<div class="card-header territory-button" data-id="' + marketName + '" style="background-color: #fff; padding-top: 15px; padding-left: 10px; font-size: 20px; font-weight: bold; cursor: pointer;">' + marketName + '</div>';
+        //                        html += '<div class="card-header" style="background-color: #fff; padding-left: 28px; font-size: 14px; border-bottom: 1px solid #ddd;"><strong>Role:</strong> <strong style="margin-left: 160px">Default:</strong></div>';
+
+        //                        html += '<div class="card-body" style="padding: 20px; background-color:#fff">';
+
+        //                        var role = groupBy(items, 'Role');
+        //                        $.each(role, function (roles, item) {
+        //                            if (roles !== null && roles.trim() !== '' && item.length > 0) {
+        //                                var presentCount = item.reduce(function (acc, obj) {
+        //                                    return acc + obj.Present;
+        //                                }, 0);
+
+        //                                html += '<div class="card-section" style="margin-bottom: 15px;">';
+        //                                html += '<p style="margin-left:10px;"> <span>' + roles + '</span> <span style="padding-right: 30px; float: right;">' + presentCount + '</span></p>';
+        //                                html += '</div>';
+        //                            }
+        //                        });
+        //                        html += '</div>';
+        //                        html += '</div>';
+        //                        html += '</div>';
+        //                        count++;
+        //                        if (count % 4 === 0 || count === Object.keys(markets).length) {
+        //                            html += '</div>';
+        //                        }
+        //                    }
         //                });
-        //                //detailsHtml += '<tr><td colspan="6"><button class="previousButton">Previous</button></td></tr>';
-        //                $('.tbody').html(detailsHtml);
+        //                $('.card-container').html(html);
         //            },
         //            error: function (errormessage) {
         //                alert(errormessage.responseText);
         //            }
         //        });
         //    }
-        
-        //    //$(document).on("click", ".previousButton", function () {
-                
-        //    //    showTerritoryDetails();
-        //    //});
 
 
 
-        //$(document).on("click", ".territory-button", function () {
-        //    var teamName = $(this).data("id-team");
-        //    var zoneName = $(this).data("id-zone");
-        //    var divName = $(this).data("id-div");
-        //    var areaName = $(this).data("id-area");
-        //    var markerName = $(this).data("id");
-        //    showRouteDetails(teamName, zoneName, divName, areaName, markerName);
-        //});
 
-        //function showRouteDetails(teamName, zoneName, divName, areaName, markerName) {
-        //    $.ajax({
-        //        url: "/Attendence/mGetKibriadataroute",
-        //        type: "POST",
-        //        contentType: 'application/json;charset=utf-8',
-        //        dataType: "json",
-        //        data: JSON.stringify({ TEAM_NAME: teamName, ZONE_NAME: zoneName, MPO_DIV: divName, MPO_AREA: areaName, TERRITORRY_NAME: markerName }),
-        //        success: function (result) {
-        //            var detailsHtml = '';
-        //            $.each(result, function (key, item) {
-        //                detailsHtml += '<tr>';
-        //                detailsHtml += '<td>' + item.TERRITORRY_NAME + '</td>';
-        //                detailsHtml += '<td>' + item.NOMPO + '</td>';
-        //                detailsHtml += '<td>' + item.Present + '</td>';
-        //                detailsHtml += '<td>' + item.LEAVE + '</td>';
-        //                detailsHtml += '<td>' + item.ABSENT + '</td>';
-        //                detailsHtml += '<td>' + ((item.Present / item.NOMPO) * 100).toFixed(2) + '%</td>';
-        //                detailsHtml += '</tr>';
-        //            });
-        //            //detailsHtml += '<tr><td colspan="6"><button class="previousButton">Previous</button></td></tr>';
-        //            $('.tbody').html(detailsHtml);
-        //        },
-        //        error: function (errormessage) {
-        //            alert(errormessage.responseText);
-        //        }
+
+
+
+        //    $(document).on("click", ".territory-button", function () {
+        //        var teamName = $(this).data("id-team");
+        //        var zoneName = $(this).data("id-zone");
+        //        var divName = $(this).data("id-div");
+        //        var areaName = $(this).data("id-area");
+        //        var markerName = $(this).data("id");
+        //        showRouteDetails(teamName, zoneName, divName, areaName, markerName);
         //    });
-        //}
+
+        //    function  showRouteDetails(teamName, zoneName, divName, areaName, markerName) {
+        //        $.ajax({
+        //            url: "/Attendence/mGetKibriadatamarket",
+        //            type: "POST",
+        //            contentType: 'application/json;charset=utf-8',
+        //            dataType: "json",
+        //            data: JSON.stringify({ TEAM_NAME: teamName, ZONE_NAME: zoneName , DIVISION: divName , MPO_AREA : areaName, TERRITORRY_NAME: markerName }),
+        //            success: function (result) {
+
+        //                console.log(result)
+
+        //                var marketroutes = groupBy(result, 'MARKET_NAME');
+
+        //                var html = '';
+        //                var count = 0;
+        //                $.each(marketroutes, function (marketroutName, items) {
+        //                    if (marketroutName !== null && marketroutName.trim() !== '') {
+        //                        if (count % 4 === 0) {
+        //                            html += '<div class="row">';
+        //                        }
+        //                        html += '<div class="col-sm-3">';
+        //                        html += '<div class="card-product" style="border-radius: 5px; margin-left:10px; margin-bottom: 10px;width:300px;">';
+        //                        html += '<div class="card-header " style="background-color: #fff; padding-top: 15px; padding-left: 10px; font-size: 20px; font-weight: bold; cursor: pointer;">' + marketroutName + '</div>';
+        //                        html += '<div class="card-header" style="background-color: #fff; padding-left: 28px; font-size: 14px; border-bottom: 1px solid #ddd;"><strong>Role:</strong> <strong style="margin-left: 160px">Default:</strong></div>';
+
+        //                        html += '<div class="card-body" style="padding: 20px; background-color:#fff">';
+
+        //                        var role = groupBy(items, 'Role');
+        //                        $.each(role, function (roles, item) {
+        //                            if (roles !== null && roles.trim() !== '' && item.length > 0) {
+        //                                var presentCount = item.reduce(function (acc, obj) {
+        //                                    return acc + obj.Present;
+        //                                }, 0);
+
+        //                                html += '<div class="card-section" style="margin-bottom: 15px;">';
+        //                                html += '<p style="margin-left:10px;"> <span>' + roles + '</span> <span style="padding-right: 30px; float: right;">' + presentCount + '</span></p>';
+        //                                html += '</div>';
+        //                            }
+        //                        });
+        //                        html += '</div>';
+        //                        html += '</div>';
+        //                        html += '</div>';
+        //                        count++;
+        //                        if (count % 4 === 0 || count === Object.keys(marketroutes).length) {
+        //                            html += '</div>';
+        //                        }
+        //                    }
+        //                });
+        //                $('.card-container').html(html);
+        //            },
+        //            error: function (errormessage) {
+        //                alert(errormessage.responseText);
+        //            }
+        //        });
+        //    }
+
+
         //});
 
-        //$(document).on("click", ".previousButton", function () {
-                
-        //    showRouteDetails();
-        //});
+
 
         $(document).ready(function () {
             var currentStatus = 'all';
@@ -1256,42 +1422,7 @@
                     dataType: "json",
                     success: function (result) {
                         var teams = groupBy(result, 'TEAM_NAME');
-
-                        var html = '';
-                        var count = 0;
-                        $.each(teams, function (teamName, items) {
-                            if (teamName !== null && teamName.trim() !== '') {
-                                if (count % 4 === 0) {
-                                    html += '<div class="row">';
-                                }
-                                html += '<div class="col-sm-3">';
-                                html += '<div class="card-product" style="border-radius: 5px; margin-left:10px; margin-bottom: 10px;width:300px;">';
-                                html += '<div class="card-header team-button" data-id="' + teamName + '" style="background-color: #fff; padding-top: 15px; padding-left: 10px; font-size: 20px; font-weight: bold; cursor: pointer;">' + teamName + '</div>';
-                                html += '<div class="card-header" style="background-color: #fff; padding-left: 28px; font-size: 14px; border-bottom: 1px solid #ddd;"><strong>Role:</strong> <strong style="margin-left: 160px">Default:</strong></div>';
-
-                                html += '<div class="card-body" style="padding: 20px; background-color:#fff">';
-
-                                var role = groupBy(items, 'Role');
-                                $.each(role, function (roles, item) {
-                                    if (roles !== null && roles.trim() !== '' && item.length > 0) {
-                                        var presentCount = item.reduce(function (acc, obj) {
-                                            return acc + obj.Present;
-                                        }, 0);
-
-                                        html += '<div class="card-section" style="margin-bottom: 15px;">';
-                                        html += '<p style="margin-left:10px;"> <span>' + roles + '</span> <span style="padding-right: 30px; float: right;">' + presentCount + '</span></p>';
-                                        html += '</div>';
-                                    }
-                                });
-                                html += '</div>';
-                                html += '</div>';
-                                html += '</div>';
-                                count++;
-                                if (count % 4 === 0 || count === Object.keys(teams).length) {
-                                    html += '</div>';
-                                }
-                            }
-                        });
+                        var html = generateHtml(teams, 'team-button', 'TEAM_NAME');
                         $('.card-container').html(html);
                     },
                     error: function (errormessage) {
@@ -1300,73 +1431,176 @@
                 });
             }
 
-            function groupBy(array, key) {
-                return array.reduce(function (acc, obj) {
-                    var property = obj[key];
-                    acc[property] = acc[property] || [];
-                    acc[property].push(obj);
-                    return acc;
-                }, {});
-            }
-
-            $(document).on("click", ".team-button", function () {
-                var teamName = $(this).data("id");
-                showZoneDetails(teamName);
-            });
-
-            function showZoneDetails(teamName) {
-                $.ajax({
-                    url: "/Attendence/mGetKibriadataGroupzonewises",
-                    type: "POST",
-                    contentType: 'application/json;charset=utf-8',
-                    dataType: "json",
-                    data: JSON.stringify({ TEAM_NAME: teamName }),
-                    success: function (result) {
-                        var zones = groupBy(result, 'ZONE_NAME');
-
-                        var html = '';
-                        var count = 0;
-                        $.each(zones, function (zoneName, items) {
-                            if (zoneName !== null && zoneName.trim() !== '') {
-                                if (count % 4 === 0) {
-                                    html += '<div class="row">';
-                                }
-                                html += '<div class="col-sm-3">';
-                                html += '<div class="card-product" style="border-radius: 5px; margin-left:10px; margin-bottom: 10px;width:300px;">';
-                                html += '<div class="card-header" style="background-color: #fff; padding-top: 15px; padding-left: 10px; font-size: 20px; font-weight: bold;">' + zoneName + '</div>';
-                                html += '<div class="card-header" style="background-color: #fff; padding-left: 28px; font-size: 14px; border-bottom: 1px solid #ddd;"><strong>Role:</strong> <strong style="margin-left: 160px">Default:</strong></div>';
-
-                                html += '<div class="card-body" style="padding: 20px; background-color:#fff">';
-
-                                var role = groupBy(items, 'Role');
-                                $.each(role, function (roles, item) {
-                                    if (roles !== null && roles.trim() !== '' && item.length > 0) {
-                                        var presentCount = item.reduce(function (acc, obj) {
-                                            return acc + obj.Present;
-                                        }, 0);
-
-                                        html += '<div class="card-section" style="margin-bottom: 15px;">';
-                                        html += '<p style="margin-left:10px;"> <span>' + roles + '</span> <span style="padding-right: 30px; float: right;">' + presentCount + '</span></p>';
-                                        html += '</div>';
-                                    }
-                                });
+            function generateHtml(groups, buttonClass, dataKey) {
+                var html = '';
+                var count = 0;
+                $.each(groups, function (groupName, items) {
+                    if (groupName !== null && groupName.trim() !== '') {
+                        if (count % 4 === 0) {
+                            html += '<div class="row">';
+                        }
+                        html += '<div class="col-sm-3">';
+                        html += '<div class="card-product" style="border-radius: 5px; margin-left:10px; margin-bottom: 10px;width:300px;">';
+                        html += `<div class="card-header ${buttonClass}" data-id="${groupName}" style="background-color: #fff; padding-top: 15px; padding-left: 10px; font-size: 20px; font-weight: bold; cursor: pointer;">${groupName}</div>`;
+                        html += '<div class="card-header" style="background-color: #fff; padding-left: 28px; font-size: 14px; border-bottom: 1px solid #ddd;"><strong>Role:</strong> <strong style="margin-left: 160px">Default:</strong></div>';
+                        html += '<div class="card-body" style="padding: 20px; background-color:#fff">';
+                        var roles = groupBy(items, 'Role');
+                        $.each(roles, function (roleName, roleItems) {
+                            if (roleName !== null && roleName.trim() !== '' && roleItems.length > 0) {
+                                var presentCount = roleItems.reduce((acc, obj) => acc + obj.Present, 0);
+                                html += '<div class="card-section" style="margin-bottom: 15px;">';
+                                html += `<p style="margin-left:10px;"> <span>${roleName}</span> <span style="padding-right: 30px; float: right;">${presentCount}</span></p>`;
                                 html += '</div>';
-                                html += '</div>';
-                                html += '</div>';
-                                count++;
-                                if (count % 4 === 0 || count === Object.keys(zones).length) {
-                                    html += '</div>';
-                                }
                             }
                         });
-                        $('.card-container').html(html); // Clear and append new data
-                    },
-                    error: function (errormessage) {
-                        alert(errormessage.responseText);
+                        html += '</div>';
+                        html += '</div>';
+                        html += '</div>';
+                        count++;
+                        if (count % 4 === 0 || count === Object.keys(groups).length) {
+                            html += '</div>';
+                        }
                     }
                 });
+                return html;
             }
+
+            function groupBy(array, key) {
+                return array.reduce((acc, obj) => {
+                    var property = obj[key];
+                acc[property] = acc[property] || [];
+                acc[property].push(obj);
+                return acc;
+            }, {});
+        }
+
+    $(document).on("click", ".team-button", function () {
+            var teamName = $(this).data("id");
+            showZoneDetails(teamName);
         });
+
+        function showZoneDetails(teamName) {
+            $.ajax({
+                url: "/Attendence/mGetKibriadataGroupzonewises",
+                type: "POST",
+                contentType: 'application/json;charset=utf-8',
+                dataType: "json",
+                data: JSON.stringify({ TEAM_NAME: teamName }),
+                success: function (result) {
+                    var zones = groupBy(result, 'ZONE_NAME');
+                    var html = generateHtml(zones, 'zone-button', 'ZONE_NAME');
+                    $('.card-container').html(html);
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        }
+
+        $(document).on("click", ".zone-button", function () {
+            var teamName = $(this).data("id-team");
+            var zoneName = $(this).data("id");
+            showDivisionDetails(teamName, zoneName);
+        });
+
+        function showDivisionDetails(teamName, zoneName) {
+            $.ajax({
+                url: "/Attendence/mGetKibriadataGroupdivwises",
+                type: "POST",
+                contentType: 'application/json;charset=utf-8',
+                dataType: "json",
+                data: JSON.stringify({ TEAM_NAME: teamName, ZONE_NAME: zoneName }),
+                success: function (result) {
+                    var divisions = groupBy(result, 'DIVISION');
+                    var html = generateHtml(divisions, 'division-button', 'DIVISION');
+                    $('.card-container').html(html);
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        }
+
+        $(document).on("click", ".division-button", function () {
+            var teamName = $(this).data("id-team");
+            var zoneName = $(this).data("id-zone");
+            var divName = $(this).data("id");
+            showAreaDetails(teamName, zoneName, divName);
+        });
+
+        function showAreaDetails(teamName, zoneName, divName) {
+            $.ajax({
+                url: "/Attendence/mGetKibriadataGroupareawises",
+                type: "POST",
+                contentType: 'application/json;charset=utf-8',
+                dataType: "json",
+                data: JSON.stringify({ TEAM_NAME: teamName, ZONE_NAME: zoneName, MPO_DIV: divName }),
+                success: function (result) {
+                    var areas = groupBy(result, 'MPO_AREA');
+                    var html = generateHtml(areas, 'area-button', 'MPO_AREA');
+                    $('.card-container').html(html);
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        }
+
+        $(document).on("click", ".area-button", function () {
+            var teamName = $(this).data("id-team");
+            var zoneName = $(this).data("id-zone");
+            var divName = $(this).data("id-div");
+            var areaName = $(this).data("id");
+            showTerritoryDetails(teamName, zoneName, divName, areaName);
+        });
+
+        function showTerritoryDetails(teamName, zoneName, divName, areaName) {
+            $.ajax({
+                url: "/Attendence/mGetKibriadatamarket",
+                type: "POST",
+                contentType: 'application/json;charset=utf-8',
+                dataType: "json",
+                data: JSON.stringify({ TEAM_NAME: teamName, ZONE_NAME: zoneName, DIVISION: divName, MPO_AREA: areaName }),
+                success: function (result) {
+                    var markets = groupBy(result, 'TERRITORRY_NAME');
+                    var html = generateHtml(markets, 'territory-button', 'TERRITORRY_NAME');
+                    $('.card-container').html(html);
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        }
+
+        $(document).on("click", ".territory-button", function () {
+            var teamName = $(this).data("id-team");
+            var zoneName = $(this).data("id-zone");
+            var divName = $(this).data("id-div");
+            var areaName = $(this).data("id-area");
+            var marketName = $(this).data("id");
+            showRouteDetails(teamName, zoneName, divName, areaName, marketName);
+        });
+
+        function showRouteDetails(teamName, zoneName, divName, areaName, marketName) {
+            $.ajax({
+                url: "/Attendence/mGetKibriadatamarket",
+                type: "POST",
+                contentType: 'application/json;charset=utf-8',
+                dataType: "json",
+                data: JSON.stringify({ TEAM_NAME: teamName, ZONE_NAME: zoneName, DIVISION: divName, MPO_AREA: areaName, TERRITORRY_NAME: marketName }),
+                success: function (result) {
+                    var marketRoutes = groupBy(result, 'MARKET_NAME');
+                    var html = generateHtml(marketRoutes, '', 'MARKET_NAME');
+                    $('.card-container').html(html);
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        }
+        });
+
+
 
 
 

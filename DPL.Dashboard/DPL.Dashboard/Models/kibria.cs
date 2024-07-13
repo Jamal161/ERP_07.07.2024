@@ -30,5 +30,9 @@ namespace DPL.DASHBOARD.Models
         public string Role { get; set; }
 
         public string Position { get; set; }
+
+        public string DIVISION { get; set; }
+
+        public string AREA { get; set; }
     }
 }
