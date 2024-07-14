@@ -28,7 +28,6 @@
 
 
 
-
     <link href="~/Content/css/boxsize.min.css" rel="stylesheet">
 
 
@@ -458,6 +457,8 @@
             vertical-align: middle;
             cursor: pointer;
         }
+
+       
     </style>
 
 </head>
@@ -698,6 +699,7 @@
             
             #example tbody td:first-child {
                 font-weight: bold;
+                
             }
 
            
@@ -1159,40 +1161,40 @@
                             { data: 'dblCreditLimit' },
                             { data: 'dblPending' }
                         ],
-                        columnDefs: [
-                             {
-                                 targets: 0,
-                                 createdCell: function(td, cellData, rowData, row, col) {
-                                     if (rowData.isHeader && rowData.headerLevel === 'team') {
-                                         $(td).addClass('team-header');
-                                     }
-                                 }
-                             },
-                             {
-                                 targets: 1,
-                                 createdCell: function(td, cellData, rowData, row, col) {
-                                     if (rowData.isHeader && rowData.headerLevel === 'zone') {
-                                         $(td).addClass('zone-header');
-                                     }
-                                 }
-                             },
-                             {
-                                 targets: 2,
-                                 createdCell: function(td, cellData, rowData, row, col) {
-                                     if (rowData.isHeader && rowData.headerLevel === 'division') {
-                                         $(td).addClass('division-header');
-                                     }
-                                 }
-                             },
-                             {
-                                 targets: 3,
-                                 createdCell: function(td, cellData, rowData, row, col) {
-                                     if (rowData.isHeader && rowData.headerLevel === 'area') {
-                                         $(td).addClass('area-header');
-                                     }
-                                 }
-                             }
-                        ],
+                        //columnDefs: [
+                        //     {
+                        //         targets: 0,
+                        //         createdCell: function(td, cellData, rowData, row, col) {
+                        //             if (rowData.isHeader && rowData.headerLevel === 'team') {
+                        //                 $(td).addClass('team-header');
+                        //             }
+                        //         }
+                        //     },
+                        //     {
+                        //         targets: 1,
+                        //         createdCell: function(td, cellData, rowData, row, col) {
+                        //             if (rowData.isHeader && rowData.headerLevel === 'zone') {
+                        //                 $(td).addClass('zone-header');
+                        //             }
+                        //         }
+                        //     },
+                        //     {
+                        //         targets: 2,
+                        //         createdCell: function(td, cellData, rowData, row, col) {
+                        //             if (rowData.isHeader && rowData.headerLevel === 'division') {
+                        //                 $(td).addClass('division-header');
+                        //             }
+                        //         }
+                        //     },
+                        //     {
+                        //         targets: 3,
+                        //         createdCell: function(td, cellData, rowData, row, col) {
+                        //             if (rowData.isHeader && rowData.headerLevel === 'area') {
+                        //                 $(td).addClass('area-header');
+                        //             }
+                        //         }
+                        //     }
+                        //],
                         footerCallback: function (row, data, start, end, display) {
                             var api = this.api();
 
@@ -1365,16 +1367,16 @@
                     return formData;
                 }
 
-                function processData(data) {
-                    return data.map(function (item) {
-                        item.dblCurrentSalesMinusSpVoucher = isNaN(item.dblCurrentSales) || isNaN(item.dblSpVoucher) ? 0 : (item.dblCurrentSales - item.dblSpVoucher);
-                        item.percentageSpVoucher = isNaN(item.dblCurrentSales) || isNaN(item.dblSpVoucher) || item.dblCurrentSales === 0 ? '0.00%' : ((item.dblSpVoucher / item.dblCurrentSales) * 100).toFixed(2) + '%';
-                        item.dblCommitmentMinusCollecCommi = isNaN(item.dblCommitment) || isNaN(item.dblcollecCommi) ? 0 : (item.dblCommitment - item.dblcollecCommi);
-                        item.percentageCollecCommi = isNaN(item.dblCommitment) || isNaN(item.dblcollecCommi) || item.dblCommitment === 0 ? '0.00%' : ((item.dblcollecCommi / item.dblCommitment) * 100).toFixed(2) + '%';
+                //function processData(data) {
+                //    return data.map(function (item) {
+                //        item.dblCurrentSalesMinusSpVoucher = isNaN(item.dblCurrentSales) || isNaN(item.dblSpVoucher) ? 0 : (item.dblCurrentSales - item.dblSpVoucher);
+                //        item.percentageSpVoucher = isNaN(item.dblCurrentSales) || isNaN(item.dblSpVoucher) || item.dblCurrentSales === 0 ? '0.00%' : ((item.dblSpVoucher / item.dblCurrentSales) * 100).toFixed(2) + '%';
+                //        item.dblCommitmentMinusCollecCommi = isNaN(item.dblCommitment) || isNaN(item.dblcollecCommi) ? 0 : (item.dblCommitment - item.dblcollecCommi);
+                //        item.percentageCollecCommi = isNaN(item.dblCommitment) || isNaN(item.dblcollecCommi) || item.dblCommitment === 0 ? '0.00%' : ((item.dblcollecCommi / item.dblCommitment) * 100).toFixed(2) + '%';
 
-                        return item;
-                    });
-                }
+                //        return item;
+                //    });
+                //}
 
 
                 function formatDate(dateString) {

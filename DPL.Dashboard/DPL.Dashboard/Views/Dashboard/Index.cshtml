@@ -129,7 +129,7 @@
 
 
         .table td, .table th {
-            padding: 10px;
+            padding: 4px;
             vertical-align: top;
             border-top: 1px solid #dee2e6;
         }
@@ -174,6 +174,67 @@
             background-color: #e9ecef;
             border-radius: .25rem;
         }
+
+
+        .team-button {
+            background-color: #fff;
+            border: none;
+            text-align: left;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            width: 100px;
+            
+        }
+
+        .zone-button {
+            background-color: #fff;
+            border: none;
+            text-align: left;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            width: 100px;
+            
+        }
+        .div-button {
+            background-color: #fff;
+            border: none;
+            text-align: left;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            width: 100px;
+            
+        }
+
+        .area-button {
+            background-color: #fff;
+            border: none;
+            text-align: left;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            width: 100px;
+            
+        }
+
+        .territory-button {
+            background-color: #fff;
+            border: none;
+            text-align: left;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            width: 100px;
+           
+        }
+
 
     </style>
     <br />
@@ -339,7 +400,7 @@
                         var html = '';
                         $.each(paginatedData, function (key, item) {
                             html += '<tr>';
-                            html += '<td>' + item.Role + '</td>';
+                            html += '<td style="padding-left:12px;;">' + item.Role + '</td>';
                             html += '<td>' + item.NOMPO + '</td>';
                             html += '<td>' + item.Present + '</td>';
                             html += '<td>' + item.LEAVE + '</td>';
@@ -621,9 +682,6 @@
 
 
        
-
-
-
         $(document).ready(function () {
             google.charts.load('current', { 'packages': ['corechart'] });
             google.charts.setOnLoadCallback(loadData);
@@ -632,25 +690,29 @@
 
             $(document).on("click", ".breadcrumb", function () {
                 var level = $(this).data("level");
-                if (level === "team") {
-                    loadData('all');
-                } else if (level === "zone") {
-                    showZoneDetails($(this).text());
-                } else if (level === "division") {
-                    var teamName = $('.breadcrumb[data-level="team"]').text();
-                    showDivisionDetails(teamName, $(this).text());
-                } else if (level === "area") {
-                    var teamName = $('.breadcrumb[data-level="team"]').text();
-                    var zoneName = $('.breadcrumb[data-level="zone"]').text();
-                    showAreaDetails(teamName, zoneName, $(this).text());
-                } else if (level === "territory") {
-                    var teamName = $('.breadcrumb[data-level="team"]').text();
-                    var zoneName = $('.breadcrumb[data-level="zone"]').text();
-                    var divName = $('.breadcrumb[data-level="division"]').text();
-                    showTerritoryDetails(teamName, zoneName, divName, $(this).text());
+                var teamName = $('.breadcrumb[data-level="team"]').text();
+                var zoneName = $('.breadcrumb[data-level="zone"]').text();
+                var divName = $('.breadcrumb[data-level="division"]').text();
+                var areaName = $('.breadcrumb[data-level="area"]').text();
+
+                switch (level) {
+                    case "team":
+                        loadData('all');
+                        break;
+                    case "zone":
+                        showZoneDetails(teamName);
+                        break;
+                    case "division":
+                        showDivisionDetails(teamName, zoneName);
+                        break;
+                    case "area":
+                        showAreaDetails(teamName, zoneName, divName);
+                        break;
+                    case "territory":
+                        showTerritoryDetails(teamName, zoneName, divName, areaName);
+                        break;
                 }
             });
-
 
             function loadData(status) {
                 $.ajax({
@@ -671,12 +733,11 @@
                             html += '</tr>';
                         });
                         $('.tbody').html(html);
-                        drawAttendanceChart(result, '');
-
-                        $('.breadcrumb').hide(); 
-                        $('.breadcrumb[data-level="team"]').show(); 
-                        updateBreadcrumbTitle('Teams', 'team'); 
                         drawAttendanceChart(result, 'All Teams');
+
+                        $('.breadcrumb').hide();
+                        $('.breadcrumb[data-level="team"]').show().text('Teams');
+                        updateBreadcrumbTitle('Teams', 'team');
                     },
                     error: function (errormessage) {
                         alert(errormessage.responseText);
@@ -712,10 +773,9 @@
                         drawAttendanceChart(result, teamName);
 
                         $('.breadcrumb').hide();
-                        $('.breadcrumb[data-level="team"]').show();
+                        $('.breadcrumb[data-level="team"]').show().text('Teams');
                         $('.breadcrumb[data-level="zone"]').show().text(teamName);
                         updateBreadcrumbTitle(teamName, 'zone');
-                        drawAttendanceChart(result, teamName);
                     },
                     error: function (errormessage) {
                         alert(errormessage.responseText);
@@ -752,9 +812,9 @@
                         drawAttendanceChart(result, zoneName);
 
                         $('.breadcrumb').hide();
-                        $('.breadcrumb[data-level="team"]').show();
-                        $('.breadcrumb[data-level="zone"]').show().text(zoneName);
-                        $('.breadcrumb[data-level="division"]').show().text(teamName);
+                        $('.breadcrumb[data-level="team"]').show().text('Teams');
+                        $('.breadcrumb[data-level="zone"]').show().text(teamName);
+                        $('.breadcrumb[data-level="division"]').show().text(zoneName);
                         updateBreadcrumbTitle(teamName + ' - ' + zoneName, 'division');
                     },
                     error: function (errormessage) {
@@ -793,10 +853,10 @@
                         drawAttendanceChart(result, divName);
 
                         $('.breadcrumb').hide();
-                        $('.breadcrumb[data-level="team"]').show();
-                        $('.breadcrumb[data-level="zone"]').show().text(zoneName);
-                        $('.breadcrumb[data-level="division"]').show().text(divName);
-                        $('.breadcrumb[data-level="area"]').show().text(teamName);
+                        $('.breadcrumb[data-level="team"]').show().text('Teams');
+                        $('.breadcrumb[data-level="zone"]').show().text(teamName);
+                        $('.breadcrumb[data-level="division"]').show().text(zoneName);
+                        $('.breadcrumb[data-level="area"]').show().text(divName);
                         updateBreadcrumbTitle(teamName + ' - ' + zoneName + ' - ' + divName, 'area');
                     },
                     error: function (errormessage) {
@@ -824,7 +884,7 @@
                         var detailsHtml = '';
                         $.each(result, function (key, item) {
                             detailsHtml += '<tr>';
-                            detailsHtml += '<td><button type="button" class="territory-button" data-id-team="' + teamName + '" data-id-zone="' + zoneName + '" data-id-div="' + divName + '" data-id-area="' + areaName + '" data-id="' + item.TERRITORRY_NAME + '">' + item.TERRITORRY_NAME + '</button></td>';
+                            detailsHtml += '<td><button type="button" class="territory-button" data-id-team="' + teamName + '" data-id-zone="' + zoneName + '" data-id-div="' + divName + '" data-id-area="' + areaName + '" data-id="' + item.MPO_TERRITORY + '">' + item.MPO_TERRITORY + '</button></td>';
                             detailsHtml += '<td>' + item.NOMPO + '</td>';
                             detailsHtml += '<td>' + item.Present + '</td>';
                             detailsHtml += '<td>' + item.LEAVE + '</td>';
@@ -836,11 +896,11 @@
                         drawAttendanceChart(result, areaName);
 
                         $('.breadcrumb').hide();
-                        $('.breadcrumb[data-level="team"]').show();
-                        $('.breadcrumb[data-level="zone"]').show().text(zoneName);
-                        $('.breadcrumb[data-level="division"]').show().text(divName);
-                        $('.breadcrumb[data-level="area"]').show().text(areaName);
-                        $('.breadcrumb[data-level="territory"]').show().text(teamName);
+                        $('.breadcrumb[data-level="team"]').show().text('Teams');
+                        $('.breadcrumb[data-level="zone"]').show().text(teamName);
+                        $('.breadcrumb[data-level="division"]').show().text(zoneName);
+                        $('.breadcrumb[data-level="area"]').show().text(divName);
+                        $('.breadcrumb[data-level="territory"]').show().text(areaName);
                         updateBreadcrumbTitle(teamName + ' - ' + zoneName + ' - ' + divName + ' - ' + areaName, 'territory');
                     },
                     error: function (errormessage) {
@@ -885,6 +945,286 @@
                     }
                 });
             }
+
+
+            function updateBreadcrumbTitle(title, level) {
+                if (level === 'team') {
+                    $('title').text('Teams');
+                } else if (level === 'zone') {
+                    $('title').text('Zone: ' + title);
+                } else if (level === 'division') {
+                    $('title').text('Division: ' + title);
+                } else if (level === 'area') {
+                    $('title').text('Area: ' + title);
+                } else if (level === 'territory') {
+                    $('title').text('Territory: ' + title);
+                }
+            }
+
+
+
+
+        //$(document).ready(function () {
+        //    google.charts.load('current', { 'packages': ['corechart'] });
+        //    google.charts.setOnLoadCallback(loadData);
+
+        //    var currentStatus = 'all';
+
+        //    $(document).on("click", ".breadcrumb", function () {
+        //        var level = $(this).data("level");
+        //        if (level === "team") {
+        //            loadData('all');
+        //        } else if (level === "zone") {
+        //            showZoneDetails($(this).text());
+        //        } else if (level === "division") {
+        //            var teamName = $('.breadcrumb[data-level="team"]').text();
+        //            showDivisionDetails(teamName, $(this).text());
+        //        } else if (level === "area") {
+        //            var teamName = $('.breadcrumb[data-level="team"]').text();
+        //            var zoneName = $('.breadcrumb[data-level="zone"]').text();
+        //            showAreaDetails(teamName, zoneName, $(this).text());
+        //        } else if (level === "territory") {
+        //            var teamName = $('.breadcrumb[data-level="team"]').text();
+        //            var zoneName = $('.breadcrumb[data-level="zone"]').text();
+        //            var divName = $('.breadcrumb[data-level="division"]').text();
+        //            showTerritoryDetails(teamName, zoneName, divName, $(this).text());
+        //        }
+        //    });
+
+
+        //    function loadData(status) {
+        //        $.ajax({
+        //            url: "/Attendence/mGetKibriadatalist",
+        //            type: "GET",
+        //            contentType: 'application/json;charset=utf-8',
+        //            dataType: "json",
+        //            success: function (result) {
+        //                var html = '';
+        //                $.each(result, function (key, item) {
+        //                    html += '<tr>';
+        //                    html += '<td><button type="button" class="team-button" data-id="' + item.TEAM_NAME + '">' + item.TEAM_NAME + '</button></td>';
+        //                    html += '<td>' + item.NOMPO + '</td>';
+        //                    html += '<td>' + item.Present + '</td>';
+        //                    html += '<td>' + item.LEAVE + '</td>';
+        //                    html += '<td>' + item.ABSENT + '</td>';
+        //                    html += '<td>' + ((item.Present / item.NOMPO) * 100).toFixed(2) + '%</td>';
+        //                    html += '</tr>';
+        //                });
+        //                $('.tbody').html(html);
+        //                drawAttendanceChart(result, '');
+
+        //                $('.breadcrumb').hide(); 
+        //                $('.breadcrumb[data-level="team"]').show(); 
+        //                updateBreadcrumbTitle('Teams', 'team'); 
+        //                drawAttendanceChart(result, 'All Teams');
+        //            },
+        //            error: function (errormessage) {
+        //                alert(errormessage.responseText);
+        //            }
+        //        });
+        //    }
+
+        //    $(document).on("click", ".team-button", function () {
+        //        var teamName = $(this).data("id");
+        //        showZoneDetails(teamName);
+        //    });
+
+        //    function showZoneDetails(teamName) {
+        //        $.ajax({
+        //            url: "/Attendence/mGetKibriadatazone",
+        //            type: "POST",
+        //            contentType: 'application/json;charset=utf-8',
+        //            dataType: "json",
+        //            data: JSON.stringify({ TEAM_NAME: teamName }),
+        //            success: function (result) {
+        //                var detailsHtml = '';
+        //                $.each(result, function (key, item) {
+        //                    detailsHtml += '<tr>';
+        //                    detailsHtml += '<td><button type="button" class="zone-button" data-id-team="' + teamName + '" data-id="' + item.ZONE_NAME + '">' + item.ZONE_NAME + '</button></td>';
+        //                    detailsHtml += '<td>' + item.NOMPO + '</td>';
+        //                    detailsHtml += '<td>' + item.Present + '</td>';
+        //                    detailsHtml += '<td>' + item.LEAVE + '</td>';
+        //                    detailsHtml += '<td>' + item.ABSENT + '</td>';
+        //                    detailsHtml += '<td>' + ((item.Present / item.NOMPO) * 100).toFixed(2) + '%</td>';
+        //                    detailsHtml += '</tr>';
+        //                });
+        //                $('.tbody').html(detailsHtml);
+        //                drawAttendanceChart(result, teamName);
+
+        //                $('.breadcrumb').hide();
+        //                $('.breadcrumb[data-level="team"]').show();
+        //                $('.breadcrumb[data-level="zone"]').show().text(teamName);
+        //                updateBreadcrumbTitle(teamName, 'zone');
+        //                drawAttendanceChart(result, teamName);
+        //            },
+        //            error: function (errormessage) {
+        //                alert(errormessage.responseText);
+        //            }
+        //        });
+        //    }
+
+        //    $(document).on("click", ".zone-button", function () {
+        //        var teamName = $(this).data("id-team");
+        //        var zoneName = $(this).data("id");
+        //        showDivisionDetails(teamName, zoneName);
+        //    });
+
+        //    function showDivisionDetails(teamName, zoneName) {
+        //        $.ajax({
+        //            url: "/Attendence/mGetKibriadatadiv",
+        //            type: "POST",
+        //            contentType: 'application/json;charset=utf-8',
+        //            dataType: "json",
+        //            data: JSON.stringify({ TEAM_NAME: teamName, ZONE_NAME: zoneName }),
+        //            success: function (result) {
+        //                var detailsHtml = '';
+        //                $.each(result, function (key, item) {
+        //                    detailsHtml += '<tr>';
+        //                    detailsHtml += '<td><button type="button" class="div-button" data-id-team="' + teamName + '" data-id-zone="' + zoneName + '" data-id="' + item.MPO_DIV + '">' + item.MPO_DIV + '</button></td>';
+        //                    detailsHtml += '<td>' + item.NOMPO + '</td>';
+        //                    detailsHtml += '<td>' + item.Present + '</td>';
+        //                    detailsHtml += '<td>' + item.LEAVE + '</td>';
+        //                    detailsHtml += '<td>' + item.ABSENT + '</td>';
+        //                    detailsHtml += '<td>' + ((item.Present / item.NOMPO) * 100).toFixed(2) + '%</td>';
+        //                    detailsHtml += '</tr>';
+        //                });
+        //                $('.tbody').html(detailsHtml);
+        //                drawAttendanceChart(result, zoneName);
+
+        //                $('.breadcrumb').hide();
+        //                $('.breadcrumb[data-level="team"]').show();
+        //                $('.breadcrumb[data-level="zone"]').show().text(zoneName);
+        //                $('.breadcrumb[data-level="division"]').show().text(teamName);
+        //                updateBreadcrumbTitle(teamName + ' - ' + zoneName, 'division');
+        //            },
+        //            error: function (errormessage) {
+        //                alert(errormessage.responseText);
+        //            }
+        //        });
+        //    }
+
+        //    $(document).on("click", ".div-button", function () {
+        //        var teamName = $(this).data("id-team");
+        //        var zoneName = $(this).data("id-zone");
+        //        var divName = $(this).data("id");
+        //        showAreaDetails(teamName, zoneName, divName);
+        //    });
+
+        //    function showAreaDetails(teamName, zoneName, divName) {
+        //        $.ajax({
+        //            url: "/Attendence/mGetKibriadataarea",
+        //            type: "POST",
+        //            contentType: 'application/json;charset=utf-8',
+        //            dataType: "json",
+        //            data: JSON.stringify({ TEAM_NAME: teamName, ZONE_NAME: zoneName, MPO_DIV: divName }),
+        //            success: function (result) {
+        //                var detailsHtml = '';
+        //                $.each(result, function (key, item) {
+        //                    detailsHtml += '<tr>';
+        //                    detailsHtml += '<td><button type="button" class="area-button" data-id-team="' + teamName + '" data-id-zone="' + zoneName + '" data-id-div="' + divName + '" data-id="' + item.MPO_AREA + '">' + item.MPO_AREA + '</button></td>';
+        //                    detailsHtml += '<td>' + item.NOMPO + '</td>';
+        //                    detailsHtml += '<td>' + item.Present + '</td>';
+        //                    detailsHtml += '<td>' + item.LEAVE + '</td>';
+        //                    detailsHtml += '<td>' + item.ABSENT + '</td>';
+        //                    detailsHtml += '<td>' + ((item.Present / item.NOMPO) * 100).toFixed(2) + '%</td>';
+        //                    detailsHtml += '</tr>';
+        //                });
+        //                $('.tbody').html(detailsHtml);
+        //                drawAttendanceChart(result, divName);
+
+        //                $('.breadcrumb').hide();
+        //                $('.breadcrumb[data-level="team"]').show();
+        //                $('.breadcrumb[data-level="zone"]').show().text(zoneName);
+        //                $('.breadcrumb[data-level="division"]').show().text(divName);
+        //                $('.breadcrumb[data-level="area"]').show().text(teamName);
+        //                updateBreadcrumbTitle(teamName + ' - ' + zoneName + ' - ' + divName, 'area');
+        //            },
+        //            error: function (errormessage) {
+        //                alert(errormessage.responseText);
+        //            }
+        //        });
+        //    }
+
+        //    $(document).on("click", ".area-button", function () {
+        //        var teamName = $(this).data("id-team");
+        //        var zoneName = $(this).data("id-zone");
+        //        var divName = $(this).data("id-div");
+        //        var areaName = $(this).data("id");
+        //        showTerritoryDetails(teamName, zoneName, divName, areaName);
+        //    });
+
+        //    function showTerritoryDetails(teamName, zoneName, divName, areaName) {
+        //        $.ajax({
+        //            url: "/Attendence/mGetKibriadatamarket",
+        //            type: "POST",
+        //            contentType: 'application/json;charset=utf-8',
+        //            dataType: "json",
+        //            data: JSON.stringify({ TEAM_NAME: teamName, ZONE_NAME: zoneName, MPO_DIV: divName, MPO_AREA: areaName }),
+        //            success: function (result) {
+        //                var detailsHtml = '';
+        //                $.each(result, function (key, item) {
+        //                    detailsHtml += '<tr>';
+        //                    detailsHtml += '<td><button type="button" class="territory-button" data-id-team="' + teamName + '" data-id-zone="' + zoneName + '" data-id-div="' + divName + '" data-id-area="' + areaName + '" data-id="' + item.TERRITORRY_NAME + '">' + item.TERRITORRY_NAME + '</button></td>';
+        //                    detailsHtml += '<td>' + item.NOMPO + '</td>';
+        //                    detailsHtml += '<td>' + item.Present + '</td>';
+        //                    detailsHtml += '<td>' + item.LEAVE + '</td>';
+        //                    detailsHtml += '<td>' + item.ABSENT + '</td>';
+        //                    detailsHtml += '<td>' + ((item.Present / item.NOMPO) * 100).toFixed(2) + '%</td>';
+        //                    detailsHtml += '</tr>';
+        //                });
+        //                $('.tbody').html(detailsHtml);
+        //                drawAttendanceChart(result, areaName);
+
+        //                $('.breadcrumb').hide();
+        //                $('.breadcrumb[data-level="team"]').show();
+        //                $('.breadcrumb[data-level="zone"]').show().text(zoneName);
+        //                $('.breadcrumb[data-level="division"]').show().text(divName);
+        //                $('.breadcrumb[data-level="area"]').show().text(areaName);
+        //                $('.breadcrumb[data-level="territory"]').show().text(teamName);
+        //                updateBreadcrumbTitle(teamName + ' - ' + zoneName + ' - ' + divName + ' - ' + areaName, 'territory');
+        //            },
+        //            error: function (errormessage) {
+        //                alert(errormessage.responseText);
+        //            }
+        //        });
+        //    }
+
+            //$(document).on("click", ".territory-button", function () {
+            //    var teamName = $(this).data("id-team");
+            //    var zoneName = $(this).data("id-zone");
+            //    var divName = $(this).data("id-div");
+            //    var areaName = $(this).data("id-area");
+            //    var markerName = $(this).data("id");
+            //    showRouteDetails(teamName, zoneName, divName, areaName, markerName);
+            //});
+
+            //function showRouteDetails(teamName, zoneName, divName, areaName, markerName) {
+            //    $.ajax({
+            //        url: "/Attendence/mGetKibriadataroute",
+            //        type: "POST",
+            //        contentType: 'application/json;charset=utf-8',
+            //        dataType: "json",
+            //        data: JSON.stringify({ TEAM_NAME: teamName, ZONE_NAME: zoneName, MPO_DIV: divName, MPO_AREA: areaName, TERRITORRY_NAME: markerName }),
+            //        success: function (result) {
+            //            var detailsHtml = '';
+            //            $.each(result, function (key, item) {
+            //                detailsHtml += '<tr>';
+            //                detailsHtml += '<td>' + item.MARKET_NAME + '</td>';
+            //                detailsHtml += '<td>' + item.NOMPO + '</td>';
+            //                detailsHtml += '<td>' + item.Present + '</td>';
+            //                detailsHtml += '<td>' + item.LEAVE + '</td>';
+            //                detailsHtml += '<td>' + item.ABSENT + '</td>';
+            //                detailsHtml += '<td>' + ((item.Present / item.NOMPO) * 100).toFixed(2) + '%</td>';
+            //                detailsHtml += '</tr>';
+            //            });
+            //            $('.tbody').html(detailsHtml);
+            //            drawAttendanceChart(result, markerName);
+            //        },
+            //        error: function (errormessage) {
+            //            alert(errormessage.responseText);
+            //        }
+            //    });
+            //}
 
             function drawAttendanceChart(data, teamName) {
                 var options = {
@@ -939,7 +1279,7 @@
                 createAndAppendTextElement(svg, 'Present: ', centerX, centerY + 120, '#58F3D1', presentValue);
                 createAndAppendTextElement(svg, 'Absent: ', centerX, centerY + 140, '#FF8E8E', absentValue);
                 createAndAppendTextElement(svg, 'Leave: ', centerX, centerY + 160, '#383838', leaveValue);
-                createAndAppendTextElement(svg, 'Total: ' + totalValue, centerX, centerY, '#FFFFFF');
+                createAndAppendTextElement(svg, 'Total MPO: ' + totalValue, centerX, centerY, '#FFFFFF');
 
                 svg.appendChild(titleText);
             }
@@ -1441,7 +1781,7 @@
                         }
                         html += '<div class="col-sm-3">';
                         html += '<div class="card-product" style="border-radius: 5px; margin-left:10px; margin-bottom: 10px;width:300px;">';
-                        html += `<div class="card-header ${buttonClass}" data-id="${groupName}" style="background-color: #fff; padding-top: 15px; padding-left: 10px; font-size: 20px; font-weight: bold; cursor: pointer;">${groupName}</div>`;
+                        html += `<div class="card-header ${buttonClass}" data-id="${groupName}" style="background-color: #fff; padding-top: 15px; padding-left: 10px; font-size: 20px; font-weight: bold; cursor: pointer; width: 300px;">${groupName}</div>`;
                         html += '<div class="card-header" style="background-color: #fff; padding-left: 28px; font-size: 14px; border-bottom: 1px solid #ddd;"><strong>Role:</strong> <strong style="margin-left: 160px">Default:</strong></div>';
                         html += '<div class="card-body" style="padding: 20px; background-color:#fff">';
                         var roles = groupBy(items, 'Role');
